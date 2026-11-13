@@ -1,0 +1,23 @@
+name: Literature-data checks
+on:
+  push:
+    branches:
+      - research/onishibari-sex-system-20261114
+  pull_request:
+    paths:
+      - 'data/derived/**'
+      - 'analysis/**'
+      - 'docs/comparative_results.md'
+      - '.github/workflows/literature_check.yml'
+
+jobs:
+  verify-published-aggregates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check published aggregates
+        run: python3 analysis/compare_published.py --check
+      - name: Regenerate report
+        run: python3 analysis/compare_published.py --output docs/comparative_results.md
+      - name: Fail if results are stale
+        run: git diff --exit-code -- docs/comparative_results.md
