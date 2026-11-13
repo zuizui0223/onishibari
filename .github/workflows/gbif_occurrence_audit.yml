@@ -5,6 +5,10 @@ on:
     paths:
       - 'analysis/gbif_occurrence_audit.py'
       - '.github/workflows/gbif_occurrence_audit.yml'
+  pull_request:
+    paths:
+      - 'analysis/gbif_occurrence_audit.py'
+      - '.github/workflows/gbif_occurrence_audit.yml'
   workflow_dispatch: {}
 
 permissions:
