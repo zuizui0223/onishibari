@@ -1,0 +1,27 @@
+name: GBIF Daphne occurrence audit
+on:
+  push:
+    branches: [research/onishibari-sex-system-20261114]
+    paths:
+      - 'analysis/gbif_occurrence_audit.py'
+      - '.github/workflows/gbif_occurrence_audit.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  query-gbif:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Query GBIF and audit taxon names, records and months
+        run: python3 -u analysis/gbif_occurrence_audit.py --sample-size 50
+      - name: Preserve dated source snapshot
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gbif-daphne-evidence-snapshot
+          path: data/derived/gbif_photo_opportunity_snapshot.json
+          retention-days: 60
