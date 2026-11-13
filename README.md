@@ -36,6 +36,13 @@ python3 analysis/synthetic_design_sensitivity.py --output docs/synthetic_design_
 - ナニワズ2017年は茎体積に性差を検出せず（F23.3、H24.3 cm³; p=0.68）、花数（F24.4、H39.3）、果実数（F2.2、H0.6）に差。オニシバリの値ではない：<https://doi.org/10.1093/aobpla/plw089>。
 - 2026年*Silene acaulis*の研究では局所的な雄機能個体密度が雌機能を左右した：<https://doi.org/10.1002/ajb2.70282>。これをオニシバリの局所性比を測る動機とする。
 
+## 2026-11-14 公開データの実取得（今回）
+- [GBIF / iNaturalist の記録数・写真機会の監査](docs/2026-11-14_public_occurrence_audit.md): オニシバリのGBIF日本国内649記録（座標あり362）、2016–2026年の座標付き写真記録26。iNaturalistでは同期間に写真61観察、研究用28観察。**GBIFとiNaturalistは重複するので足さない。**
+- [写真28観察の一次目視スクリーニング](docs/visual_photo_screen.md) と [ラベルCSV](data/derived/inat_visual_screen_v01.csv): 最初の写真で開花を確認14、果実4、花/蕾不明瞭1、葉/蕾のみ7、ライセンスによる未評価2。花の機能的雌雄は**全28件未判定**。
+- [Daphne属の競合する繁殖戦略と反証可能な仮説](docs/comparative_sex_system_synthesis.md): 低い両性株の雌機能（ナニワズ）と、小型花・高自殖（コショウノキ）の違いを比較。
+- [GBIF API取得コード](analysis/gbif_occurrence_audit.py)、[iNaturalist取得コード](analysis/inat_onishibari_audit.py)、[写真コンタクトシート生成](analysis/build_inat_screening_sheet.py)、[一次判定検証・月別集計](analysis/summarize_visual_screen.py)。GitHub Actionsで実取得と写真スクリーニング資料の生成に成功。
+- **これは観測機会と既存画像の監査であって、オニシバリの自家不和合性・送粉者・雌雄の適応度の新規実験結果ではない。**
+
 ## 研究結果の運用ルール
 1. *D. jezoensis*（ナニワズ）と *D. pseudomezereum*（オニシバリ）の実験値を混ぜない。
 2. 袋掛けゼロ結実だけで自家不和合性と結論しない。
