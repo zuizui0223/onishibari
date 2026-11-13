@@ -2,7 +2,7 @@ name: iNaturalist Onishibari opportunity audit
 on:
   push:
     branches: [research/onishibari-sex-system-20261114]
-    paths: ['analysis/inat_onishibari_audit.py', '.github/workflows/inat_onishibari.yml']
+    paths: ['analysis/inat_onishibari_audit.py', 'analysis/build_inat_screening_sheet.py', '.github/workflows/inat_onishibari.yml']
   pull_request:
     paths: ['analysis/inat_onishibari_audit.py', '.github/workflows/inat_onishibari.yml']
   workflow_dispatch: {}
@@ -18,9 +18,15 @@ jobs:
       - uses: actions/checkout@v4
       - name: Verify iNaturalist sex/phenology annotation opportunities
         run: python3 -u analysis/inat_onishibari_audit.py --sample-size 100
+      - name: Set up photograph screening contact pages
+        run: |
+          python3 -m pip install --quiet pillow
+          python3 analysis/build_inat_screening_sheet.py
       - uses: actions/upload-artifact@v4
         if: success()
         with:
           name: inat-onishibari-evidence-snapshot
-          path: data/derived/inat_onishibari_opportunity_snapshot.json
+          path: |
+            data/derived/inat_onishibari_opportunity_snapshot.json
+            data/screening_gallery/*
           retention-days: 60
