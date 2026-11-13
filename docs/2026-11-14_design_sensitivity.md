@@ -50,7 +50,7 @@ Chandler & DeMarche (2026, *American Journal of Botany*, *Silene acaulis*) は�
 ## 文献・実測元
 - Shibata A & Kudo G. 2017. *AoB PLANTS* https://doi.org/10.1093/aobpla/plw089 （ナニワズ; 花と株の形態、自然結実、自殖/他殖実験）
 - Shibata A et al. 2018. *J Plant Res* https://doi.org/10.1007/s10265-017-0978-5 （ナニワズ; 自殖・他殖・発芽と近交弱勢）
-- Kikuzawa K. 1989. *Ecol Res* https://doi.org/10.2307/3565336 （ナニワズ; 初期の除雄・柱頭花粉の解釈、DOI表記は元データ要再確認）
+- Kikuzawa K. 1989. *Oikos* 56:196–202. https://doi.org/10.2307/3565336 （ナニワズ; 初期の除雄・柱頭花粉の解釈）
 - Golam Sarwar AKM et al. 2023. *Jpn J Palynology* https://www.jstage.jst.go.jp/article/jjpal/68/2/68_68_2_KJ004/_article/-char/ja/ （ナニワズSEM/TEM、既往オニシバリSEM寸法を比較）
 - Chandler EK & DeMarche ML. 2026. *Am J Bot* https://doi.org/10.1002/ajb2.70282 （局所両性株頻度の新しい証拠・別種）
 - 神奈川県自然環境保全センター：オニシバリの弱い香りを記録 https://www.pref.kanagawa.jp/docs/f4y/01about/ikimono/winter_trees.html
