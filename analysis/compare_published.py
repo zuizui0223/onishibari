@@ -16,6 +16,10 @@ CONTRASTS = [
     ("jezoensis_2017", "tube_length_mm", "hermaphrodite", "female"),
     ("jezoensis_2017", "hand_fruit_set_proportion", "herm_cross", "female_cross"),
     ("jezoensis_2017", "hand_fruit_set_proportion", "herm_self", "herm_cross"),
+    ("jezoensis_2017", "stem_volume_cm3", "hermaphrodite", "female"),
+    ("jezoensis_2017", "flower_count_n", "hermaphrodite", "female"),
+    ("jezoensis_2017", "fruit_count_n", "female", "hermaphrodite"),
+    ("jezoensis_2017", "natural_fruit_set_proportion", "female", "hermaphrodite"),
     ("miyabeana_2018", "natural_fruit_set_proportion", "open_canopy", "closed_canopy"),
     ("mezereum_2023", "branch_fruit_set_proportion", "hand_outcross", "ambient"),
     ("laureola_2007", "plant_stem_count", "female", "hermaphrodite"),
@@ -97,9 +101,9 @@ def self_check(data):
     assert abs(a[4] - 15.76 / 11.10) < 1e-12
     assert abs(b[4] - 0.211 / 0.604) < 1e-12
     assert abs(c[4] - 0.071 / 0.211) < 1e-12
-    assert len(CONTRASTS) == 9
+    assert len(CONTRASTS) == 13
     assert all(row["species"] != "Daphne pseudomezereum" for row in data.values())
-    print("9 within-study comparisons validated (published aggregates only)")
+    print("13 within-study comparisons validated (published aggregates only)")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
