@@ -18,3 +18,11 @@ Daphne laureola,laureola_2007,plant_stem_count,female,21,6.9,not extracted,10.10
 Daphne laureola,laureola_2007,plant_stem_count,hermaphrodite,13.4,4.3,not extracted,10.1093/aob/mcm254
 Daphne laureola,laureola_2007,flower_count,female,638.9,286.2,not extracted,10.1093/aob/mcm254
 Daphne laureola,laureola_2007,flower_count,hermaphrodite,414.8,182.8,not extracted,10.1093/aob/mcm254
+Daphne jezoensis,jezoensis_2017,stem_volume_cm3,female,23.3,2,149 plants,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,stem_volume_cm3,hermaphrodite,24.3,1.6,214 plants,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,flower_count_n,female,24.4,1.3,"246 plants; 2015 census",10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,flower_count_n,hermaphrodite,39.3,1.9,"357 plants; 2015 census",10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,fruit_count_n,female,2.2,0.3,"246 plants; 2015 census",10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,fruit_count_n,hermaphrodite,0.6,0.2,"357 plants; 2015 census",10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,natural_fruit_set_proportion,female,0.084,0.009,"246 plants; 2015 census",10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,natural_fruit_set_proportion,hermaphrodite,0.015,0.004,"357 plants; 2015 census",10.1093/aobpla/plw089
