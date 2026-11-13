@@ -10,6 +10,10 @@ Each ratio uses two mean values from the same study and species; no effect-size 
 | *Daphne jezoensis* | jezoensis_2017 | tube_length_mm | hermaphrodite / female | 1.293x | +1.92 mm | [DOI](https://doi.org/10.1093/aobpla/plw089) |
 | *Daphne jezoensis* | jezoensis_2017 | hand_fruit_set_proportion | herm_cross / female_cross | 0.349x | -39.30 percentage points | [DOI](https://doi.org/10.1093/aobpla/plw089) |
 | *Daphne jezoensis* | jezoensis_2017 | hand_fruit_set_proportion | herm_self / herm_cross | 0.336x | -14.00 percentage points | [DOI](https://doi.org/10.1093/aobpla/plw089) |
+| *Daphne jezoensis* | jezoensis_2017 | stem_volume_cm3 | hermaphrodite / female | 1.043x | +1.00 cm3 | [DOI](https://doi.org/10.1093/aobpla/plw089) |
+| *Daphne jezoensis* | jezoensis_2017 | flower_count_n | hermaphrodite / female | 1.611x | +14.90 n | [DOI](https://doi.org/10.1093/aobpla/plw089) |
+| *Daphne jezoensis* | jezoensis_2017 | fruit_count_n | female / hermaphrodite | 3.667x | +1.60 n | [DOI](https://doi.org/10.1093/aobpla/plw089) |
+| *Daphne jezoensis* | jezoensis_2017 | natural_fruit_set_proportion | female / hermaphrodite | 5.600x | +6.90 percentage points | [DOI](https://doi.org/10.1093/aobpla/plw089) |
 | *Daphne miyabeana* | miyabeana_2018 | natural_fruit_set_proportion | open_canopy / closed_canopy | 3.465x | +22.21 percentage points | [DOI](https://doi.org/10.1111/1442-1984.12212) |
 | *Daphne mezereum* | mezereum_2023 | branch_fruit_set_proportion | hand_outcross / ambient | 9.684x | +16.50 percentage points | [DOI](https://doi.org/10.1111/njb.03871) |
 | *Daphne laureola* | laureola_2007 | plant_stem_count | female / hermaphrodite | 1.567x | +7.60 count | [DOI](https://doi.org/10.1093/aob/mcm254) |
