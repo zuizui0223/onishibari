@@ -88,8 +88,8 @@ def main():
             "taxon_id": (item.get("taxon") or {}).get("id"),
             "identification": (item.get("taxon") or {}).get("name"),
             "annotated_terms": [{
-                "term_id": (ann.get("controlled_attribute") or {}).get("id"),
-                "value_id": (ann.get("controlled_value") or {}).get("id"),
+                "term_id": ann.get("controlled_attribute_id") or (ann.get("controlled_attribute") or {}).get("id"),
+                "value_id": ann.get("controlled_value_id") or (ann.get("controlled_value") or {}).get("id"),
             } for ann in item.get("annotations") or []],
             "photo_count": len(photos),
             "photo_refs": [{
@@ -99,6 +99,8 @@ def main():
             } for p in photos[:3]],
             "observation_url": "https://www.inaturalist.org/observations/" + str(item.get("id")),
         })
+    male_obs, male_url = get("/observations", dict(BASE, photos="true", quality_grade="research",
+                               term_id=9, term_value_id=11, per_page=1))
     doc = {
         "retrieved_utc": datetime.now(timezone.utc).isoformat(),
         "source": "iNaturalist v1 API",
@@ -111,7 +113,8 @@ def main():
         "monthly_counts_sum": sum(months.values()),
         "month_sum_matches_photos": sum(months.values()) == counts["research_photos"],
         "sample": sample,
-        "urls": dict(urls, photo_sample=preview_url, month_queries=month_urls),
+        "male_annotated_example_ids": [r.get("id") for r in male_obs.get("results", [])],
+        "urls": dict(urls, photo_sample=preview_url, male_example=male_url, month_queries=month_urls),
         "limitations": (
             "Each count is observation events, NOT unique plants or flowering. "
             "Only research-grade photo observations are used for month counts. "
