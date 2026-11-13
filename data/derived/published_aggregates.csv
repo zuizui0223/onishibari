@@ -1,0 +1,20 @@
+species,study,metric,group,value,reported_pm,measurement_n_or_context,doi
+Daphne jezoensis,jezoensis_2017,flower_width_mm,female,11.1,0.2,21 plants,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,flower_width_mm,hermaphrodite,15.76,0.38,21 plants,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,flower_mass_mg,female,6.11,0.27,21 plants,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,flower_mass_mg,hermaphrodite,8.96,0.32,21 plants,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,tube_length_mm,female,6.55,0.13,21 plants,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,tube_length_mm,hermaphrodite,8.47,0.21,21 plants,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,hand_fruit_set_proportion,female_cross,0.604,0.063,not extracted,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,hand_fruit_set_proportion,herm_cross,0.211,0.068,not extracted,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,hand_fruit_set_proportion,herm_self,0.071,0.036,not extracted,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,pollen_limitation_index,female,0.86,,not reported,10.1093/aobpla/plw089
+Daphne jezoensis,jezoensis_2017,pollen_limitation_index,hermaphrodite,0.93,,not reported,10.1093/aobpla/plw089
+Daphne miyabeana,miyabeana_2018,natural_fruit_set_proportion,open_canopy,0.3122,0.0307,not extracted,10.1111/1442-1984.12212
+Daphne miyabeana,miyabeana_2018,natural_fruit_set_proportion,closed_canopy,0.0901,0.0171,not extracted,10.1111/1442-1984.12212
+Daphne mezereum,mezereum_2023,branch_fruit_set_proportion,ambient,0.019,0.004,17 paired plants,10.1111/njb.03871
+Daphne mezereum,mezereum_2023,branch_fruit_set_proportion,hand_outcross,0.184,0.09,17 paired plants,10.1111/njb.03871
+Daphne laureola,laureola_2007,plant_stem_count,female,21,6.9,not extracted,10.1093/aob/mcm254
+Daphne laureola,laureola_2007,plant_stem_count,hermaphrodite,13.4,4.3,not extracted,10.1093/aob/mcm254
+Daphne laureola,laureola_2007,flower_count,female,638.9,286.2,not extracted,10.1093/aob/mcm254
+Daphne laureola,laureola_2007,flower_count,hermaphrodite,414.8,182.8,not extracted,10.1093/aob/mcm254
