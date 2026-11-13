@@ -17,6 +17,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check published aggregates
         run: python3 analysis/compare_published.py --check
+      - name: Check synthetic field-design sensitivity simulator
+        run: python3 analysis/synthetic_design_sensitivity.py --check --simulations 100
       - name: Regenerate report
         run: python3 analysis/compare_published.py --output docs/comparative_results.md
       - name: Fail if results are stale
