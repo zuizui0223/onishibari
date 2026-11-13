@@ -7,6 +7,8 @@ on:
     paths:
       - 'data/derived/**'
       - 'analysis/**'
+      - 'data/derived/inat_visual_screen_v01.csv'
+      - 'docs/visual_photo_screen.md'
       - 'docs/comparative_results.md'
       - '.github/workflows/literature_check.yml'
 
@@ -19,6 +21,10 @@ jobs:
         run: python3 analysis/compare_published.py --check
       - name: Check synthetic field-design sensitivity simulator
         run: python3 analysis/synthetic_design_sensitivity.py --check --simulations 100
+      - name: Validate manual visual screening
+        run: python3 analysis/summarize_visual_screen.py --output docs/visual_photo_screen.md
+      - name: Check visual screen summary freshness
+        run: git diff --exit-code -- docs/visual_photo_screen.md
       - name: Regenerate report
         run: python3 analysis/compare_published.py --output docs/comparative_results.md
       - name: Fail if results are stale
