@@ -37,8 +37,8 @@ SCHEDULE_COLUMNS = COLUMNS + (
     "not_actual_pollination"
 )
 BLOCKING_WARNING = (
-    "Five planned arms per confirmed plant morph require >=5 predehiscence "
-    "buds on a uniquely identified genet. All output is PRE-ASSIGNMENT."
+    "Five planned arms require >=5 selected predehiscence buds per genet, "
+    "respecting a conservation fraction of verified buds. All output is PRE-ASSIGNMENT."
 )
 VERSION = "onishibari_2027_core_v1"
 
@@ -76,7 +76,11 @@ def stable_seed(seed, population_id, genet_id):
     s=f"{seed}|{population_id}|{genet_id}|{VERSION}".encode("utf-8")
     return int.from_bytes(hashlib.sha256(s).digest()[:8], "big")
 
-def allocate(rows, seed):
+def allocate(rows, seed, max_buds_per_genet=10, max_fraction_per_genet=0.50):
+    if not isinstance(max_buds_per_genet,int) or max_buds_per_genet<5:
+        raise ValueError("max_buds_per_genet must be >=5")
+    if not 0 < max_fraction_per_genet <= 1:
+        raise ValueError("max_fraction_per_genet must be in (0,1]")
     if not isinstance(seed, int):
         raise ValueError("Protocol seed must be integer")
     groups=defaultdict(list)
@@ -86,10 +90,15 @@ def allocate(rows, seed):
     for k in sorted(groups):
         group=groups[k]
         morph=group[0]["sex_morph"]
-        ready=[r for r in group if r["flower_stage"]=="predehiscence"
-               and r["voucher_checked"]=="yes" and morph in MORPHS]
+        all_ready=[r for r in group if r["flower_stage"]=="predehiscence"
+                   and r["voucher_checked"]=="yes" and morph in MORPHS]
         rng=random.Random(stable_seed(seed,*k))
         arms=MORPHS.get(morph)
+        # Reserve a pre-specified fraction of available buds for natural reproduction.
+        budget=min(max_buds_per_genet,int(max_fraction_per_genet*len(all_ready)))
+        ready=sorted(all_ready,key=lambda r:(r["branch_id"],r["flower_id"]))
+        if len(ready)>budget:
+            ready=rng.sample(ready,budget)
         if arms and len(ready)>=len(arms):
             base, spare=divmod(len(ready),len(arms))
             targets={name:base for name in arms}
@@ -136,6 +145,8 @@ def allocate(rows, seed):
                 status="SKIPPED_UNVERIFIED_MORPH"
             elif r["flower_stage"]!="predehiscence":
                 status="SKIPPED_NOT_PREDEHISCENCE"
+            elif arms and len(all_ready)>=len(arms):
+                status="SKIPPED_CONSERVATION_CAP_OR_FRACTION"
             else:
                 status="SKIPPED_LT5_READY_BUDS_PER_GENET"
             e.update({
@@ -188,13 +199,17 @@ def test():
         for morph,g in (("male_biased_morph","H_FIXTURE"),
                         ("female_morph","F_FIXTURE")):
             alloc=[r for r in a if r["genet_id"]==g]
-            cnt=Counter(r["treatment"] for r in alloc)
+            cnt=Counter(r["treatment"] for r in alloc if r["treatment"])
             assert set(cnt)==set(MORPHS[morph])
             assert max(cnt.values())-min(cnt.values())<=1
             assert not any(r["cross_donor_genet_id"] for r in alloc)
         assert all(x["allocation_status"].startswith("SKIPPED") for x in a
                    if x["genet_id"] in ("U_FIXTURE","SPARSE_FIXTURE"))
         assert all(x["not_actual_pollination"]=="TRUE" for x in a)
+        assert sum(bool(r["treatment"]) for r in a if r["genet_id"]=="H_FIXTURE")==6
+        assert sum(bool(r["treatment"]) for r in a if r["genet_id"]=="F_FIXTURE")==5
+        assert sum("CONSERVATION" in r["allocation_status"] for r in a)==12
+        assert allocate(rows,20271114,max_fraction_per_genet=1.0,max_buds_per_genet=5)!=a
         # Duplicate units cannot be counted as independent flowers.
         with csvfile.open("a",encoding="utf-8",newline="") as out:
             writer=csv.DictWriter(out,fieldnames=COLUMNS)
@@ -213,6 +228,8 @@ def main():
     p.add_argument("--inventory", type=Path)
     p.add_argument("--output", type=Path)
     p.add_argument("--seed",type=int,default=20271114)
+    p.add_argument("--max-buds-per-genet",type=int,default=10)
+    p.add_argument("--max-fraction-per-genet",type=float,default=0.50)
     p.add_argument("--self-test",action="store_true")
     args=p.parse_args()
     if args.self_test:
@@ -220,12 +237,16 @@ def main():
         return
     if args.inventory is None or args.output is None:
         p.error("Provide a real bud inventory and an output file (or --self-test)")
-    rows=allocate(read_inventory(args.inventory),args.seed)
+    rows=allocate(read_inventory(args.inventory),args.seed,
+                  max_buds_per_genet=args.max_buds_per_genet,
+                  max_fraction_per_genet=args.max_fraction_per_genet)
     save_rows(rows,args.output)
     counts=Counter(x["allocation_status"] for x in rows)
     print("PILOT_RANDOMIZATION=ASSIGNMENT_ONLY; NOT OBSERVATIONS",flush=True)
     print("Output:",args.output, "Inventory:",len(rows),flush=True)
     print("Statuses:",dict(counts),flush=True)
+    print("Conservation cap:",args.max_buds_per_genet,
+          "Max fraction:",args.max_fraction_per_genet,flush=True)
     print("WARNING: donor IDs, pollen QC and treatment outcomes must be filled in "
           "in the field; do NOT interpret planned treatments as executed.",flush=True)
 
