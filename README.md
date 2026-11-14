@@ -23,6 +23,7 @@ python3 analysis/synthetic_design_sensitivity.py --check --simulations 100
 python3 analysis/reproduce_shibata2020_seed_survival.py --check
 python3 analysis/reproduce_shibata2020_paternity.py
 python3 analysis/reproduce_shibata2020_siring_elasticities.py
+python3 analysis/retained_female_function_scenarios.py --check
 python3 analysis/synthetic_design_sensitivity.py --output docs/synthetic_design_sensitivity.md
 ```
 
@@ -76,6 +77,13 @@ python3 analysis/synthetic_design_sensitivity.py --output docs/synthetic_design_
 - 7–11年追跡で果実数と翌年花数の負の関連を検出。ただし別の2022年の資源操作実験では明確な果実形成コストが見えなかった。**年数・因果性・集団差のある別設計として両論文を併記し、コストがゼロとも確定とも断定しない**。
 - [再計算用種子データ](data/derived/shibata2020_seed_pipeline.csv)／[生存・近交弱勢検証](analysis/reproduce_shibata2020_seed_survival.py)、[父性割当元集計](data/derived/shibata2020_paternity_assignment.csv)／[父性件数検証](analysis/reproduce_shibata2020_paternity.py)、[雄成功度モデルの元係数](data/derived/shibata2020_sire_success_coefficients.csv)／[係数の効果倍率検証](analysis/reproduce_shibata2020_siring_elasticities.py)。
 - **自家花粉干渉実験の旧比較を修正**：総花粉粒数を揃えるだけだと、活性のある他家花粉の量が違うので、単純なX+X2とX+Sの差は機構を識別できない。2027年試験は最新版v2の多処理と花粉管・胚・父性解析へ。従来の[仮想感度シミュレーション](docs/2026-11-14_design_sensitivity.md)のORも自家花粉の機構特異的な検出率ではない。
+
+## 2026-11-14：残存雌機能が維持され得る条件を数値化
+- [残存雌機能の仮想閾値モデル](docs/2026-11-14_retained_pistil_thresholds.md) と [再計算コード](analysis/retained_female_function_scenarios.py)。近縁ナニワズの**種子形成後の**生存率（他殖31/40、自殖6/19）から相対生存率r=0.40747、δ=0.59253、自己由来の単純な遺伝子コピーの帰結2r=0.81494を計算した。
+- **あくまでも思考実験**：配偶者不足下で自殖種子S=0.5個/機会、通常の雄機能損失c=0.05、固定維持コストk=0という**架空の条件**なら、配偶者不足機会pが**10.9%超**で残存雌機能の仮想的な直接の遺伝的利益が正。自殖種子が一つも形成されなければこの利益は存在しない。真の性システムの進化的安定性は計算していない。
+- [2027年の最小限の実証計画](protocols/2027_minimum_identifiability_workplan.md)。まず雄的両性花の他殖雌機能、袋掛け自律自殖と受精・発芽、翌年の投資コストを分けて確認する。**完全な雄花の対照が存在しなければ、「雌しべそのものの形成コスト」は直接測れない**。
+- **空の記録フォーマット**：[花ごとの授粉操作](data/templates/2027_flower_reproduction_events.csv) と [種子ごとの発芽・生存追跡](data/templates/2027_offspring_survival_followup.csv)。実測値は一行も入れていない。
+- CIは`python3 analysis/retained_female_function_scenarios.py --check`、自動生成Markdownとコミット済み出力の一致を検証する。2020年の種子・父性原著の検証と合わせて再現性を確保。
 
 ## 研究結果の運用ルール
 1. *D. jezoensis*（ナニワズ）と *D. pseudomezereum*（オニシバリ）の実験値を混ぜない。
