@@ -25,6 +25,8 @@ jobs:
         run: python3 analysis/retained_female_function_scenarios.py --check
       - name: Generate conditional female-function retention report
         run: python3 analysis/retained_female_function_scenarios.py
+      - name: Verify generated conditional theory against committed output
+        run: git diff --exit-code -- docs/2026-11-14_retained_pistil_thresholds.md
       - name: Check genetic paternity assignment counts
         run: python3 analysis/reproduce_shibata2020_paternity.py
       - name: Check paternity-success fitted elasticities
