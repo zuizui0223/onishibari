@@ -1,0 +1,32 @@
+name: GBIF Daphne spatial overlap QC
+on:
+  push:
+    branches:
+      - research/onishibari-sex-system-20261114
+    paths:
+      - 'analysis/gbif_daphne_spatial_overlap.py'
+      - '.github/workflows/gbif_spatial_overlap.yml'
+  pull_request:
+    paths:
+      - 'analysis/gbif_daphne_spatial_overlap.py'
+      - '.github/workflows/gbif_spatial_overlap.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  aggregate-grid-overlap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Query and aggregate photo-independent GBIF occurrences
+        run: python3 -u analysis/gbif_daphne_spatial_overlap.py
+      - name: Export aggregate-only spatial evidence with complete provenance
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gbif-daphne-spatial-aggregate-025deg
+          path: data/derived/gbif_daphne_spatial_aggregates.json
+          retention-days: 60
