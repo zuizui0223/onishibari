@@ -1,0 +1,15 @@
+# Never publish field-precise locations, individual plants, or unpublished results.
+data/private/
+data/raw/
+data/secure/
+private/
+*.gpkg
+*.gdb/
+*.shp
+*.shx
+*.dbf
+*.prj
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.DS_Store
