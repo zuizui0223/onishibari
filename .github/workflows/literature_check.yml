@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Check that executed pollinations, donor QC and complete follow-up do not silently become successes
+        run: python3 analysis/audit_2027_pilot_outcomes.py --self-test
       - name: Validate within-genet treatment randomizer with synthetic fixtures
         run: python3 analysis/randomize_2027_pilot.py --self-test
       - name: Validate zero-fruit interpretation with correlated flowers
