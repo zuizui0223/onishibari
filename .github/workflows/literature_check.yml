@@ -21,6 +21,10 @@ jobs:
         run: python3 analysis/audit_hamaya_photo_phenology.py --check
       - name: Check thesis seed-stage survival and inbreeding depression
         run: python3 analysis/reproduce_shibata2020_seed_survival.py --check
+      - name: Validate retained pistil thought-experiment assumptions and thresholds
+        run: python3 analysis/retained_female_function_scenarios.py --check
+      - name: Generate conditional female-function retention report
+        run: python3 analysis/retained_female_function_scenarios.py
       - name: Check genetic paternity assignment counts
         run: python3 analysis/reproduce_shibata2020_paternity.py
       - name: Check paternity-success fitted elasticities
@@ -37,3 +41,10 @@ jobs:
         run: python3 analysis/compare_published.py --output docs/comparative_results.md
       - name: Fail if results are stale
         run: git diff --exit-code -- docs/comparative_results.md
+      - name: Save hypothetical sex-function theory report
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daphne-conditional-pistil-retention-theory
+          path: docs/2026-11-14_retained_pistil_thresholds.md
+          retention-days: 90
