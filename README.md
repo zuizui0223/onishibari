@@ -85,6 +85,15 @@ python3 analysis/synthetic_design_sensitivity.py --output docs/synthetic_design_
 - **空の記録フォーマット**：[花ごとの授粉操作](data/templates/2027_flower_reproduction_events.csv) と [種子ごとの発芽・生存追跡](data/templates/2027_offspring_survival_followup.csv)。実測値は一行も入れていない。
 - CIは`python3 analysis/retained_female_function_scenarios.py --check`、自動生成Markdownとコミット済み出力の一致を検証する。2020年の種子・父性原著の検証と合わせて再現性を確保。
 
+## 2026-11-14：送粉者不足と配偶者不足を分離（重要なモデル修正）
+- [雌株F・雄的両性株H・完全雄型Mの比較を分ける研究解釈](docs/2026-11-14_two_channel_evolutionary_interpretation.md)。**F vs Hの雌株の維持**と、**H vs 仮想Mの雌しべ残存**は同じ問題ではない。
+- 近縁ナニワズの2018年原著では、自殖由来の種子は形成されても**送粉者のサービスが必要**で、既存個体群で自殖による十分な繁殖保証はなかった。**他殖相手不在を送粉者不在と同一視できない**。オニシバリで自律自殖があるかは未測定。
+- [新モデルの再現コード](analysis/two_channel_pollen_mate_sensitivity.py)：配偶者不在p、有効な花粉輸送v、訪花経由自殖S_visit、自律自殖S_auto、通常の雌機能F、雄機能損失c、維持コストkを区別。ナニワズの種子形成後の相対生存率r=0.40747だけを参考入力し、残りは全て仮定。
+- 仮想条件（F=0.01、c=0.08、k=0.01、S_visit=0.5、S_auto=0）では、v=0.8なら残存雌機能が正となる配偶者不足pは**17.3%超**、v=0.2なら**25.1%超**、v=0なら利益なし。これは**オニシバリの環境依存性の実測でも進化的維持の推定でもない**。
+- 同じナニワズ59種子の標本に基づく独立種子の仮定でもrのばらつきが大きい。母系間の非独立性は未補正。CIは[過程モデルの自動検査](.github/workflows/literature_check.yml)を実施し、全表を`daphne-pollinator-mate-two-channel-theory`の期間限定アーティファクトへ出力。
+- **最優先の実証は、袋掛けだけの自律自殖と、人工自家授粉の自家和合性を区別すること**。次に他殖授粉後の雌機能、受精前干渉・自殖胚の死亡、雌機能保持に伴う雄成功度のコストを独立に測る。
+- [旧10.9%閾値](docs/2026-11-14_retained_pistil_thresholds.md)は送粉経路を省略した思考実験として残し、適応証拠・検出力・性型平衡に使わない。
+
 ## 研究結果の運用ルール
 1. *D. jezoensis*（ナニワズ）と *D. pseudomezereum*（オニシバリ）の実験値を混ぜない。
 2. 袋掛けゼロ結実だけで自家不和合性と結論しない。
