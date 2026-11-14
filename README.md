@@ -43,6 +43,14 @@ python3 analysis/synthetic_design_sensitivity.py --output docs/synthetic_design_
 - [GBIF API取得コード](analysis/gbif_occurrence_audit.py)、[iNaturalist取得コード](analysis/inat_onishibari_audit.py)、[写真コンタクトシート生成](analysis/build_inat_screening_sheet.py)、[一次判定検証・月別集計](analysis/summarize_visual_screen.py)。GitHub Actionsで実取得と写真スクリーニング資料の生成に成功。
 - **これは観測機会と既存画像の監査であって、オニシバリの自家不和合性・送粉者・雌雄の適応度の新規実験結果ではない。**
 
+## 2026-11-14：全104写真の監査へ拡張
+- **実取得**：[iNaturalist全写真監査](docs/2026-11-14_all_photo_review.md)、[61観察の手動ラベル](data/derived/inat_visual_screen_v02.csv) を追加。日本のオニシバリ写真付き観察61件（研究用28、同定中33）、画像参照104枚、CCライセンス等で閲覧用100枚を確認。
+- **写真で直接確認**：開いた花23観察、成熟果実8観察、未熟果実2観察（4月・6月）。花/蕾不明2、葉・枝等のみ22、未評価4。性型は**全61件未確定**。
+- **注釈の欠測を発見**：実際に花が見える23観察のうち、iNaturalistの開花注釈が付いているのは6件のみ（17件には注釈なし）。果実確認10観察のうち注釈あり5件。注釈ベースの花期研究には欠測への対処が必要。
+- **再現性**：[全写真取得](analysis/inat_all_photo_audit.py)、[ライセンス付き画像コンタクトシート](analysis/inat_all_photo_gallery.py)、[61件のID・性型unknownの検証](analysis/validate_all_photo_review.py)をGitHub Actionsで実行。画像本体はGitにコミットせず、出典・ライセンス付きの期限付きartifactへ保存。
+- **性システム記載の差を明示**：[撮影・解剖の判定基準](protocols/photo_sex_morph_scoring.md)。植物資料には「雌雄異株」と「雌性両全性異株」の両表記があり、雌しべの外形と実際の種子親機能は区別する。
+- 画像で見つかる橙色の葯様構造は形態候補にすぎない。**雄的な両性株の自家和合性や雌機能を今回の写真から証明したわけではない。**
+
 ## 研究結果の運用ルール
 1. *D. jezoensis*（ナニワズ）と *D. pseudomezereum*（オニシバリ）の実験値を混ぜない。
 2. 袋掛けゼロ結実だけで自家不和合性と結論しない。
