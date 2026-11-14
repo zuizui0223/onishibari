@@ -13,7 +13,7 @@ permissions:
 jobs:
   query-inaturalist:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Verify iNaturalist sex/phenology annotation opportunities
@@ -22,11 +22,15 @@ jobs:
         run: |
           python3 -m pip install --quiet pillow
           python3 analysis/build_inat_screening_sheet.py
+          python3 -u analysis/inat_all_photo_audit.py
+          python3 -u analysis/inat_all_photo_gallery.py
       - uses: actions/upload-artifact@v4
         if: success()
         with:
-          name: inat-onishibari-evidence-snapshot
+          name: inat-onishibari-all-and-research-screens
           path: |
             data/derived/inat_onishibari_opportunity_snapshot.json
             data/screening_gallery/*
+            data/derived/inat_all_photo_snapshot.json
+            data/all_photo_gallery/*
           retention-days: 60
