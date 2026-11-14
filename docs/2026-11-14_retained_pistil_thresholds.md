@@ -2,6 +2,8 @@
 
 **THEORETICAL SCENARIOS ONLY. No *D. pseudomezereum* mating-system data, no estimated colonization frequency, no true sex-system fitness or equilibrium.**
 
+**REVISION 2026-11-14:** The older 10.9% threshold assumes mature selfed seeds are produced whenever compatible mates are absent; it does NOT model whether effective pollinators can transfer self pollen. This can fail biologically even in self-compatible plants. See [the two-channel model](../analysis/two_channel_pollen_mate_sensitivity.py) for a mate × pollinator sensitivity test; neither model is fitted to Onishibari.
+
 ### Only empirical input: viability after a seed already exists, from a different species
 
 - *Daphne jezoensis* Shibata (2020): outcrossed offspring retained 31/40 = 0.775 and selfed 6/19 = 0.316 through the three-year stage.
