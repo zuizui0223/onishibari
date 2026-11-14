@@ -40,7 +40,7 @@ REPORT_HEADER = ("sex_morph","treatment","planned_flowers","genets_assigned",
                  "missing_execution","lost_or_pending",
                  "completed_itt_flowers","completed_pp_flowers",
                  "pp_mature_fruit","pp_seed_bearing_flowers",
-                 "pp_total_mature_seeds","pp_germinated_seeds",
+                 "pp_total_mature_seeds","pp_germination_assessed_flowers","pp_germinated_seeds",
                  "pp_genets_with_followup","pp_genets_with_seed",
                  "gate_status")
 
@@ -220,18 +220,26 @@ def run_audit(assignments,execution,followup):
                 pp_mature_fruit=sum(r["mature_fruit"] for r in pp),
                 pp_seed_bearing_flowers=sum(r["mature_seeds"]>0 for r in pp),
                 pp_total_mature_seeds=sum(r["mature_seeds"] for r in pp),
-                pp_germinated_seeds=sum(r["germinated_seeds"] for r in pp
-                                       if r["germinated_seeds"]!=""),
+                pp_germination_assessed_flowers=sum(r["germinated_seeds"]!="" for r in pp),
+                pp_germinated_seeds=(sum(r["germinated_seeds"] for r in pp
+                                       if r["germinated_seeds"]!="") if any(
+                                       r["germinated_seeds"]!="" for r in pp) else ""),
                 pp_genets_with_followup=len(pp_genets),
                 pp_genets_with_seed=len(seed_genets),
                 gate_status=gate,
             ))
     ctrl=next(r for r in report if r["sex_morph"]=="female_morph"
               and r["treatment"]=="bag_hand_cross")
-    if ctrl["pp_seed_bearing_flowers"]==0:
-        for row in report:
-            if row["sex_morph"]=="male_biased_morph" and row["treatment"]=="bag_hand_cross":
-                row["gate_status"]="H_CROSS_NOT_INTERPRETABLE_WITHOUT_F_CROSS_POSITIVE"
+    for row in report:
+        if row["sex_morph"]=="male_biased_morph" and row["treatment"]=="bag_hand_cross":
+            if row["pp_seed_bearing_flowers"]>0 and ctrl["pp_seed_bearing_flowers"]>0:
+                row["gate_status"]="H_AND_F_CROSS_SEED_OBSERVED_NO_EQUAL_FITNESS_INFERENCE"
+            elif row["pp_seed_bearing_flowers"]>0:
+                row["gate_status"]="H_CROSS_SEED_OBSERVED_F_CONTROL_UNVERIFIED"
+            elif ctrl["pp_seed_bearing_flowers"]>0:
+                row["gate_status"]="H_CROSS_ZERO_WITH_F_POSITIVE_NOT_PROOF_STERILITY"
+            else:
+                row["gate_status"]="H_AND_F_CROSS_NO_SEED_CONTROL_UNVERIFIED"
     return out_rows,report
 
 def write_csv(rows,fieldnames,path):
@@ -275,6 +283,10 @@ def self_test():
                  s["treatment"]=="bag_hand_cross")
     assert cross_F["pp_seed_bearing_flowers"]>=1
     assert cross_F["gate_status"]=="POSITIVE_CONTROL_SEED_OBSERVED"
+    hc=next(s for s in summary if s["sex_morph"]=="male_biased_morph"
+            and s["treatment"]=="bag_hand_cross")
+    assert hc["gate_status"]=="H_CROSS_ZERO_WITH_F_POSITIVE_NOT_PROOF_STERILITY"
+    assert all(s["pp_germinated_seeds"]=="" for s in summary)
     self_H=next(s for s in summary if s["sex_morph"]=="male_biased_morph" and
                  s["treatment"]=="bag_hand_self")
     assert self_H["pp_seed_bearing_flowers"]>=1
