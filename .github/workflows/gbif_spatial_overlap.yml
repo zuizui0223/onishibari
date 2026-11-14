@@ -5,6 +5,7 @@ on:
       - research/onishibari-sex-system-20261114
     paths:
       - 'analysis/gbif_daphne_spatial_overlap.py'
+      - 'analysis/gbif_daphne_effort_sensitivity.py'
       - '.github/workflows/gbif_spatial_overlap.yml'
   pull_request:
     paths:
@@ -23,10 +24,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: Query and aggregate photo-independent GBIF occurrences
         run: python3 -u analysis/gbif_daphne_spatial_overlap.py
+      - name: Test record-stratified overlap and reproducible random subsampling
+        run: python3 analysis/gbif_daphne_effort_sensitivity.py --self-test
+      - name: Evaluate spatial overlap within observation eras and source types
+        run: python3 -u analysis/gbif_daphne_effort_sensitivity.py --reps 400
       - name: Export aggregate-only spatial evidence with complete provenance
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: gbif-daphne-spatial-aggregate-025deg
-          path: data/derived/gbif_daphne_spatial_aggregates.json
+          path: |
+            data/derived/gbif_daphne_spatial_aggregates.json
+            data/derived/gbif_daphne_effort_sensitivity.json
           retention-days: 60
