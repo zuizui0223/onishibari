@@ -17,6 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate within-genet treatment randomizer with synthetic fixtures
+        run: python3 analysis/randomize_2027_pilot.py --self-test
+      - name: Validate zero-fruit interpretation with correlated flowers
+        run: python3 analysis/zero_fruit_sensitivity.py --check
+      - name: Generate unobserved zero-fruit sensitivity summary
+        run: python3 analysis/zero_fruit_sensitivity.py
       - name: Validate original 1955 and 2020 source scope
         run: python3 analysis/audit_hamaya_photo_phenology.py --check
       - name: Check thesis seed-stage survival and inbreeding depression
@@ -47,6 +53,13 @@ jobs:
         run: python3 analysis/compare_published.py --output docs/comparative_results.md
       - name: Fail if results are stale
         run: git diff --exit-code -- docs/comparative_results.md
+      - name: Store theoretical zero-fruit sensitivity
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: onishibari-zero-fruit-design-sensitivity
+          path: docs/zero_fruit_interpretation.md
+          retention-days: 90
       - name: Save two-channel alternative theory report
         if: success()
         uses: actions/upload-artifact@v4
