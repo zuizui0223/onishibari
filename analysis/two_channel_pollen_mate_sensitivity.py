@@ -170,15 +170,19 @@ def write_report():
     ]
     for name,params in scenarios:
         st,root=threshold(r=r,**params)
-        label={
-           "positive_if_p_above":f"p > {100*root:.1f}%",
-           "positive_if_p_below":f"p < {100*root:.1f}%",
+        labels={
            "negative_everywhere":"never (all p)",
            "positive_everywhere":"all p",
            "neutral_everywhere":"never positive; neutral",
            "nonnegative_everywhere":"nonnegative incl. boundary",
            "nonpositive_everywhere":"never positive; boundary zero",
-        }[st]
+        }
+        if st=="positive_if_p_above":
+            label=f"p > {100*root:.1f}%"
+        elif st=="positive_if_p_below":
+            label=f"p < {100*root:.1f}%"
+        else:
+            label=labels[st]
         lines.append("| "+name+" | "+" | ".join(f"{params[x]:.2f}" for x in
                      ("v","s_visited","s_autonomous","f_outcross","c_male","k_fixed"))+" | "+label+" |")
     ratio_q,threshold_q=propagate_seed_count_uncertainty()
