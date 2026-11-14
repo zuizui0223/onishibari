@@ -1,0 +1,1 @@
+population_id,genet_id,branch_id,flower_id,sex_morph,treatment,assay_stage,assay_status,assay_date,hours_since_pollination,pollen_qc,pollen_donor_genet_id,pollen_grains_count,pollen_grains_germinated,pollen_tubes_at_ovary,ovules_examined,fertilized_ovules,intact_embryos,aborted_embryos,specimen_evidence_id,notes
