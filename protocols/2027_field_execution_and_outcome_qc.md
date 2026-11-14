@@ -69,6 +69,31 @@ python3 analysis/audit_2027_pilot_outcomes.py \
 
 統計モデルは今後の本試験で株・集団の階層性を含める。**本スクリプトは品質監査と記述的集計のみ**であり、得られたp値や因果効果を主張しない。初年度は管理された実験操作が成立したか、HとF双方に陽性種子があるかを明確にすることが優先。
 
+
+## ステップ4：花粉管・胚の破壊採取（別花の非縦断コホート）
+
+成熟果実の追跡用に割り付けた花とは**異なる花ID**で、柱頭・花粉管・胚を採取する。[段階別空テンプレート](../data/templates/2027_destructive_assay_header.csv) の `assay_stage` は `stigma` / `pollen_tube` / `embryo`。
+
+| assay_stage | 必須測定値 | 解釈上の注意 |
+|---|---|---|
+| `stigma` | `pollen_grains_count`、`pollen_grains_germinated` | 花粉付着と発芽。顕微鏡で自家／他家を区別しない限り、親由来は不明 |
+| `pollen_tube` | `pollen_grains_count`、`pollen_tubes_at_ovary` | 花粉管が子房へ伸長した状態。胚珠への受精・子の父性は未証明 |
+| `embryo` | `ovules_examined`、`fertilized_ovules`、`intact_embryos`、`aborted_embryos` | 組織染色・胚形成の根拠を標本IDで管理し、近交弱勢と後期SIを単独で決めない |
+
+**同じ花を三段階で測ったと解釈しない。** 違う花・違う時刻・時には違う株に由来する割合の単純な積から「受粉→受精→種子の生存確率」を作らない。採取段階ごとに別の母株数、花数、品質不良と欠測数を報告する。
+
+```bash
+python3 analysis/audit_2027_destructive_assays.py --self-test
+
+# 現地データが本当に得られてから実行。破壊採取と成熟果実追跡の花IDを照合
+python3 analysis/audit_2027_destructive_assays.py \
+  --assays data/private/2027_dissection_stages.csv \
+  --mature-assignments data/private/2027_assignments.csv \
+  --output data/private/2027_stage_assay_summary.csv
+```
+
+当コードは `genet`・`flower` の重複、花粉数を超える発芽、見かけの花粉粒数を超える子房花粉管、胚珠数を超える受精数、胚数の非整合、欠測を0と記録した誤り、人工授粉の花粉供与株取り違えを検出する。**自家不和合性・胚死亡の原因を自動推定しない**。原画像・顕微鏡記録の照合と統計推定はその後の作業。
+
 ## 全体の判定ゲート
 - **Gate 0**：対象がオニシバリと独立に確認され、形態的H/Fが区別されたか
 - **Gate 1**：予定処理が実施され、供与花粉の品質・バッグ・追跡が妥当か
