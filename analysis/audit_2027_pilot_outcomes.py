@@ -259,8 +259,10 @@ def self_test():
                              sex_morph=morph,voucher_checked="yes",
                              flower_stage="predehiscence"))
     aa=allocate(buds,20271114)
+    plans=[r for r in aa if r["allocation_status"]=="ASSIGNED_NOT_APPLIED"]
+    assert len(plans)==10  # >=half of all buds deliberately left untouched
     exe,fr=[],[]
-    for r in aa:
+    for r in plans:
         arm=r["treatment"]
         er={field:r[field] for field in ID}
         er.update(actual_treatment=arm,execution_status="performed",
@@ -278,7 +280,7 @@ def self_test():
                  seed_germinated_count="",observer_notes="SYNTHETIC")
         exe.append(er);fr.append(f)
     x,summary=run_audit(aa,exe,fr)
-    assert len(x)==20
+    assert len(x)==10
     cross_F=next(s for s in summary if s["sex_morph"]=="female_morph" and
                  s["treatment"]=="bag_hand_cross")
     assert cross_F["pp_seed_bearing_flowers"]>=1
@@ -295,10 +297,10 @@ def self_test():
     hit=next(r for r in donor_test if r["actual_treatment"]=="bag_hand_cross")
     hit["cross_donor_genet_id"]=hit["genet_id"]
     _,s2=run_audit(aa,donor_test,fr)
-    assert sum(row["completed_pp_flowers"] for row in s2)==19
+    assert sum(row["completed_pp_flowers"] for row in s2)==9
     # Missing outcome means unknown, not 0 fruit.
     _,s3=run_audit(aa,exe,fr[:-1])
-    assert sum(row["completed_itt_flowers"] for row in s3)==19
+    assert sum(row["completed_itt_flowers"] for row in s3)==9
     # Duplicate execution must fail.
     try:
         run_audit(aa,exe+[exe[0]],fr)
@@ -306,8 +308,8 @@ def self_test():
         pass
     else:
         raise AssertionError("Duplicate flower was accepted")
-    # All 20 actual fruits are SYNTHETIC test fixtures only.
-    print("PILOT_OUTCOME_QC_TEST=SUCCESS; 20 SYNTHETIC flowers only; "
+    # All simulated fruit outcomes are SYNTHETIC test fixtures only.
+    print("PILOT_OUTCOME_QC_TEST=SUCCESS; 10 assigned SYNTHETIC flowers only; "
           "no data from real Onishibari plants",flush=True)
 
 def main():
