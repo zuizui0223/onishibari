@@ -21,6 +21,10 @@ jobs:
         run: python3 analysis/audit_hamaya_photo_phenology.py --check
       - name: Check thesis seed-stage survival and inbreeding depression
         run: python3 analysis/reproduce_shibata2020_seed_survival.py --check
+      - name: Validate separate mate scarcity and pollinator-service model
+        run: python3 analysis/two_channel_pollen_mate_sensitivity.py --check
+      - name: Generate two-channel model and related-species viability sensitivity
+        run: python3 analysis/two_channel_pollen_mate_sensitivity.py
       - name: Validate retained pistil thought-experiment assumptions and thresholds
         run: python3 analysis/retained_female_function_scenarios.py --check
       - name: Generate conditional female-function retention report
@@ -43,6 +47,13 @@ jobs:
         run: python3 analysis/compare_published.py --output docs/comparative_results.md
       - name: Fail if results are stale
         run: git diff --exit-code -- docs/comparative_results.md
+      - name: Save two-channel alternative theory report
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daphne-pollinator-mate-two-channel-theory
+          path: docs/2026-11-14_two_channel_retention_sensitivity.md
+          retention-days: 90
       - name: Save hypothetical sex-function theory report
         if: success()
         uses: actions/upload-artifact@v4
