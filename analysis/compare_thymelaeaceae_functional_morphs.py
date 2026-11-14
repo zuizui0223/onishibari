@@ -121,8 +121,8 @@ def check():
     rows=load()
     ratios(rows)
     assert "cryptic functional dioecy" in generate(rows)
-    assert "10 independent" in generate(rows)
-    print("FAMILY_REPRODUCTIVE_COMPARE_CHECK=SUCCESS 10 sourced cases; 4 genera; "
+    assert "not ten independent" in generate(rows)
+    print("FAMILY_REPRODUCTIVE_COMPARE_CHECK=SUCCESS 10 sourced cases; 5 genera; "
           "Pimelea fruit ratios validated; Dpm SI unknown; Daphnopsis functional male != SI",flush=True)
 
 if __name__=="__main__":
