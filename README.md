@@ -58,6 +58,14 @@ python3 analysis/synthetic_design_sensitivity.py --output docs/synthetic_design_
 - **広域のGBIF実解析**：[3種の分布格子重複の実測とスケール感度](docs/2026-11-14_gbif_spatial_overlap_sensitivity.md)。精度・日本範囲をQC後、オニシバリ347記録/65格子、ナニワズ240/99、コショウノキ293/99。オニシバリとナニワズの記録Jaccardは0.1°=0.0163、0.25°=0.0446、0.5°=0.1275。**真のニッチ重複・同所性・種分化の推定ではない**。
 - **再現スクリプト**：[1955原著の証拠範囲と現代写真の月の照合](analysis/audit_hamaya_photo_phenology.py)、[GBIF座標を公開せず格子数だけで分布重複を評価するコード](analysis/gbif_daphne_spatial_overlap.py)。GitHub Actionsで確認する。
 
+
+## 2026-11-14 第2次追試：分布データの観測過程と分類改訂
+- **2025年の新しい系統分類**：Han et al. (2025) は旧 *D. pseudomezereum* var. *koreana* を *D. kamtschatica* var. *koreana* とする分類を提案し、Kew POWOも受容。葉緑体とITSの系統不一致がある。オニシバリ・ナニワズとの比較で旧学名の集計を混同しない。[文献・送粉記録の批判的監査](docs/2026-11-14_taxonomy_pollination_critical_update.md)。
+- **匂い・送粉者の前提を更新**：オニシバリの弱い香りの公的記述と、ハナアブ多数の訪花という非査読の野外観察例がある。「全く無臭・送粉者不在」と前提化しない。花粉輸送/結実寄与は未測定。
+- **GBIF観測過程の感度を実計算**：[博物館標本・HUMAN_OBSERVATION・2000年以降・位置不確実性明記の層別と400回レコード数均等化](docs/2026-11-14_gbif_record_effort_robustness.md)。オニシバリ×ナニワズの0.25°占有格子Jaccardは全記録0.0446、標本のみ0.0438、HUMAN_OBSERVATIONのみ0.0250。各100レコードに揃えると中央値0.0241（5–95%反復幅0.0108–0.0482）。
+- **位置品質上の制約**：報告済み位置不確実性が存在するのは、QC後オニシバリ347記録のうち21件だけ。現時点の格子差から真の接触頻度、繁殖様式・送粉者・性分化を推論しない。
+- スクリプト：[記録層と件数を揃える再解析](analysis/gbif_daphne_effort_sensitivity.py)。Python標準ライブラリのみ、固定シード。実データはGBIF API、出力は**集約値のみ**。
+
 ## 研究結果の運用ルール
 1. *D. jezoensis*（ナニワズ）と *D. pseudomezereum*（オニシバリ）の実験値を混ぜない。
 2. 袋掛けゼロ結実だけで自家不和合性と結論しない。
