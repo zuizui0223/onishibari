@@ -36,7 +36,7 @@
 ## 再現可能な割付け
 
 - 各個体の蕾を**1行1蕾**として [空の入力表](../data/templates/2027_bud_inventory_header.csv) に記録。`sex_morph` は `male_biased_morph` / `female_morph` / `undetermined`、`voucher_checked` は `yes/no`、`flower_stage` は `predehiscence/open/not_ready`。
-- `analysis/randomize_2027_pilot.py` が同定確認済みかつ飛散前の蕾を**同一株の中で5アームへ均衡割付け**する。最低5蕾／株に満たない株を無理に割り付けず、スキップ理由を保持。結果は**予定表であり授粉が成功した記録ではない**。
+- `analysis/randomize_2027_pilot.py` が同定確認済みかつ飛散前の蕾を**同一株の中で5アームへ均衡割付け**する。**自然繁殖保護のため、初期値は確認済み蕾の最大50%かつ最大10花／株**（どちらか小さい値）。その条件で最低5処理を配分できない株は割り付けず、スキップ理由を保持。規模を事後的に調整せず、変更が必要なら事前登録する。結果は**予定表であり授粉が成功した記録ではない**。
 - 再現のためのシード値は `20271114` を例示。現地のプレ登録時に固定し、割付け前の個体リストは凍結。スクリプトを使う際の例：
 ```bash
 python3 analysis/randomize_2027_pilot.py --self-test
@@ -44,7 +44,7 @@ python3 analysis/randomize_2027_pilot.py \
   --inventory data/private/2027_bud_inventory.csv \
   --output data/private/2027_randomized_assignments.csv --seed 20271114
 ```
-- `data/private` は公開対象外とする運用が必要（.gitignoreへ追加予定）。割付けの出力には交配親IDは空欄のまま。**現地で受粉操作したら必ず別の実施ログと供与親識別を記入**し、推定データとして自動で使わない。
+- `data/private` は公開対象外とし、すでに `.gitignore` で除外している。ただしGitの強制追加や既存追跡ファイルは防げないため、コミット前の人手による内容確認が必須。割付けの出力には交配親IDは空欄のまま。**現地で受粉操作したら必ず別の実施ログと供与親識別を記入**し、推定データとして自動で使わない。
 - 2027年の実際の蕾数・雌雄比・株間ばらつきが未知なので、5アームの均等割付けに必要な総株数を現時点で「十分」と断言しない。
 
 ## 第二波：花粉管・胚形成の破壊採取
@@ -70,3 +70,14 @@ python3 analysis/randomize_2027_pilot.py \
 - 他種 `D. jezoensis` の低結実率をオニシバリの仮説検定の真値として扱わない。
 
 以上のワークフローは**採集許可・研究倫理・現地株の確認後に初めて実施可能**であり、今回のスクリプトで生成したのは割付け規則のみ。
+
+
+## 実施・追跡・花粉管の別テーブル
+
+前回の「予定の5処理」だけでは**実際に授粉が行われたか、バッグが破れたか、他殖花粉の供与株が分かるか**を監査できないので、実行・結果を完全分離した。
+
+- [実施ログの空CSV](../data/templates/2027_pollination_execution_header.csv) と [成熟果実・種子追跡の空CSV](../data/templates/2027_mature_fruit_followup_header.csv) を作り、[QCコード](../analysis/audit_2027_pilot_outcomes.py)で同一の4IDに結合する。**planned / performed / deviated / lost / pending / completed**を別状態として数える。
+- 同じ花を花粉管・胚観察で切り取ったら、成熟果実の再追跡は**不可能**。破壊採取は別の花IDを割り付け、[段階別の空CSV](../data/templates/2027_destructive_assay_header.csv) と [段階QCコード](../analysis/audit_2027_destructive_assays.py)で集計する。成熟果実用に既に割り付けられた花のIDと重複する場合は実行拒否する。
+- 花粉の付着、発芽、花粉管到達、受精胚、成熟果実、発芽は**別々の標本/個体階層のデータ**。花粉管の観察で受精が証明されるわけではなく、異なる採取花から計算した割合を単一花の縦断的な遷移確率として扱わない。
+
+詳しい運用： [実施と追跡のQC仕様](2027_field_execution_and_outcome_qc.md)。この解析系は**実際の2027年のオニシバリ野外データをまだ一切含まない**。
