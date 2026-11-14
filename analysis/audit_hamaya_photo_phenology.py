@@ -47,7 +47,7 @@ def validate_primary(rows):
             raise ValueError("Missing taxon-specific flowering window")
     if known[("Daphne pseudomezereum","calyx_lobe_to_tube_ratio")]["min"]!="0.5":
         raise ValueError("Dpm calyx ratio was silently modified")
-    if known[("Daphne jezoensis","calyx_lobe_to_tube_ratio")]["min"]!="1":
+    if known[("Daphne jezoensis","calyx_lobe_to_tube_ratio")]["max"]!="1":
         raise ValueError("Djezo calyx ratio was silently modified")
     print("HAMAYA_PRIMARY_CHECK=17 entries; 4 section-wide sex ranges; historical species distinction retained")
     return known
