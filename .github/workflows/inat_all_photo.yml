@@ -1,0 +1,39 @@
+name: iNaturalist all-photo morphology audit
+on:
+  push:
+    branches: [research/onishibari-sex-system-20261114]
+    paths:
+      - 'analysis/inat_all_photo_audit.py'
+      - 'analysis/inat_all_photo_gallery.py'
+      - '.github/workflows/inat_all_photo.yml'
+  pull_request:
+    paths:
+      - 'analysis/inat_all_photo_audit.py'
+      - 'analysis/inat_all_photo_gallery.py'
+      - '.github/workflows/inat_all_photo.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  query-and-illustrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve all observation photo metadata
+        run: python3 -u analysis/inat_all_photo_audit.py
+      - name: Install contact sheet image library
+        run: python3 -m pip install --quiet pillow
+      - name: Build attribution-aware manual screens of every licensed image
+        run: python3 -u analysis/inat_all_photo_gallery.py
+      - name: Upload source-identified photo sheets and all-photo metadata
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: inat-onishibari-all-photo-screens
+          path: |
+            data/derived/inat_all_photo_snapshot.json
+            data/all_photo_gallery/*
+          retention-days: 60
