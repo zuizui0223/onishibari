@@ -20,6 +20,9 @@
 python3 analysis/compare_published.py --check
 python3 analysis/compare_published.py --output docs/comparative_results.md
 python3 analysis/synthetic_design_sensitivity.py --check --simulations 100
+python3 analysis/reproduce_shibata2020_seed_survival.py --check
+python3 analysis/reproduce_shibata2020_paternity.py
+python3 analysis/reproduce_shibata2020_siring_elasticities.py
 python3 analysis/synthetic_design_sensitivity.py --output docs/synthetic_design_sensitivity.md
 ```
 
@@ -27,7 +30,7 @@ python3 analysis/synthetic_design_sensitivity.py --output docs/synthetic_design_
 
 ## 2027年野外実験計画
 - [全体プロトコル](protocols/2027_field_protocol.md)
-- [最優先：除雄花への他家＋他家対他家＋自家（等量）＋花粉付着順序の要因実験](protocols/2027_pollen_interference_factorial.md)
+- [最新版v2：他家花粉量・総量・自家花粉生存性を分離する授粉実験](protocols/2027_pollen_identifiability_v2.md)（従来の[等量混合案](protocols/2027_pollen_interference_factorial.md)は識別上の交絡があるため参考資料へ変更）
 - [空の野外観測CSVテンプレート](data/templates/onishibari_observation_template.csv)
 
 ## 更新された直接根拠
@@ -65,6 +68,14 @@ python3 analysis/synthetic_design_sensitivity.py --output docs/synthetic_design_
 - **GBIF観測過程の感度を実計算**：[博物館標本・HUMAN_OBSERVATION・2000年以降・位置不確実性明記の層別と400回レコード数均等化](docs/2026-11-14_gbif_record_effort_robustness.md)。オニシバリ×ナニワズの0.25°占有格子Jaccardは全記録0.0446、標本のみ0.0438、HUMAN_OBSERVATIONのみ0.0250。各100レコードに揃えると中央値0.0241（5–95%反復幅0.0108–0.0482）。
 - **位置品質上の制約**：報告済み位置不確実性が存在するのは、QC後オニシバリ347記録のうち21件だけ。現時点の格子差から真の接触頻度、繁殖様式・送粉者・性分化を推論しない。
 - スクリプト：[記録層と件数を揃える再解析](analysis/gbif_daphne_effort_sensitivity.py)。Python標準ライブラリのみ、固定シード。実データはGBIF API、出力は**集約値のみ**。
+
+## 2026-11-14：ナニワズ父性解析・長期適応度の一次資料を追加
+- [Shibata（2020）博士論文の父性・長期繁殖コスト・近交弱勢の原著監査](docs/2026-11-14_shibata2020_paternity_lifetime_fitness.md)。**別種ナニワズの実測**でありオニシバリの新規観測ではない。
+- 同論文の遺伝的父性では814子中482子（59.2%）が父性割当。雄的両性株の花数と父性成功が正に関連。平均花粉散布距離6.9–11.4m。**花の幅の因果効果ではない**。
+- 他殖40種子→1年後38発芽→3年間31生存。自殖19種子→9発芽→6生存。累積近交弱勢 **δ≈0.593**。自殖は完全に不可能ではないが、子の適応度が低い。
+- 7–11年追跡で果実数と翌年花数の負の関連を検出。ただし別の2022年の資源操作実験では明確な果実形成コストが見えなかった。**年数・因果性・集団差のある別設計として両論文を併記し、コストがゼロとも確定とも断定しない**。
+- [再計算用種子データ](data/derived/shibata2020_seed_pipeline.csv)／[生存・近交弱勢検証](analysis/reproduce_shibata2020_seed_survival.py)、[父性割当元集計](data/derived/shibata2020_paternity_assignment.csv)／[父性件数検証](analysis/reproduce_shibata2020_paternity.py)、[雄成功度モデルの元係数](data/derived/shibata2020_sire_success_coefficients.csv)／[係数の効果倍率検証](analysis/reproduce_shibata2020_siring_elasticities.py)。
+- **自家花粉干渉実験の旧比較を修正**：総花粉粒数を揃えるだけだと、活性のある他家花粉の量が違うので、単純なX+X2とX+Sの差は機構を識別できない。2027年試験は最新版v2の多処理と花粉管・胚・父性解析へ。従来の[仮想感度シミュレーション](docs/2026-11-14_design_sensitivity.md)のORも自家花粉の機構特異的な検出率ではない。
 
 ## 研究結果の運用ルール
 1. *D. jezoensis*（ナニワズ）と *D. pseudomezereum*（オニシバリ）の実験値を混ぜない。
