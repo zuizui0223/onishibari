@@ -3,7 +3,7 @@
 
 Within each plant, compare emasculated X+X2 versus emasculated X+S flowers:
 X+X2: pollen from two unrelated donors; X+S: one unrelated donor plus self.
-Both have equal total pollen loads. Pilot rates from target species are unknown.
+Both have equal total pollen loads, but X+X2 has twice the viable outcross pollen of X+S, so the simulated contrast does NOT isolate self-pollen clogging. Pilot rates from the target species are unknown.
 """
 import argparse
 import math
@@ -49,10 +49,10 @@ def estimate(plants, flowers, baseline, icc, odds_ratio, reps, seed):
 
 def report(reps, seed):
     scenarios = [
-        (0.20, 0.20, 0.50, "strong"),
-        (0.20, 0.20, 0.70, "moderate"),
+        (0.20, 0.20, 0.50, "large_contrast"),
+        (0.20, 0.20, 0.70, "moderate_contrast"),
         (0.20, 0.20, 1.00, "null"),
-        (0.20, 0.40, 0.50, "strong_high_heterogeneity"),
+        (0.20, 0.40, 0.50, "large_contrast_high_heterogeneity"),
     ]
     output = [
         "# Matched-pollen, plant-paired sensitivity scenarios",
@@ -77,6 +77,7 @@ def report(reps, seed):
         "## Limitations and interpretation",
         "- Simulated rejection is an approximate sensitivity indicator, not observed power or a guarantee of significance.",
         "- The null scenario should reject in about 5% of simulations; Monte Carlo error is reported in the last column.",
+        "- CRITICAL: X+S vs X+X2 also differs in the amount of active outcross pollen, despite equal total grains. These odds ratios are hypothetical mixture-treatment effects, NOT isolated self-pollen interference.",
         "- Even with equal total grains, X+S vs X+X2 does not separate stigma clogging from self-fertilization followed by embryo abortion. Add fluorescent pollen-tube observation and genetically assigned offspring.",
         "- Compare against X-only to measure pollen dose, and sham/intact versus emasculated to test the naturally present self-pollen pathway; latter contrast remains vulnerable to emasculation injury.",
         "- Multiple populations require explicit population-level heterogeneity; these simulations assume one exchangeable plant pool and can be optimistic.",
