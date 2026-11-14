@@ -54,6 +54,21 @@ def summarise(source,meta,scores):
         counts=Counter((meta[r["observation_id"]].get("observed_on") or "unknown")[5:7] for r in items)
         return ", ".join(f"{int(k)}月 {v}" for k,v in sorted(counts.items()))
     by_grade=Counter(o.get("quality_grade") or "unknown" for o in meta.values())
+    flower_annotations = {
+        oid for oid, o in meta.items()
+        if any(a.get("term_id") == 12 and a.get("value_id") == 13
+               for a in o.get("annotations", []))
+    }
+    fruit_annotations = {
+        oid for oid, o in meta.items()
+        if any(a.get("term_id") == 12 and a.get("value_id") == 14
+               for a in o.get("annotations", []))
+    }
+    seen_flower = {r["observation_id"] for r in floral}
+    seen_fruit = {r["observation_id"] for r in ripe+immature}
+    flower_annotated_overlap = len(seen_flower & flower_annotations)
+    fruit_annotated_overlap = len(seen_fruit & fruit_annotations)
+
     labels={
        "open_flower_visible":"Open flower discernible",
        "ripe_fruit_visible":"Ripe red fruit visible",
@@ -83,6 +98,8 @@ def summarise(source,meta,scores):
        "- Functional sexual morph is **indeterminate for every observation**. A male community annotation is not independent proof of viable pollen; fruit is evidence of female reproductive activity in that event, not necessarily a fixed lifetime morph.",
        "- An image with no visible open flower does not imply that the plant was not flowering elsewhere on the same shrub.",
        "- Unreviewed photos remain in the sample denominator but receive no reproductive stage score.",
+       f"- iNaturalist flowering annotation (term 12/13) exists on {len(flower_annotations)} records, but only {flower_annotated_overlap} of {len(seen_flower)} visually confirmed open-flower records carry it; {len(seen_flower)-flower_annotated_overlap} visually confirmed flowering records lack this annotation.",
+       f"- iNaturalist fruiting annotation (term 12/14) exists on {len(fruit_annotations)} records; {fruit_annotated_overlap} of {len(seen_fruit)} visually confirmed fruit records carry it; {len(seen_fruit)-fruit_annotated_overlap} visually confirmed fruit records lack this annotation. Inconclusive photographs are not false annotation proof.",
        "- iNaturalist and GBIF syndicate overlapping observations. Do not sum their record counts.",
        "- The recorded months are observation opportunities selected by photographers, NOT population flowering/fruiting curves; climate-date regressions require observation-effort and geographic controls.",
        "",
