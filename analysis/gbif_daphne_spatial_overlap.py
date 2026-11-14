@@ -76,9 +76,9 @@ def valid(row,key):
             return "unparseable_uncertainty"
     return None
 
-def cell(row):
-    return (int(math.floor(float(row["decimalLatitude"])/GRID_DEGREES)),
-            int(math.floor(float(row["decimalLongitude"])/GRID_DEGREES)))
+def cell(row, spacing=GRID_DEGREES):
+    return (int(math.floor(float(row["decimalLatitude"])/spacing)),
+            int(math.floor(float(row["decimalLongitude"])/spacing)))
 
 def lat_summary(cells):
     if not cells:
@@ -119,7 +119,7 @@ def one_species(rows, taxon_key, count):
         "latitude_of_occupied_cell_centers":lat_summary(cells),
         "basis_of_record":dict(bs),
         "uncertainty_reported_in_retained":known_uncertainty,
-    }, cells, modern
+    }, cells, modern, accepted
 
 def pairs(keys,sets):
     output={}
@@ -136,17 +136,49 @@ def pairs(keys,sets):
             }
     return output
 
+def grid_sensitivity(records):
+    output={}
+    for spacing in (0.1,0.25,0.5):
+        any_date={}
+        since_2000={}
+        for name,rows in records.items():
+            any_date[name]={cell(r,spacing) for r in rows}
+            since_2000[name]={
+                cell(r,spacing) for r in rows
+                if str(r.get("year") or "").isdigit() and int(r["year"])>=2000
+            }
+        def measured(groups):
+            pairs={}
+            names=list(SPECIES)
+            for i,a in enumerate(names):
+                for b in names[i+1:]:
+                    both=len(groups[a]&groups[b])
+                    union=len(groups[a]|groups[b])
+                    pairs[a+" / "+b]={
+                        "shared_cells":both,
+                        "union_cells":union,
+                        "jaccard":round(both/union,4) if union else None,
+                    }
+            return pairs
+        output[str(spacing)]={
+            "grid_degrees":spacing,
+            "all_dates":measured(any_date),
+            "since_2000":measured(since_2000),
+        }
+    return output
+
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--output",default="data/derived/gbif_daphne_spatial_aggregates.json")
     args=parser.parse_args()
-    summary,allcells,moderncells={}, {}, {}
+    summary,allcells,moderncells,records_by_species={}, {}, {}, {}
     for name,key in SPECIES.items():
         rows,count=download_taxon(key)
-        result,cells,newcells=one_species(rows,key,count)
+        result,cells,newcells,accepted=one_species(rows,key,count)
         summary[name]=result
         allcells[name]=cells
         moderncells[name]=newcells
+        records_by_species[name]=accepted
         print("SPATIAL_SPECIES="+json.dumps({"name":name,**result},sort_keys=True),flush=True)
     report={
         "generated_utc":datetime.now(timezone.utc).isoformat(),
@@ -159,17 +191,20 @@ def main():
             "max_known_coord_uncertainty_m":10000,
             "coordinate_uncertainty_missing":"retained but flagged",
             "grid_degrees":GRID_DEGREES,
+            "tested_grid_degrees":[0.1,0.25,0.5],
             "modern_year_min":2000,
             "note":"No coordinates or spatial cell identifiers exported"
         },
         "species":summary,
         "pairwise_all_dates":pairs(list(SPECIES),allcells),
         "pairwise_year_2000_plus":pairs(list(SPECIES),moderncells),
+        "pairwise_grid_sensitivity":grid_sensitivity(records_by_species),
         "limitations":[
             "A 0.25-degree cell represents presence of at least one reported location, not abundance.",
             "GBIF records combine different survey effort, years, coordinates and taxonomy.",
             "Cultivated, misidentified and repeated occurrences can remain after quality filters.",
             "0.25-degree spatial overlap is scale-dependent and cannot establish true biological sympatry.",
+            "Grid-resolution sensitivity is a model-choice check, not a correction for sampling or taxonomy bias.",
             "Latitude is not temperature; do not infer causality in bloom timing or reproduction.",
             "No exact rare plant coordinates, site names, GBIF record IDs or location grids exported."
         ]
@@ -179,6 +214,9 @@ def main():
     dest.write_text(json.dumps(report,ensure_ascii=False,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     for k,v in report["pairwise_all_dates"].items():
         print("SPATIAL_PAIR="+json.dumps({"pair":k,**v},sort_keys=True),flush=True)
+    for g,grp in report["pairwise_grid_sensitivity"].items():
+        for pair,result in grp["all_dates"].items():
+            print("SPATIAL_SCALE_PAIR="+json.dumps({"grid":g,"pair":pair,**result},sort_keys=True),flush=True)
     print("SPATIAL_OUTPUT="+str(dest),flush=True)
 
 if __name__=="__main__":
