@@ -197,14 +197,16 @@ def self_test():
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--assays",type=Path)
+    p.add_argument("--mature-assignments",type=Path)
     p.add_argument("--output",type=Path)
     p.add_argument("--self-test",action="store_true")
     args=p.parse_args()
     if args.self_test:
         self_test();return
-    if not args.assays or not args.output:
-        p.error("Both --assays and --output required")
-    if not all("private" in str(x).split("/") for x in (args.assays,args.output)):
+    if not args.assays or not args.output or not args.mature_assignments:
+        p.error("Need --assays, --mature-assignments and --output")
+    if not all("private" in str(x).split("/") for x in
+               (args.assays,args.mature_assignments,args.output)):
         p.error("Raw assay records and per-genet outputs must stay under private/")
     with args.assays.open(encoding="utf-8",newline="") as f:
         reader=csv.DictReader(f)
@@ -213,6 +215,17 @@ def main():
         rows=list(reader)
     if not rows:
         raise ValueError("No real assay rows; do not substitute synthetic results")
+    with args.mature_assignments.open(encoding="utf-8",newline="") as f:
+        assignment_rows=list(csv.DictReader(f))
+    if not assignment_rows:
+        raise ValueError("Missing mature-fruit assignments; cannot verify flower independence")
+    mature_keys={
+        tuple(r.get(k,"") for k in KEY)
+        for r in assignment_rows if r.get("allocation_status")=="ASSIGNED_NOT_APPLIED"
+    }
+    assay_keys={tuple(r.get(k,"") for k in KEY) for r in rows}
+    if mature_keys & assay_keys:
+        raise ValueError("Destructive dissection and mature-fruit followup reuse same flower ID")
     summary=summarise(parse(rows))
     args.output.parent.mkdir(parents=True,exist_ok=True)
     with args.output.open("w",encoding="utf-8",newline="") as f:
