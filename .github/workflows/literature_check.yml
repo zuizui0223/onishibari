@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate Daphne sex-system, selfing syndrome and phylogeny evidence without synonym inflation
+        run: python3 analysis/validate_daphne_phylo_sex_review.py
       - name: Check independent destructive sample stages and impossible assay counts
         run: python3 analysis/audit_2027_destructive_assays.py --self-test
       - name: Check that executed pollinations, donor QC and complete follow-up do not silently become successes
