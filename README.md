@@ -1,1 +1,146 @@
 # onishibari
+
+**オニシバリ (*Daphne pseudomezereum*) の性表現・送粉・繁殖生態研究**
+
+> Research draft. 現時点で**オニシバリ固有の人工授粉・送粉者・遺伝・花サイズに関する実測データは未収集**。以下の定量比較はすべて近縁の別種について公表された数値に基づく。
+
+## 核心の問い
+雌株より花が大きいとされる雄的な両性株で、雌しべが形態的に維持されながら、なぜ雌機能が低下するのか？ 特に**自家花粉の干渉 (pollen clogging)**、花粉不足、自家不和合性、近交弱勢、胚珠・胚の機能低下を区別する。
+
+## 2026-11-14：ジンチョウゲ科5属の機能的雌雄二型と自殖様式を拡張比較
+- **近縁属の新しい直接対照**：ブラジルの `Daphnopsis filipedunculata` は、雄花に形態的な雌しべ（pistillode）が発達しているが、雄型40株×各6花への自殖/他殖/開放等の操作では果実0。雌型の自然果実率23.1%。49rametのうちSNPに基づく26genetで、**隠蔽的雌雄異株**。**SIのある両性花と誤判定しない**。[2024年原著](https://doi.org/10.1093/aobpla/plae048)。
+- **性表現の複数起源**：ハワイ`Wikstroemia`では形態的雌雄異株・隠蔽的雌雄異株・完全両性花があり、異なる型の交配で両性花の子が多く出現。**器官の形態退化と機能喪失は非同時になり得る**。[Mayer & Charlesworth 1992](https://doi.org/10.1111/j.1558-5646.1992.tb01995.x)。
+- **雌花小型化≠自殖シンドローム**：旧`Gnidia wikstroemiana`（2026年に`Thymelina wikstroemiana`への新組合せを提案）では、雌花は小型・花柱が長く、雌株の繁殖エネルギー総投資は両性株より7.3%高い。雌性両全性異株の**資源配分**の対照。[2006年原著](https://doi.org/10.1111/j.1095-8339.2006.00566.x)、[2026年分類改訂](https://doi.org/10.1002/tax.70202)。
+- **同じ科の雌/両性型の自然結実差**：1960年の`Pimelea traversii`ではF/H **2.06倍**、`P. prostrata`では**9.82倍**。昔の自然観察に基づく比なので、花粉不足・性別の内在的稔性・年次を分けられない。[原著](https://paperspast.natlib.govt.nz/periodicals/TPRSNZ1960-88.2.4.5)。
+- **系統の注意**：2024年のDaphne32種/238標本ITS解析では、Daphne属の従来の範囲は多系統的で、Pseudomezereumはその研究中で単系統。ただし深い分岐は未解決。別属の類似は機能アナロジーであり、**10ケース＝10独立な系統転換ではない**。
+- **成果物**：[詳細レビュー](docs/2026-11-14_thymelaeaceae_cryptic_dioecy_vs_selfing_review.md)、[5属10ケースの原著根拠付き行データ](data/derived/thymelaeaceae_reproductive_function_cross_genera_v1.csv)、[独立性と数値・機能分類の検証コード](analysis/compare_thymelaeaceae_functional_morphs.py)。この表は**meta-analysisでも系統樹再構築でもなく、形態と機能の証拠マップ**。
+- **オニシバリの次の判別テスト**：雄的花と雌花を同株追跡で別々に人工他殖し、受精可能かを検証する。雄的花が自殖・他殖とも不結実なら、単なるSIより**隠蔽的雌雄異株**の機構を優先比較する。
+
+## 最新の重点比較：自殖シンドローム様の花 × 自家不和合性 × 雌雄の花サイズ差（2026-11-14）
+- [近縁群・系統分類と属内対照の総説](docs/2026-11-14_daphne_phylogeny_sex_selfing_comparative_review.md) と [種・集団別、証拠の強さ付きCSV](data/derived/daphne_sex_selfing_phylogeny_evidence_v1.csv)。**オニシバリで厳密な生理学的SIが確認されたとの一次実験証拠はまだない**。小さな雌花≠自殖シンドローム（雌花そのものは自殖できない）。
+- **近縁Pseudomezereum群**：オニシバリ `D. pseudomezereum`、ナニワズ `D. jezoensis`（旧 `D. kamtschatica var. jezoensis`）、`D. kamtschatica`、2025年にその変種へ再分類された旧 `D. pseudomezereum var. koreana`。**核ITSと葉緑体の姉妹関係が不一致**。旧 `D. rebunensis` はナニワズの異名で、独立種として重複計上しない。
+- **真の自殖シンドローム例**：`D. kiusiana`（コショウノキ）東部系統で花の縮小＋葯柱頭間距離の短縮＋高い推定自殖率（g2 0.920、対する西部0.178）。日本の「雌雄異株」図鑑と遺伝論文の完全花/高自殖が**整合しない**ため、個体/地域/分類に基づき検証を要する。
+- **外見での雄・雌の形態二型**：`D. jezoensis` H/Fの花幅比**1.42**、花筒長比1.29、花乾重比1.47。`D. laureola`の花筒比H/Fは2001年**1.65**、別の2004年集団では**1.68**。[公表平均と標本単位を区別するCSV](data/derived/daphne_sex_morph_effect_size_source_means.csv)（SDとSEや花/株nを混ぜない）。**雄的な花が大きく雌花が小さいことは自殖への転換の診断ではない**。
+- **真正SIの属内対照**：`D. arbuscula`（Gajdošová et al. 2024）は袋掛け・人工自家授粉でも果実が得られず、著者は自家不和合性を報告。ただし芳香の強い紫～桃色の両性花で、**自殖シンドローム的な花の減少とは別**。遺伝学的な自殖率は未推定。
+- **一見した矛盾の注意例**：`D. mezereum`の二次形質データベースにはSIとselfingが同時表示されるが、異なる集団/文献を合成している可能性があり、**同じ株が生理学的にSIなのに自殖する証拠とは扱わない**。
+- 比較の第一候補：同所的に確認されたオニシバリ×コショウノキの個体群で、植物ID付き性型解剖、自律自殖/人工自殖/人工他殖、花粉管・胚・成熟種子・遺伝的父性を**同じ基準**で測定。系統近縁と機能比較を分け、全種が姉妹種と仮定しない。
+- [データ整合性チェック](analysis/validate_daphne_phylo_sex_review.py)は、系統の異名、性型の混同、未知の自家和合性、推定自殖率の出典、花サイズのSD/SEを検査する。
+
+## 文献と解析
+- [文献レビュー](docs/2026-11-14_evidence_review.md)
+- [1989–2023年の自家花粉干渉仮説の証拠監査](docs/pollen_interference_critical_review.md)
+- [4種の公表平均値から計算した13組の比較表](docs/comparative_results.md)
+- [種名・文献・測定条件つきの公開数値CSV](data/derived/published_aggregates.csv)
+- [再計算する Python スクリプト](analysis/compare_published.py)
+- [自家花粉対他家花粉の混合実験・仮想感度解析コード](analysis/synthetic_design_sensitivity.py)
+
+実行（Python標準ライブラリのみ）：
+```bash
+python3 analysis/compare_published.py --check
+python3 analysis/compare_published.py --output docs/comparative_results.md
+python3 analysis/synthetic_design_sensitivity.py --check --simulations 100
+python3 analysis/reproduce_shibata2020_seed_survival.py --check
+python3 analysis/reproduce_shibata2020_paternity.py
+python3 analysis/reproduce_shibata2020_siring_elasticities.py
+python3 analysis/retained_female_function_scenarios.py --check
+python3 analysis/synthetic_design_sensitivity.py --output docs/synthetic_design_sensitivity.md
+```
+
+各比率は**同じ論文・同じ種**の公表平均値間の記述的比較のみ。個体データ・標準誤差の共分散がないため統合メタ解析や新しい有意差検定を行っていない。
+
+## 2027年野外実験計画
+- [全体プロトコル](protocols/2027_field_protocol.md)
+- [最新版v2：他家花粉量・総量・自家花粉生存性を分離する授粉実験](protocols/2027_pollen_identifiability_v2.md)（従来の[等量混合案](protocols/2027_pollen_interference_factorial.md)は識別上の交絡があるため参考資料へ変更）
+- [空の野外観測CSVテンプレート](data/templates/onishibari_observation_template.csv)
+
+## 更新された直接根拠
+- オニシバリ花粉のSEM径21–26µmは既存研究を2023年の花粉比較論文が引用するもの：<https://www.jstage.jst.go.jp/article/jjpal/68/2/68_68_2_KJ004/_article/-char/ja/>。本文2023年の新規測定はナニワズなので種を混同しない。
+- 神奈川県自然環境保全センターによるオニシバリの**弱い香り**の観察記載：<https://www.pref.kanagawa.jp/docs/f4y/01about/ikimono/winter_trees.html>。香気成分や昆虫誘引は未測定。
+- ナニワズ2017年は茎体積に性差を検出せず（F23.3、H24.3 cm³; p=0.68）、花数（F24.4、H39.3）、果実数（F2.2、H0.6）に差。オニシバリの値ではない：<https://doi.org/10.1093/aobpla/plw089>。
+- 2026年*Silene acaulis*の研究では局所的な雄機能個体密度が雌機能を左右した：<https://doi.org/10.1002/ajb2.70282>。これをオニシバリの局所性比を測る動機とする。
+
+## 2026-11-14 公開データの実取得（今回）
+- [GBIF / iNaturalist の記録数・写真機会の監査](docs/2026-11-14_public_occurrence_audit.md): オニシバリのGBIF日本国内649記録（座標あり362）、2016–2026年の座標付き写真記録26。iNaturalistでは同期間に写真61観察、研究用28観察。**GBIFとiNaturalistは重複するので足さない。**
+- [写真28観察の一次目視スクリーニング](docs/visual_photo_screen.md) と [ラベルCSV](data/derived/inat_visual_screen_v01.csv): 最初の写真で開花を確認14、果実4、花/蕾不明瞭1、葉/蕾のみ7、ライセンスによる未評価2。花の機能的雌雄は**全28件未判定**。
+- [Daphne属の競合する繁殖戦略と反証可能な仮説](docs/comparative_sex_system_synthesis.md): 低い両性株の雌機能（ナニワズ）と、小型花・高自殖（コショウノキ）の違いを比較。
+- [GBIF API取得コード](analysis/gbif_occurrence_audit.py)、[iNaturalist取得コード](analysis/inat_onishibari_audit.py)、[写真コンタクトシート生成](analysis/build_inat_screening_sheet.py)、[一次判定検証・月別集計](analysis/summarize_visual_screen.py)。GitHub Actionsで実取得と写真スクリーニング資料の生成に成功。
+- **これは観測機会と既存画像の監査であって、オニシバリの自家不和合性・送粉者・雌雄の適応度の新規実験結果ではない。**
+
+## 2026-11-14：全104写真の監査へ拡張
+- **実取得**：[iNaturalist全写真監査](docs/2026-11-14_all_photo_review.md)、[61観察の手動ラベル](data/derived/inat_visual_screen_v02.csv) を追加。日本のオニシバリ写真付き観察61件（研究用28、同定中33）、画像参照104枚、CCライセンス等で閲覧用100枚を確認。
+- **写真で直接確認**：開いた花23観察、成熟果実8観察、未熟果実2観察（4月・6月）。花/蕾不明2、葉・枝等のみ22、未評価4。性型は**全61件未確定**。
+- **注釈の欠測を発見**：実際に花が見える23観察のうち、iNaturalistの開花注釈が付いているのは6件のみ（17件には注釈なし）。果実確認10観察のうち注釈あり5件。注釈ベースの花期研究には欠測への対処が必要。
+- **再現性**：[全写真取得](analysis/inat_all_photo_audit.py)、[ライセンス付き画像コンタクトシート](analysis/inat_all_photo_gallery.py)、[61件のID・性型unknownの検証](analysis/validate_all_photo_review.py)をGitHub Actionsで実行。画像本体はGitにコミットせず、出典・ライセンス付きの期限付きartifactへ保存。
+- **性システム記載の差を明示**：[撮影・解剖の判定基準](protocols/photo_sex_morph_scoring.md)。植物資料には「雌雄異株」と「雌性両全性異株」の両表記があり、雌しべの外形と実際の種子親機能は区別する。
+- 画像で見つかる橙色の葯様構造は形態候補にすぎない。**雄的な両性株の自家和合性や雌機能を今回の写真から証明したわけではない。**
+
+## 2026-11-14：直接の原著と広域生態へ拡張
+- **1955年の一次資料を発掘**：[オニシバリ自体を含む花の性差・花期・種同定の原著レビュー](docs/2026-11-14_hamaya_1955_direct_evidence.md)。雄花/雌花の萼筒8–10/4–6mm、雄しべ1.5–2/1–1.5mmは**節内の複数近縁分類群に共通する概括**であり、オニシバリ単独の平均・サンプル数ではない。雌花の子房と柱頭位置の違いも記載。
+- **原著の分類に注意**：オニシバリとナニワズの萼裂片／萼筒比は**ともに0.5〜1.0と重なる**が典型値が違う。葉の基部側脈など複数の形態証拠を統合する。Kew POWOでは別の受容種。
+- **秋から翌春の花芽形成**：浜谷(1955)には前年果実・旧葉・新花序が同時に存在する例あり。Lei et al.(2020)は冬緑・夏落葉の炭素収支を実験的に検証。両者を結ぶ性型別の季節資源配分は新しい**未検証仮説**。
+- **広域のGBIF実解析**：[3種の分布格子重複の実測とスケール感度](docs/2026-11-14_gbif_spatial_overlap_sensitivity.md)。精度・日本範囲をQC後、オニシバリ347記録/65格子、ナニワズ240/99、コショウノキ293/99。オニシバリとナニワズの記録Jaccardは0.1°=0.0163、0.25°=0.0446、0.5°=0.1275。**真のニッチ重複・同所性・種分化の推定ではない**。
+- **再現スクリプト**：[1955原著の証拠範囲と現代写真の月の照合](analysis/audit_hamaya_photo_phenology.py)、[GBIF座標を公開せず格子数だけで分布重複を評価するコード](analysis/gbif_daphne_spatial_overlap.py)。GitHub Actionsで確認する。
+
+
+## 2026-11-14 第2次追試：分布データの観測過程と分類改訂
+- **2025年の新しい系統分類**：Han et al. (2025) は旧 *D. pseudomezereum* var. *koreana* を *D. kamtschatica* var. *koreana* とする分類を提案し、Kew POWOも受容。葉緑体とITSの系統不一致がある。オニシバリ・ナニワズとの比較で旧学名の集計を混同しない。[文献・送粉記録の批判的監査](docs/2026-11-14_taxonomy_pollination_critical_update.md)。
+- **匂い・送粉者の前提を更新**：オニシバリの弱い香りの公的記述と、ハナアブ多数の訪花という非査読の野外観察例がある。「全く無臭・送粉者不在」と前提化しない。花粉輸送/結実寄与は未測定。
+- **GBIF観測過程の感度を実計算**：[博物館標本・HUMAN_OBSERVATION・2000年以降・位置不確実性明記の層別と400回レコード数均等化](docs/2026-11-14_gbif_record_effort_robustness.md)。オニシバリ×ナニワズの0.25°占有格子Jaccardは全記録0.0446、標本のみ0.0438、HUMAN_OBSERVATIONのみ0.0250。各100レコードに揃えると中央値0.0241（5–95%反復幅0.0108–0.0482）。
+- **位置品質上の制約**：報告済み位置不確実性が存在するのは、QC後オニシバリ347記録のうち21件だけ。現時点の格子差から真の接触頻度、繁殖様式・送粉者・性分化を推論しない。
+- スクリプト：[記録層と件数を揃える再解析](analysis/gbif_daphne_effort_sensitivity.py)。Python標準ライブラリのみ、固定シード。実データはGBIF API、出力は**集約値のみ**。
+
+## 2026-11-14：ナニワズ父性解析・長期適応度の一次資料を追加
+- [Shibata（2020）博士論文の父性・長期繁殖コスト・近交弱勢の原著監査](docs/2026-11-14_shibata2020_paternity_lifetime_fitness.md)。**別種ナニワズの実測**でありオニシバリの新規観測ではない。
+- 同論文の遺伝的父性では814子中482子（59.2%）が父性割当。雄的両性株の花数と父性成功が正に関連。平均花粉散布距離6.9–11.4m。**花の幅の因果効果ではない**。
+- 他殖40種子→1年後38発芽→3年間31生存。自殖19種子→9発芽→6生存。累積近交弱勢 **δ≈0.593**。自殖は完全に不可能ではないが、子の適応度が低い。
+- 7–11年追跡で果実数と翌年花数の負の関連を検出。ただし別の2022年の資源操作実験では明確な果実形成コストが見えなかった。**年数・因果性・集団差のある別設計として両論文を併記し、コストがゼロとも確定とも断定しない**。
+- [再計算用種子データ](data/derived/shibata2020_seed_pipeline.csv)／[生存・近交弱勢検証](analysis/reproduce_shibata2020_seed_survival.py)、[父性割当元集計](data/derived/shibata2020_paternity_assignment.csv)／[父性件数検証](analysis/reproduce_shibata2020_paternity.py)、[雄成功度モデルの元係数](data/derived/shibata2020_sire_success_coefficients.csv)／[係数の効果倍率検証](analysis/reproduce_shibata2020_siring_elasticities.py)。
+- **自家花粉干渉実験の旧比較を修正**：総花粉粒数を揃えるだけだと、活性のある他家花粉の量が違うので、単純なX+X2とX+Sの差は機構を識別できない。2027年試験は最新版v2の多処理と花粉管・胚・父性解析へ。従来の[仮想感度シミュレーション](docs/2026-11-14_design_sensitivity.md)のORも自家花粉の機構特異的な検出率ではない。
+
+## 2026-11-14：残存雌機能が維持され得る条件を数値化
+- [残存雌機能の仮想閾値モデル](docs/2026-11-14_retained_pistil_thresholds.md) と [再計算コード](analysis/retained_female_function_scenarios.py)。近縁ナニワズの**種子形成後の**生存率（他殖31/40、自殖6/19）から相対生存率r=0.40747、δ=0.59253、自己由来の単純な遺伝子コピーの帰結2r=0.81494を計算した。
+- **あくまでも思考実験**：配偶者不足下で自殖種子S=0.5個/機会、通常の雄機能損失c=0.05、固定維持コストk=0という**架空の条件**なら、配偶者不足機会pが**10.9%超**で残存雌機能の仮想的な直接の遺伝的利益が正。自殖種子が一つも形成されなければこの利益は存在しない。真の性システムの進化的安定性は計算していない。
+- [2027年の最小限の実証計画](protocols/2027_minimum_identifiability_workplan.md)。まず雄的両性花の他殖雌機能、袋掛け自律自殖と受精・発芽、翌年の投資コストを分けて確認する。**完全な雄花の対照が存在しなければ、「雌しべそのものの形成コスト」は直接測れない**。
+- **空の記録フォーマット**：[花ごとの授粉操作](data/templates/2027_flower_reproduction_events.csv) と [種子ごとの発芽・生存追跡](data/templates/2027_offspring_survival_followup.csv)。実測値は一行も入れていない。
+- CIは`python3 analysis/retained_female_function_scenarios.py --check`、自動生成Markdownとコミット済み出力の一致を検証する。2020年の種子・父性原著の検証と合わせて再現性を確保。
+
+## 2026-11-14：送粉者不足と配偶者不足を分離（重要なモデル修正）
+- [雌株F・雄的両性株H・完全雄型Mの比較を分ける研究解釈](docs/2026-11-14_two_channel_evolutionary_interpretation.md)。**F vs Hの雌株の維持**と、**H vs 仮想Mの雌しべ残存**は同じ問題ではない。
+- 近縁ナニワズの2018年原著では、自殖由来の種子は形成されても**送粉者のサービスが必要**で、既存個体群で自殖による十分な繁殖保証はなかった。**他殖相手不在を送粉者不在と同一視できない**。オニシバリで自律自殖があるかは未測定。
+- [新モデルの再現コード](analysis/two_channel_pollen_mate_sensitivity.py)：配偶者不在p、有効な花粉輸送v、訪花経由自殖S_visit、自律自殖S_auto、通常の雌機能F、雄機能損失c、維持コストkを区別。ナニワズの種子形成後の相対生存率r=0.40747だけを参考入力し、残りは全て仮定。
+- 仮想条件（F=0.01、c=0.08、k=0.01、S_visit=0.5、S_auto=0）では、v=0.8なら残存雌機能が正となる配偶者不足pは**17.3%超**、v=0.2なら**25.1%超**、v=0なら利益なし。これは**オニシバリの環境依存性の実測でも進化的維持の推定でもない**。
+- 同じナニワズ59種子の標本に基づく独立種子の仮定でもrのばらつきが大きい。母系間の非独立性は未補正。CIは[過程モデルの自動検査](.github/workflows/literature_check.yml)を実施し、全表を`daphne-pollinator-mate-two-channel-theory`の期間限定アーティファクトへ出力。
+- **最優先の実証は、袋掛けだけの自律自殖と、人工自家授粉の自家和合性を区別すること**。次に他殖授粉後の雌機能、受精前干渉・自殖胚の死亡、雌機能保持に伴う雄成功度のコストを独立に測る。
+- [旧10.9%閾値](docs/2026-11-14_retained_pistil_thresholds.md)は送粉経路を省略した思考実験として残し、適応証拠・検出力・性型平衡に使わない。
+
+## 2026-11-14：最初の野外実験を実行可能にした（今回）
+- [最小の5処理×雌雄形態別実験](protocols/2027_stage1_randomized_fertility_pilot.md)：**オニシバリ自身**で、開放・袋掛けのみ・袋掛け偽操作・人工自家授粉・人工他家授粉（雌型では開放＋他殖追加）を、同一標識株内でランダム化。これは**研究計画であり、受粉実施結果ではない**。
+- [蕾ごとの割付けコード](analysis/randomize_2027_pilot.py)：**標本確認済み・花粉飛散前・5蕾以上／株**の実データだけで5アームに均衡割付け。株・枝のID重複、性型の不一致、同定保留を検出。未達株は理由付きで割付け対象外のまま残す。架空のフィクスチャだけで自己テストし、実データを生成しない。
+- [空の入力CSV](data/templates/2027_bud_inventory_header.csv)。出力には供与花粉株IDを架空で埋めず、**現地で記入する欄だけ残す**。生育地の位置や未公開個体IDは`data/private/`に置いて、GitHub公開には反映しない（`.gitignore`追加）。
+- [全株ゼロ結実の感度コード](analysis/zero_fruit_sensitivity.py)：独立の20株で各1花の他殖結実が全ゼロでも、成功する株の真の割合の片側95%上限は**13.9%**。各株に複数花を使う場合のクラスター相関もBeta-Binomialで探索する。**全て仮想シナリオで、オニシバリの観測結果ではない**。詳細表はGitHub Actionsの`onishibari-zero-fruit-design-sensitivity`アーティファクトに出力。
+- *D. laureola* では柱頭の花粉量と花粉管への変換率が異なる例が報告され、同じ花粉到着量でも受精前成功が違う。受粉粒数→花粉管→胚→成熟種子→発芽を分ける。[原著要旨](https://pubmed.ncbi.nlm.nih.gov/26928007/)。
+- **現段階で必要なデータは**：性型を確かめた野外の蕾在庫、花粉供与株候補、人工自殖/他殖の果実・種子・発芽。公開写真から性型や自家不和合性を捏造しない。
+
+実データ取得**後**の割付けコマンド（各ファイルは手元の非公開領域）：
+```bash
+python3 analysis/randomize_2027_pilot.py --self-test
+python3 analysis/randomize_2027_pilot.py \
+  --inventory data/private/2027_bud_inventory.csv \
+  --output data/private/2027_randomized_assignments.csv \
+  --seed 20271114
+python3 analysis/zero_fruit_sensitivity.py --check
+```
+
+## 2026-11-14：野外データの実施照合と受精過程の監査を実装
+- [実施/追跡データの品質監査マニュアル](protocols/2027_field_execution_and_outcome_qc.md)。**実験の割付けと実施を分離**し、供与花粉株のID、袋破損、花粉活性、果実・種子の追跡を独立ログで確認する。
+- [2027年の授粉実施データの空ヘッダー](data/templates/2027_pollination_execution_header.csv)、[成熟果実・種子追跡の空ヘッダー](data/templates/2027_mature_fruit_followup_header.csv)、[実施・成熟結果の照合コード](analysis/audit_2027_pilot_outcomes.py)。**未実施、追跡継続中、観測ゼロを混同しない**。雌株の人工他殖陽性対照が未確認なら、両性株の全ゼロを完全な雌機能喪失としない。
+- [花粉・胚の独立した破壊採取データの空ヘッダー](data/templates/2027_destructive_assay_header.csv)、[生殖段階別QCコード](analysis/audit_2027_destructive_assays.py)。柱頭花粉数・花粉管・受精胚は**別の花**で測り、成熟果実と同じ花IDを流用させない。異なる試料集団の割合を一続きの受精成功確率として掛け合わせない。
+- [ランダム割付けコード](analysis/randomize_2027_pilot.py) を保全寄りに修正：**確認済み蕾の最大50%、かつ最大10蕾/株まで**を初期値とし、残りは自然繁殖へ。5処理に足りない株は事前登録なしに無理に割り付けない。
+- **現時点で対象オニシバリの実際の授粉・花粉管・胚・種子データはゼロ**。Python自己テストは合成フィクスチャのみで、GitHub Actionsで実行。実際の個体番号、現地座標、未公開測定は`data/private/`の非公開パスに保存し、公開ブランチへ追加しない。
+
+## 研究結果の運用ルール
+1. *D. jezoensis*（ナニワズ）と *D. pseudomezereum*（オニシバリ）の実験値を混ぜない。
+2. 袋掛けゼロ結実だけで自家不和合性と結論しない。
+3. 同じ植物の**花の大きさ**と**株全体のサイズ**を区別する。
+4. 除雄による改善・自家花粉の付着量・他家花粉管の到達・胚発達・発芽を分けて判定する。
+5. コードが計算を終えても、オニシバリの新規生態学的実証が得られたと記載しない。
