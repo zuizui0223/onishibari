@@ -1,0 +1,9 @@
+source_id,taxon,population,pollination_type,seeds_sown,germinated_after_one_year,survived_three_years_after_germination,source_section,source_url,notes
+Shibata2020,Daphne jezoensis,CTS,outcross,18,,,Chapter 3 Methods p61-62,https://doi.org/10.14943/doctoral.k14152,Sample composition only; stage outcomes reported pooled
+Shibata2020,Daphne jezoensis,CTS,self,11,,,Chapter 3 Methods p61-62,https://doi.org/10.14943/doctoral.k14152,Sample composition only; stage outcomes reported pooled
+Shibata2020,Daphne jezoensis,NOP,outcross,3,,,Chapter 3 Methods p61-62,https://doi.org/10.14943/doctoral.k14152,Sample composition only; stage outcomes reported pooled
+Shibata2020,Daphne jezoensis,NOP,self,2,,,Chapter 3 Methods p61-62,https://doi.org/10.14943/doctoral.k14152,Sample composition only; stage outcomes reported pooled
+Shibata2020,Daphne jezoensis,TOM,outcross,19,,,Chapter 3 Methods p61-62,https://doi.org/10.14943/doctoral.k14152,Sample composition only; stage outcomes reported pooled
+Shibata2020,Daphne jezoensis,TOM,self,6,,,Chapter 3 Methods p61-62,https://doi.org/10.14943/doctoral.k14152,Sample composition only; stage outcomes reported pooled
+Shibata2020,Daphne jezoensis,pooled,outcross,40,38,31,Chapter 3 Results p67,https://doi.org/10.14943/doctoral.k14152,Stage counts reconstructed uniquely from reported 95.0% germination and 81.6% conditional survival
+Shibata2020,Daphne jezoensis,pooled,self,19,9,6,Chapter 3 Results p67,https://doi.org/10.14943/doctoral.k14152,Stage counts reconstructed uniquely from reported 47.4% germination and 66.7% conditional survival
