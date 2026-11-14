@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate original 1955 and 2020 source scope
+        run: python3 analysis/audit_hamaya_photo_phenology.py --check
       - name: Check published aggregates
         run: python3 analysis/compare_published.py --check
       - name: Check synthetic field-design sensitivity simulator
