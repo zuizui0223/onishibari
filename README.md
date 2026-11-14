@@ -7,6 +7,15 @@
 ## 核心の問い
 雌株より花が大きいとされる雄的な両性株で、雌しべが形態的に維持されながら、なぜ雌機能が低下するのか？ 特に**自家花粉の干渉 (pollen clogging)**、花粉不足、自家不和合性、近交弱勢、胚珠・胚の機能低下を区別する。
 
+## 2026-11-14：ジンチョウゲ科5属の機能的雌雄二型と自殖様式を拡張比較
+- **近縁属の新しい直接対照**：ブラジルの `Daphnopsis filipedunculata` は、雄花に形態的な雌しべ（pistillode）が発達しているが、雄型40株×各6花への自殖/他殖/開放等の操作では果実0。雌型の自然果実率23.1%。49rametのうちSNPに基づく26genetで、**隠蔽的雌雄異株**。**SIのある両性花と誤判定しない**。[2024年原著](https://doi.org/10.1093/aobpla/plae048)。
+- **性表現の複数起源**：ハワイ`Wikstroemia`では形態的雌雄異株・隠蔽的雌雄異株・完全両性花があり、異なる型の交配で両性花の子が多く出現。**器官の形態退化と機能喪失は非同時になり得る**。[Mayer & Charlesworth 1992](https://doi.org/10.1111/j.1558-5646.1992.tb01995.x)。
+- **雌花小型化≠自殖シンドローム**：旧`Gnidia wikstroemiana`（2026年に`Thymelina wikstroemiana`への新組合せを提案）では、雌花は小型・花柱が長く、雌株の繁殖エネルギー総投資は両性株より7.3%高い。雌性両全性異株の**資源配分**の対照。[2006年原著](https://doi.org/10.1111/j.1095-8339.2006.00566.x)、[2026年分類改訂](https://doi.org/10.1002/tax.70202)。
+- **同じ科の雌/両性型の自然結実差**：1960年の`Pimelea traversii`ではF/H **2.06倍**、`P. prostrata`では**9.82倍**。昔の自然観察に基づく比なので、花粉不足・性別の内在的稔性・年次を分けられない。[原著](https://paperspast.natlib.govt.nz/periodicals/TPRSNZ1960-88.2.4.5)。
+- **系統の注意**：2024年のDaphne32種/238標本ITS解析では、Daphne属の従来の範囲は多系統的で、Pseudomezereumはその研究中で単系統。ただし深い分岐は未解決。別属の類似は機能アナロジーであり、**10ケース＝10独立な系統転換ではない**。
+- **成果物**：[詳細レビュー](docs/2026-11-14_thymelaeaceae_cryptic_dioecy_vs_selfing_review.md)、[5属10ケースの原著根拠付き行データ](data/derived/thymelaeaceae_reproductive_function_cross_genera_v1.csv)、[独立性と数値・機能分類の検証コード](analysis/compare_thymelaeaceae_functional_morphs.py)。この表は**meta-analysisでも系統樹再構築でもなく、形態と機能の証拠マップ**。
+- **オニシバリの次の判別テスト**：雄的花と雌花を同株追跡で別々に人工他殖し、受精可能かを検証する。雄的花が自殖・他殖とも不結実なら、単なるSIより**隠蔽的雌雄異株**の機構を優先比較する。
+
 ## 最新の重点比較：自殖シンドローム様の花 × 自家不和合性 × 雌雄の花サイズ差（2026-11-14）
 - [近縁群・系統分類と属内対照の総説](docs/2026-11-14_daphne_phylogeny_sex_selfing_comparative_review.md) と [種・集団別、証拠の強さ付きCSV](data/derived/daphne_sex_selfing_phylogeny_evidence_v1.csv)。**オニシバリで厳密な生理学的SIが確認されたとの一次実験証拠はまだない**。小さな雌花≠自殖シンドローム（雌花そのものは自殖できない）。
 - **近縁Pseudomezereum群**：オニシバリ `D. pseudomezereum`、ナニワズ `D. jezoensis`（旧 `D. kamtschatica var. jezoensis`）、`D. kamtschatica`、2025年にその変種へ再分類された旧 `D. pseudomezereum var. koreana`。**核ITSと葉緑体の姉妹関係が不一致**。旧 `D. rebunensis` はナニワズの異名で、独立種として重複計上しない。
