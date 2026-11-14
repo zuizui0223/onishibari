@@ -6,6 +6,8 @@ on:
       - 'analysis/inat_all_photo_audit.py'
       - 'analysis/inat_all_photo_gallery.py'
       - 'analysis/validate_all_photo_review.py'
+      - 'analysis/audit_hamaya_photo_phenology.py'
+      - 'data/derived/primary_onishibari_morph_phenology_evidence.csv'
       - 'data/derived/inat_visual_screen_v02.csv'
       - '.github/workflows/inat_all_photo.yml'
   pull_request:
@@ -32,6 +34,8 @@ jobs:
         run: python3 -u analysis/inat_all_photo_gallery.py
       - name: Validate 61 observation-level manual scores against live source IDs
         run: python3 analysis/validate_all_photo_review.py --output data/derived/all_photo_summary_generated.md
+      - name: Cross-check historical morphology with verified photo dates
+        run: python3 analysis/audit_hamaya_photo_phenology.py --output docs/hamaya_vs_photo_validation.md
       - name: Upload source-identified photo sheets and all-photo metadata
         if: success()
         uses: actions/upload-artifact@v4
@@ -39,6 +43,7 @@ jobs:
           name: inat-onishibari-all-photo-screens
           path: |
             data/derived/inat_all_photo_snapshot.json
+            docs/hamaya_vs_photo_validation.md
             data/derived/all_photo_summary_generated.md
             data/derived/inat_visual_screen_v02.csv
             data/all_photo_gallery/*
