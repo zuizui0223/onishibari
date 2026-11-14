@@ -192,7 +192,72 @@ def self_test():
         pass
     else:
         raise AssertionError("Impossible embryo progression was accepted")
+    # The same genet's manipulations across fruit and destructive cohorts
+    # must not exceed half of original viable buds, even if individual
+    # workflows separately appear within their limits.
+    original=[]
+    for i in range(20):
+        original.append(dict(population_id="SYNTHETIC",genet_id="H",
+                             branch_id="B",flower_id=f"reserve{i:02d}",
+                             flower_stage="predehiscence",voucher_checked="yes",
+                             sex_morph="male_biased_morph",
+                             allocation_status=("ASSIGNED_NOT_APPLIED" if i<5
+                                                else "SKIPPED_CONSERVATION_CAP_OR_FRACTION")))
+    stage=[dict(population_id="SYNTHETIC",genet_id="H",branch_id="B",
+                flower_id=f"reserve{i:02d}") for i in range(5,8)]
+    assert check_total_sampling_budget(original,stage)[("SYNTHETIC","H")]==8
+    try:
+        check_total_sampling_budget(original,[dict(x) for x in stage]+[
+            dict(population_id="SYNTHETIC",genet_id="H",branch_id="B",
+                 flower_id=f"reserve{i:02d}") for i in range(8,11)])
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Combined manipulation exceeded ecological cap undetected")
     print("STAGE_ASSAY_QC_TEST=SUCCESS; SYNTHETIC destructive flowers only",flush=True)
+
+def check_total_sampling_budget(assignment_rows, assay_rows,
+                                fraction=0.5, max_buds=10):
+    """Guard the total across fruit-followup and destructive stage cohorts.
+
+    Conservative assumption: each stage-assay row is an additional
+    manipulated flower, including pending/lost assay entries. Each assay
+    flower must already be in the (private) original bud inventory.
+    """
+    if not 0 < fraction <= 1 or max_buds < 5:
+        raise ValueError("Unreasonable total conservation budget")
+    universe={}
+    allowed_count=defaultdict(int)
+    manipulated_count=defaultdict(int)
+    for a in assignment_rows:
+        identity=tuple(a.get(k,"") for k in KEY)
+        if not all(identity) or identity in universe:
+            raise ValueError("Duplicate or empty flower in original bud inventory")
+        universe[identity]=a
+        genet=identity[:2]
+        if (a.get("flower_stage")=="predehiscence"
+            and a.get("voucher_checked")=="yes"
+            and a.get("sex_morph") in MORPHS):
+            allowed_count[genet]+=1
+        if a.get("allocation_status")=="ASSIGNED_NOT_APPLIED":
+            manipulated_count[genet]+=1
+    for record in assay_rows:
+        identity=tuple(record.get(k,"") for k in KEY)
+        if identity not in universe:
+            raise ValueError("Destructive flower absent from original inventory")
+        a=universe[identity]
+        if a.get("allocation_status")=="ASSIGNED_NOT_APPLIED":
+            raise ValueError("Destructive flower also assigned to mature fruit followup")
+        if not (a.get("flower_stage")=="predehiscence"
+                and a.get("voucher_checked")=="yes"
+                and a.get("sex_morph") in MORPHS):
+            raise ValueError("Unverified or non-bud plant cannot be destructively sampled")
+        manipulated_count[identity[:2]]+=1
+    for genet,number in manipulated_count.items():
+        budget=min(int(allowed_count.get(genet,0)*fraction),max_buds)
+        if number>budget:
+            raise ValueError(f"Combined manipulation exceeds conservation budget for {genet}: {number} > {budget}")
+    return manipulated_count
 
 def main():
     p=argparse.ArgumentParser()
@@ -219,13 +284,7 @@ def main():
         assignment_rows=list(csv.DictReader(f))
     if not assignment_rows:
         raise ValueError("Missing mature-fruit assignments; cannot verify flower independence")
-    mature_keys={
-        tuple(r.get(k,"") for k in KEY)
-        for r in assignment_rows if r.get("allocation_status")=="ASSIGNED_NOT_APPLIED"
-    }
-    assay_keys={tuple(r.get(k,"") for k in KEY) for r in rows}
-    if mature_keys & assay_keys:
-        raise ValueError("Destructive dissection and mature-fruit followup reuse same flower ID")
+    check_total_sampling_budget(assignment_rows,rows)
     summary=summarise(parse(rows))
     args.output.parent.mkdir(parents=True,exist_ok=True)
     with args.output.open("w",encoding="utf-8",newline="") as f:
