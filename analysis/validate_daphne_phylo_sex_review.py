@@ -62,9 +62,9 @@ def check():
             float(west["genetic_selfing_fraction"]))==(.920,.178)
     assert "Japanese field guides dioecy" in east["floral_sex_system_reported"]
     arb=by["Daphne arbuscula"][0]
-    assert arb["genetic_selfing_fraction"]=="0"
+    assert arb["genetic_selfing_fraction"]=="" # Zero selfed FRUITS is not population genetic selfing-rate estimate
     assert "168 hand-self" in arb["estimate_method"]
-    assert "not a close sister" in arb["uncertainty_or_conflict"]
+    assert "not demonstrated close sister" in arb["uncertainty_or_conflict"]
     mez=by["Daphne mezereum"][0]
     assert "UNRESOLVED" in mez["self_compatibility"]
     # A statement is not a new direct experimental SI assay in the target.
@@ -90,7 +90,7 @@ def check():
     assert len(set((r["taxon"],r["study"],r["trait"]) for r in dims))==5
     print("DAPHNE_COMPARISON_VALID=13 sourced rows; 12 taxon names (one synonym);"
           " 2 D. kiusiana populations; 5 non-target floral sex contrasts."
-          " Dpm physiological SI UNTESTED. D. arbuscula reported SI, showy flowers.",
+          " Dpm physiological SI UNTESTED. D. arbuscula no self fruit, genetic selfing fraction unknown, showy flowers.",
           flush=True)
 
 if __name__=="__main__":
