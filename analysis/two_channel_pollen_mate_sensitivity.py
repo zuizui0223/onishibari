@@ -146,7 +146,7 @@ def write_report():
         "",
         "Shibata et al. (2018) reported that even naturally selfed offspring of the related *D. jezoensis* required pollinator service, and usual populations did NOT gain reproductive assurance. Thus it is invalid to assume mate scarcity automatically generates seed in the absence of effective visitors. The older one-state model equated these two failures. Here they are independent hypothetical axes.",
         "",
-        "One empirical viability input ONLY from a different species: Shibata (2020) *D. jezoensis*, outcrossed {31}/{40} three-year survivors, selfed {6}/{19}. Relative post-seed viability **r={r:.5f}**. No one has measured the target *D. pseudomezereum* value.",
+        f"One empirical viability input ONLY from a different species: Shibata (2020) *D. jezoensis*, outcrossed 31/40 three-year survivors, selfed 6/19. Relative post-seed viability **r={r:.5f}**. No one has measured the target *D. pseudomezereum* value.",
         "",
         "### Four conditional states",
         "",
