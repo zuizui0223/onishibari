@@ -107,7 +107,7 @@ def one_species(rows, taxon_key, count):
             continue
         accepted.append(row)
     cells={cell(row) for row in accepted}
-    modern={cell(row) for row in accepted if str(row.get("year",""))>="2000"}
+    modern={cell(row) for row in accepted if str(row.get("year") or "").isdigit() and int(row["year"])>=2000}
     known_uncertainty=sum(r.get("coordinateUncertaintyInMeters") is not None for r in accepted)
     bs=Counter(r.get("basisOfRecord") or "UNKNOWN" for r in accepted)
     return {
