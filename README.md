@@ -112,6 +112,13 @@ python3 analysis/randomize_2027_pilot.py \
 python3 analysis/zero_fruit_sensitivity.py --check
 ```
 
+## 2026-11-14：野外データの実施照合と受精過程の監査を実装
+- [実施/追跡データの品質監査マニュアル](protocols/2027_field_execution_and_outcome_qc.md)。**実験の割付けと実施を分離**し、供与花粉株のID、袋破損、花粉活性、果実・種子の追跡を独立ログで確認する。
+- [2027年の授粉実施データの空ヘッダー](data/templates/2027_pollination_execution_header.csv)、[成熟果実・種子追跡の空ヘッダー](data/templates/2027_mature_fruit_followup_header.csv)、[実施・成熟結果の照合コード](analysis/audit_2027_pilot_outcomes.py)。**未実施、追跡継続中、観測ゼロを混同しない**。雌株の人工他殖陽性対照が未確認なら、両性株の全ゼロを完全な雌機能喪失としない。
+- [花粉・胚の独立した破壊採取データの空ヘッダー](data/templates/2027_destructive_assay_header.csv)、[生殖段階別QCコード](analysis/audit_2027_destructive_assays.py)。柱頭花粉数・花粉管・受精胚は**別の花**で測り、成熟果実と同じ花IDを流用させない。異なる試料集団の割合を一続きの受精成功確率として掛け合わせない。
+- [ランダム割付けコード](analysis/randomize_2027_pilot.py) を保全寄りに修正：**確認済み蕾の最大50%、かつ最大10蕾/株まで**を初期値とし、残りは自然繁殖へ。5処理に足りない株は事前登録なしに無理に割り付けない。
+- **現時点で対象オニシバリの実際の授粉・花粉管・胚・種子データはゼロ**。Python自己テストは合成フィクスチャのみで、GitHub Actionsで実行。実際の個体番号、現地座標、未公開測定は`data/private/`の非公開パスに保存し、公開ブランチへ追加しない。
+
 ## 研究結果の運用ルール
 1. *D. jezoensis*（ナニワズ）と *D. pseudomezereum*（オニシバリ）の実験値を混ぜない。
 2. 袋掛けゼロ結実だけで自家不和合性と結論しない。
