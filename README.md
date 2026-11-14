@@ -94,6 +94,24 @@ python3 analysis/synthetic_design_sensitivity.py --output docs/synthetic_design_
 - **最優先の実証は、袋掛けだけの自律自殖と、人工自家授粉の自家和合性を区別すること**。次に他殖授粉後の雌機能、受精前干渉・自殖胚の死亡、雌機能保持に伴う雄成功度のコストを独立に測る。
 - [旧10.9%閾値](docs/2026-11-14_retained_pistil_thresholds.md)は送粉経路を省略した思考実験として残し、適応証拠・検出力・性型平衡に使わない。
 
+## 2026-11-14：最初の野外実験を実行可能にした（今回）
+- [最小の5処理×雌雄形態別実験](protocols/2027_stage1_randomized_fertility_pilot.md)：**オニシバリ自身**で、開放・袋掛けのみ・袋掛け偽操作・人工自家授粉・人工他家授粉（雌型では開放＋他殖追加）を、同一標識株内でランダム化。これは**研究計画であり、受粉実施結果ではない**。
+- [蕾ごとの割付けコード](analysis/randomize_2027_pilot.py)：**標本確認済み・花粉飛散前・5蕾以上／株**の実データだけで5アームに均衡割付け。株・枝のID重複、性型の不一致、同定保留を検出。未達株は理由付きで割付け対象外のまま残す。架空のフィクスチャだけで自己テストし、実データを生成しない。
+- [空の入力CSV](data/templates/2027_bud_inventory_header.csv)。出力には供与花粉株IDを架空で埋めず、**現地で記入する欄だけ残す**。生育地の位置や未公開個体IDは`data/private/`に置いて、GitHub公開には反映しない（`.gitignore`追加）。
+- [全株ゼロ結実の感度コード](analysis/zero_fruit_sensitivity.py)：独立の20株で各1花の他殖結実が全ゼロでも、成功する株の真の割合の片側95%上限は**13.9%**。各株に複数花を使う場合のクラスター相関もBeta-Binomialで探索する。**全て仮想シナリオで、オニシバリの観測結果ではない**。詳細表はGitHub Actionsの`onishibari-zero-fruit-design-sensitivity`アーティファクトに出力。
+- *D. laureola* では柱頭の花粉量と花粉管への変換率が異なる例が報告され、同じ花粉到着量でも受精前成功が違う。受粉粒数→花粉管→胚→成熟種子→発芽を分ける。[原著要旨](https://pubmed.ncbi.nlm.nih.gov/26928007/)。
+- **現段階で必要なデータは**：性型を確かめた野外の蕾在庫、花粉供与株候補、人工自殖/他殖の果実・種子・発芽。公開写真から性型や自家不和合性を捏造しない。
+
+実データ取得**後**の割付けコマンド（各ファイルは手元の非公開領域）：
+```bash
+python3 analysis/randomize_2027_pilot.py --self-test
+python3 analysis/randomize_2027_pilot.py \
+  --inventory data/private/2027_bud_inventory.csv \
+  --output data/private/2027_randomized_assignments.csv \
+  --seed 20271114
+python3 analysis/zero_fruit_sensitivity.py --check
+```
+
 ## 研究結果の運用ルール
 1. *D. jezoensis*（ナニワズ）と *D. pseudomezereum*（オニシバリ）の実験値を混ぜない。
 2. 袋掛けゼロ結実だけで自家不和合性と結論しない。
