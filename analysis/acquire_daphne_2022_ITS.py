@@ -17,7 +17,7 @@ GROUPS={
  "Daphne papyracea (Guangdong)":(list(range(699,703)),"Daphne papyracea"),
 }
 BASE="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
-DOI="https://doi.org/10.1016/j.pld.2021.11.002"
+DOI="https://doi.org/10.1016/j.pld.2021.11.001"
 
 def accession_to_label():
     result={}
