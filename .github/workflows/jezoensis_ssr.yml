@@ -3,12 +3,12 @@ on:
   push:
     branches: [research/onishibari-sex-system-20261114]
     paths:
-      - 'analysis/acquire_jezoensis_SSR_and_synonyms.py'
+      - 'analysis/acquire_jezoensis_SSR_and_synonyms.py', 'analysis/compare_jezoensis_core_plastid_markers.py'
       - 'data/derived/jezoensis_2014_SSR_primer_candidates.csv'
       - '.github/workflows/jezoensis_ssr.yml'
   pull_request:
     paths:
-      - 'analysis/acquire_jezoensis_SSR_and_synonyms.py'
+      - 'analysis/acquire_jezoensis_SSR_and_synonyms.py', 'analysis/compare_jezoensis_core_plastid_markers.py'
       - 'data/derived/jezoensis_2014_SSR_primer_candidates.csv'
       - '.github/workflows/jezoensis_ssr.yml'
   workflow_dispatch: {}
@@ -26,6 +26,13 @@ jobs:
         run: python3 analysis/acquire_jezoensis_SSR_and_synonyms.py --self-test
       - name: Retrieve original 10 SSR loci and NCBI alias index counts
         run: python3 -u analysis/acquire_jezoensis_SSR_and_synonyms.py --out outputs/jezoensis_ssr
+      - name: Verify chloroplast barcode mapping
+        run: python3 analysis/compare_jezoensis_core_plastid_markers.py --self-test
+      - name: Compare D. jezoensis partial plastid barcodes to three close plastomes
+        run: |
+          python3 analysis/compare_jezoensis_core_plastid_markers.py \
+            --jezoensis outputs/jezoensis_ssr/jezoensis_3_plastid_fragments.fasta \
+            --out outputs/jezoensis_ssr/close_species_plastid_comparison
       - name: Preserve accession-verified original sequences and failures
         if: always()
         uses: actions/upload-artifact@v4
