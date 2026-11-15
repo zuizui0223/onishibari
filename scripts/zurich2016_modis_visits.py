@@ -116,6 +116,10 @@ def main():
             observations=defaultdict(dict)
             image_counts={}
             for item in sorted(terra,key=lambda i:(date(i),i.id)):
+                # A MODIS composite extends about 16 days from its start.
+                # Include only scenes overlapping the actual June15-July20 field season.
+                if date(item)>max_day or date(item)+dt.timedelta(days=15)<min_day:
+                    continue
                 key=(str(date(item)),item.id)
                 if key in scene_ids:continue
                 scene_ids.add(key)
@@ -126,6 +130,9 @@ def main():
                                       GDAL_HTTP_MAX_RETRY="2"):
                         with rasterio.open(signed.assets[asset].href) as ds:
                             xy=transform("EPSG:4326",ds.crs,xs,ys)
+                            if var=="NDVI":
+                                report.setdefault("unique_250m_pixels_by_scene",{})[item.id]=len(set(
+                                   ds.index(x,y) for x,y in zip(xy[0],xy[1])))
                             data=[a[0] for a in ds.sample(list(zip(xy[0],xy[1])),masked=True)]
                             vals[var]=[(None if np.ma.is_masked(v) else float(v)) for v in data]
                 nvalid=0
@@ -159,6 +166,26 @@ def main():
                   "visits_per_recorded_window_median":round(float(np.median(yy)),5) if yy else None,
                   "NDVI_vs_visit_count":spearman_safe(xx,yy),
                   "EVI_vs_visit_count":spearman_safe(aa,yy)}
+            # Exploratory eight planned tests (4 plants × 2 vegetation indices).
+            # All shares the same 24 garden locations and tests are correlated.
+            eligible=[]
+            for p,x in summary.items():
+                for index in ("NDVI","EVI"):
+                    rec=x.get(index+"_vs_visit_count")
+                    if rec and rec.get("p_unadjusted") is not None:
+                        eligible.append((p,index,rec["p_unadjusted"]))
+            ordered=sorted(eligible,key=lambda x:x[2])
+            qvals={}
+            qnext=1.0
+            for idx in range(len(ordered)-1,-1,-1):
+                pl,vi,pv=ordered[idx]
+                qnext=min(qnext,pv*len(ordered)/(idx+1))
+                qvals[(pl,vi)]=round(qnext,6)
+            for p,x in summary.items():
+                for ix in ("NDVI","EVI"):
+                    z=x.get(ix+"_vs_visit_count")
+                    if z:z["q_BH_across_eight_tests"]=qvals.get((p,ix))
+            report["multiple_testing_method"]="Benjamini-Hochberg across 4 plants × 2 indices; study site predictors not independent"
             report["by_plant"]=summary
             report["status"]="success" if report["sites_with_any_good_ndvi"]>=18 else "insufficient"
     except Exception as e:
