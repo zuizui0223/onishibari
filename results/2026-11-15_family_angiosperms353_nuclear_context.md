@@ -53,3 +53,6 @@ Likewise request original Japanese P and Kamchatkan K Illumina total-DNA FASTQs 
 
 ## Inference gate
 Until independently sampled low-copy nuclear loci exist **for P, C, and K from matched individuals**, historical chloroplast capture, ITS-only introgression/concerted evolution, and ILS remain observationally compatible. Do not combine these 162 nonfocal quartet loci with the 2025 focal ITS/Cp as if they were the same taxa.
+
+## Independent row-level QC supplement
+All 349 gene-tree assignments are now inspectable in `per_gene_coverage_and_quartet.tsv` (one row per gene tree, 349 rows and 4 columns; 162 covered, 187 missing >=1 Daphne). Latest successfully executed workflow run: https://github.com/zuizui0223/onishibari/actions/runs/43682044800 ; artifact ID **14148374481** (`daphne-2026-nuclear-gene-tree-context`), ZIP SHA256 `0024a44f3a6bc7459b067e25f522d77b8fdab0d1127d1fcddf4e8ee88aa8052c`. Counts independently rechecked by opening source ZIP: 151 + 10 + 1 = 162, total 349. This detailed table is an audit trail, not new data from the focal East Asian trio.
