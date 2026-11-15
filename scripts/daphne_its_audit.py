@@ -16,6 +16,8 @@ ACCESSIONS = {
     "K": ("PX056858", 550, 650, "Daphne kamtschatica, Russia"),
     "O1": ("MT623684", 400, 900, "Daphne kiusiana, Kumamoto, Japan"),
     "O2": ("MT623688", 400, 900, "Daphne kiusiana, Jeju, Korea"),
+    "O3": ("MT623695", 400, 900, "Daphne odora, Guangdong, China"),
+    "O4": ("MT623699", 400, 900, "Daphne papyracea, Guangdong, China"),
 }
 IUPAC = set("ACGTRYSWKMBDHVN")
 ACGT = set("ACGT")
@@ -107,7 +109,7 @@ def main():
             seqs[key]=seq
             write_fasta(raw/(key+"_"+acc+".fa"),[(key,seq)])
             time.sleep(0.4)
-        for og in ("O1","O2"):
+        for og in ("O1","O2","O3","O4"):
             input_file=out/("quartet_"+og+"_raw.fa")
             aligned_file=out/("quartet_"+og+"_aligned.fa")
             write_fasta(input_file,[(x,seqs[x]) for x in ("P","C","K",og)])
