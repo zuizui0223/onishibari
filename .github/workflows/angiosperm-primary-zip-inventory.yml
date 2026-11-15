@@ -1,0 +1,29 @@
+name: Primary flower pollen seed and paternity raw ZIP schema audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/audit_primary_reproductive_zip_inventory.py
+      - .github/workflows/angiosperm-primary-zip-inventory.yml
+
+permissions:
+  contents: read
+
+jobs:
+  original-published-records-qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download and validate Dryad public original version ZIPs
+        run: python3 scripts/audit_primary_reproductive_zip_inventory.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: floral-reproductive-primary-version-zip-provenance
+          path: analysis_results_primary_repro_csv_inventory/
+          if-no-files-found: warn
+          retention-days: 30
