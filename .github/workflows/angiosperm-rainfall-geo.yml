@@ -30,4 +30,5 @@ jobs:
           path: |
             analysis_results_rainfall_pilot/pilot_summary.json
             analysis_results_rainfall_pilot/species_median_PL_worldclim_10m.csv
+            analysis_results_rainfall_pilot/site_coordinates_for_ndvi_sampling.csv
           if-no-files-found: warn
