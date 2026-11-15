@@ -1,0 +1,35 @@
+name: Zurich paired flower-seeding versus ovule-completion contrast
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/zurich2016_paired_stage_contrast.py
+      - .github/workflows/angiosperm-zurich-paired-stage.yml
+      - scripts/zurich2016_flower_date_link.py
+      - scripts/zurich2016_display_to_seed.py
+
+permissions:
+  contents: read
+
+jobs:
+  paired-garden-contrast:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install required statistics
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy scipy
+      - name: Compare two functional reproductive endpoints under identical garden resampling
+        run: .venv/bin/python scripts/zurich2016_paired_stage_contrast.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zurich-paired-seeded-flower-versus-ovule-completion
+          path: analysis_results_zurich_stage_contrast/
+          if-no-files-found: warn
+          retention-days: 30
