@@ -1,0 +1,31 @@
+name: UK PoMS independent landcover versus floral resources spatial validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/ukpoms_flower_vs_landcover_cv.py
+      - .github/workflows/angiosperm-ukpoms-spatial-cv.yml
+
+permissions:
+  contents: read
+
+jobs:
+  uk-1km-resource-predictions:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pandas, scipy and scikit-learn
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q pandas numpy scipy scikit-learn
+      - name: Fit 5-fold leave-1km-squares-out models of visitors versus floral access and land cover
+        run: .venv/bin/python scripts/ukpoms_flower_vs_landcover_cv.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ukpoms-1km-flower-vs-landcover-heldout-prediction
+          path: analysis_results_ukpoms_predict/
+          if-no-files-found: warn
