@@ -34,7 +34,11 @@ NUM_FLOWER=["log_floral_units"]
 MODELS={
  "base_plant_season_weather":(CATS_BASE,NUM_BASE),
  "base_plus_landcover":(CATS_BASE+CATS_LAND,NUM_BASE),
+ "base_plus_flower_unit_number":(CATS_BASE,NUM_BASE+NUM_FLOWER),
+ "base_plus_patch_context":(CATS_BASE+CATS_FLOWER,NUM_BASE),
  "base_plus_local_flowers":(CATS_BASE+CATS_FLOWER,NUM_BASE+NUM_FLOWER),
+ "landcover_plus_flower_unit_number":(CATS_BASE+CATS_LAND,NUM_BASE+NUM_FLOWER),
+ "landcover_plus_patch_context":(CATS_BASE+CATS_LAND+CATS_FLOWER,NUM_BASE),
  "base_plus_both":(CATS_BASE+CATS_LAND+CATS_FLOWER,NUM_BASE+NUM_FLOWER),
 }
 RESPONSES=["all_insects_total","bumblebees","hoverflies","all_bees"]
@@ -192,7 +196,7 @@ def main():
        "models":{name:{"categorical":ca,"numeric":nu} for name,(ca,nu) in MODELS.items()},
        "measurement":"10-min fixed-area insect landings, floral-unit count and cover; NOT individual pollination effectiveness",
        "limits":[
-         "Flower count units differ by target type (individual flowers vs heads/spikes/umbels). Flower type and floral_unit are covariates; no universal per-flower equivalence.",
+         "Separating floral-unit count from patch context is a feature-ablation prediction exercise, not a causal decomposition. Flower count units differ by target type (individual flowers vs heads/spikes/umbels). Flower type and floral_unit are covariates; no universal per-flower equivalence.",
          "More floral units increases available opportunities in a fixed quadrat mechanically; prediction does not establish ecological scarcity or selection.",
          "Land cover is a coarse category, NOT remote NDVI or GPP/AGB measurement.",
          "Visitor detection depends on flower target choice, time of day, weather, taxonomic identification and survey eligibility.",
