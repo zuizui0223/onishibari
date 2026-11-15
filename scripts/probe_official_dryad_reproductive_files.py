@@ -99,6 +99,7 @@ def main():
             # versionNumber is not the numeric version ID; do not misuse it.
         doc["chosen_version_id"]=vid
         if vid:
+            doc["public_version_download_probe"]=fetch_small_file(BASE+"/versions/"+str(vid)+"/download")
             files=fetch_json(BASE+"/versions/"+str(vid)+"/files")
             doc["files_status"]=files.get("status")
             doc["files_error"]=files.get("error")
