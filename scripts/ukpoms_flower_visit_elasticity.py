@@ -127,7 +127,7 @@ def main():
             "all_within_1km_square":(D,FORMULA_WITHIN),
             "exclude_other_flower_target":(
                 D.loc[~D["target_flower_corrected"].str.contains("Other",case=False)].copy(),
-                FORMULA_WITHIN),
+                FORMULA_ENV),
             "drop_top_1pct_flower_units":(D.loc[D["floral_unit_count"]<=q99].copy(),
                                            FORMULA_WITHIN),
         }
@@ -141,16 +141,32 @@ def main():
             targets=GUILDS if variant in ("all_adjusted_habitat","all_within_1km_square") else GUILDS[:3]
             for response in targets:
                 if response not in data.columns:raise ValueError("Missing outcome "+response)
-                results=fit_one(data,form,response,variant,"poisson")
-                outcomes.append(results)
-                print("POISSON",variant,response,results["log_units_beta"],results["cluster_95pct_ci"],
-                      results["doubling_flower_units_visits_per_unit_multiplier"],flush=True)
+                try:
+                    results=fit_one(data,form,response,variant,"poisson")
+                    outcomes.append(results)
+                    print("POISSON",variant,response,results["log_units_beta"],results["cluster_95pct_ci"],
+                          results["doubling_flower_units_visits_per_unit_multiplier"],flush=True)
+                except Exception as e:
+                    report.setdefault("sensitivity_fit_failures",[]).append(
+                        {"variant":variant,"response":response,
+                         "error":type(e).__name__+": "+str(e)[:300]})
+                    print("SENSITIVITY_FAILED",variant,response,type(e).__name__,str(e)[:180],flush=True)
         # NB sensitivity (fixed alpha); the same observed square clusters.
         for y in GUILDS[:3]:
-            res=fit_one(D,FORMULA_ENV,y,"all_adjusted_habitat","negbin_alpha1")
-            outcomes.append(res)
-            print("NEG_BIN",y,res["log_units_beta"],res["cluster_95pct_ci"],flush=True)
+            try:
+                res=fit_one(D,FORMULA_ENV,y,"all_adjusted_habitat","negbin_alpha1")
+                outcomes.append(res)
+                print("NEG_BIN",y,res["log_units_beta"],res["cluster_95pct_ci"],flush=True)
+            except Exception as e:
+                report.setdefault("sensitivity_fit_failures",[]).append(
+                    {"variant":"all_adjusted_habitat_NB","response":y,
+                     "error":type(e).__name__+": "+str(e)[:300]})
+                print("NEG_BIN_FAILED",y,type(e).__name__,str(e)[:180],flush=True)
         report["estimates"]=outcomes
+        required={("all_adjusted_habitat",group) for group in GUILDS}|{("all_within_1km_square",group) for group in GUILDS}
+        observed={(x["variant"],x["response"]) for x in outcomes if x["link"]=="poisson"}
+        if not required.issubset(observed):
+            raise ValueError("Primary pre-specified Poisson models missing: "+str(required-observed))
         report["status"]="success"
     except Exception as e:
         report["error"]=type(e).__name__+": "+str(e)
