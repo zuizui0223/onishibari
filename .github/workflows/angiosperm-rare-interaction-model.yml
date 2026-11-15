@@ -1,0 +1,27 @@
+name: Rare interaction lifetime sensitivity theory
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/lifetime_rare_interaction_model.py
+      - .github/workflows/angiosperm-rare-interaction-model.yml
+
+permissions:
+  contents: read
+
+jobs:
+  analytical-scenarios:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compute clearly labeled theoretical annual-to-lifetime encounter probabilities
+        run: python3 scripts/lifetime_rare_interaction_model.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-lifetime-encounter-theory-only
+          path: analysis_results_theory/
+          if-no-files-found: warn
