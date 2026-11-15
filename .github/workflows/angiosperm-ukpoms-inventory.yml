@@ -1,0 +1,27 @@
+name: Inventory 2026 UK PoMS 2017-23 FIT Counts (independent pollinator dataset)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/ukpoms_fitcounts_inventory.py
+      - .github/workflows/angiosperm-ukpoms-inventory.yml
+
+permissions:
+  contents: read
+
+jobs:
+  ukpoms-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch official EIDC archive, validate ZIP, list data schema with no raw locations
+        run: python3 scripts/ukpoms_fitcounts_inventory.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ukpoms-2017-23-official-data-inventory
+          path: analysis_results_ukpoms/
+          if-no-files-found: warn
