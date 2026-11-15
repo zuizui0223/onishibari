@@ -1,0 +1,27 @@
+name: Daphne NCBI SRA index audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/daphne-comparative-2026-11-15]
+    paths:
+      - scripts/daphne_sra_index_audit.py
+      - .github/workflows/daphne-sra-index.yml
+
+permissions:
+  contents: read
+
+jobs:
+  sra-index-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Query NCBI indexed SRA studies and runs by focal names, synonyms and comparators
+        run: python3 scripts/daphne_sra_index_audit.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-ncbi-sra-index-evidence
+          path: analysis_results_sra/
+          if-no-files-found: warn
