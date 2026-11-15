@@ -7,7 +7,7 @@ reproductive outcome for matched anonymized garden IDs. Garden coordinates
 never copied/exported; 24 sites is a local ecological case study, not a
 cross-angiosperm evolutionary model.
 """
-import csv,hashlib,io,json,math,time,urllib.request,zipfile
+import csv,hashlib,io,json,math,time,urllib.request,zipfile,datetime
 from collections import Counter,defaultdict
 from pathlib import Path
 from scipy.stats import spearmanr
@@ -18,6 +18,8 @@ URL=("https://www.envidat.ch/dataset/d8e61f31-c2e5-4052-8784-b1624dfbfc40/"
  "resource/cef4a88c-0ef6-4327-a4a0-fc7d33b468e5/download/"
  "rejichacko_etal_2025_envidat.zip")
 FILE="06_trait_data/species_temporal_flower_visitation_matrix.csv"
+COMMON_PLANT={"daucus carota":"carrot", "onobrychis viciifolia":"sainfoin",
+ "raphanus sativus":"radish", "symphytum officinale":"comfrey"}
 SUCCESS={
  "daucus carota":("07_pollination_success/daucus_carota_seed_set.csv","seed_per_umbel"),
  "onobrychis viciifolia":("07_pollination_success/onobrychis_viciifolia_fruit_set.csv","fruit_per_flower"),
@@ -97,9 +99,14 @@ def main():
                 agg.append((vcount,len(positives),date,window))
                 day_counts[date]+=1
             summary["n_dates"]=len(day_counts)
+            parsed_dates=[]
+            for name in day_counts:
+                try:parsed_dates.append(datetime.datetime.strptime(name,"%d.%m.%Y").date())
+                except ValueError:continue
             summary["date_distribution_summary"]={
-                "earliest":min(day_counts) if day_counts else "",
-                "latest":max(day_counts) if day_counts else "",
+                "earliest":min(parsed_dates).isoformat() if parsed_dates else "",
+                "latest":max(parsed_dates).isoformat() if parsed_dates else "",
+                "n_date_strings_parsed":len(parsed_dates),
                 "max_observation_rows_one_day":max(day_counts.values()) if day_counts else 0}
             summary["garden_plant_groups"]=len(all_groups)
             summary["matrix_nonmissing_observation_rows"]=sum(len(x) for x in all_groups.values())
@@ -149,7 +156,7 @@ def main():
                         if yes is None or no is None or yes+no==0:continue
                         numerator[site]+=yes;denominator[site]+=yes+no
                 joined=[]
-                for x in byplant.get(p,[]):
+                for x in byplant.get(COMMON_PLANT[p],[]):
                     site=x["site"]
                     if denominator[site]>0:
                         joined.append((x["visits_per_record"],numerator[site]/denominator[site]))
