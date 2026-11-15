@@ -95,6 +95,7 @@ def main():
         report["astral_quartet_split"]=splits(astral,FOCAL.values())
         binary=obtain("4_IQTree.tar.gz")
         outcounts=Counter()
+        per_gene=[]
         with tarfile.open(fileobj=io.BytesIO(binary),mode="r:gz") as arc:
             members=[m for m in arc.getmembers() if m.isfile()]
             report["archive_members_total"]=len(members)
@@ -115,10 +116,12 @@ def main():
                     part=splits(t,FOCAL.values())
                     if part is None:
                         report["gene_trees_fewer_4taxa"]+=1
+                        per_gene.append([member.name,ntips,0,"missing_1plus_Daphne"])
                     else:
                         report["gene_trees_4taxa_covered"]+=1
                         key=part if isinstance(part,str) else "/".join("-".join(x) for x in part)
                         outcounts[key]+=1
+                        per_gene.append([member.name,ntips,1,key])
                         if len(report["tree_examples"])<8:
                             report["tree_examples"].append({"path":member.name,"quartet":key})
                 except Exception as e:
@@ -126,6 +129,12 @@ def main():
                     if len(report["tree_examples"])<8:
                         report["tree_examples"].append({"path":member.name,"error":str(e)})
         report["quartet_counts"]=dict(outcounts)
+        if len(per_gene)!=report["gene_trees_total"]:
+            raise ValueError("Per-gene table and number of parsed gene trees disagree")
+        (OUT/"per_gene_coverage_and_quartet.tsv").write_text(
+            "gene_tree_path\\tn_gene_tree_tips\\tall_four_daphne_present\\tunrooted_quartet\\n".replace("\\t","\t").replace("\\n","\n")
+            + "".join("\t".join(map(str,row))+"\n" for row in per_gene),
+            encoding="utf8")
         denominator=report["gene_trees_4taxa_covered"]
         report["quartet_fractions"]={
             key:round(n/denominator,5) for key,n in outcounts.items()} if denominator else {}
