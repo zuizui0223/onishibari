@@ -55,3 +55,16 @@ Total planned = 13 population units × 6 genets = **78 genets**, core mechanism 
 - If raw P/K/C nuclear reads remain unavailable, **report marker-level discordance** and stop before mechanism ranking. Draft a genome-enabled study rather than publishing unsupported introgression.
 - If fewer than ~100 truly independent recoverable nuclear loci or phylogenetic uncertainty remains high after pilot, revise inference claims and prioritize targeted resequencing or RAD with locus-dropout diagnostics.
 - Deposit code/data with immutable accession IDs and source SHA checksums, maintain no false claim of currently available complete nuclear data.
+
+
+## Addendum — archive feasibility + locus target adaptivity (2026-11-15)
+
+The initial fixed target of ≥100 nuclear loci should be treated as a **pilot benchmark, not a calibrated full-analysis target**. Under a simple 3-taxon MSC, the expected fraction of discordant gene trees is `2exp(-t)/3` for internal branch t. A two-sided binomial test of an **illustrative 2:1 imbalance among the two discordant alternatives** has ~82% power conditional on 80 observed discordant independent loci; a mean of 80 such discordants requires ~198 total loci if t=0.5 or ~327 loci if t=1.0, even before missingness or tree error. These are *assumption-based sensitivities*, not an introgression test or guarantee.
+
+The source-verified 2026 Bonnaudet aligned nuclear dataset offers a **50-locus proxy reference FASTA** across D. sureil, D. tangutica, D. mucronata and D. laureola (4×50=200 reference sequences, median 4-way fully observed length 973.5 bp). These species do NOT include P/C/K. Use panel only for a first 20–50-locus recoverability test when original genomic reads are obtained, with paralogy/coverage QC and only then plan the full panel.
+
+Korean Yoo et al. 2023 SRA SRR19117239 is the **sole run** indexed under BioProject PRJNA835716 in both ENA/NCBI (359.8 Mb vs 7.34 Gb initially reported). The public reads have effectively no recoverable nrITS; prioritize contacting authors for unfiltered raw 7.34 Gb and for Han et al. 2025 original P/K total-DNA FASTQs. Prepared **unsent** requests are in `docs/author_unfiltered_read_requests_unsent.md`.
+
+Reproducible inputs/results: `results/2026-11-15_archives_proxy_panel_power.md`, and successful runs 43682778058 (archive), 43682931727 (50-locus panel), 43683047543 (conditional power).
+
+**Go/no-go:** If no original or new independently derived P/C/K nuclear reads become accessible, stop at robust cytonuclear marker discordance. Do **not** identify ILS vs introgression from nonfocal nuclear loci or from two marker compartments.
