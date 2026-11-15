@@ -82,12 +82,12 @@ def run_tree(aligned,prefix):
 def main():
     report={"research_question":"Does addition of independent named Daphne ITS records affect the P,C,K gene-tree positions?",
       "locus":"nrITS multicopy rDNA only; NOT low-copy nuclear loci",
-      "candidate_search":"GenBank MT623670–MT623710 queried by nucleotide record, validated exact headers",
+      "candidate_search":"GenBank MT623670–MT623710 queried by nucleotide record, validated exact headers; this contiguous series yielded five distinct named species, not eight; total incl focal P,C,K is eight",
       "genbank_series":{},"retained_accessions":{},"results":{}}
     try:
         series=fetch_batch()
         report["genbank_series"]={s:[a for a,seq,h in values] for s,values in sorted(series.items())}
-        if len(series)<8:raise ValueError("Fewer than 8 distinct Daphne species in accession series")
+        if len(series)<5:raise ValueError("Fewer than 5 distinct Daphne species in accession series")
         selected=[]
         for label,(acc,desc) in KNOWN.items():
             h,s=fetch(acc)
