@@ -10,7 +10,7 @@ doi:10.5285/d706088c-9d48-4be5-b156-6ed6ad5e0618.
 Data Open Government Licence, programme attribution required.
 """
 from __future__ import annotations
-import csv, datetime as dt, hashlib, io, json, math, time, urllib.request, zipfile
+import csv, datetime as dt, hashlib, io, json, math, time, urllib.request, zipfile, re
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -111,6 +111,14 @@ def profile_rows(rows,panel,cols):
     summary["all_insects_minus_sum_guilds"]={str(k):v for k,v in differences.most_common(15)}
     summary["n_unique_1km_cells"]=len({r.get("x1km_square","") for r in rows
                                       if str(r.get("x1km_square","")).strip()}) if "x1km_square" in cols else None
+    def shape(ref):
+        # Never disclose real grid references, just character type and length.
+        letters=str(ref).strip().upper().replace(" ","")
+        return re.sub(r"[0-9]","9",re.sub(r"[A-Z]","L",letters)) if letters else "<empty>"
+    summary["grid_reference_string_shapes"]={
+        proj:dict(Counter(shape(r.get("x1km_square",""))
+                          for r in rows if r.get("sample_projection")==proj))
+        for proj in sorted(set(r.get("sample_projection","") for r in rows))}
     return summary
 
 def main():
