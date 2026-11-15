@@ -102,3 +102,22 @@ Prediction: Male display may increase pollen export in absolute terms while yiel
 - Estimate PoMS `floral_unit_count` elasticity for visitors per structural unit by target flower, but don't infer biology from heterogeneous `Other`.
 - Link modern monitoring to biomass/landscape EVI/NDVI and vegetation seasonality only at actual observation dates; previous 2023 UK NDVI heldout gave almost zero incremental predictive power beyond floral units and landcover (run 43704350736).
 - Move from counts to actual deposited conspecific pollen/seed output and cross-population paternity for evolutionary consequences.
+
+
+## New correction and broader inference (2026-11-15 evening): temporal and reproductive denominator matters
+
+The earlier UK PoMS 2017–23 sublinear *between quadrat* visitation slope does **not** establish a universal law that increasing floral display within the same plant reduces effective pollination. Independent source analysis of Reji Chacko et al. (2016 Zurich data, published 2026 JAE) linked *actual same-day* flowers and survey minutes for 285 garden×plant×day observations. Within garden-plant temporal slope estimates were much closer to proportional, and with negative-binomial/date effects their beta CI includes one for all four phytometers. The carrot slope is highly sensitive to choice of seasonal smoothing.
+
+Separate output processes matter:
+- Rare-visited sainfoin (67 active garden×days, 24 0-visitor days) has *no excess zero dates* versus a simple null allocating its site's total visits in proportion to flower×effort (expected 19.9 zeros among nonzero-total sites, p_excess=.13).
+- In gardens with at least one visitor day and one zero day, same-garden label permutation shows larger sainfoin floral display on visitor days even after global quadratic DOY detrending (two-sided p=.0108; 17 informative gardens). The occurrence of >=1 visit and the intensity conditional on >0 are distinct processes. Source positive-only count elasticity for sainfoin is only .214 [−.145,.574]; this is not a formal zero-truncated hurdle fit.
+- Carrot (7 zero dates) appears to have a low-display threshold: all observed zero-visitor site-days have <=3 umbels, but all seven dates have positive visits to radish in the same garden; its raw within-garden association collapses after DOY detrending (p=.178). A null with F² can reproduce its zero count but overpredicts concentration; avoid assigning a true mechanistic attraction exponent.
+- Functional reproduction is NOT identical to visitor counts. The original authors' guild-specific seed/fruit analysis is published. A new site-level sensitivity using visitor rate per approximate flower-unit-hour finds comfrey bumblebees positively associated with *fraction of flowers setting some seed* (n=23 gardens, rho=.538, BH q=.0408 across 10 comparisons), but not robustly with *ovule-level completion* (rho=.288, p=.183). No causal mediation or direct plant biomass is established.
+- To test the proposed evolutionary mechanism, compare actual floral mass/display versus stigma conspecific compatible pollen, male paternity, seed viability, and lifetime opportunities, with manipulations within individuals and repeated seasons across independent lineages.
+
+Source results:
+- `results/2026-11-15_zurich_same_day_display_reproductive_conversion.md` (source join, model sensitivity, normalized visits vs reproductive outcomes)
+- `results/2026-11-15_exposure_conditional_pollinator_scarcity.md` (garden-conditioned multinomial zero/temporal null, F^alpha sensitivity, within-site label permutations).
+- `docs/flower_investment_opportunity_fitness_field_experiment_v0_1.md` (prospective experiment design).
+
+**Current conclusion:** mean visit rarity, temporal encounter interruption, total visitor counts per display, effective pollen delivery and actual biomass investment are separate and can have different environment/phylogenetic dependencies. The data do NOT yet identify selection for dioecy/selfing, speciation, or an NDVI/biomass-mediated evolutionary cause.
