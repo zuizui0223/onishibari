@@ -32,14 +32,15 @@ def sites():
             r["_lat"]=lat;r["_lon"]=lon
             by[r["sex_system"]].append(r)
     chosen=[]
+    group_limits={"dioecy":12,"monoecy":12,"hermaphroditism":24}
     for group in GROUPS:
         ranked=sorted(by[group],key=lambda r:hashlib.sha256(r["species"].encode()).hexdigest())
-        if len(ranked)<3:raise ValueError("Few sites for "+group)
-        chosen.extend(ranked[:3])
+        if len(ranked)<group_limits[group]:raise ValueError("Few sites for "+group)
+        chosen.extend(ranked[:group_limits[group]])
     return chosen,len(rows),{g:len(by[g]) for g in GROUPS}
 
-def extract(item,asset,lon,lat):
-    href=planetary_computer.sign(item).assets[asset].href
+def extract(signed_item,asset,lon,lat):
+    href=signed_item.assets[asset].href
     with rasterio.Env(GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR",
                       GDAL_HTTP_MAX_RETRY="2"):
         with rasterio.open(href) as ds:
@@ -69,8 +70,13 @@ def observe(client,r,day):
         terra=0 if i.id.startswith("MOD13Q1") or str(i.properties.get("platform")).lower()=="terra" else 1
         return terra,abs((image_date(i)-date).days),i.id
     item=min(items,key=rank)
-    values={v:extract(item,asset,lon,lat) for v,asset in ASSETS.items()}
-    good=values["QA"] in [0,1]
+    signed_item=planetary_computer.sign(item)
+    qa=extract(signed_item,ASSETS["QA"],lon,lat)
+    good=qa in (0,1)
+    values={"QA":qa,"NDVI":None,"EVI":None}
+    if good:
+        values["NDVI"]=extract(signed_item,ASSETS["NDVI"],lon,lat)
+        values["EVI"]=extract(signed_item,ASSETS["EVI"],lon,lat)
     return dict(species=r["species"],sex_system=r["sex_system"],
         GloPL_species_median_PL=r["median_pl_effect"],latitude=lat,longitude=lon,
         requested_date=day,image_date=str(image_date(item)),
@@ -110,7 +116,7 @@ def main():
     if good:
         with (OUT/"modis_points.csv").open("w",newline="") as f:
             w=csv.DictWriter(f,fieldnames=list(good[0]));w.writeheader();w.writerows(good)
-    report["status"]="success" if report["QA_accepted_samples"]>=3 else "insufficient"
+    report["status"]="success" if report["QA_accepted_samples"]>=25 else "insufficient"
     (OUT/"summary.json").write_text(json.dumps(report,indent=2,ensure_ascii=False)+"\n")
     print(json.dumps(report,indent=2))
     if report["status"]!="success":raise RuntimeError("Point sampling failed or insufficient QA")
