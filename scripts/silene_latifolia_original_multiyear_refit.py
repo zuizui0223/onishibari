@@ -145,6 +145,43 @@ def main():
             "not_randomized_flower_cost":True,"leaf_physiology_not_pre_treatment_controlled":True}
     else:
         summary["survival_observational_model"]={"status":"not_fitted","reason":"insufficient binary coded outcome or 2004-linked observations"}
+    # Survivorship and missing-censoring sensitivity. Binary future status
+    # is Y/N in original source; missing is never silently recoded as dead.
+    summary["survival_temporal_endpoints"]={}
+    for endpoint in ycols:
+        v=merged[endpoint].astype("string").str.strip().str.lower().map(mapping)
+        dat=merged.copy()
+        dat["alive_bin"]=v
+        dat=dat.dropna(subset=["alive_bin","display2004","Sex","Line"]).copy()
+        if dat.alive_bin.nunique()<2 or len(dat)<100:continue
+        dat["log1p_display2004"]=np.log1p(dat.display2004.clip(lower=0))
+        m=smf.glm("alive_bin ~ log1p_display2004 + C(Sex)*C(Line)",
+                  data=dat,family=sm.families.Binomial()).fit(cov_type="HC3")
+        summary["survival_temporal_endpoints"][endpoint]={
+            "n":len(dat),"n_alive":int(dat.alive_bin.sum()),
+            "display_beta":coefficient(m).get("log1p_display2004"),
+            "timepoint_not_inferred_to_be_lifetime_fitness":True}
+    summary["final_survival_sensitivity_missing_extremes"]={}
+    for missing_status in (0,1):
+        dat=merged.dropna(subset=["display2004","Sex","Line"]).copy()
+        dat["alive_bin"]=dat["alive_end"].fillna(missing_status)
+        dat["log1p_display2004"]=np.log1p(dat.display2004.clip(lower=0))
+        m=smf.glm("alive_bin ~ log1p_display2004 + C(Sex)*C(Line)",
+            data=dat,family=sm.families.Binomial()).fit(cov_type="HC3")
+        summary["final_survival_sensitivity_missing_extremes"][f"all_16_missing_as_{missing_status}"]={
+            "n":len(dat),"n_alive":int(dat.alive_bin.sum()),
+            "display_beta":coefficient(m).get("log1p_display2004"),
+            "hypothetical_extreme_only_not_a_truth_claim":True}
+    summary["sex_specific_final_survival"]={}
+    for sex in ("f","m"):
+        dd=valid[valid.Sex==sex].copy()
+        dd["log1p_display2004"]=np.log1p(dd.display2004.clip(lower=0))
+        m=smf.glm("alive_end ~ log1p_display2004 + C(Line)",
+                   data=dd,family=sm.families.Binomial()).fit(cov_type="HC3")
+        summary["sex_specific_final_survival"][sex]={
+           "n":len(dd),"n_alive":int(dd.alive_end.sum()),
+           "display_beta":coefficient(m).get("log1p_display2004"),
+           "few_surviving_male_events_and_low_power":sex=="m"}
     # Female year not inferred from file title without original protocol.
     fruit["Number of Fruits"]=num(fruit["Number of Fruits"])
     fruit["Mass of all seeds (mg)"]=num(fruit["Mass of all seeds (mg)"])
@@ -158,6 +195,24 @@ def main():
            "n":len(g),"n_nonmissing_seed_mass":int(g["Mass of all seeds (mg)"].notna().sum()),
            "median_seed_mass_mg":scalar(g["Mass of all seeds (mg)"].median()),
            "median_fruits":scalar(g["Number of Fruits"].median())}
+    # Separate current seed-mass association with a 2004 display *snapshot*.
+    # Fruit/seed source year is not assumed; not a mechanistic allocation test.
+    fjoined=female.merge(c04[["_id","Total Flowers"]],on="_id",how="inner",validate="one_to_one")
+    fjoined["seed_mass"]=num(fjoined["Mass of all seeds (mg)"])
+    fjoined["display"]=num(fjoined["Total Flowers"])
+    fjoined=fjoined.dropna(subset=["seed_mass","display","Line"]).copy()
+    if (fjoined.seed_mass<0).any() or (fjoined.display<0).any():
+        raise ValueError("negative original source seed mass or flower snapshot")
+    if len(fjoined)>=80:
+        fjoined["ln_seeds"]=np.log1p(fjoined.seed_mass)
+        fjoined["ln_display"]=np.log1p(fjoined.display)
+        m=smf.ols("ln_seeds ~ ln_display + C(Line)",data=fjoined).fit(cov_type="HC3")
+        summary["female_seed_mass_vs_2004_flower_snapshot"]={
+           "n_independent_genets":len(fjoined),
+           "model":"ln1p seed mass ~ ln1p 2004 repeated open-flower snapshots + selection line",
+           "display_beta":coefficient(m).get("ln_display"),
+           "seed_sample_year_not_independently_verified":True,
+           "trait_covariance_not_randomized":True}
     summary["reproduction_of_female_plants_not_lifetime_offspring"]=True
     outfile=OUT/"silene_original_multiyear_survival_source_audit.json"
     outfile.write_text(json.dumps(scalar(summary),ensure_ascii=False,indent=2)+"\n")
