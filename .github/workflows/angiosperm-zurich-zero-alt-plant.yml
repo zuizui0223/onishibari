@@ -1,0 +1,27 @@
+name: Zurich 2016 zero-visitor days alternative blooming plant diagnostic
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/zurich2016_zeroday_alternative_plants.py
+      - .github/workflows/angiosperm-zurich-zero-alt-plant.yml
+
+permissions:
+  contents: read
+
+jobs:
+  zero-event-context:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check whether other target plant species received insects on same garden/day zero
+        run: python3 scripts/zurich2016_zeroday_alternative_plants.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zurich2016-zero-visit-plant-other-bloom-positive
+          path: analysis_results_zeroday_diagnostics/
+          if-no-files-found: warn
