@@ -1,0 +1,27 @@
+name: Audit directly measured woody plant biomass columns BAAD v1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/baad_biomass_inventory.py
+      - .github/workflows/angiosperm-baad-inventory.yml
+
+permissions:
+  contents: read
+
+jobs:
+  direct-mass-inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect original CC0 woody plant dry-mass variable definitions
+        run: python3 scripts/baad_biomass_inventory.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-BAAD-direct-biomass-column-audit
+          path: analysis_results_baad/
+          if-no-files-found: warn
