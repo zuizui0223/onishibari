@@ -1,0 +1,31 @@
+name: Daphne 2026 Angiosperms353 gene-tree context
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/daphne-comparative-2026-11-15]
+    paths:
+      - scripts/daphne_2026_nuclear_context.py
+      - .github/workflows/daphne-2026-nuclear-context.yml
+
+permissions:
+  contents: read
+
+jobs:
+  audit-gene-tree-quartets:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Biopython
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install --quiet biopython
+      - name: Read deposited Angiosperms353 gene trees; verify only four Daphne taxa
+        run: .venv/bin/python scripts/daphne_2026_nuclear_context.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-2026-nuclear-gene-tree-context
+          path: analysis_results_daphne_2026_nuclear/
+          if-no-files-found: warn
