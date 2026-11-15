@@ -62,38 +62,53 @@ def audit_table(source,filename,raw,license_note=""):
     },rows
 
 def find_glopl():
-    """Dryad API lists files. Optional if source endpoint fails."""
+    """Prefer original Dryad GloPL.csv; author GitHub code repository is fallback."""
     url="https://datadryad.org/api/v2/datasets/"+urllib.parse.quote("doi:10.5061/dryad.dt437",safe="")
-    blob,actual=get(url,limit=2_000_000)
-    meta=json.loads(blob)
-    (OUT/"dryad_glopl_metadata.json").write_text(json.dumps(meta,indent=2)[:200000])
-    links=meta.get("_links",{})
-    candidates=[]
-    for key,value in links.items():
-        if ("files" in key.lower() or "version" in key.lower()):
-            if isinstance(value,dict) and value.get("href"):
-                candidates.append(value["href"])
-    # Dryad v2 common endpoint /datasets/{id}/versions/{versionId}/files
-    version=meta.get("versionNumber") or meta.get("version")
-    ident=meta.get("id") or ""
-    for u in candidates+[f"https://datadryad.org/api/v2/datasets/{ident}/files"]:
-        try:
-            if not u.startswith("http"):u="https://datadryad.org"+u
-            b,actual=get(u,limit=1_000_000)
-            o=json.loads(b)
-            listing=o.get("_embedded",{}).get("stash:files",[]) or o.get("files") or []
-            if listing:
-                for f in listing:
-                    if f.get("path")=="GloPL.csv" or f.get("filename")=="GloPL.csv":
-                        f_id=f.get("id")
-                        dl=f.get("_links",{}).get("stash:download",{}).get("href")
-                        if not dl and f_id:dl=f"https://datadryad.org/api/v2/files/{f_id}/download"
+    errors=[]
+    try:
+        blob,_=get(url,limit=2_000_000)
+        meta=json.loads(blob)
+        (OUT/"dryad_glopl_metadata.json").write_text(json.dumps(meta,indent=2)[:200000])
+        version_endpoint=(meta.get("_links",{}).get("stash:version",{}) or {}).get("href")
+        if not version_endpoint:raise ValueError("Dataset lacks stash:version link")
+        if not version_endpoint.startswith("http"):
+            version_endpoint="https://datadryad.org"+version_endpoint
+        raw,_=get(version_endpoint,limit=2_000_000)
+        vmeta=json.loads(raw)
+        (OUT/"dryad_glopl_version.json").write_text(json.dumps(vmeta,indent=2)[:200000])
+        vlinks=vmeta.get("_links",{})
+        endpoints=[
+            item.get("href") for key,item in vlinks.items()
+            if "files" in key.lower() and isinstance(item,dict) and item.get("href")]
+        if "id" in vmeta:endpoints.append(f"https://datadryad.org/api/v2/versions/{vmeta['id']}/files")
+        for p in endpoints:
+            try:
+                if not p.startswith("http"):p="https://datadryad.org"+p
+                bs,_=get(p,limit=2_000_000)
+                j=json.loads(bs)
+                listing=j.get("_embedded",{}).get("stash:files",[]) or j.get("files",[])
+                for x in listing:
+                    if x.get("path")!="GloPL.csv" and x.get("filename")!="GloPL.csv":continue
+                    fid=x.get("id")
+                    href=(x.get("_links",{}).get("stash:download",{}) or {}).get("href")
+                    for dl in [href,f"https://datadryad.org/api/v2/files/{fid}/download"]:
                         if not dl:continue
                         if not dl.startswith("http"):dl="https://datadryad.org"+dl
-                        raw,actual=get(dl,limit=4_000_000)
-                        return raw,{"api":url,"download":actual,"file_meta":f}
-        except Exception:continue
-    raise RuntimeError("GloPL.csv unavailable from Dryad API file metadata; source not silently substituted")
+                        try:
+                            data,actual=get(dl,limit=4_000_000)
+                            if data[:100].lstrip().startswith(b"<html"):continue
+                            return data,{"api":url,"download":actual,"release":"Dryad original"}
+                        except Exception as e:errors.append("file download: "+str(e))
+            except Exception as e:errors.append("file listings: "+str(e))
+    except Exception as e:errors.append("Dryad API: "+str(e))
+    # Curated working copy from the original GloPL authors' analysis repository.
+    fallback=("https://raw.githubusercontent.com/idiv-biodiversity/"
+      "pollen-limitation-data-descriptor/master/Data/GloPL_with_id.csv")
+    data,actual=get(fallback,limit=4_000_000)
+    if not data[:100].lstrip() or data[:100].lstrip().startswith(b"<html"):
+        raise ValueError("GloPL author repo did not return valid CSV")
+    return data,{"api":url,"download":actual,"release":"Authors' curated GitHub working copy",
+                 "original_dryad_errors":errors}
 
 def profile():
     report={"as_of":"2026-11-15","sources":SOURCES,"tables":[],
@@ -126,9 +141,10 @@ def profile():
         tables["PROTEUS"]=rows
         try:
             raw,gloplmeta=find_glopl()
-            d,rows=audit_table("GloPL_2018","GloPL.csv",raw,
+            d,rows=audit_table("GloPL_2018",("GloPL.csv" if gloplmeta["release"]=="Dryad original" else "GloPL_with_id.csv"),raw,
                     "Pollen supplementation experiments; each row can be site-year-treatment or morph")
             d["download"]=gloplmeta["download"]
+            d["release"]=gloplmeta["release"]
             report["tables"].append(d)
             tables["GloPL"]=rows
             report["glopl_access"]="successful"
