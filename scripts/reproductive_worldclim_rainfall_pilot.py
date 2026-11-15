@@ -54,7 +54,17 @@ def float_valid(text):
 
 def get_raster_point(zips,zip_file,tif_name,coordinates):
     with zipfile.ZipFile(io.BytesIO(zips[zip_file])) as z:
-        if tif_name not in z.namelist():raise ValueError("Missing raster "+tif_name)
+        names=z.namelist()
+        if tif_name not in names:
+            # Monthly WorldClim archives use zero-padded month names _01 to _12.
+            stem,last=tif_name.rsplit("_",1)
+            month_string=last.removesuffix(".tif")
+            if not month_string.isdigit():
+                raise ValueError("Missing raster "+tif_name+"; actual members "+str(names[:30]))
+            corrected=stem+"_"+month_string.zfill(2)+".tif"
+            if corrected not in names:
+                raise ValueError("Missing raster "+tif_name+" or "+corrected+"; actual members "+str(names[:30]))
+            tif_name=corrected
         b=z.read(tif_name)
     tmp=OUT/tif_name
     tmp.write_bytes(b)
@@ -134,6 +144,24 @@ def main():
             monthly.append(get_raster_point(data,SOURCES[0],f"wc2.1_10m_prec_{i}.tif",points))
         elevation=get_raster_point(data,SOURCES[1],"wc2.1_10m_elev.tif",points)
         report["source_rasters"]=provenance
+        sites=defaultdict(list)
+        for r in rows:
+            # 6 decimal places; actual source coordinate precision can be much poorer.
+            site_key=f'{r["latitude"]:.6f},{r["longitude"]:.6f}'
+            sites[site_key].append(r)
+        with (OUT/"site_coordinates_for_ndvi_sampling.csv").open("w",newline="") as site_file:
+            writer=csv.DictWriter(site_file,fieldnames=["site_id","longitude","latitude",
+                "n_effect_size_cases","year_field_is_publication_not_observation","temporally_linkable_to_modis"])
+            writer.writeheader()
+            for site_key,values in sorted(sites.items()):
+                r=values[0]
+                writer.writerow({
+                    "site_id":"glopl_"+hashlib.sha256(site_key.encode()).hexdigest()[:16],
+                    "longitude":r["longitude"],"latitude":r["latitude"],
+                    "n_effect_size_cases":len(values),
+                    "year_field_is_publication_not_observation":True,
+                    "temporally_linkable_to_modis":False})
+        report["distinct_coordinate_pairs_for_ndvi"]=len(sites)
         for i,r in enumerate(rows):
             mm=[arr[i] for arr in monthly]
             if any(v is None or v<0 for v in mm):
