@@ -1,0 +1,32 @@
+name: Zurich within-garden same-date flower display to insect visitation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/zurich2016_within_garden_display.py
+      - .github/workflows/angiosperm-zurich-within-display.yml
+
+permissions:
+  contents: read
+
+jobs:
+  within-site-flower-variation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install numerical and cluster-robust model tools
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy statsmodels patsy
+      - name: Compare within garden plant display change to visits by real date and effort
+        run: |
+          OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 .venv/bin/python scripts/zurich2016_within_garden_display.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zurich2016-within-plantsite-display-visitation-elasticity
+          path: analysis_results_zurich_within_display/
+          if-no-files-found: warn
