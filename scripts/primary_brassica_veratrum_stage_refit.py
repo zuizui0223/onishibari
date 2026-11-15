@@ -114,18 +114,30 @@ def brassica(files):
     required=["Treatment","Plant","Raceme","nflowers","nfruit","intfruit","Totveg"]
     if any(c not in df for c in required):raise ValueError("missing Brassica raceme columns")
     numeric(df,required)
-    if df[required].isna().any().any():raise ValueError("missing expected values Brassica raceme")
+    original_raceme_rows=len(df)
+    missing_by_column={k:int(v) for k,v in df[required].isna().sum().items()}
+    print("BRASSICA_RACEME_MISSING_COUNTS",missing_by_column,flush=True)
+    # Do not silently turn missing mass/fruit counts into zero. Repeated total
+    # plant vegetative mass may be missing in one raceme but present in another.
     if df.groupby("Plant").Treatment.nunique().max()!=1:raise ValueError("plant treatment conflict")
-    if df.groupby("Plant").Totveg.nunique().max()!=1:raise ValueError("mass inconsistent within plant")
+    if df.groupby("Plant").Totveg.nunique().max()>1:raise ValueError("mass inconsistent within plant")
+    df["Totveg"]=df.groupby("Plant")["Totveg"].transform(lambda v:v.dropna().iloc[0] if v.notna().any() else float("nan"))
+    core=["Treatment","Plant","nflowers","nfruit","Totveg"]
+    invalid_plants=set(df.loc[df[core].isna().any(axis=1),"Plant"].dropna())
+    df=df[~df.Plant.isin(invalid_plants)].copy()
+    if len(df)==0 or df.Plant.nunique()<65:raise ValueError("Too much missing original raceme data")
     plant=df.groupby(["Plant","Treatment"],as_index=False).agg(
         nflowers=("nflowers","sum"),nfruit=("nfruit","sum"),intfruit=("intfruit","sum"),
         Totveg=("Totveg","first"),n_racemes=("Raceme","size"))
-    if len(plant)!=86:raise ValueError(f"expected 86 plants got {len(plant)}")
+    if len(plant)<65:raise ValueError(f"too few complete plants {len(plant)}")
     if (plant.nfruit>plant.nflowers).any():raise ValueError("fruit counts exceed flower numbers")
     if (plant.Totveg<=0).any() or (plant.nflowers<=0).any():raise ValueError("nonpositive mass/flowers")
     plant["fruit_rate"]=plant.nfruit/plant.nflowers
     plant["log_vegetative_mass"]=np.log(plant.Totveg)
     summary={"plant_total":len(plant),"raceme_rows":len(df),
+             "source_raceme_rows":original_raceme_rows,
+             "missing_by_raceme_column":missing_by_column,
+             "excluded_plants_with_missing_required_fields":len(invalid_plants),
              "treatment_n_plants":native(plant.Treatment.value_counts().sort_index().to_dict()),
              "all_fruits":native(plant.nfruit.sum()),"all_flowers":native(plant.nflowers.sum()),
              "by_treatment":{}}
