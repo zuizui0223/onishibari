@@ -72,3 +72,13 @@ Next important validation is to obtain garden-level flowering resources and urba
 - `scripts/glopl_spatial_cv.py` (explicit out-of-region holdout)
 - `docs/remote_sensing_pollination_biomass_protocol.md` (scaling and source policy)
 - These are reproducible exploratory analyses on Draft PR #3, not peer-reviewed conclusions.
+
+## Within-family sex-system comparability check (corrected source run 43697541650)
+Only **six named families** in the 91 matched biomass+height species contain at least two sex-system categories, each with one to three sampled species in this data slice:
+- Aceraceae: two monoecious vs one dioecious species
+- Myrsinaceae: one hermaphroditic vs one dioecious
+- Theaceae: one hermaphroditic vs one dioecious
+- Oleaceae: two dioecious vs one hermaphroditic
+- Malvaceae: one hermaphroditic vs one monoecious
+- Lauraceae: one dioecious vs one hermaphroditic
+The sign of **height-adjusted** dioecious vs hermaphroditic mass residuals is mixed across the four applicable families (Myrsinaceae & Theaceae positive for dioecy; Oleaceae & Lauraceae negative for dioecy). These are sparse, unmatched species-level contrasts, not a robust phylogenetic analysis. Therefore this dataset does **not** support a universal sex-system dry-biomass difference after conditioning on size and lineage. Experimental flower tissue dry-mass comparisons from within populations remain the key missing variable.
