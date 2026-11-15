@@ -1,0 +1,32 @@
+name: Zurich 2016 any-visit versus positive-count floral display pilot
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/zurich2016_display_two_part.py
+      - .github/workflows/angiosperm-zurich-two-part.yml
+
+permissions:
+  contents: read
+
+jobs:
+  zero-and-positive-count:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install numerical and GLM dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy statsmodels
+      - name: Compare positive-visit incidence and conditional visitor counts by floral display within species
+        run: |
+          OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 .venv/bin/python scripts/zurich2016_display_two_part.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zurich2016-zero-versus-positive-visit-flower-threshold
+          path: analysis_results_zurich_two_part/
+          if-no-files-found: warn
