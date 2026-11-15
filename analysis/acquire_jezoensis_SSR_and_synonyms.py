@@ -125,6 +125,9 @@ def main():
         time.sleep(0.4)
     discovered=[]
     classification_errors=[]
+    plastid_expected={"LC680075":"matK","LC693863":"rbcL",
+                      "OK419833":"trnH-psbA"}
+    plastid_verified={}
     # An ESearch synonym match can carry the wrong modern organism name.
     # Fetch records and check original registered taxon before classifying.
     for uid_batch_start in range(0,len(matching_ids),50):
@@ -137,6 +140,17 @@ def main():
                 locus_kind=("ITS" if looks_like_its(description) else
                             "published_2014_SSR" if record.id.split(".")[0] in EXPECTED
                             else "unresolved_other")
+                acc=record.id.split(".")[0]
+                if acc in plastid_expected and accepted_taxon(organism):
+                    marker=plastid_expected[acc]
+                    desc_norm=description.lower()
+                    if marker.lower() not in desc_norm and not (
+                            marker=="trnH-psbA" and "trnh-psba" in desc_norm):
+                        raise ValueError("Expected plastid region not found: "+record.id)
+                    seq=str(record.seq).upper()
+                    if set(seq)-set("ACGTRYSWKMBDHVN"):
+                        raise ValueError("Invalid plastid DNA alphabet")
+                    plastid_verified[acc]=(record.id,marker,seq)
                 discovered.append(dict(accession=record.id,organism=organism,
                     description=description,locus_kind=locus_kind,
                     length_bp=len(record.seq),matches_expected_taxon=accepted_taxon(organism),
@@ -147,6 +161,12 @@ def main():
         keys=("accession","organism","description","locus_kind","length_bp",
               "matches_expected_taxon","source_url")
         w=csv.DictWriter(fh,fieldnames=keys);w.writeheader();w.writerows(discovered)
+    with (args.out/"jezoensis_3_plastid_fragments.fasta").open("w") as fh:
+        for acc in plastid_expected:
+            if acc not in plastid_verified:continue
+            ident,marker,seq=plastid_verified[acc]
+            fh.write(">"+ident+"|"+marker+"|Daphne_jezoensis|nakata074\n")
+            fh.write("\n".join(seq[i:i+80] for i in range(0,len(seq),80))+"\n")
     result=dict(timestamp_utc=datetime.now(timezone.utc).isoformat(),
         primary_source="https://doi.org/10.3732/apps.1400001",
         original_published_ssr=10,verified_ssr=len(verified),
@@ -155,6 +175,9 @@ def main():
         ncbi_organism_matched_count=sum(x["matches_expected_taxon"] for x in discovered),
         ncbi_ITS_matched_count=sum(x["matches_expected_taxon"] and x["locus_kind"]=="ITS" for x in discovered),
         classification_errors=classification_errors,
+        plastid_verified={k:dict(accession=v[0],marker=v[1],length_bp=len(v[2]),
+            sha256=hashlib.sha256(v[2].encode()).hexdigest())
+            for k,v in plastid_verified.items()},
         note="SSR fragments are not ITS; cannot add to 24-tip ITS phylogeny",
         target_cross_amplification="NOT_TESTED",
         sex_system_of_original_target="GYNODIOECY",
@@ -165,6 +188,7 @@ def main():
         verified_ssr=len(verified),failed=len(failed),
         locus_types=[(x["accession"],x["locus_kind"]) for x in discovered],
         queried_ITS_count=result["ncbi_ITS_matched_count"],
+        plastid_markers_verified=len(plastid_verified),
         query_counts=[(q["taxon_query"],q.get("reported_record_count"),
                        q["status"]) for q in synonym_search]),ensure_ascii=False),flush=True)
     if not verified:raise SystemExit("No independently verified SSR accession")
