@@ -11,9 +11,9 @@ MAFFT quartet alignment per marker: ITS (P PX056852, C PX056848, K PX056858, O M
 
 | Unrooted split | ITS logL | ITS ΔlogL | ITS p-AU | plastome logL | plastome ΔlogL | plastome p-AU |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| PC | KO | -1414.777079 | 0.000 | 0.978 | -245280.0748 | 55.384 | 0.000122 |
-| CK | PO | -1423.254168 | 8.477 | 0.0228 | -245224.6912 | 0.000 | 1.000 |
-| PK | CO | -1423.254042 | 8.477 | 0.0222 | -245286.4151 | 61.724 | 2.14×10^-12 |
+| P–C (versus K–O) | -1414.777079 | 0.000 | 0.978 | -245280.0748 | 55.384 | 0.000122 |
+| C–K (versus P–O) | -1423.254168 | 8.477 | 0.0228 | -245224.6912 | 0.000 | 1.000 |
+| P–K (versus C–O) | -1423.254042 | 8.477 | 0.0222 | -245286.4151 | 61.724 | 2.14×10^-12 |
 
 **Conclusions limited to these alignments**: ITS strongly supports PC and rejects CK and PK under the chosen nucleotide model (AU<0.05). Plastome strongly supports CK and rejects PC and PK. The tests do not compare demographic mechanisms (ILS versus introgression); two different genomic compartments can reflect different genealogies even without hybridization. The cp genome is one linked, typically uniparentally inherited unit; IR repeats duplicate some sites and per-site resampling does not grant independent genomic genealogies.
 
