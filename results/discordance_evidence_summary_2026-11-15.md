@@ -45,3 +45,6 @@ Pulled original GenBank nucleotide flat-files for PV752465, PV752464, ON244034 v
 - No high-resolution species tree has been estimated from independent nuclear loci.
 - No timing/direction of gene flow has been established.
 - No causation between flower sexual dimorphism, pollinator scarcity, and speciation has been demonstrated.
+
+## 2026-11-15 update: same-specimen C nuclear ITS salvage failed, with control
+Yoo et al. (2023) public raw reads SRR19117239 (same 2023 voucher as ON244034 plastome) were aligned to Han et al. (2025) PX056848 ITS: 0/2,383,060 individual reads mapped. Plastome positive control ON244034 produced 99.96% read-level mapping. See `results/korean_2023_sra_its_zero_validated_2026-11-15.md` and https://github.com/zuizui0223/onishibari/actions/runs/43678829837 . Therefore, the 2023 Korean specimen still has no observed matched nrITS; **do not imply the discordant nuclear/plastid trees come from the same individual**. A reference-free WGS rescue cannot solve this from public SRR19117239 because it is effectively chloroplast reads only. New 2026 genus-level HybSeq work confirms a different European Daphne allopolyploid but not focal Korean introgression: https://doi.org/10.1093/aob/mcag358 . The reported BioProject PRJNA1493253 did not appear in the NCBI SRA phrase-index query on this date.
