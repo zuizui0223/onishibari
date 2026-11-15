@@ -62,7 +62,7 @@ def observe(client,r,day):
         for field in ("start_datetime","end_datetime","datetime"):
             value=i.properties.get(field)
             if value: return dt.date.fromisoformat(value[:10])
-        m=re.search(r"A(20\\d{2})(\\d{3})",i.id)
+        m=re.search(r"A(20\d{2})(\d{3})",i.id)
         if m: return dt.date(int(m.group(1)),1,1)+dt.timedelta(days=int(m.group(2))-1)
         raise ValueError("MODIS STAC item lacks date: "+i.id)
     def rank(i):
