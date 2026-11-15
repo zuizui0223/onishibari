@@ -68,3 +68,16 @@ H5 **Evolutionary consequences**: A low visit rate can coexist with rare long-di
 - Report GloPL latitude/longitude accuracy; site coordinate inferred from articles can be coarse enough that 250m pixel extraction is misleading.
 - Select minimum-coverage or inverse-probability weighting for photographic, field and study selection; avoid full-data-case restriction.
 - For seed production effect-size meta analysis use measurement SD and sample size when available, random effects and phylogeny; no claim of causality from cross-sectional NDVI/biomass correlation.
+
+## Verified follow-up: same-year NDVI and published urbanization controls (2026-11-15)
+
+The original top-of-document status ("NDVI not executed") applies only to **the Earth Engine 736-site long-term GloPL composite workflow**. A **separate, genuine MOD13Q1 satellite analysis has now completed** for 2016, same-year 24 Zurich garden sites using Planetary Computer STAC and pixel reliability QA. Do not describe all NDVI extraction as pending.
+
+1. True 2016 MODIS NDVI/EVI: 24/24 gardens, three 250m 16-day scenes; original visitor matrix 21,120 site × plant × time windows and 5,794 observed insect visitors. <https://github.com/zuizui0223/onishibari/actions/runs/43697781055>.
+2. Plant–insect guild response: 100% of 5,794 visits mapped to 167 source taxa; carrot hoverfly visits versus NDVI rho=+.659 (q_BH=.0124 over 27 nondegenerate tests), while carrot bee visits rho=+.251. <https://github.com/zuizui0223/onishibari/actions/runs/43701737786>.
+3. **Essential negative control:** the same 24 gardens' `Urban_500` impervious cover and local flower richness are already published by Chacko et al. (2026), DOI 10.1111/1365-2664.70384, source <https://github.com/mrejichacko/BetterBlooms>. NDVI was strongly inversely associated with imperviousness (rho=-.927), but not local flowering species richness (rho=-.035). After adjusting for both, NDVI–carrot-hoverfly partial-rank rho fell to -.155. An independent NDVI covariate worsened 24-garden leave-one-out MAE 2.19% relative to imperviousness+local flowers. <https://github.com/zuizui0223/onishibari/actions/runs/43702182669>.
+4. Direct woody individual biomass from BAAD v1.0.0 joined to Wang sexual system labels: 4,133 mass+height+sex individuals, 91 species. Only 6 families have mixed sexual-system states, none with 2+ species in both contrasted groups. **Biomass and sexual system causal/evolutionary claims are not established**. <https://github.com/zuizui0223/onishibari/actions/runs/43697541650>.
+5. Full evidence: `results/2026-11-15_ndvi_guild_urban_biomass_integrated.md`.
+
+**Updated ecological priority:** distinguish high ecosystem productivity, low sealed-surface fraction, dense but shaded canopy, local flower resources, and effective pollen delivery. The original 2026 Zurich authors already demonstrated site-level urban densification and flower-richness effects: our new remote-sensing association should not be presented as a novel demonstration of those effects. A new broad study must replicate across habitat types and species, with true biomass allocation and more than one year.
+
