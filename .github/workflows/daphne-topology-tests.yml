@@ -1,0 +1,32 @@
+name: Daphne three-topology marker likelihood tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/daphne-comparative-2026-11-15]
+    paths:
+      - scripts/daphne_topology_robustness.py
+      - .github/workflows/daphne-topology-tests.yml
+
+permissions:
+  contents: read
+
+jobs:
+  compare-topologies:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install MAFFT and IQ-TREE
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y mafft iqtree
+          iqtree2 --version
+      - name: Compare all three splits in nrITS and plastome with AU and SH
+        run: python3 scripts/daphne_topology_robustness.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-three-topology-tests
+          path: analysis_results_topology/
+          if-no-files-found: warn
