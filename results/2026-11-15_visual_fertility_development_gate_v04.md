@@ -33,7 +33,7 @@ Threshold at which increased female floral investment changes from flower/arriva
 
 `F* = B/[c_b + p(c_f + z o c_s)]`, for p>0.
 
-Below F*: `dS_f/dF = z o p > 0`; above F*: `dS_f/dF = -(z o c_b)/(c_f+z o c_s) <0` when c_b>0. For c_b=0, success **plateaus** above F*, rather than falling. If p=0, female success is zero for all F, and an internal F* has no biological meaning. The kink assumes homogeneous flowers and resource sharing; **later-flower developmental order and hormones are not modeled**.
+Below F*: `dS_f/dF = z o p > 0`; for F* < F < B/c_b: `dS_f/dF = -(z o c_b)/(c_f+z o c_s) <0` when c_b>0. At F ≥ B/c_b all available resources have been spent on flowers, so realized maternal seed output is already zero and the derivative is zero. For c_b=0, success **plateaus** above F*, rather than falling. If p=0, female success is zero for all F, and an internal F* has no biological meaning. The kink assumes homogeneous flowers and resource sharing; **later-flower developmental order and hormones are not modeled**.
 
 The separate *male* component is `M(F)=q_m a_m F^β_m`, where q_m is independent male pollen-export opportunity, a_m an arbitrary fitness scale, and β_m=0.46 is borrowed solely as a *Mimulus* sensitivity illustration. The unified comparison `S_f + w M` is in **arbitrary units** because offspring genetics, competition, and paternal/maternal value have not been calibrated. Do not claim an empirically inferred sex allocation or optimum.
 
