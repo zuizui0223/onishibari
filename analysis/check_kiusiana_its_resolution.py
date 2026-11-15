@@ -7,7 +7,7 @@ did not supply the 2023 population microsatellite selfing-rate estimates.
 """
 import argparse
 from collections import Counter
-from itertools import product
+from itertools import product,combinations
 from pathlib import Path
 import json
 
@@ -52,7 +52,20 @@ def measure(data):
     haplotypes=sorted(set(k+j))
     freqs=[{"haplotype":"H"+str(i+1),"Kumamoto":k.count(h),"Jeju":j.count(h)}
            for i,h in enumerate(haplotypes)]
+    # Exact conditional permutation across the 8 registered sequences,
+    # descriptive only: these are two sites, not whole east/west lineages.
+    seqs=k+j
+    def tvd(indices):
+        a=Counter(seqs[i] for i in indices)
+        b=Counter(seqs[i] for i in range(8) if i not in indices)
+        return sum(abs(a[h]/4-b[h]/4) for h in haplotypes)/2
+    observed=tvd(set(range(4)))
+    permutations=[tvd(set(z)) for z in combinations(range(8),4)]
+    exact_p=sum(x>=observed-1e-12 for x in permutations)/len(permutations)
     return {
+      "haplotype_total_variation":observed,
+      "exact_label_permutation_p":exact_p,
+      "n_label_permutations":len(permutations),
       "n_kumamoto":len(k),"n_jeju":len(j),"aligned_bases":L,
       "n_variable_sites":len(variants),"variable_sites":variants,
       "n_fixed_diagnostic_sites":len(fixed),"fixed_diagnostic_sites":fixed,
@@ -72,6 +85,7 @@ def selftest():
     assert a["n_variable_sites"]==1
     assert a["n_fixed_diagnostic_sites"]==0
     assert a["n_shared_haplotypes"]==2
+    assert a["n_label_permutations"]==70
     for acc in GROUP["Jeju"]:toy[acc]="TTTT"
     assert measure(toy)["n_fixed_diagnostic_sites"]>=3
     toy[GROUP["Kumamoto"][0]]="AAA"
