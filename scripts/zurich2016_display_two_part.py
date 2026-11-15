@@ -59,14 +59,24 @@ def fit(rows,day_adjust=False):
     z=sm.GLM(d["binary"],X,family=sm.families.Binomial()).fit(
         maxiter=100,tol=1e-9,cov_type="cluster",cov_kwds={"groups":d["site"]})
     beta=float(z.params["logF"]);se=float(z.bse["logF"])
-    e={"model":"any-visitor logit, not effective pollen delivery",
-       "plant_source_days":len(d),
-       "adjust_for_doy":day_adjust,
-       "flower_log_count_coefficient":round(beta,6),
-       "cluster_se":round(se,6),
-       "cluster95":[round(beta-1.96*se,6),round(beta+1.96*se,6)],
-       "odds_any_visit_when_F_double":round(2**beta,6),
-       "p_beta0":round(float(2*ss.norm.sf(abs(beta/se))),7)}
+    if not (math.isfinite(beta) and math.isfinite(se) and se>0 and abs(beta)<15):
+        # Only a single radish zero-visit date is present. Such logit
+        # fits can experience quasi/complete separation and return an
+        # enormous coefficient and NaN SE. Do not report that as data.
+        e={"model":"any-visitor logit, not effective pollen delivery",
+           "plant_source_days":len(d),"adjust_for_doy":day_adjust,
+           "status":"NOT_IDENTIFIABLE_SEPARATION",
+           "note":"Extreme logit parameter or nonfinite cluster SE; no odds ratio/p-value interpreted."}
+    else:
+        e={"model":"any-visitor logit, not effective pollen delivery",
+           "plant_source_days":len(d),
+           "adjust_for_doy":day_adjust,
+           "flower_log_count_coefficient":round(beta,6),
+           "cluster_se":round(se,6),
+           "cluster95":[round(beta-1.96*se,6),round(beta+1.96*se,6)],
+           "odds_any_visit_when_F_double":round(2**beta,6),
+           "p_beta0":round(float(2*ss.norm.sf(abs(beta/se))),7),
+           "status":"ESTIMABLE"}
     positive=d[d["binary"]==1].copy()
     if len(positive)<15:return e
     X2=sm.add_constant(positive[["logF"]+["doyc" if day_adjust else "logEff"]])
