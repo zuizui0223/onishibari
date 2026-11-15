@@ -7,6 +7,14 @@
 ## 核心の問い
 雌株より花が大きいとされる雄的な両性株で、雌しべが形態的に維持されながら、なぜ雌機能が低下するのか？ 特に**自家花粉の干渉 (pollen clogging)**、花粉不足、自家不和合性、近交弱勢、胚珠・胚の機能低下を区別する。
 
+## 2026-11-15：ナニワズの核SSR10座位＋同一標本の葉緑体3領域を実取得し、近縁群へ追加
+
+- [13登録配列の実取得、1,354bpの近縁比較、ITS24配列の重複監査](docs/2026-11-15_jezoensis_nuclear_ssr_and_1354bp_plastid_comparison.md)。**ナニワズを「配列が存在しない」とみなすのは誤り**。NCBIに`D. jezoensis`名で**核SSR10、葉緑体matK/LC680075、rbcL/LC693863、trnH–psbA/OK419833**の計13配列を確認。旧学名5種類の独立ヒットは今回0だが、データベース全体の不在証明ではない。
+- 同一標本`nakata074`の **matK 781bp＋rbcL 573bp** とオニシバリ基準変種`PV752465`・D. kamtschatica`PV752464`・旧koreana`ON244034`の相同部位を比較。**オニシバリ—ナニワズは1/1,354bp（rbcL 0/573bp）**、D. kamtschatica—旧koreanaも1、オニシバリ—旧koreanaは2。全4群の多型は**4位置のみ**。葉緑体の母系一系統の断片であり、性型祖先や交雑・核系統関係を決めない。
+- **2014年ナニワズSSRプライマー10対の原著数値**を[CSV](data/derived/jezoensis_2014_SSR_primer_candidates.csv)で保存。[SSRsをアクセッションで検証するコード](analysis/acquire_jezoensis_SSR_and_synonyms.py)、[葉緑体マーカー相同塩基比較](analysis/compare_jezoensis_core_plastid_markers.py)と[実データ取得・比較CI](https://github.com/zuizui0223/onishibari/actions/runs/43670095785)で再現。**これらのSSRは核ITSではなく、オニシバリでPCR増幅できるか未検証**。
+- [核ITS24登録配列の重複ハプロタイプ監査](analysis/audit_Daphne_ITS24_duplicate_patterns.py)では、500共通塩基の**異なる塩基配列型は9型のみ**。コショウノキ11登録配列は2型、1型は熊本・済州・湖南すべてに存在。[原データからの検証CI](https://github.com/zuizui0223/onishibari/actions/runs/43669743942)。9配列型は9種・9独立進化ではない。
+- **オニシバリ自身の人工自殖/他殖、雄的な花の雌機能、近交弱勢の直接データは引き続き未取得。** 短い葉緑体の一致やITSの同一型から繁殖様式を予測しない。
+
 ## 2026-11-15：核ITS24配列の実解析、コショウノキ東西の識別力
 
 - [2022年の核rDNA登録配列と2023年の自殖シンドローム研究を比較した実データレポート](docs/2026-11-15_kiusiana_ITS_marker_resolution_vs_selfing.md)。2022年に熊本4・済州島4個体から登録された780bp（ITS1/5.8S/ITS2と端のrRNAを含む）では、**変異5箇所・3配列型・1型共有・地域間の固定差0**。
