@@ -1,0 +1,70 @@
+# Remote-sensing test of reproductive-strategy, biomass, rainfall and pollination
+
+Status (2026-11-15): **initial static precipitation pilot run submitted to GitHub Actions; NDVI/GPP/GEDI extraction NOT executed**. It requires an authenticated Earth Engine project, proper site geometry import and validation of source observation dates.
+
+## Question
+Does reproductive mode (dioecy, monoecy, hermaphroditism; autonomous selfing; sex-function allocation) covary with (a) ambient **vegetation production**, (b) **local plant biomass**, (c) **resource seasonality**, and (d) **pollinator availability and effective pollen delivery**? Are any patterns shared across plant lineages or conditioned on canopy, climate and individual life history?
+
+**RF** is provisionally interpreted as **rainfall**, not Random Forest (machine-learning algorithm). WorldClim 2.1 rain is meteorological interpolation; CHIRPS v3 is gauge + satellite precipitation. NDVI ≠ direct biomass, NDVI ≠ floral abundance, NDVI ≠ pollinator numbers.
+
+## Distinguish scales of biomass, evidence and units
+1. **Individual biomass**: dry mass of plant vegetative organs, male/female flowers, fruit and seeds (g or g/individual). This tests allometric sex allocation, and requires field data / trusted TRY or BIEN size models. Remote sensing is inadequate for understory *Daphne* individual biomass.
+2. **Vegetation productivity**: MOD17 GPP (kg C m^-2 yr^-1), NIRv/spectral indices, vegetation greenness. May influence resource competition and pollinator activity, *not identical to standing plant mass*.
+3. **Landscape above-ground woody biomass**: GEDI L4B (Mg ha^-1) with pixel-level uncertainty (1km, observed mainly 2019-2023) or ESA CCI Biomass (~100m woody AGB, selected years 2005-2024 with documented uncertainty). Dense canopy can increase AGB while decreasing understory irradiance; forest AGB is not understory focal plant biomass.
+
+## Satellite and meteorological candidate data
+| Variable | Source | Native grain | Valid time | Primary role | Limitation |
+|---|---|---|---|---|---|
+| NDVI/EVI, annual and monthly amplitude | MOD13Q1 v6.1 | 250m, 16-day | 2000–present | landscape greenness and seasonality | saturated at high LAI, not floral biomass |
+| LAI/FPAR | MCD15A3H v6.1 | 500m, 4-day | 2002–present | canopy growth / shade proxy | modelled |
+| GPP | MOD17A2HGF v6.1 | 500m, 8-day | 2000–present | carbon fixation/productivity | modelled |
+| AGB mean/SE | GEDI L4B v2.1 | 1km, one-period summary | 2019–2023 | woody canopy aboveground biomass | 2018-and-earlier GloPL experiments temporally mismatched |
+| woody AGB/uncertainty | ESA CCI Biomass | 100m + coarser | 2005–2012,2015–2024 | true woody AGB context | does not measure nonwoody understory biomass |
+| RF precipitation normals | WorldClim 2.1 | 10' in fast pilot | 1970–2000 baseline | broad climate context | static climatology, not experiment-year rainfall |
+| RF precipitation time series | CHIRPS v3 | 0.05° daily, ~1981–present | year-matched only with true experiment year | rainfall anomalies, dry spells | quasi-global 60°S–60°N; no direct biomass |
+
+Official sources:
+- https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD13Q1
+- https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MOD17A2HGF
+- https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MCD15A3H
+- https://doi.org/10.3334/ORNLDAAC/2299
+- https://climate.esa.int/en/projects/biomass/
+- https://www.chc.ucsb.edu/data/chirps3
+- https://geodata.ucdavis.edu/climate/worldclim/2_1/base/
+
+## Important temporal caveat for the existing GloPL corpus
+GloPL cases are experiments published between 1981–2015. The CSV `Year` field is **publication year**, not the actual field-observation year for every case. **Never match 2015 MODIS imagery to a site solely because its paper was published in 2015.** The GloPL georeferenced data can be assigned long-term baseline climate (WorldClim 1970–2000) and broad 2001–2015 vegetation climatology as a **retrospective habitat proxy**, not evidence of contemporaneous environmental exposure.
+
+Historical NDVI time series back to 1981 can be obtained from NOAA AVHRR NDVI CDR at 0.05°, but precise matching still needs a verified study observation date. Official data: https://www.ncei.noaa.gov/products/climate-data-records/normalized-difference-vegetation-index .
+
+## Steps now
+1. `scripts/reproductive_worldclim_rainfall_pilot.py` downloads 10-minute monthly rainfall and elevation rasters from WorldClim, extracts values for matching GloPL lat/lon, and estimates annual rainfall normal, monthly precipitation CV and elevation. It exports `site_coordinates_for_ndvi_sampling.csv` keyed by a hash of reported site coordinates, **not by an inferred field year**.
+2. Upload that CSV to Earth Engine as a point table (longitude and latitude columns), set your valid Earth Engine project asset ID in `scripts/gee_glopl_modis_context.js`, run three buffer summaries (250m/1km/5km). In 2001–2015 climatological composite, use QA-masked MOD13Q1 NDVI/EVI, seasonal amplitudes of monthly climatological VI, annual-mean MOD17 GPP. This script is a **ready-to-execute template, not a claimed completed export**.
+3. Only after site time matching, evaluate climate/NDVI anomalies, flowering DOY overlap, and seasonal resource gaps. GloPL alone is insufficient for temporal alignment.
+4. Keep the separate canopy biomass products for newer, time-compatible field sites. For *Daphne* understory, validate canopy openness, understory light and floral display with on-site measurements.
+
+## True pollinator scarcity as a measurement problem
+- **Encounter rate:** species-corrected visits per flower-hour, time of day, pollinator taxon, temperature and weather, observer effort; use zeros and hierarchical detectability.
+- **Functional pollen transfer:** conspecific pollen deposition or pollen tubes per visit, standardized against compatible-mate availability. A visit is not equivalent to pollination.
+- **Pollen limitation:** additive hand cross-pollination effects on seed production, separated from bagged-self, compatibility and inbreeding depression; GloPL is a compilation of experimental outcomes, NOT pollinator abundance.
+- **Temporal reliability:** coefficient of variation and autocorrelation of effective visit rate, frequency of consecutive bad years/seasons, overlap of focal flower phenology with pollinator activity, alternative guild compensation (diurnal/nocturnal).
+- **Landscape capacity**: pollinator richness/occupancy models corrected for record effort plus habitat diversity; GBIF pollinator occurrence is not abundance.
+
+## Pre-registered competing predictions
+H1 **Resources-to-biomass**: Higher GPP/AGB corresponds to greater landscape resource production, but within dense forest understory pollen transfer may decline with canopy closure despite high AGB. Test forest habitat × light × flower abundance rather than NDVI-only slope.
+
+H2 **Productivity variability versus strategy**: Temporal NDVI amplitude and rainfall anomaly persistence, controlling climate, phylogeny, land cover and sampling, predict prevalence of autonomous assurance, partner-route redundancy, or chronic pollen limitation. The effect can depend on ancestry and lifespan rather than being monotonic.
+
+H3 **Phenological mismatch**: The circular distance between focal flowering peak and *community* vegetation green-up/peak (measured NDVI), plus measured flower availability and pollinator phenology, predicts functional pollen transfer better than annual NDVI alone. NDVI is not flower phenology; ground truth required.
+
+H4 **Biomass allocation**: Male/female floral display allometry relates to individual mass and resource reserves, rather than remote landscape canopy AGB. Test standardized sex morph dry-mass and flower-size measures in common environments.
+
+H5 **Evolutionary consequences**: A low visit rate can coexist with rare long-distance pollen export sustaining gene flow while local seed set remains pollen-limited. Use paternity, population genomics and coalescent models; F_ST or cp/ITS discordance alone does not establish speciation.
+
+## Essential confounders, scales and safeguards
+- Source `study × species × experimental case × site × actual year`, with species and study random intercepts, family/phylogeny and spatial correlation; do not falsely treat 2,969 GloPL cases as independent populations.
+- Rainfall, temperature, elevation, biomes, latitude, canopy, plant habit (woody/herbaceous), plant size, disturbance, urban agriculture, soil and landcover.
+- Satellite sampling buffers 250m, 1km and 5km are sensitivity choices, **not automatic bee flight ranges**. Foraging traits should determine meaningful scales.
+- Report GloPL latitude/longitude accuracy; site coordinate inferred from articles can be coarse enough that 250m pixel extraction is misleading.
+- Select minimum-coverage or inverse-probability weighting for photographic, field and study selection; avoid full-data-case restriction.
+- For seed production effect-size meta analysis use measurement SD and sample size when available, random effects and phylogeny; no claim of causality from cross-sectional NDVI/biomass correlation.
