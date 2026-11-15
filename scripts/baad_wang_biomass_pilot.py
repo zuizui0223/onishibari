@@ -47,7 +47,7 @@ def median(vals):
 
 def main():
     result={"source":"Falster et al 2015 BAAD version 1.0.0, Wang et al 2021 deposited sexual system labels",
-      "status":"failed","mass_proxy":"individual m.to dry biomass, NOT floral allocation or site biomass density",
+      "status":"failed","mass_measure":"individual m.to dry biomass, NOT floral allocation or site biomass density",
       "biases":["individuals from different ontogenetic ages/studies, species are NOT sampled to typical size",
          "woody plants only, no herbaceous extrapolation",
          "species labels in Wang represent sex system and not functional performance",
@@ -112,7 +112,7 @@ def main():
         for name,arr in sorted(S.items()):
             ssummary.append({"species":name,"family":arr[0]["family"],"sex":arr[0]["sex"],
                 "sampled_individuals":len(arr),
-                "species_sample_median_mass_g":median([x["mass_g"] for x in arr]),
+                "species_sample_median_mass_kg":median([x["mass_g"] for x in arr]),
                 "species_sample_median_height_m":median([x["height_m"] for x in arr]),
                 "pooled_height_adjusted_log_mass_residual":median([x["residual"] for x in arr]),
                 "n_studies":len(set(x["study"] for x in arr))})
@@ -123,13 +123,26 @@ def main():
             result["comparisons"][sex]={
                 "n_species":len(gr),
                 "n_individuals":sum(s["sampled_individuals"] for s in gr),
-                "median_species_sample_mass_g":median([s["species_sample_median_mass_g"] for s in gr]),
+                "median_species_sample_mass_kg":median([s["species_sample_median_mass_kg"] for s in gr]),
                 "median_species_sample_height_m":median([s["species_sample_median_height_m"] for s in gr]),
                 "median_height_adjusted_log_mass_residual":median([s["pooled_height_adjusted_log_mass_residual"] for s in gr]),
                 "n_distinct_families":len(set(s["family"] for s in gr))}
         families=defaultdict(set)
         for s in ssummary:families[s["family"]].add(s["sex"])
         result["families_with_more_than_one_sex_system"]=sum(len(x)>1 for x in families.values())
+        by_family={}
+        for s in ssummary:
+            family=s["family"]
+            by_family.setdefault(family,{})
+            by_family[family].setdefault(s["sex"],[])
+            by_family[family][s["sex"]].append(s)
+        result["multi_sex_system_families"]={
+            family:{sex:{"n_species":len(spp),
+              "median_height_adjusted_log_mass_residual":
+                median([q["pooled_height_adjusted_log_mass_residual"] for q in spp])}
+              for sex,spp in value.items()}
+            for family,value in sorted(by_family.items()) if len(value)>1
+        }
         if len(ssummary)>=20:
             fields=list(ssummary[0])
             with (OUT/"height_adjusted_species_baad_mass.csv").open("w",newline="") as o:
