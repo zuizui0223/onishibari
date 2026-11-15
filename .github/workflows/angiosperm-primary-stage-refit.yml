@@ -1,0 +1,33 @@
+name: Original Brassica and Veratrum reproductive conversion stage refit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/primary_brassica_veratrum_stage_refit.py
+      - .github/workflows/angiosperm-primary-stage-refit.yml
+
+permissions:
+  contents: read
+
+jobs:
+  two-study-original-data-reanalysis:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install primary-record statistical libraries
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy statsmodels
+      - name: Audit plant-clustered flower timing and matched-stage seed limitation
+        run: .venv/bin/python scripts/primary_brassica_veratrum_stage_refit.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brassica-veratrum-original-reproductive-stage-refit
+          path: analysis_results_primary_stage_refit/
+          retention-days: 30
+          if-no-files-found: warn
