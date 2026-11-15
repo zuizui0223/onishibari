@@ -1,0 +1,27 @@
+name: Daphne ENA NCBI raw-read archive crosswalk
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/daphne-comparative-2026-11-15]
+    paths:
+      - scripts/daphne_ena_archive_audit.py
+      - .github/workflows/daphne-ena-archive-audit.yml
+
+permissions:
+  contents: read
+
+jobs:
+  cross-archive:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Crosswalk original study, BioSample and run in ENA, and query SRA by focal voucher
+        run: python3 scripts/daphne_ena_archive_audit.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-ena-ncbi-archive-audit
+          path: analysis_results_crossarchive/
+          if-no-files-found: warn
