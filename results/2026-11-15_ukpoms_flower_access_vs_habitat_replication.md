@@ -86,3 +86,30 @@ PoMS `x1km_square` is an OSGB 2-letter+4-digit or Irish OSIE 1-letter+4-digit **
 - `scripts/ukpoms_flower_vs_landcover_cv.py`: spatially blocked predictions, feature ablation, 101-square cluster error bootstrap
 - `scripts/ukpoms_temporal_holdout.py`: future-year test
 - `scripts/ukpoms_2023_modis_1km.py`: satellite season-matched NDVI **pilot script, status must be checked separately**; do not claim results if its workflow hasn't passed
+
+
+## Fully executed remote-sensing bridge: NASA NDVI of 2023 UK PoMS 1km squares
+The MOD13Q1 V061 seasonal context pilot **succeeded**, independent of 2016 Zurich, with actual NASA satellite imagery, field-year match and QA.
+
+Source [GitHub Action run 43704350736](https://github.com/zuizui0223/onishibari/actions/runs/43704350736), artifact **14158485341** `ukpoms-2023-1km-NDVI-plus-floral-habitat-QA`, ZIP SHA256 `2eef04aa75f5a2ca60fc50cedfa6a4a8f2cb6bc9f5eeca26088027a0c8a94578`.
+Script `scripts/ukpoms_2023_modis_1km.py`.
+- Reconstructed 101 square geometries from OSGB/OSIE 1 km grid references (different national projections). For each cell, 4 interior quarter-square points were projected to MODIS sinusoidal coordinates, and NDVI values with pixel reliability QA 0/1 were averaged; **not one 250m point pretending to represent a precisely geocoded 1km survey**.
+- 102 MOD13Q1 UK May–August 2023 STAC candidate scenes, chose 8 tile/month scenes, near May 9, June 10, July 12, August 13 (four seasonal representative composites).
+- 99 grid squares had valid NDVI for ≥2 months, and 88 visited squares / **547 actual FIT records in 2023** passed model joins; the median per-site seasonal NDVI in these records was 0.75412. Original 2023 1km survey had 551 recorded FITs. No site coordinates, exact national-grid reference or observer identifiers are re-published.
+- Model/validation: restrict to those 547 surveys, five-fold held-out 1 km grid squares; compare `recorded target flower + season/hour/weather + flower units/cover/context + landcover/habitat` against **exact same features plus** `2023 May–Aug mean NDVI` and `four-month representative-image NDVI amplitude`.
+
+| Response | Baseline OOF MAE log1p | +NDVI OOF MAE log1p | Prediction MAE gain from adding NDVI |
+|---|---:|---:|---:|
+| All 10-minute insect visitors | **0.653702** | 0.656527 | **−0.43215% (worse)** |
+| Hoverfly visits | **0.590383** | 0.597562 | **−1.21608% (worse)** |
+| All bee visits | **0.516447** | 0.519174 | **−0.52804% (worse)** |
+| Bumblebee visits | 0.398691 | **0.398011** | **+0.17052% (tiny improvement)** |
+
+**Do not claim NDVI universally has no ecological effect**: this tests one year, small 1km-square sample and four QA-selected composites, not visit-date-matched bloom NDVI, flower abundance, GPP or woody AGB; candidate NDVI highly collinear with recorded habitat is possible but not directly estimated for UK. It does indicate that there was **no meaningful, consistent incremental predictive benefit** of these 2023 NDVI summaries once directly recorded floral access and habitat variables were known. The earlier 24 Zurich gardens independently showed NDVI covaried with urban sealed area (rho=−0.927), and it added no independent skill after that control; **do not generalize urban collinearity numerically to UK landscapes**.
+
+Source of satellite processing is NASA `MOD13Q1.061`, 16-day 250m Terra NDVI (scale 0.0001; pixel QA 0/1), published catalogue https://doi.org/10.5067/MODIS/MOD13Q1.061 . Seasonal mean across a few composite scenes is environmental context, not biomass or flowering stage.
+
+**What does explain variation (prediction, not cause)?** In 2017–2023 allocated 1km surveys, adding recorded flower availability and habitat jointly to target-flower/season/weather improved held-out visitors by ~5.9% MAE(log1p). Decompositions show target-floral-unit count more useful for total/bee visits; patch cover/context more useful for hoverflies in this dataset. The cluster bootstrap interval for floral-only vs habitat-only MAE improvement in all insects includes zero: the data do NOT support declaring floral information universally superior to habitat. Evidence supports *complementary*, group-conditional information and a limit on greenness-only proxy inference.
+
+### Additional source-integrity point
+UK PoMS `1km_square` metadata has 2,932 OSGB/121 OSIE records, whose grid references have distinct 2-letter+4-digit vs 1-letter+4-digit shapes. This is why a cell-average rather than fine point pixel is essential. Source audit run 43703595223.
