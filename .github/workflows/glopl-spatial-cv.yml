@@ -1,0 +1,38 @@
+name: Validate GloPL rainfall context spatial out of sample
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/glopl_spatial_cv.py
+      - .github/workflows/glopl-spatial-cv.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  independent-geographic-and-family-holdout:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: angiosperm-GloPL-geographic-rainfall-climatology-pilot
+          run-id: 43693752526
+          github-token: ${{ github.token }}
+          path: input
+      - name: Install model dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -q numpy scikit-learn
+      - name: Compare lat/elevation baseline to rainfall and sex system under held-out region and family
+        run: .venv/bin/python scripts/glopl_spatial_cv.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-GloPL-climate-spatial-heldout-validation
+          path: analysis_results_spatial_cv/
+          if-no-files-found: warn
