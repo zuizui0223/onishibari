@@ -112,9 +112,17 @@ def main():
                     for f in candidates[:14]:
                         if not isinstance(f,dict):continue
                         fid=f.get("id")
+                        if fid is None:
+                            lk=f.get("_links",{})
+                            for kk in ("self","stash:download"):
+                                href=(lk.get(kk) or {}).get("href","")
+                                mt=re.search(r"/files/(\d+)",href)
+                                if mt:
+                                    fid=int(mt.group(1))
+                                    break
                         name=f.get("path") or f.get("filename") or f.get("name") or ""
                         meta={"file_id":fid,"name":name,"size":f.get("size")}
-                        if isinstance(fid,int) and isinstance(f.get("size"),int) and f["size"]<=MAX_BYTES and str(name).lower().endswith((".csv",".txt",".md")):
+                        if isinstance(fid,int) and isinstance(f.get("size"),int) and f["size"]<=MAX_BYTES and str(name).lower().endswith((".csv",".txt",".md")) and sum("public_download_probe" in e for e in doc["file_overview"])<2:
                             # Public endpoint documented by official Dryad API.
                             meta["public_download_probe"]=fetch_small_file(BASE+"/files/"+str(fid)+"/download")
                         doc["file_overview"].append(meta)
