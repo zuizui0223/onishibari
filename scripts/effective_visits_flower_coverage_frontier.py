@@ -21,7 +21,7 @@ from __future__ import annotations
 import csv
 import json
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 OUT=Path("analysis_results_visitation_quality_frontier")
@@ -147,6 +147,19 @@ def main():
     checks(t)
     gammas=(0.0,round(t.beta,3),round(t.beta+.10,3),round(t.beta+.30,3))
     cases=[opt(g,t) for g in gammas]
+    # Scale-sensitivity counterexample: UK quadrat beta ~.17 vs Zürich
+    # within-garden/date beta near 1 are different observational estimands.
+    # Neither is a randomized within-genet causal attraction elasticity.
+    cross_scale=[]
+    for beta in (.17,.9,1.0):
+        assumptions=replace(t,beta=beta)
+        result=opt(.27,assumptions)
+        result["hypothetical_beta"]=beta
+        result["same_hypothetical_quality_loss_gamma"]=.27
+        result["original_beta_data_study_not_transportable_across_scales"]=True
+        cross_scale.append(result)
+    assert cross_scale[0]["F_peak_effective_serviced_flowers_in_grid"]==9
+    assert all(z["F_peak_effective_serviced_flowers_in_grid"]==t.max_F for z in cross_scale[1:])
     curves=[]
     for gamma in gammas:
         for F in (1,2,4,9,16,32,64,128,256,300):
@@ -178,6 +191,7 @@ def main():
       "resource_costs_not_measured":True,
       "parameters":vars(t),
       "scenarios":cases,
+      "cross_grain_sensitivity_why_PoMS_vs_Zurich_cannot_share_beta":cross_scale,
       "monotonicity_check_F1_to_F10000":True,
       "do_not_use_as_fitness_estimate":True
     }
