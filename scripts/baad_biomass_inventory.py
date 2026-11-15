@@ -38,7 +38,7 @@ def main():
                 report["files"].append({"name":name,"size":f.file_size})
                 if not name.lower().endswith(".csv"):continue
                 if any(w in name.lower() for w in ("contacts","references")):continue
-                text=z.read(name).decode("utf8-sig",errors="replace")
+                text=z.read(name).decode("utf-8-sig",errors="replace")
                 reader=csv.DictReader(io.StringIO(text))
                 columns=reader.fieldnames or []
                 rows=list(reader)
