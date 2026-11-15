@@ -1,0 +1,31 @@
+name: Robustness of 2016 carrot hoverfly NDVI association
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/zurich2016_hoverfly_sensitivity.py
+      - .github/workflows/angiosperm-hoverfly-sensitivity.yml
+
+permissions:
+  contents: read
+
+jobs:
+  one-city-robustness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install satellite and statistical source tools
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q pystac-client planetary-computer rasterio scipy numpy
+      - name: Check outliers, geography and visit-group composition
+        run: .venv/bin/python scripts/zurich2016_hoverfly_sensitivity.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-2016-carrot-hoverfly-NDVI-sensitivity
+          path: analysis_results_guild_spatial_sensitivity/
+          if-no-files-found: warn
