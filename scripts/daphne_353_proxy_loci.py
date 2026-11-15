@@ -102,8 +102,8 @@ def main():
                   max_Daphne_ungapped_bases=max(ungapped),
                   proxy_taxa_count=4)
                 rows.append(item)
-                if complete_n>=200 and min(ungapped)>=250 and
-                    0.001<=var/max(complete_n,1)<=0.15:
+                if (complete_n>=200 and min(ungapped)>=250 and
+                        0.001<=var/max(complete_n,1)<=0.15):
                     best.append((item,d))
         rows.sort(key=lambda x:x["locus_id"])
         report["qualifying_proxy_loci"]=len(best)
