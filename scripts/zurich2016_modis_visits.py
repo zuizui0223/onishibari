@@ -74,6 +74,31 @@ def main():
         with zipfile.ZipFile(io.BytesIO(raw)) as zipf:
             site=csvfrom(zipf,SITE_FILE)
             vis=csvfrom(zipf,VISIT_FILE)
+            # Four distinct reproductive endpoints per standardized phytometer.
+            # No garden coordinates, plant IDs or site-specific outcomes exported.
+            endpoint_sources={
+                "carrot":("07_pollination_success/daucus_carota_seed_set.csv","n_seeds",None),
+                "sainfoin":("07_pollination_success/onobrychis_viciifolia_fruit_set.csv","n_flowers_with_fruits","n_flowers_without_fruits"),
+                "radish":("07_pollination_success/raphanus_sativus_fruit_set.csv","n_flowers_with_fruits","n_flowers_without_fruits"),
+                "comfrey":("07_pollination_success/symphytum_officinale_fruit_set.csv","n_flowers_with_seeds","n_flowers_without_seeds")}
+            reproductive={}
+            for plant,(file,success_col,fail_col) in endpoint_sources.items():
+                buckets=defaultdict(lambda:[0.0,0.0])
+                for rec in csvfrom(zipf,file):
+                    excluded=str(rec.get("exclude") or rec.get("excluded") or "").strip().lower()
+                    if excluded in ("1","yes","true","excluded","exclude"):continue
+                    garden=str(rec.get("Id","")).strip().lower()
+                    success=number(rec.get(success_col))
+                    if success is None or success<0:continue
+                    if fail_col is None:
+                        numerator,denominator=success,1.0
+                    else:
+                        failures=number(rec.get(fail_col))
+                        if failures is None or failures<0 or success+failures<=0:continue
+                        numerator,denominator=success,success+failures
+                    buckets[garden][0]+=numerator
+                    buckets[garden][1]+=denominator
+                reproductive[plant]={g:y[0]/y[1] for g,y in buckets.items() if y[1]>0}
             coords={}
             for r in site:
                 key=str(r["Id"]).strip().lower()
@@ -152,20 +177,34 @@ def main():
             summary={}
             for plant in sorted({p for (siteid,p) in visits}):
                 xx=[];yy=[];aa=[]
+                ndvi_repro=[]; evi_repro=[]; visits_repro=[]; repro_out=[]
                 for sid in coords:
                     visits_raw=visits.get((sid,plant))
                     scenes=list(observations.get(sid,{}).values())
                     if not visits_raw or not scenes:continue
                     ndvi=sum(v[0] for v in scenes)/len(scenes)
                     evi=sum(v[1] for v in scenes)/len(scenes)
+                    visitors=sum(visits_raw)/len(visits_raw)
                     xx.append(ndvi);aa.append(evi)
-                    yy.append(sum(visits_raw)/len(visits_raw))
+                    yy.append(visitors)
+                    if sid in reproductive.get(plant,{}):
+                        ndvi_repro.append(ndvi)
+                        evi_repro.append(evi)
+                        visits_repro.append(visitors)
+                        repro_out.append(reproductive[plant][sid])
                 summary[plant]={
                   "n_gardens_qa_matched":len(xx),
                   "ndvi_median":round(float(np.median(xx)),5) if xx else None,
                   "visits_per_recorded_window_median":round(float(np.median(yy)),5) if yy else None,
                   "NDVI_vs_visit_count":spearman_safe(xx,yy),
-                  "EVI_vs_visit_count":spearman_safe(aa,yy)}
+                  "EVI_vs_visit_count":spearman_safe(aa,yy),
+                  "reproduction_endpoint":("mean seeds per umbel" if plant=="carrot" else
+                      "fruit set proportion" if plant in ("radish","sainfoin") else
+                      "fraction flowers with seeds"),
+                  "n_gardens_reproduction_matched":len(repro_out),
+                  "NDVI_vs_reproductive_outcome":spearman_safe(ndvi_repro,repro_out),
+                  "EVI_vs_reproductive_outcome":spearman_safe(evi_repro,repro_out),
+                  "visitors_vs_reproductive_outcome":spearman_safe(visits_repro,repro_out)}
             # Exploratory eight planned tests (4 plants × 2 vegetation indices).
             # All shares the same 24 garden locations and tests are correlated.
             eligible=[]
@@ -185,7 +224,22 @@ def main():
                 for ix in ("NDVI","EVI"):
                     z=x.get(ix+"_vs_visit_count")
                     if z:z["q_BH_across_eight_tests"]=qvals.get((p,ix))
-            report["multiple_testing_method"]="Benjamini-Hochberg across 4 plants × 2 indices; study site predictors not independent"
+            report["multiple_testing_method"]="Benjamini-Hochberg across 4 plants × 2 indices for visits association; study site predictors not independent"
+            # Additional eight tests are a different outcome family. They are
+            # exploratory and cannot establish mediation or adaptation.
+            obs=[]
+            for p, x in summary.items():
+                for index in ("NDVI","EVI"):
+                    rec=x.get(index+"_vs_reproductive_outcome")
+                    if rec and rec.get("p_unadjusted") is not None:
+                        obs.append((p,index,rec["p_unadjusted"]))
+            ranked=sorted(obs,key=lambda x:x[2])
+            qnext=1.0
+            for j in range(len(ranked)-1,-1,-1):
+                plant,index,pval=ranked[j]
+                qnext=min(qnext,pval*len(ranked)/(j+1))
+                summary[plant][index+"_vs_reproductive_outcome"]["q_BH_across_eight_repro_tests"]=round(qnext,6)
+            report["additional_endpoint_tests"]="NDVI/EVI vs reproductive endpoint separately BH-adjusted across eight tests; visitor-reproductive correlations remain descriptive"
             report["by_plant"]=summary
             report["status"]="success" if report["sites_with_any_good_ndvi"]>=18 else "insufficient"
     except Exception as e:
