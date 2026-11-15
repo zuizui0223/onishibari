@@ -113,7 +113,7 @@ def brassica(files):
     df=files["1_Table_1_-_Vegetative_mass.csv"].copy()
     required=["Treatment","Plant","Raceme","nflowers","nfruit","intfruit","Totveg"]
     if any(c not in df for c in required):raise ValueError("missing Brassica raceme columns")
-    numeric(df,required)
+    numeric(df,[c for c in required if c!="Plant"])
     original_raceme_rows=len(df)
     missing_by_column={k:int(v) for k,v in df[required].isna().sum().items()}
     print("BRASSICA_RACEME_MISSING_COUNTS",missing_by_column,flush=True)
@@ -168,7 +168,7 @@ def brassica(files):
     # Flower records include only intentionally hand-supplemented flowers in Exp 1.
     f=files["3_Table_2_-_Fruit_set_flower_level_4_raceme.csv"].copy()
     rcols=["Treatment","Plant","Totveg","proppoll","Raceme","Flw","fday","Frt"]
-    numeric(f,rcols)
+    numeric(f,[c for c in rcols if c!="Plant"])
     f=f.dropna(subset=rcols).copy()
     f=f[f.Totveg>0]
     f["logVeg"]=np.log(f.Totveg)
@@ -202,7 +202,7 @@ def brassica(files):
     # Exp2: conditional on sampled fruits and plant genets.
     o=files["7_Table_3_-_Ovule_fates_ovule_level.csv"].copy()
     cols=["Treatment","Plant","fruitN","rPosition","n_totovule","ovule_basal","fertilized","develop","abort"]
-    numeric(o,cols)
+    numeric(o,[c for c in cols if c!="Plant"])
     o=o.dropna(subset=cols)
     if len(o)!=9421 or o.Plant.nunique()!=46:raise ValueError("unexpected ovule source grain")
     if not (o.fertilized==o.develop+o.abort).all():
@@ -224,7 +224,7 @@ def brassica(files):
       "conditional_on_sampled_developing_fruits_not_all_flowers":True,
       "plant_resampling_not_ovule_independence":True}
     sf=files["6_Table_3_-_Ovule_fates_flower_level.csv"].copy()
-    numeric(sf,["Treatment","Plant","n_totovule","n.unfert","n.abort","n.seed"])
+    numeric(sf,["Treatment","n_totovule","n.unfert","n.abort","n.seed"])
     if len(sf)!=719:raise ValueError("expected 719 source fruit rows")
     consistent=(sf["n_totovule"]==sf["n.unfert"]+sf["n.abort"]+sf["n.seed"])
     summary["sampled_developing_fruits_ovule_fate"]["n_fruit_rows"]=len(sf)
