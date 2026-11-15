@@ -80,6 +80,7 @@ def numeric(df,keys):
 
 def native(x):
     if x is None:return None
+    if isinstance(x,(bool,np.bool_)):return bool(x)
     if isinstance(x,(float,np.floating)):
         return round(float(x),6) if math.isfinite(x) else None
     if isinstance(x,(int,np.integer)):return int(x)
@@ -172,7 +173,7 @@ def brassica(files):
     f=f.dropna(subset=rcols).copy()
     f=f[f.Totveg>0]
     f["logVeg"]=np.log(f.Totveg)
-    if f.Frt.isin([0,1]).all() is False:raise ValueError("nonbinomial floral outcome")
+    if not bool(f.Frt.isin([0,1]).all()):raise ValueError("nonbinomial floral outcome")
     if len(f)<2000 or f.Plant.nunique()!=86:raise ValueError("unexpected flower inventory")
     mods=smf.glm("Frt ~ fday*C(Treatment) + logVeg",data=f,
              family=sm.families.Binomial()).fit(cov_type="cluster",cov_kwds={"groups":f.Plant})
@@ -230,6 +231,17 @@ def brassica(files):
     summary["sampled_developing_fruits_ovule_fate"]["n_fruit_rows"]=len(sf)
     summary["sampled_developing_fruits_ovule_fate"]["n_fruits_with_valid_ovule_partition"]=native(consistent.sum())
     summary["sampled_developing_fruits_ovule_fate"]["all_ovule_partition_exact"]=bool(consistent.all())
+    partition_cols=["n_totovule","n.unfert","n.abort","n.seed"]
+    complete_part=sf[partition_cols].notna().all(axis=1)
+    delta=(sf["n_totovule"]-sf["n.unfert"]-sf["n.abort"]-sf["n.seed"])
+    unusual=delta.loc[complete_part & (delta!=0)]
+    summary["sampled_developing_fruits_ovule_fate"]["fruit_source_partition_QC"]={
+       "n_missing_any_partition_field":int((~complete_part).sum()),
+       "n_nonzero_partition_difference_among_complete":len(unusual),
+       "nonzero_difference_values_counts":native(unusual.value_counts().sort_index().to_dict()),
+       "data_quality_issues_not_zero_filled":True,
+       "original_ovule_fate_records_analysed_separately":True}
+
     return summary
 
 def log_effect(hand,natural):
