@@ -82,3 +82,25 @@ Only **six named families** in the 91 matched biomass+height species contain at 
 - Malvaceae: one hermaphroditic vs one monoecious
 - Lauraceae: one dioecious vs one hermaphroditic
 The sign of **height-adjusted** dioecious vs hermaphroditic mass residuals is mixed across the four applicable families (Myrsinaceae & Theaceae positive for dioecy; Oleaceae & Lauraceae negative for dioecy). These are sparse, unmatched species-level contrasts, not a robust phylogenetic analysis. Therefore this dataset does **not** support a universal sex-system dry-biomass difference after conditioning on size and lineage. Experimental flower tissue dry-mass comparisons from within populations remain the key missing variable.
+
+
+## D. New same-2016-season greenness → observed encounters / reproductive outcomes bridge
+
+Completed verified [GitHub Actions run 43697781055](https://github.com/zuizui0223/onishibari/actions/runs/43697781055); artifact `angiosperm-zurich2016-time-matched-MODIS-visitation` ID **14154838639**, ZIP SHA256 `344228aab2505d03a12f3f70416645b340a0347687c7bbab29fe81bc7d7aecc9`. Same 24 unique garden-site MODIS 250m pixels × three field-season-overlapping 2016 composites, source garden location data NOT exported. Garden-level reproductive outcomes are each computed as proper source-specific numerator/denominator, not averaged incompatible flower/fruit/seed units together.
+
+| Plant | endpoint | NDVI – visitors rho | NDVI – reproduction rho | NDVI reproduction p nominal | NDVI/EVI reproduction q (BH over eight tests) | visitors – reproduction rho |
+|---|---|---:|---:|---:|---:|---:|
+| carrot | seeds / umbel | +0.46161 | +0.40609 | 0.04895 | 0.07833 (NDVI) | −0.10007 |
+| radish | fraction flowers with fruits | +0.38547 | +0.45130 | 0.02686 | 0.07577 (NDVI) | +0.20579 |
+| comfrey | fraction flowers with seeds | −0.16129 | +0.42609 | 0.03788 | 0.07577 (NDVI) | +0.04577 |
+| sainfoin | fraction flowers with fruits | +0.49486 | +0.06348 | 0.76824 | 0.76824 (NDVI) | +0.19408 |
+
+The four **visitors-to-reproduction** correlations were not nominally significant, while NDVI–reproduction for three species were nominal p<0.05 but **none survive BH q<0.05 when jointly testing NDVI/EVI for four species**. EVI–reproduction: carrot +0.43217 p=.03494 q=.07577; radish +0.47913 p=.01784 q=.07577; comfrey +0.36957 p=.07551 q=.10068; sainfoin +0.13826 p=.51939 q=.59359.
+
+**Interpretation:** preliminary species-specific divergence between (1) ambient landscape greenness association with visitor catch, and (2) ambient greenness association with fruit/seed outcomes. This supports *investigating* whether water, light, soil, nutrient status or local garden production resources affect reproduction beyond visit frequency, not evidence of mediation or causal NDVI effects. Important confounders: urbanization, canopy exposure, local flower resources, weather, pollinator species and effectiveness, phenology, visitor observation effort and sampling design; all four species share the same 24 gardens, so the 12+ pathway comparisons are not independent experimental replicates. Pollen delivery, autonomous selfing and vegetative biomass were not observed for these four *specific plants* with the same dates. Do not infer a universal sex-system mechanism: the plants are merely four contrasting phytometer species.
+
+### Research-level updated prediction
+**Biomass/vegetation productivity → (a) floral resource availability and pollinator encounter *and* (b) host resource allocation to seeds; the two routes can be decoupled.** Flowering date, pollinator guild identity and compatibility determine which path influences realized genetic offspring; garden productivity may alter seed set without increasing recorded visits. Next required test is measured garden flower abundance/individual plant performance and independent paternity/pollen deposition, preferably with measured individual dry mass and fine-scale canopy/shade.
+
+### Independent BAAD units validation
+Corrected source-backed kg-unit rerun [43697541650](https://github.com/zuizui0223/onishibari/actions/runs/43697541650) validates mass values and per-family mixed residual contrasts; artifact ID **14154593704**, ZIP SHA256 `f861c4172e189367df2f117a1ffc70d2719fa7aeffe17fd10ec39e90689df4fb`.
