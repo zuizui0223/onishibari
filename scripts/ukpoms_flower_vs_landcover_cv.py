@@ -168,8 +168,53 @@ def cv_experiment(df,folds,resp):
     baseline=scores["base_plant_season_weather"]["MAE_log1p_visits"]
     for label,metrics in scores.items():
         metrics["MAE_log1p_improvement_vs_base_pct"]=round(100*(baseline-metrics["MAE_log1p_visits"])/baseline,5)
+    # Cluster bootstrap on the 101 held-out squares of stored OOF predictions.
+    # Conditional on fitted CV predictions: DOES NOT represent model refit
+    # uncertainty, statistical causal inference, or independent insect fitness.
+    site_labels=df["square_id"].to_numpy()
+    sqs=sorted(set(site_labels))
+    if len(sqs)<20:raise ValueError("Unexpectedly few square clusters")
+    idx_by_site=[np.flatnonzero(site_labels==k) for k in sqs]
+    rng=np.random.default_rng(20261115)
+    contrasts={
+       "local_flowers_vs_landcover":("base_plus_landcover","base_plus_local_flowers"),
+       "both_vs_landcover":("base_plus_landcover","base_plus_both"),
+       "both_vs_local_flowers":("base_plus_local_flowers","base_plus_both"),
+       "flower_units_vs_patch_context":("base_plus_patch_context","base_plus_flower_unit_number"),
+    }
+    boot_summary={}
+    log_errors={label:np.abs(np.log1p(pred)-yt) for label,pred in stored.items()}
+    for label,(reference,candidate) in contrasts.items():
+        diffs=log_errors[reference]-log_errors[candidate]
+        observed=float(np.mean(diffs))
+        per_site_sum=np.array([float(diffs[ii].sum()) for ii in idx_by_site])
+        per_site_n=np.array([len(ii) for ii in idx_by_site])
+        draws=rng.integers(0,len(sqs),size=(2000,len(sqs)))
+        simulated=np.sum(per_site_sum[draws],axis=1)/np.sum(per_site_n[draws],axis=1)
+        boot_summary[label]={
+            "reference":reference,"candidate":candidate,
+            "positive_means_candidate_lower_MAE":True,
+            "observed_delta_MAE_log1p":round(observed,6),
+            "delta_percent_of_reference_MAE":round(observed/float(np.mean(log_errors[reference]))*100,5),
+            "conditional_cluster_bootstrap_95pct_CI":list(
+                map(lambda x:round(float(x),6),np.quantile(simulated,[.025,.975]))),
+            "positive_fraction_in_2000_bootstrap_resamples":
+                round(float(np.mean(simulated>0)),4),
+            "cluster_count":len(sqs),
+            "warning":"Resamples heldout square-level prediction errors, no model retraining; not causal p value."}
+    for i,(train,test) in enumerate(folds):
+        v=split_records[i]
+        base_mae=float(np.mean(log_errors["base_plant_season_weather"][test]))
+        v["fold_base_MAE_log1p"]=round(base_mae,6)
+        v["fold_flower_MAE_gain_pct"]=round(
+            100*(base_mae-float(np.mean(log_errors["base_plus_local_flowers"][test])))/base_mae,5)
+        v["fold_landcover_MAE_gain_pct"]=round(
+            100*(base_mae-float(np.mean(log_errors["base_plus_landcover"][test])))/base_mae,5)
+        v["fold_both_MAE_gain_pct"]=round(
+            100*(base_mae-float(np.mean(log_errors["base_plus_both"][test])))/base_mae,5)
     return {"response":resp,"n":len(df),"n_zero":int(sum(yy==0)),
             "folds":split_records,"scores":scores,
+            "cluster_bootstrap_model_comparisons":boot_summary,
             "unit":"recorded insect visitor count per 10-minute 50cm-quadrat"}
 
 def within_target_spearman(df):
@@ -199,6 +244,7 @@ def main():
          "Separating floral-unit count from patch context is a feature-ablation prediction exercise, not a causal decomposition. Flower count units differ by target type (individual flowers vs heads/spikes/umbels). Flower type and floral_unit are covariates; no universal per-flower equivalence.",
          "More floral units increases available opportunities in a fixed quadrat mechanically; prediction does not establish ecological scarcity or selection.",
          "Land cover is a coarse category, NOT remote NDVI or GPP/AGB measurement.",
+         "Bootstrap confidence intervals are conditional on out-of-fold prediction errors and do not account for refit variation or causal identification.",
          "Visitor detection depends on flower target choice, time of day, weather, taxonomic identification and survey eligibility.",
          "The 1 km square is the heldout unit, not the 3,053 observed visits; spatial survey location metadata never exported.",
          "No abundance of available flowers outside quadrat nor lifetime floral biomass, seed set or reproductive allocation.",
