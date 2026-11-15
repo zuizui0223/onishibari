@@ -107,22 +107,54 @@ def main():
         w=csv.DictWriter(f,fieldnames=keys);w.writeheader()
         for x in verified:w.writerow({k:x[k] for k in keys})
     synonym_search=[]
+    matching_ids=set()
     for name in NAMES:
         query=f'"{name}"[Organism]'
         u=url_for("esearch.fcgi",dict(db="nuccore",term=query,
-                                         retmode="json",retmax=0))
+                                         retmode="json",retmax=200))
         q=dict(taxon_query=name,query=query,url=u)
         try:
             content,_=fetch(u)
-            n=int(json.loads(content)["esearchresult"]["count"])
-            q.update(status="success",reported_record_count=n)
+            result=json.loads(content)["esearchresult"]
+            n=int(result["count"]); ids=result.get("idlist",[])
+            if n>len(ids):raise ValueError("NCBI result truncated; retry with pagination")
+            matching_ids.update(ids)
+            q.update(status="success",reported_record_count=n,returned_ids=len(ids))
         except Exception as e:q.update(status="error",error=str(e))
         synonym_search.append(q)
         time.sleep(0.4)
+    discovered=[]
+    classification_errors=[]
+    # An ESearch synonym match can carry the wrong modern organism name.
+    # Fetch records and check original registered taxon before classifying.
+    for uid_batch_start in range(0,len(matching_ids),50):
+        batch=sorted(matching_ids)[uid_batch_start:uid_batch_start+50]
+        try:
+            records,source=genbank(batch)
+            for record in records:
+                organism=record.annotations.get("organism","")
+                description=record.description
+                locus_kind=("ITS" if looks_like_its(description) else
+                            "published_2014_SSR" if record.id.split(".")[0] in EXPECTED
+                            else "unresolved_other")
+                discovered.append(dict(accession=record.id,organism=organism,
+                    description=description,locus_kind=locus_kind,
+                    length_bp=len(record.seq),matches_expected_taxon=accepted_taxon(organism),
+                    source_url=source))
+        except Exception as e:
+            classification_errors.append(str(e))
+    with (args.out/"NCBI_jezoensis_record_types.csv").open("w",encoding="utf-8",newline="") as fh:
+        keys=("accession","organism","description","locus_kind","length_bp",
+              "matches_expected_taxon","source_url")
+        w=csv.DictWriter(fh,fieldnames=keys);w.writeheader();w.writerows(discovered)
     result=dict(timestamp_utc=datetime.now(timezone.utc).isoformat(),
         primary_source="https://doi.org/10.3732/apps.1400001",
         original_published_ssr=10,verified_ssr=len(verified),
         ssr_errors=failed,synonym_search=synonym_search,
+        ncbi_record_types=discovered,
+        ncbi_organism_matched_count=sum(x["matches_expected_taxon"] for x in discovered),
+        ncbi_ITS_matched_count=sum(x["matches_expected_taxon"] and x["locus_kind"]=="ITS" for x in discovered),
+        classification_errors=classification_errors,
         note="SSR fragments are not ITS; cannot add to 24-tip ITS phylogeny",
         target_cross_amplification="NOT_TESTED",
         sex_system_of_original_target="GYNODIOECY",
@@ -131,6 +163,8 @@ def main():
          json.dumps(result,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
     print("JEZOENSIS_SSR_AUDIT="+json.dumps(dict(
         verified_ssr=len(verified),failed=len(failed),
+        locus_types=[(x["accession"],x["locus_kind"]) for x in discovered],
+        queried_ITS_count=result["ncbi_ITS_matched_count"],
         query_counts=[(q["taxon_query"],q.get("reported_record_count"),
                        q["status"]) for q in synonym_search]),ensure_ascii=False),flush=True)
     if not verified:raise SystemExit("No independently verified SSR accession")
