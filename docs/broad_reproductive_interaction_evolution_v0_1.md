@@ -66,3 +66,12 @@ Compare equal-average-rate regimes: (i) constant lambda for every individual, (i
 - Pollen limitation exploratory descriptive run: https://github.com/zuizui0223/onishibari/actions/runs/43692755764
 - Time-integrated rare interaction model run: https://github.com/zuizui0223/onishibari/actions/runs/43692850742
 - This is a standalone **broad** workstream; the original narrow Daphne phylogenomic PR #2 remains separate and unchanged.
+
+## Update: remote-sensed greenness is strongly confounded with landscape imperviousness
+
+A source-reproducible 2016 MODIS × Zürich 24-garden validation now shows **why landscape greenness alone is not a satisfactory pollinator scarcity metric**. NDVI correlates with carrot hoverfly counts (rho+.659, BH q=.0124 across 27 guild tests), but also with the already-published 500m impervious-cover fraction (rho -.927). After adjusting for original urban cover and local floral richness, NDVI partial rank rho is -.155 and adds no leave-one-garden-out prediction (MAE worsens 2.19%). This is a negative result for **independent NDVI explanatory value in this one case study**, not a universal null effect of remotely sensed productivity. The original 2026 paper already tested densification, local flowering resources and pollination success on these exact sites; proper novelty lies in broader cross-landscape quantity × accessibility × reliability comparisons, functional pollen transfer and size-normalized reproductive biomass.
+
+Direct woody biomass test BAAD×Wang: 91 mass/height/sex-system species (12 dioecious, 19 monoecious, 60 hermaphroditic), but only 6 families mix sex-system labels and no family has replicated species in two compared states. Avoid claiming evolutionary size allocation from these descriptive medians.
+
+Verified runs 43701737786 (guild), 43701970972 (sensitivity), 43702182669 (urban flower controls), 43697541650 (dry biomass); integrated evidence `results/2026-11-15_ndvi_guild_urban_biomass_integrated.md`.
+
