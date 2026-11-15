@@ -63,7 +63,7 @@ def find_version_id(obj):
         for link_key in ("self","stash:version","stash:files"):
             v=links.get(link_key,{}) if isinstance(links,dict) else {}
             href=v.get("href","") if isinstance(v,dict) else ""
-            match=re.search(r"/versions/(\\d+)",str(href))
+            match=re.search(r"/versions/(\d+)",str(href))
             if match:return int(match.group(1))
     return None
 
