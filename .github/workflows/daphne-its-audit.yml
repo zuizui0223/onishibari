@@ -1,0 +1,44 @@
+name: Daphne nrITS quartet audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/daphne-comparative-2026-11-15]
+    paths:
+      - scripts/daphne_its_audit.py
+      - .github/workflows/daphne-its-audit.yml
+
+permissions:
+  contents: read
+
+jobs:
+  source-data-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install phylogenetic tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y mafft
+          sudo apt-get install -y iqtree || true
+      - name: Fetch original NCBI nrITS records and count quartet site patterns
+        run: python3 scripts/daphne_its_audit.py --out analysis_results
+      - name: ML sensitivity analyses for two outgroups (not a species-tree test)
+        shell: bash
+        run: |
+          set -eu
+          IQ=""
+          if command -v iqtree2; then IQ=iqtree2; elif command -v iqtree; then IQ=iqtree; fi
+          if [ -z "$IQ" ]; then echo "IQ-TREE unavailable, ML sensitivity skipped"; exit 0; fi
+          for O in O1 O2; do
+            "$IQ" -s "analysis_results/quartet_"$O"_aligned.fa" \
+              -m GTR+F+I+G4 -B 1000 -alrt 1000 -T 2 \
+              -pre "analysis_results/quartet_"$O"_ml"
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-nrITS-public-sequence-audit
+          path: analysis_results/
+          if-no-files-found: warn
