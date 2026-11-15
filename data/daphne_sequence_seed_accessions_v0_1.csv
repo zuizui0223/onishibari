@@ -1,0 +1,7 @@
+accession,locus,published_taxon,accepted_working_taxon,source_doi,source_type,verification_status
+PV752465,plastome,Daphne pseudomezereum var. pseudomezereum,Daphne pseudomezereum,10.11110/kjpt.2025.55.3.157,2025 study reported deposition,paper_only_not_retrieved
+PV752464,plastome,Daphne kamtschatica,Daphne kamtschatica,10.11110/kjpt.2025.55.3.157,2025 study reported deposition,paper_only_not_retrieved
+ON244034,plastome,Daphne pseudomezereum var. koreana,Daphne kamtschatica var. koreana,10.11110/kjpt.2025.55.3.157,previously deposited accession cited by 2025 study,paper_only_not_retrieved
+PX056852,nrITS,Daphne pseudomezereum var. pseudomezereum,Daphne pseudomezereum,10.11110/kjpt.2025.55.3.157,2025 study reported deposition,paper_only_not_retrieved
+PX056858,nrITS,Daphne kamtschatica,Daphne kamtschatica,10.11110/kjpt.2025.55.3.157,2025 study reported deposition,paper_only_not_retrieved
+PX056848,nrITS,Daphne pseudomezereum var. koreana,Daphne kamtschatica var. koreana,10.11110/kjpt.2025.55.3.157,2025 study reported deposition,paper_only_not_retrieved
