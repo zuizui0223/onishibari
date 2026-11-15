@@ -1,0 +1,13 @@
+analysis_stream,response,model,floral_unit_ln_elasticity,ci_lower,ci_upper,foldchange_total_visits_if_double_F,foldchange_per_unit_if_double_F,records,square_clusters
+allocated_1km,all_insects,poisson_within_square,0.169345,0.094522,0.244169,1.124,0.562,3048,101
+allocated_1km,all_bees,poisson_within_square,0.217279,0.133858,0.300699,1.163,0.581,3048,101
+allocated_1km,hoverflies,poisson_within_square,0.089735,0.002859,0.176611,1.064,0.532,3048,101
+allocated_1km,bumblebees,poisson_within_square,0.144305,0.023946,0.264665,1.105,0.553,3048,101
+allocated_1km,all_insects,poisson_habitat_adjusted_common,0.220158,0.158980,0.281336,1.164861,0.582431,3048,101
+public_volunteers,all_insects,poisson_habitat_adjusted_common,0.091590,0.049149,0.134030,1.065544,0.532772,13372,2978
+allocated_1km,all_bees,poisson_habitat_adjusted_common,0.306304,0.215358,0.397249,1.236535,0.618268,3048,101
+public_volunteers,all_bees,poisson_habitat_adjusted_common,0.099256,0.041098,0.157413,1.071221,0.535610,13372,2978
+allocated_1km,hoverflies,poisson_habitat_adjusted_common,0.125100,0.038133,0.212067,1.090583,0.545292,3048,101
+public_volunteers,hoverflies,poisson_habitat_adjusted_common,0.062474,0.014030,0.110918,1.044255,0.522127,13372,2978
+allocated_1km,bumblebees,poisson_habitat_adjusted_common,0.192363,0.072778,0.311948,1.142634,0.571317,3048,101
+public_volunteers,bumblebees,poisson_habitat_adjusted_common,0.082495,0.029465,0.135525,1.058848,0.529424,13372,2978
