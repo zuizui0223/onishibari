@@ -10,7 +10,7 @@ from collections import Counter
 from pathlib import Path
 OUT=Path("analysis_results_baad")
 OUT.mkdir(exist_ok=True)
-URL="https://github.com/dfalster/baad/releases/download/v1.0.0/baad.zip"
+URL="https://github.com/dfalster/baad/releases/download/v1.0.0/baad_data.zip"
 
 def load():
     for i in range(3):
@@ -55,6 +55,6 @@ def main():
         report["status"]="success"
     except Exception as e:report["error"]=type(e).__name__+": "+str(e)
     (OUT/"baad_v1_inventory.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
-    print(json.dumps(report,ensure_ascii=False,indent=2)[:22000])
+    print(json.dumps({k:report[k] for k in ('source','versioned_release','status','zip_size','files','tables') if k in report},ensure_ascii=False,indent=2)[:18000])
     if report["status"]!="success":raise RuntimeError(report["error"])
 if __name__=="__main__":main()
