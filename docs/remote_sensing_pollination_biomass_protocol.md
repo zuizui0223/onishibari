@@ -81,3 +81,9 @@ The original top-of-document status ("NDVI not executed") applies only to **the 
 
 **Updated ecological priority:** distinguish high ecosystem productivity, low sealed-surface fraction, dense but shaded canopy, local flower resources, and effective pollen delivery. The original 2026 Zurich authors already demonstrated site-level urban densification and flower-richness effects: our new remote-sensing association should not be presented as a novel demonstration of those effects. A new broad study must replicate across habitat types and species, with true biomass allocation and more than one year.
 
+
+
+## 2026-11-15 completed independent UK PoMS 1km remote sensing result (2023)
+The 736-site GloPL GEE historical-climatology script is **still not executed**, but another satellite study **has been executed and validated**. Using UK PoMS 2017–2023 timed surveys (EIDC 10.5285/d706088c-9d48-4be5-b156-6ed6ad5e0618), we retrieved 2023 MOD13Q1 NDVI for 101 OSGB/OSIE 1km survey squares from 8 May–August QA-selected MODIS tile-month images (4 subpixel quadrants per square). For 547 2023 recorded FITs in 88 squares with 2+ valid months, NDVI mean and seasonal range added **no consistent predictive improvement** over models already given target flower, weather, local flower units/cover/context, and source landcover/habitat. Independent 1km-square heldout MAE relative change: all insects −0.43%, hoverflies −1.22%, all bees −0.53%, bumblebees +0.17%. This is **not** a failure of remote sensing generally, and NDVI ≠ actual floral biomass.
+
+Successful run: https://github.com/zuizui0223/onishibari/actions/runs/43704350736 . For full provenance, temporal limits and comparisons with Zürich see `results/2026-11-15_ukpoms_flower_access_vs_habitat_replication.md`. Next key gap is *actual flowering dates* and functional pollen-delivery observations at independent sites, not another simple average-NDVI regression.
