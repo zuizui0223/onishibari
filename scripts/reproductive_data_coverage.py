@@ -103,11 +103,11 @@ def find_glopl():
     except Exception as e:errors.append("Dryad API: "+str(e))
     # Curated working copy from the original GloPL authors' analysis repository.
     fallback=("https://raw.githubusercontent.com/idiv-biodiversity/"
-      "pollen-limitation-data-descriptor/master/Data/GloPL_with_id.csv")
+      "pollen-limitation-data-descriptor/master/Output/GloPL.csv")
     data,actual=get(fallback,limit=4_000_000)
     if not data[:100].lstrip() or data[:100].lstrip().startswith(b"<html"):
         raise ValueError("GloPL author repo did not return valid CSV")
-    return data,{"api":url,"download":actual,"release":"Authors' curated GitHub working copy",
+    return data,{"api":url,"download":actual,"release":"Authors' final publication output in GitHub",
                  "original_dryad_errors":errors}
 
 def profile():
@@ -141,7 +141,7 @@ def profile():
         tables["PROTEUS"]=rows
         try:
             raw,gloplmeta=find_glopl()
-            d,rows=audit_table("GloPL_2018",("GloPL.csv" if gloplmeta["release"]=="Dryad original" else "GloPL_with_id.csv"),raw,
+            d,rows=audit_table("GloPL_2018","GloPL.csv",raw,
                     "Pollen supplementation experiments; each row can be site-year-treatment or morph")
             d["download"]=gloplmeta["download"]
             d["release"]=gloplmeta["release"]
