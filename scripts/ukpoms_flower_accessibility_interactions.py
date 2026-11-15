@@ -93,6 +93,16 @@ def main():
         D=matrix(cleaned)
         D["hour"]=D["hour"].fillna(D["hour"].median())
         report["n_cases"]=len(D)
+        table=pd.crosstab(D["target_flower_corrected"],D["flower_structure"])
+        report["flower_structure_by_target_taxon"]={
+            name:{cat:int(row.get(cat,0)) for cat in ("open","closed")}
+            for name,row in table.iterrows()}
+        report["n_taxa_with_open_and_closed_at_least_10_each"]=sum(
+            int(row.get("open",0))>=10 and int(row.get("closed",0))>=10
+            for _,row in table.iterrows())
+        report["n_taxa_with_open_and_closed_any"]=sum(
+            int(row.get("open",0))>0 and int(row.get("closed",0))>0
+            for _,row in table.iterrows())
         for moderator,levels in MODERATORS.items():
             for outcome in GUILDS:
                 item=fit_model(D,moderator,levels,outcome)
@@ -108,6 +118,21 @@ def main():
             if p is None:continue
             q=min(q,p*len(tests)/(j+1))
             report["results"][index]["joint_BH_q_across_6_tests"]=round(q,7)
+        # Extra robustness outside the original six-test family: remove the
+        # taxonomically heterogeneous "Other" flower-target group entirely.
+        named=D.loc[~D["target_flower_corrected"].str.contains("Other",case=False)].copy()
+        report["named_target_only_structure_sensitivity"]={
+            "n_records":len(named),"n_square_clusters":int(named["square_id"].nunique()),
+            "joint_tests":{}}
+        for outcome in GUILDS:
+            try:
+                item=fit_model(named,"flower_structure",MODERATORS["flower_structure"],outcome)
+                report["named_target_only_structure_sensitivity"]["joint_tests"][outcome]=item
+                print("NAMED_ONLY",outcome,item["joint_p_cluster_robust"],
+                      {k:v["elasticity"] for k,v in item["levels"].items()},flush=True)
+            except Exception as exc:
+                report["named_target_only_structure_sensitivity"]["joint_tests"][outcome]={
+                    "failure":type(exc).__name__+": "+str(exc)[:350]}
         report["status"]="success"
     except Exception as e:
         report["error"]=type(e).__name__+": "+str(e)
