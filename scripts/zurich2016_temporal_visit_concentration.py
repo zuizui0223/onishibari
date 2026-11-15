@@ -27,7 +27,7 @@ OUT=Path("analysis_results_zurich_temporal_reliability")
 OUT.mkdir(exist_ok=True)
 N_SIM=10000
 
-def evaluate(groups,seed=20261115,floral_exposure=True):
+def evaluate(groups,seed=20261115,floral_exposure=True,flower_power=None):
     RNG=np.random.default_rng(seed)
     case=[]
     for (site,plant),days in sorted(groups.items()):
@@ -40,7 +40,8 @@ def evaluate(groups,seed=20261115,floral_exposure=True):
         flowers=np.array([r["flower_units"] for r in days],float)
         if not np.all(minutes>0) or not np.all(flowers>0):
             raise ValueError("Nonpositive exposure in observed day")
-        exposure=minutes*flowers if floral_exposure else minutes
+        exponent=(1.0 if floral_exposure else 0.0) if flower_power is None else float(flower_power)
+        exposure=minutes * np.power(flowers,exponent)
         p=exposure/exposure.sum()
         sim=RNG.multinomial(n,p,size=N_SIM)
         obs_zero=int(np.sum(counts==0))
@@ -101,6 +102,21 @@ def main():
             gr[(r["site"],r["plant"])].append(r)
         report["flower_unit_times_effort_null"]=evaluate(gr,seed=20261115,floral_exposure=True)
         report["effort_only_null_sensitivity"]=evaluate(gr,seed=20261116,floral_exposure=False)
+        # Predeclared F^alpha sensitivity; alpha is imposed, NOT estimated or
+        # the observational within-garden visitation elasticity. In
+        # particular, do NOT equate this with pollen-delivery efficiency.
+        report["nonlinear_flower_attraction_sensitivity"]={
+            str(alpha):{
+                plant:{
+                    "observed_zero_site_days":r["observed_zero_visit_site_days"],
+                    "null_expected_zero_site_days":r["null_expected_zero_visit_days"],
+                    "excess_zero_p":r["one_sided_excess_zero_p_conditional"],
+                    "obs_mean_HHI":r["observed_mean_within_siteplant_visit_HHI"],
+                    "null_mean_HHI":r["null_mean_within_siteplant_visit_HHI"]
+                } for plant,r in evaluate(gr,seed=20262000+int(alpha*1000),
+                                         flower_power=alpha).items()}
+            for alpha in (0.5,1.0,1.5,2.0,3.0)}
+        report["sensitivity_note"]="The F exponent alpha is a sensitivity assumption, not a mechanism estimate; tests zero counts conditional on garden visits and exposure."
         report["status"]="success"
     except Exception as exc:
         report["error"]=type(exc).__name__+": "+str(exc)
