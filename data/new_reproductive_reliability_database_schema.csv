@@ -1,0 +1,10 @@
+table,unit_of_analysis,key,required_columns,important_notes
+taxa,species,"accepted_taxon_id","original_name;accepted_name;family;source;date_accessed",Never conflate unverified synonym with accepted species
+populations,species_population,"population_id","accepted_taxon_id;site_id;population_definition;georeference_precision",Required for site-to-site effects and mating connectivity
+years,population_breeding_season,"population_id+year","sampled_date_range;reproductive_cohort;weather;survey_hours",Phenology and year are measured not assumed
+morphs,sex_morph_population_year,"population_id+year+morph_id","morphological_sex;functional_male_fitness;functional_female_fitness;sex_switching_status",Morphological dioecy not equal functional sex performance
+individuals,genet_year,"individual_id+year","population_id;morph_id;adult_survival;size;ramet_vs_genet;flower_number",Avoid clonal ramets as independent genets
+interactions,flower_event,"event_id","individual_id;year;timestamp;pollinator_taxon;observation_effort;effective_pollen_deposition;quality",Visits per effort are not pollen delivery probabilities
+experiment,experimental_treatment,"experiment_id","individual_id;year;bagged_self;hand_outcross;natural_open;fruit_set;viable_seed_set",Use consistent contrasts; identify resource limitation and inbreeding depression
+genetics,genet_reference,"specimen_id+genomic_panel","accepted_taxon_id;sample_id;ploidy;lineage;unlinked_nuclear_loci;plastid_haplotype",Different genetic specimens must not be paired without voucher evidence
+references,source_assertion,"assertion_id","doi;file_checksum;publication_year;trait;source_type;confidence_grade",Separate literature reported from directly observed values
