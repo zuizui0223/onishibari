@@ -121,11 +121,18 @@ def main():
             "n_total_flower_values_positive":int((g.display2004>0).sum())}
     raw_alive=ind[ycols[-1]]
     str_alive=raw_alive.astype("string").str.strip().str.lower()
-    mapping={"1":1,"0":0,"true":1,"false":0,"yes":1,"no":0,"alive":1,"dead":0}
+    mapping={"1":1,"0":0,"true":1,"false":0,"yes":1,"no":0,"y":1,"n":0,"alive":1,"dead":0}
     merged["alive_end"]=str_alive.map(mapping)
     valid=merged.dropna(subset=["alive_end","display2004","Sex","Line"]).copy()
     summary["last_survival_endpoint"]=ycols[-1]
     summary["survival_n_binary_usable"]=len(valid)
+    summary["survival_missing_end"]=int(merged.alive_end.isna().sum())
+    summary["end_missing_by_early_2005_alive_status"]=categories(merged.loc[merged.alive_end.isna(),"Alive 4/2005"])
+    summary["survival_by_sex_line"]=(
+        {str(sex)+"_"+str(line):{"n_with_recorded_end":len(g),
+                                 "alive_end":int((g.alive_end==1).sum()),
+                                 "alive_fraction":scalar(g.alive_end.mean())}
+         for (sex,line),g in valid.groupby(["Sex","Line"])})
     summary["survival_dead_count"]=int((valid.alive_end==0).sum())
     summary["survival_alive_count"]=int((valid.alive_end==1).sum())
     if len(valid)>=160 and valid.alive_end.nunique()==2:
@@ -143,6 +150,8 @@ def main():
     fruit["Mass of all seeds (mg)"]=num(fruit["Mass of all seeds (mg)"])
     female=fruit.merge(ind[["_id","Sex","Line"]],on="_id",how="left",validate="one_to_one")
     summary["female_fruit_table_sex_counts"]=categories(female.Sex)
+    summary["female_fruit_source_rows_excluded_as_male"]=int((female.Sex!="f").sum())
+    female=female[female.Sex=="f"].copy()
     summary["female_seed_mass_by_line"]={}
     for line,g in female.groupby("Line"):
         summary["female_seed_mass_by_line"][str(line)]={
