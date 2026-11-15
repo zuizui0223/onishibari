@@ -18,6 +18,7 @@ from pyproj import Transformer
 from pystac_client import Client
 import planetary_computer
 import rasterio
+from rasterio.warp import transform as project_coordinates
 
 from ukpoms_flower_vs_landcover_cv import prepare,matrix,learn,MODELS
 
@@ -98,7 +99,7 @@ def sample_months(points):
         validrows=[]
         with rasterio.Env(GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR",GDAL_HTTP_MAX_RETRY="2"):
             with rasterio.open(qa_url) as qa:
-                xs,ys=rasterio.warp.transform("EPSG:4326",qa.crs,
+                xs,ys=project_coordinates("EPSG:4326",qa.crs,
                      [x for x,y in all_geo],[y for x,y in all_geo])
                 eligible=[i for i,(x,y) in enumerate(zip(xs,ys))
                     if qa.bounds.left<=x<qa.bounds.right and qa.bounds.bottom<=y<qa.bounds.top]
