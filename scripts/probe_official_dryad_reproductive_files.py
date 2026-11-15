@@ -9,7 +9,7 @@ Run only on known small explicitly public datasets, cap downloads at 700 KB.
 When no anonymous file access exists, report 'inaccessible' and stop.
 """
 from __future__ import annotations
-import json, urllib.request, urllib.error, urllib.parse
+import json, re, urllib.request, urllib.error, urllib.parse
 from pathlib import Path
 
 OUT=Path("analysis_results_dryad_access_20261115")
@@ -56,7 +56,15 @@ def find_version_id(obj):
     if isinstance(obj,dict):
         for key in ("id","versionId","versionID"):
             v=obj.get(key)
-            if isinstance(v,int):return v
+            if isinstance(v,int) or (isinstance(v,str) and v.isdigit()):
+                return int(v)
+        # Dryad API versions commonly use canonical links rather than an ID field.
+        links=obj.get("_links",{})
+        for link_key in ("self","stash:version","stash:files"):
+            v=links.get(link_key,{}) if isinstance(links,dict) else {}
+            href=v.get("href","") if isinstance(v,dict) else ""
+            match=re.search(r"/versions/(\\d+)",str(href))
+            if match:return int(match.group(1))
     return None
 
 def main():
@@ -82,6 +90,8 @@ def main():
             cand=j.get("_embedded",{}).get("stash:versions",[]) if isinstance(j,dict) else j
             if isinstance(cand,list) and cand:
                 doc["n_versions_returned"]=len(cand)
+                doc["version_candidate_public_keys"]=[list(v)[:20] if isinstance(v,dict) else str(type(v)) for v in cand[:3]]
+                doc["version_candidate_links"]=[v.get("_links",{}) if isinstance(v,dict) else None for v in cand[:3]]
                 vid=find_version_id(cand[-1]) or find_version_id(cand[0])
             if not vid and isinstance(j,dict):vid=find_version_id(j)
         if not vid and metadata.get("status")==200:
