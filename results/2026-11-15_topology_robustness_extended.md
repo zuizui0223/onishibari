@@ -48,3 +48,26 @@ The `MT623670–MT623710` accession series contains 5 named `Daphne` ITS species
 2. Independent nuclear loci across multiple specimens from each P/C/K geography. The public 2023 Korean SRA SRR19117239 is effectively plastid-only: 0/2.38 million reads mapped to ITS, 99.96% to ON244034 plastome under positive control (run 43678829837).
 3. MSC species tree, gene concordance and symmetrical-discordance tests, network / admixture alternative models, ploidy and chromosome markers, functional sex phenotype verification.
 4. Nothing in these two independently analyzed **genomic compartments** is definitive evidence for ancient introgression, chloroplast capture, incomplete lineage sorting, or reproductive-system-mediated speciation.
+
+
+## Confirmed IR masking sensitivity (successfully executed, 2026-11-15)
+
+An additional GitHub Actions run explicitly **removed the second (IRa) of the two reverse-complement 41,725 bp inverted repeats** in ON244034 before re-optimizing the three alternative chloroplast quartet trees with IQ-TREE AU/SH tests.
+
+Run: https://github.com/zuizui0223/onishibari/actions/runs/43680830371
+Artifact ID: **14148457071** (`daphne-three-topology-tests`); ZIP SHA256 `536222195ff75f2a0fb435772b186a54659a592d55744ea2769c29d1f938d4dd`.
+
+- C reference ON244034 171,152 bp: LSC 84,963 + IRb 41,725 + SSC 2,739 + IRa 41,725; the IR copies were checked as exact reverse complements, so removing reference positions 129428–171152 corresponds to one copy.
+- Alignment length after masking IRa: 131,280 columns (versus 173,356 with the repeated IR).
+- Remaining strictly informative 2:2 site patterns with D. laureola as outgroup: CK = 26, PC = 4, PK = 0. With D. kiusiana as outgroup: CK = 26, PC = 6, PK = 0.
+- **AU topology test after IRa masking** (same `K3Pu+F+I+G4` model; 10,000 RELL resamplings):
+
+| Quartet split | log likelihood | delta log likelihood | AU p value |
+| --- | ---: | ---: | ---: |
+| PC vs KO | -186518.6628 | 51.618 | 0.000244 |
+| CK vs PO | -186467.0452 | 0 | 1.000 |
+| PK vs CO | -186525.1250 | 58.080 | 0.000358 |
+
+**Decision:** the chloroplast CK vs ITS PC genealogical discordance survives IR deduplication. High support within an organellar locus still does **not** identify introgression over ILS, nor does it provide multiple independent genomic histories.
+
+In the independent IR-reanalysis run, full-marker AU numbers vary slightly due to fresh random resampling: ITS PC 0.980, CK 0.0202, PK 0.0206; full plastome CK 1.000, PC 0.0000951, PK 7.39e-10. Direction and 0.05-level test decisions are unchanged from the earlier successful run.
