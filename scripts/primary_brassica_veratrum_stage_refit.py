@@ -38,20 +38,40 @@ def obtain(name):
     req=urllib.request.Request(url,headers={"User-Agent":"Published-data-reproduction/0.1","Accept":"application/zip"})
     with urllib.request.urlopen(req,timeout=70) as r:
         raw=r.read(850000)
-    if hashlib.sha256(raw).hexdigest()!=spec["sha"]:
-        raise ValueError("original public version ZIP SHA mismatch "+name)
+    # Dryad may generate ZIP with variable envelope timestamps. Instead
+    # authenticate each table's uncompressed original bytes against the pinned
+    # SHA256 from our previously inspected official original ZIP inventory.
+    if not zipfile.is_zipfile(io.BytesIO(raw)):
+        raise ValueError("not a published Dryad ZIP")
+    expected={
+      "Brassica":{
+         "1_Table_1_-_Vegetative_mass.csv":"eee389756b1b713dabe3bb9d244a9a1096066ac8df63840496c12794370c932d",
+         "3_Table_2_-_Fruit_set_flower_level_4_raceme.csv":"a6fa8c969aa9e76e12081979a8a1c431c2ba183a8bcb363ac9adda165c61a756",
+         "6_Table_3_-_Ovule_fates_flower_level.csv":"4dc4718c5d2233fc95ebddbe799653e88bc60358d4b601cb9f618268aaa2d45d",
+         "7_Table_3_-_Ovule_fates_ovule_level.csv":"2ccafcb2c3ab73ec2c882c60f4047cbb34315287fcdc296388773dafaeba076a"
+      },
+      "Veratrum":{"Fruit_Seed_Data.csv":"d020dfa7fbdbe05ab822c64004b9de83b9840e07d02d04918678974f34848b7a"}
+    }
     result={}
+    verified=set()
     with zipfile.ZipFile(io.BytesIO(raw)) as z:
         for item in z.infolist():
             basename=Path(item.filename).name
             if not basename.lower().endswith(".csv"):continue
             if item.file_size>400000:raise ValueError("unexpected oversized data member")
             blob=z.read(item)
+            if basename in expected[name]:
+                if hashlib.sha256(blob).hexdigest()!=expected[name][basename]:
+                    raise ValueError("published original CSV member SHA mismatch "+basename)
+                verified.add(basename)
             # Legacy Mac CR line endings are normalized rather than reinterpreted.
             txt=blob.decode("utf-8-sig","replace").replace("\r\n","\n").replace("\r","\n")
             df=pd.read_csv(io.StringIO(txt),sep=None,engine="python",na_values=["NA","NaN"],keep_default_na=True)
             df.columns=[str(x).strip() for x in df.columns]
             result[basename]=df
+    if verified!=set(expected[name]):
+        raise ValueError("missing required published original files "+str(set(expected[name])-verified))
+    print("SOURCE_MEMBERS_SHA256_VERIFIED",name,len(verified),"ZIP-envelope SHA mismatch is acceptable",flush=True)
     return result
 
 def numeric(df,keys):
