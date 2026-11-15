@@ -1,0 +1,27 @@
+name: Daphne GenBank raw-read linkage audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/daphne-comparative-2026-11-15]
+    paths:
+      - scripts/daphne_genbank_links.py
+      - .github/workflows/daphne-genbank-links.yml
+
+permissions:
+  contents: read
+
+jobs:
+  genbank-links:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch GenBank record links for P C K
+        run: python3 scripts/daphne_genbank_links.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-genbank-linked-metadata
+          path: analysis_results_metadata/
+          if-no-files-found: warn
