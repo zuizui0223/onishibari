@@ -44,7 +44,7 @@ def retrieve(version_id):
         return blob, r.geturl()
 
 def open_csv(data:bytes):
-    txt=data.decode("utf-8-sig","replace")
+    txt=data.decode("utf-8-sig","replace").replace("\r\n","\n").replace("\r","\n")
     try:dialect=csv.Sniffer().sniff(txt[:8192],delimiters=",;\t")
     except csv.Error:dialect=csv.excel
     dr=csv.DictReader(io.StringIO(txt),dialect=dialect)
@@ -69,7 +69,12 @@ def provenance():
                 b=z.read(member)
                 f={"name":path.split("/")[-1],"bytes":len(b),"sha256":hashlib.sha256(b).hexdigest()}
                 if path.lower().endswith((".csv",".txt")):
-                    headers,rows=open_csv(b)
+                    try:
+                        headers,rows=open_csv(b)
+                    except csv.Error as exc:
+                        f["parse_warning"]=type(exc).__name__+": "+str(exc)
+                        info["files"].append(f)
+                        continue
                     f["rows"]=len(rows)
                     f["headers"]=headers
                     f["categorical_audit"]={}
