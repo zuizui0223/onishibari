@@ -75,3 +75,24 @@ Direct woody biomass test BAAD×Wang: 91 mass/height/sex-system species (12 dioe
 
 Verified runs 43701737786 (guild), 43701970972 (sensitivity), 43702182669 (urban flower controls), 43697541650 (dry biomass); integrated evidence `results/2026-11-15_ndvi_guild_urban_biomass_integrated.md`.
 
+
+
+## New 2026-11-15 completed: flower-count elasticity at fixed effort
+UK PoMS observed **10-minute fixed 50cm quadrat landings** scale **sublinearly** with counted target floral units. Structured 1km-square subset 3,048 surveys, 101 square clusters, after plant target, year/month/weather, floral type and square fixed effects:
+- All insect visitor counts beta(log F)=**0.169 [cluster-robust 95% CI 0.095,0.244]**; doubling observed floral units predicts total landings ×1.124, equivalent to **recorded insect landings per floral unit ×0.562**.
+- All bees beta=.217 [.134,.301], hoverflies .090 [.003,.177], bumblebees .144 [.024,.265].
+- Within UK PoMS's **different public-volunteer sampling stream** 13,372 valid observations / 2,978 grid cells, source-harmonized adjusted all-insect beta=.092 [.049,.134]; allocated-square beta=.220 [.159,.281]. Both source streams show sublinear count relationships, but volunteer sample selection differs strongly.
+- Any-visitor event in a 10-minute quad increases with F: all-insect adjusted OR **1.223** per doubling; all-bees OR **1.241**, while per-structural-unit total landing counts drop. These are complementary definitions of resource access.
+- Respects the known prior *Digitalis purpurea* dilution literature (Grindeland et al. 2005, DOI 10.1111/j.1365-2435.2005.00988.x): **not a new ecological principle**, and cannot be called actual pollen-deposition/seed-set dilution. Floral units differ among flower heads/spikes/umbels/individual flowers.
+- Open-versus-closed floral shape interaction appears strong but **not identifiable independent of plant taxon**: only the heterogeneous `Other` source plant group contains both categories. No within-taxon morphological selection conclusion.
+- Floral patch isolated/same flower/mixed flower did not significantly modify slope in this analyzed sample (all-insect joint p=.849); not evidence of a universal null.
+
+Completed report: `results/2026-11-15_floral_density_sublinear_visitors.md`; effect table `data/2026-11-15_poms_floral_unit_scaling_effects.csv`.
+Reproducible runs:
+- main fixed site + sensitivities https://github.com/zuizui0223/onishibari/actions/runs/43705791623
+- two PoMS streams https://github.com/zuizui0223/onishibari/actions/runs/43706325276
+- zero-visitor GLM https://github.com/zuizui0223/onishibari/actions/runs/43706071915
+- hoverfly vs bee composition https://github.com/zuizui0223/onishibari/actions/runs/43705978912
+- floral shape/patch interaction and identity audit https://github.com/zuizui0223/onishibari/actions/runs/43706798707
+
+Updated conceptual bottleneck: **biomass investment (individual dry mass) → visible floral display (F) → total visitor attraction (Y; sublinear) → per-flower effective compatible pollen → seed viability and male pollen export → lifetime genetic connectivity**. Each arrow needs different data and cannot be proved from FIT Counts alone. Future direct experiments should vary display *within species*, sex morph and physical habitat over years, measure per-flower pollen deposition and reproductive allocation biomass, and evaluate partner scarcity by observation time+functional delivery rather than occurrence records/NDVI.
