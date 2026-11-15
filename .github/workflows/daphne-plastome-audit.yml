@@ -21,8 +21,21 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y mafft
+          sudo apt-get install -y iqtree || true
       - name: Fetch four published whole-plastome GenBank accessions with two alternative outgroups
         run: python3 scripts/daphne_plastome_audit.py --out analysis_results_cp
+      - name: Whole-plastome ML quartet sensitivity (linked-marker test only)
+        shell: bash
+        run: |
+          set -eu
+          IQ=""
+          if command -v iqtree2; then IQ=iqtree2; elif command -v iqtree; then IQ=iqtree; fi
+          if [ -z "$IQ" ]; then echo "IQ-TREE unavailable, ML skipped"; exit 0; fi
+          for O in O1 O2; do
+            "$IQ" -s "analysis_results_cp/plastome_"$O"_aligned.fa" \
+              -m K3Pu+F+I+G4 -B 1000 -alrt 1000 -T 2 \
+              -pre "analysis_results_cp/plastome_"$O"_ml"
+          done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
