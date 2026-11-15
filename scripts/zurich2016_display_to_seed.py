@@ -48,10 +48,18 @@ CATS={
   "success":"n_flowers_with_fruits","fail":"n_flowers_without_fruits",
   "exclude":set(["19","28","39","52"])},
  "comfrey":{
+  "plant":"comfrey",
   "visits":"A_Bombus_Comfrey",
-  "file":"07_pollination_success/symphytum_officinale_seed_set.csv",
+  "file":"07_pollination_success/symphytum_officinale_fruit_set.csv",
   "outcome":"flower_with_seeds_proportion",
   "success":"n_flowers_with_seeds","fail":"n_flowers_without_seeds",
+  "exclude":set(["39"])},
+ "comfrey_seed_ovules":{
+  "plant":"comfrey",
+  "visits":"A_Bombus_Comfrey",
+  "file":"07_pollination_success/symphytum_officinale_seed_set.csv",
+  "outcome":"seed_fertilized_ovule_proportion",
+  "success":"n_seeds","fail":"n_unfertilized_ovules",
   "exclude":set(["39"])},
 }
 REPS=2000
@@ -177,7 +185,7 @@ def main():
             garden_records=[]
             for site,(numer,denom) in buckets.items():
                 if denom<=0 or site not in ab:continue
-                eff,Fh=result_by_garden.get((site,p),(0.,0.))
+                eff,Fh=result_by_garden.get((site,spec.get("plant",p)),(0.,0.))
                 guild=num(ab[site].get(spec["visits"]))
                 if guild is None or guild<0 or eff<=0 or Fh<=0:continue
                 u=urban.get(site);f=richness.get(site)
@@ -201,7 +209,7 @@ def main():
                 if x["p_unadjusted"] is not None:
                     all_tests.append((p,x["label"],x["p_unadjusted"]))
             print("PLANT",p,res,flush=True)
-        # Benjamini-Hochberg across eight descriptive comparisons; tests
+        # Benjamini-Hochberg across all descriptive comparisons; tests
         # are correlated and not independently preregistered research claims.
         ordered=sorted(all_tests,key=lambda x:x[2])
         q=1.
@@ -209,7 +217,7 @@ def main():
             p,label,pval=ordered[i]
             q=min(q,pval*len(ordered)/(i+1))
             for x in report["by_plant"][p]["visit_rate_comparisons"]:
-                if x["label"]==label:x["q_BH_over_eight_correlated_descriptives"]=round(q,6)
+                if x["label"]==label:x["q_BH_over_all_correlated_descriptives"]=round(q,6)
         report["status"]="success"
     except Exception as e:
         report["error"]=type(e).__name__+": "+str(e)
