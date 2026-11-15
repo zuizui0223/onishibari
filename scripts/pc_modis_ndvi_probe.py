@@ -5,7 +5,7 @@ This tests remote sensing access and QA, NOT any ecological hypothesis. Dates
 2013-02/08 are arbitrary habitat snapshots, NOT pollen experiment dates.
 """
 from collections import defaultdict
-import csv, datetime as dt, hashlib, json, math, os, time
+import csv, datetime as dt, hashlib, json, math, os, time, re
 from pathlib import Path
 import planetary_computer
 from pystac_client import Client
@@ -56,16 +56,24 @@ def observe(client,r,day):
       bbox=[lon-0.015,lat-0.015,lon+0.015,lat+0.015],
       datetime=start+"/"+end,max_items=32).items())
     if not items:raise RuntimeError("STAC has no items for this point/date")
+    def image_date(i):
+        if i.datetime is not None:
+            return i.datetime.date()
+        for field in ("start_datetime","end_datetime","datetime"):
+            value=i.properties.get(field)
+            if value: return dt.date.fromisoformat(value[:10])
+        m=re.search(r"A(20\\d{2})(\\d{3})",i.id)
+        if m: return dt.date(int(m.group(1)),1,1)+dt.timedelta(days=int(m.group(2))-1)
+        raise ValueError("MODIS STAC item lacks date: "+i.id)
     def rank(i):
         terra=0 if i.id.startswith("MOD13Q1") or str(i.properties.get("platform")).lower()=="terra" else 1
-        gap=abs((i.datetime.date()-date).days) if i.datetime else 1000
-        return terra,gap,i.id
+        return terra,abs((image_date(i)-date).days),i.id
     item=min(items,key=rank)
     values={v:extract(item,asset,lon,lat) for v,asset in ASSETS.items()}
     good=values["QA"] in [0,1]
     return dict(species=r["species"],sex_system=r["sex_system"],
         GloPL_species_median_PL=r["median_pl_effect"],latitude=lat,longitude=lon,
-        requested_date=day,image_date=str(item.datetime.date()),
+        requested_date=day,image_date=str(image_date(item)),
         stac_item=item.id,platform=item.properties.get("platform"),
         QA_reliability=values["QA"],QA_acceptable=good,
         NDVI=(values["NDVI"]*0.0001 if good and values["NDVI"] is not None and -2000<=values["NDVI"]<=10000 else None),
