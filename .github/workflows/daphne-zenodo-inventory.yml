@@ -1,0 +1,31 @@
+name: Inventory 2026 Thymelaeaceae nuclear phylogenomic data
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/daphne-comparative-2026-11-15]
+    paths:
+      - scripts/zenodo_phylogeny_inventory.py
+      - .github/workflows/daphne-zenodo-inventory.yml
+
+permissions:
+  contents: read
+
+jobs:
+  survey-public-phylogeny:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tree parser
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install --quiet biopython
+      - name: Inventory Zenodo dataset and check actual inclusion of P C K
+        run: .venv/bin/python scripts/zenodo_phylogeny_inventory.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-2026-family-hybseq-inventory
+          path: analysis_results_zenodo_thymelaeaceae/
+          if-no-files-found: warn
