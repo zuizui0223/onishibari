@@ -132,8 +132,8 @@ def main():
                 for ix,siteid in enumerate(coords):
                     qa=vals["QA"][ix]
                     ndvi=vals["NDVI"][ix];evi=vals["EVI"][ix]
-                    if qa in (0,1) and ndvi is not None and evi is not None and
-                          -2000<=ndvi<=10000 and -2000<=evi<=10000:
+                    if (qa in (0,1) and ndvi is not None and evi is not None and
+                            -2000<=ndvi<=10000 and -2000<=evi<=10000):
                         observations[siteid][str(date(item))]=(ndvi*.0001,evi*.0001)
                         nvalid+=1
                 image_counts[item.id]={"scene_start_date":str(date(item)),
