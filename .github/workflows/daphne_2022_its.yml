@@ -2,9 +2,9 @@ name: Published Daphne nrITS 2022 accession audit
 on:
   push:
     branches: [research/onishibari-sex-system-20261114]
-    paths: ['analysis/acquire_daphne_2022_ITS.py', 'analysis/check_kiusiana_its_resolution.py', '.github/workflows/daphne_2022_its.yml']
+    paths: ['analysis/acquire_daphne_2022_ITS.py', 'analysis/check_kiusiana_its_resolution.py', 'analysis/audit_Daphne_ITS24_duplicate_patterns.py', '.github/workflows/daphne_2022_its.yml']
   pull_request:
-    paths: ['analysis/acquire_daphne_2022_ITS.py', 'analysis/check_kiusiana_its_resolution.py', '.github/workflows/daphne_2022_its.yml']
+    paths: ['analysis/acquire_daphne_2022_ITS.py', 'analysis/check_kiusiana_its_resolution.py', 'analysis/audit_Daphne_ITS24_duplicate_patterns.py', '.github/workflows/daphne_2022_its.yml']
   workflow_dispatch: {}
 
 permissions:
@@ -29,6 +29,12 @@ jobs:
           python3 analysis/check_kiusiana_its_resolution.py \
             --raw data/derived/lee2022_ITS_evidence/published_2022_ITS.fasta \
             --output data/derived/lee2022_ITS_evidence/kiusiana_original_marker_variation.json
+      - name: Confirm 24-record dataset includes only nine unique ITS sequence patterns
+        run: |
+          python3 analysis/audit_Daphne_ITS24_duplicate_patterns.py --self-test
+          python3 analysis/audit_Daphne_ITS24_duplicate_patterns.py \
+            --lee data/derived/lee2022_ITS_evidence/published_2022_ITS.fasta \
+            --out data/derived/lee2022_ITS_evidence/ITS24_haplotype_audit
       - name: Save original sequence metadata and explicit failures
         if: always()
         uses: actions/upload-artifact@v4
