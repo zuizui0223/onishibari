@@ -56,10 +56,15 @@ def main():
             result["files"]=[dict(path=i.filename,bytes=i.file_size) for i in infos]
             for info in infos:
                 if info.filename.lower().endswith(".csv") and info.file_size<=20_000_000:
-                    if "site_coordinates" in info.filename: 
-                        # Never process precise coordinates for display.
-                        result["csv_profiles"].append(dict(file=info.filename,columns_redacted=True,
-                             description="Private garden geolocations: deliberately not exported"))
+                    if "site_coordinates" in info.filename:
+                        # Read source schema only, never output location values.
+                        text=zipf.read(info).decode("utf-8-sig",errors="replace")
+                        reader=csv.DictReader(io.StringIO(text))
+                        colnames=reader.fieldnames or []
+                        n_rows=sum(1 for _ in reader)
+                        result["csv_profiles"].append(dict(file=info.filename,rows=n_rows,
+                             columns=colnames,location_values_redacted=True,
+                             description="Only header and row count; private garden coordinates not exported"))
                         continue
                     result["csv_profiles"].append(meta_for_csv(zipf.read(info),info.filename))
         result["status"]="success"
