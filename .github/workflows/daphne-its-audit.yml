@@ -31,7 +31,7 @@ jobs:
           IQ=""
           if command -v iqtree2; then IQ=iqtree2; elif command -v iqtree; then IQ=iqtree; fi
           if [ -z "$IQ" ]; then echo "IQ-TREE unavailable, ML sensitivity skipped"; exit 0; fi
-          for O in O1 O2; do
+          for O in O1 O2 O3 O4; do
             "$IQ" -s "analysis_results/quartet_"$O"_aligned.fa" \
               -m GTR+F+I+G4 -B 1000 -alrt 1000 -T 2 \
               -pre "analysis_results/quartet_"$O"_ml"
