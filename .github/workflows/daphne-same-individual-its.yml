@@ -48,6 +48,25 @@ jobs:
           samtools index analysis_results_same_individual/C2025_mapped.bam
       - name: Count nrITS repeat-pileup and compare diagnostic sites between 2023 and 2025 specimens
         run: .venv/bin/python scripts/daphne_same_individual_its.py
+      - name: Positive control - map same reads to voucher ON244034 plastome
+        run: |
+          .venv/bin/python - <<'PY'
+          import sys
+          sys.path.insert(0,"scripts")
+          from daphne_its_audit import fetch,write_fasta
+          from pathlib import Path
+          h,s=fetch("ON244034")
+          write_fasta(Path("analysis_results_same_individual/C2023_plastome_reference.fa"),[("C_plastome",s)])
+          PY
+          bowtie2-build analysis_results_same_individual/C2023_plastome_reference.fa analysis_results_same_individual/plastome_index
+          bowtie2 --very-sensitive-local -p 4 -x analysis_results_same_individual/plastome_index \
+            -1 fastq/SRR19117239_1.fastq -2 fastq/SRR19117239_2.fastq \
+            2> analysis_results_same_individual/bowtie2_plastome_positive_control.txt |
+            samtools view -b -F 4 - |
+            samtools sort -@ 2 -o analysis_results_same_individual/plastome_mapped.bam -
+          samtools flagstat analysis_results_same_individual/plastome_mapped.bam \
+            > analysis_results_same_individual/plastome_flagstat.txt
+          cat analysis_results_same_individual/bowtie2_plastome_positive_control.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -57,4 +76,6 @@ jobs:
             analysis_results_same_individual/C2023_recovered_consensus_masked.fa
             analysis_results_same_individual/C2023_ITS_base_counts.tsv
             analysis_results_same_individual/bowtie2_mapping_log.txt
+            analysis_results_same_individual/bowtie2_plastome_positive_control.txt
+            analysis_results_same_individual/plastome_flagstat.txt
           if-no-files-found: warn
