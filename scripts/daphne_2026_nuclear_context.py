@@ -48,7 +48,9 @@ def splits(t,interest):
         if len(leafset)==2:
             complement=present-leafset
             if len(complement)==2:
-                parts.add(tuple(sorted((tuple(sorted(leafset)),tuple(sorted(complement)))))
+                a=tuple(sorted(leafset))
+                b=tuple(sorted(complement))
+                parts.add(tuple(sorted((a,b))))
     if len(parts)==1:return next(iter(parts))
     return "UNRESOLVED" if not parts else "CONFLICTING"
 
