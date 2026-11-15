@@ -1,0 +1,60 @@
+name: Daphne 2023 plastome specimen nuclear ITS retrieval
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/daphne-comparative-2026-11-15]
+    paths:
+      - scripts/daphne_same_individual_its.py
+      - .github/workflows/daphne-same-individual-its.yml
+
+permissions:
+  contents: read
+
+jobs:
+  recover-nuclear-its:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install alignment and SRA tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y sra-toolkit bowtie2 samtools mafft
+          python3 -m venv .venv
+          .venv/bin/pip install --quiet pysam
+          mkdir -p analysis_results_same_individual fastq
+      - name: Fetch 2023 Korean plastome specimen raw whole-DNA reads
+        run: |
+          prefetch SRR19117239 --max-size 1G
+          fasterq-dump SRR19117239 --split-files --threads 4 --temp ./ --outdir fastq
+          ls -lh fastq/SRR19117239_*.fastq
+      - name: Fetch nrITS reference, index and align total DNA reads
+        run: |
+          .venv/bin/python - <<'PY'
+          import sys
+          sys.path.insert(0,"scripts")
+          from daphne_its_audit import fetch,write_fasta
+          from pathlib import Path
+          h,s=fetch("PX056848")
+          write_fasta(Path("analysis_results_same_individual/C2025_reference.fa"),[("C2025",s)])
+          PY
+          bowtie2-build analysis_results_same_individual/C2025_reference.fa analysis_results_same_individual/nrITS_index
+          bowtie2 --very-sensitive-local -p 4 -x analysis_results_same_individual/nrITS_index \
+            -1 fastq/SRR19117239_1.fastq -2 fastq/SRR19117239_2.fastq \
+            2> analysis_results_same_individual/bowtie2_mapping_log.txt |
+            samtools view -b -F 4 - |
+            samtools sort -@ 2 -o analysis_results_same_individual/C2025_mapped.bam -
+          samtools index analysis_results_same_individual/C2025_mapped.bam
+      - name: Count nrITS repeat-pileup and compare diagnostic sites between 2023 and 2025 specimens
+        run: .venv/bin/python scripts/daphne_same_individual_its.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-2023-same-individual-nrits-pileup
+          path: |
+            analysis_results_same_individual/same_individual_nrits_audit.json
+            analysis_results_same_individual/C2023_recovered_consensus_masked.fa
+            analysis_results_same_individual/C2023_ITS_base_counts.tsv
+            analysis_results_same_individual/bowtie2_mapping_log.txt
+          if-no-files-found: warn
