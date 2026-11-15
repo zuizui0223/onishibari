@@ -1,0 +1,27 @@
+name: Exploratory PL vs sexual-system coverage, by experiment grain
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/pollen_limitation_sex_system_pilot.py
+      - .github/workflows/angiosperm-pl-systems.yml
+
+permissions:
+  contents: read
+
+jobs:
+  separate-evidence-types:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - name: Re-fetch GloPL and Wang sexual systems, stratify, summarize without pseudo-replication
+        run: python3 scripts/pollen_limitation_sex_system_pilot.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-pl-sexual-system-descriptive-pilot
+          path: analysis_results_pl_pilot/
+          if-no-files-found: warn
