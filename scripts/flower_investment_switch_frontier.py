@@ -123,7 +123,7 @@ def test(t: Params):
     higher_male=optimize(((.4,1.0),),t,3.0)["integer_F"]
     assert higher_male>baseline
     # Separate real structural display from paternity outcome.
-    assert paternal(16,t)/paternal(2,t)==(16/2)**t.male_exponent
+    assert math.isclose(paternal(16,t)/paternal(2,t), (16/2)**t.male_exponent, rel_tol=1e-12)
     print("SELF_TEST_OK",{
         "analytic_discrete_optimum_close":True,
         "jensen_verified_grid":True,
