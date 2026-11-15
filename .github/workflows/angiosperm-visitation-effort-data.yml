@@ -1,0 +1,27 @@
+name: Audit 2025 visitation-effort and pollination-success source data
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/visitation_2025_dataset_audit.py
+      - .github/workflows/angiosperm-visitation-effort-data.yml
+
+permissions:
+  contents: read
+
+jobs:
+  source-columns:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect quantitative visitor effort and reproductive outputs; redact site coordinates
+        run: python3 scripts/visitation_2025_dataset_audit.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-2025-pollinator-visitation-effort-metadata
+          path: analysis_results_pollinator_scarcity/
+          if-no-files-found: warn
