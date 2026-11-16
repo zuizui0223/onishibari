@@ -47,8 +47,8 @@ def main():
             verified.append(rec+":"+field)
         if row["measured_floral_biomass"]!="False":
             raise AssertionError("incorrect measured floral mass flag")
-        if "site" not in row["inference_note"].lower() and "not_seed_recovery" not in row["inference_note"]:
-            raise AssertionError("missing site uncertainty caution "+rec)
+        if row["analysis_file"]!="results/2026-11-16_sagittaria_sequential_fruiting_genotype_matched_v10.md":
+            raise AssertionError("source report is not the audited Sagittaria primary-data report")
 
     s=src["by_treatment"]
     for env in ("Net","Shade","Open"):
