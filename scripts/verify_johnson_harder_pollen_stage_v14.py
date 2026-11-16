@@ -28,7 +28,7 @@ def main():
     assert a["families_by_species_sample_size"]["Orchidaceae"]==111
     assert a["families_by_species_sample_size"]["Apocynaceae"]==53
     assert y["cross_paper_taxon_overlap"]["n_exact_binomial_matches"]==49
-    assert y["cross_paper_taxon_overlap"]["n_unique_51_taxa"]==51
+    assert y["cross_paper_taxon_overlap"]["n_51_nonambiguous_names"]==51
     assert y["cross_paper_taxon_overlap"]["PTE_source_disagreement"]["n_more_than_10pct_relative_disagreement"]==1
     assert REPORT.exists() and "physical" in REPORT.read_text().lower()
     data=list(csv.DictReader(LED.open(encoding="utf-8",newline="")))
