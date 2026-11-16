@@ -27,7 +27,10 @@ def dryad():
     with urllib.request.urlopen(req,timeout=70) as r:b=r.read(800000)
     with zipfile.ZipFile(io.BytesIO(b)) as z:inner=z.read("PTE_PO_data.zip")
     if hashlib.sha256(inner).hexdigest()!=ZSHA:raise ValueError("published inner source changed")
-    with zipfile.ZipFile(io.BytesIO(inner)) as z:csvbytes=z.read("PTE_PO_data_matched.csv")
+    with zipfile.ZipFile(io.BytesIO(inner)) as z:
+        matches=[i for i in z.infolist() if Path(i.filename).name=="PTE_PO_data_matched.csv"]
+        if len(matches)!=1:raise ValueError("expected one published original species CSV in nested archive")
+        csvbytes=z.read(matches[0])
     if hashlib.sha256(csvbytes).hexdigest()!=CSHA:raise ValueError("original 51-species source changed")
     d=pd.read_csv(io.BytesIO(csvbytes))
     if len(d)!=51 or not {"genusGBIF","speciesGBIF","familyGBIF","PTE","Pollen","Ovules","PO"}<=set(d):
