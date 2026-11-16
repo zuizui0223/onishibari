@@ -39,7 +39,7 @@ def read():
     d["total"]=pd.to_numeric(d.FlowerNo,errors="raise")
     assert d["count"].isna().sum()==9
     assert d["count"].dropna().ge(0).all()
-    assert d["count"].le(d["total"]).fillna(True).all()
+    assert (d["count"].isna() | d["count"].le(d["total"])).all()
     assert d.total.gt(0).all()
     # Original date source is M/D with NO calendar year; don't interpret as actual year 0001.
     def day(s):
