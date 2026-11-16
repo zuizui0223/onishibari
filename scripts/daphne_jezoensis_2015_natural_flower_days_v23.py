@@ -124,6 +124,6 @@ def main():
       "abs_flower_days_are_display_not_paternal_fitness":True,
       "no_Daphne_pseudomezereum_functional_sex_inferred":True}
     file=OUT/"daphne_2015_166_FH_seasonal_open_days_v23.json"
-    file.write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n")
-    print("DAPHNE_2015_NATURAL_FLOWER_DAYS_V23",json.dumps(out,ensure_ascii=False),flush=True)
+    file.write_text(json.dumps(out,ensure_ascii=False,indent=2,default=lambda x:x.item() if hasattr(x,"item") else str(x))+"\n")
+    print("DAPHNE_2015_NATURAL_FLOWER_DAYS_V23",json.dumps(out,ensure_ascii=False,default=lambda x:x.item() if hasattr(x,"item") else str(x)),flush=True)
 if __name__=="__main__":main()
