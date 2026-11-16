@@ -20,7 +20,7 @@ OUT=Path("analysis_results_silene_clarkia_design_v08");OUT.mkdir(exist_ok=True)
 STUDIES={
 "Silene_dioica_2022":{"version":251371,"doi":"10.5061/dryad.0rxwdbs4d",
  "expected":{"allFruits_FloDis.txt":"9165c2c3c80d234b6395e91147d8f20a85fe210d0a76f28767e11b8790178bb2",
- "dataID_FloDis.txt":"1d245bb2dd6222bdaa05b0e23521eafd286cfa533b3826f8a5d8a65f715d3f9",
+ "dataID_FloDis.txt":"1d245bb2dd6222bdaa05b0e23521eafd286cfa533b3826f8a5d8a65f715d3f9a",
  "paternity_FloDis.txt":"2b440e3fad9cfd2801cba56e9de9941d13f4ee936cb9a79938d22610e62050b9",
  "README.md":"2456c5c16aec6bfc398dede02e0d99e7e3940cf607b4efdbcfa0892abfd8bfda"}},
 "Clarkia_four_species_2024":{"version":332601,"doi":"10.5061/dryad.k3j9kd56r",
