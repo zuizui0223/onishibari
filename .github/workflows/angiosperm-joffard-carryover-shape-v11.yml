@@ -1,0 +1,33 @@
+name: Original 2026 Silene pollen carryover shape: held-out-bee validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/joffard2026_pollen_carryover_shape_cv_v11.py
+      - .github/workflows/angiosperm-joffard-carryover-shape-v11.yml
+
+permissions:
+  contents: read
+
+jobs:
+  independently-held-out-bumblebees:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install source-model dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy statsmodels
+      - name: Compare original 25-bumblebee pollen-carryover model shapes
+        run: .venv/bin/python scripts/joffard2026_pollen_carryover_shape_cv_v11.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: silene2026-bee-heldout-pollen-carryover-shape-v11
+          path: analysis_results_pollen_carryover_shape_v11/
+          retention-days: 30
+          if-no-files-found: warn
