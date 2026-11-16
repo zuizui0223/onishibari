@@ -1,0 +1,29 @@
+name: "Daphne 2018 fruiting versus 2020 future floral display source diagnostic v0.35"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_jezoensis_2018_2020_lagged_fruiting_cost_v35.py
+      - .github/workflows/daphne-lagged-fruit-cost-v35.yml
+permissions:
+  contents: read
+jobs:
+  source-reproduction-lag:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install data environment
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy
+      - name: Audit sex-separated lag, baseline adjustment, small-n uncertainty
+        run: .venv/bin/python scripts/daphne_jezoensis_2018_2020_lagged_fruiting_cost_v35.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-2018-fruiting-to-2020-flowering-lag-diagnostic-v35
+          path: analysis_results_daphne_lagged_fruiting_v35/
+          retention-days: 30
+          if-no-files-found: warn
