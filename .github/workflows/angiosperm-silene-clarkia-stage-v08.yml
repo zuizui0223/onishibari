@@ -7,6 +7,9 @@ on:
       - research/angiosperm-reproductive-decoupling-20261115
     paths:
       - scripts/silene_clarkia_original_stage_refit_v08.py
+      - scripts/verify_silene_clarkia_stage_ledger_v08.py
+      - data/2026-11-15_stage_transition_evidence_v02.csv
+      - results/2026-11-16_silene_clarkia_original_multistage_refit_v08.md
       - .github/workflows/angiosperm-silene-clarkia-stage-v08.yml
 
 permissions:
@@ -24,6 +27,8 @@ jobs:
           .venv/bin/pip install -q numpy pandas statsmodels
       - name: Refit original individual experimental contrasts with honest biological denominators
         run: .venv/bin/python scripts/silene_clarkia_original_stage_refit_v08.py
+      - name: Verify manuscript evidence values against freshly rerun original source
+        run: .venv/bin/python scripts/verify_silene_clarkia_stage_ledger_v08.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
