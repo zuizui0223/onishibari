@@ -31,6 +31,8 @@ Outcome **log(1 + counted grains deposited on stigma)**; each predictor is cente
 - The latter early kink model has first→second change in log(1+grains) **−1.4096 [−2.1898,−.6294]**, and each subsequent step **−.24635 [−.34843,−.14427]**, fitted with bee-cluster robust uncertainty. It is a viable *description*, **not** a uniquely inferred mechanistic threshold.
 - Power-like curve has within-bee slope for log(sequence ordinal) **−1.31392 [−1.66879,−.95906]**. This is about the transformed outcome, **not** proof the arithmetic mean pollen count follows a literal power law of exponent 1.314.
 
+**Original recipient-plant sensitivity:** The experiment also sampled stigmas from **51 different recipient female plants**. Removing the one bee-position cell whose two records had ambiguous recipient identity and adding both recipient-plant and bumblebee **fixed intercepts** leaves 184 source units; the visit-order log-slope remains **−1.4559** (bee-cluster 95%CI **[−2.1613,−0.7504]**, p≈5.24×10^−5). Thus the declining pollen delivery is not solely attributable to fixed baseline differences among recipient females in this sensitivity model. Recipient plants and pollinators still form crossed group structures and uncertainty was clustered by bee only. It remains an observational sensitivity within the controlled sequence, not evidence of stigma compatibility or later seed set.
+
 All these are analyses of a single source study, **not four phylogenetically independent replications**.
 
 ### Zero-grain risk, independent supporting endpoint
