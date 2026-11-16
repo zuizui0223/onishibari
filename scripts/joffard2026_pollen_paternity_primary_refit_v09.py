@@ -61,6 +61,10 @@ def pollen():
     x=load("pollen")
     required=["pollinator_ID","position_of_the_flower_in_the_sequence","female_plant_ID","number_of_pollen_grains"]
     if list(x.columns)!=required:raise ValueError("unexpected pollen schema "+str(list(x.columns)))
+    # Patsy/statsmodels categorical formula terms require ordinary Python
+    # object strings, not pandas StringDtype, with some runner versions.
+    x["pollinator_ID"]=x["pollinator_ID"].astype(str)
+    x["female_plant_ID"]=x["female_plant_ID"].astype(str)
     x["pos"]=pd.to_numeric(x[required[1]],errors="coerce")
     x["grains"]=pd.to_numeric(x["number_of_pollen_grains"],errors="coerce")
     if x[required].isna().any().any() or x.pos.isna().any() or x.grains.isna().any():raise ValueError("missing pollen source")
