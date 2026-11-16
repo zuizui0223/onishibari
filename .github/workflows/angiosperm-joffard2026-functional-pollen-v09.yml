@@ -1,0 +1,29 @@
+name: Silene 2026 pollen carryover and genetic paternity original data analysis
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/joffard2026_pollen_carryover_paternity_v09.py
+      - .github/workflows/angiosperm-joffard2026-functional-pollen-v09.yml
+permissions:
+  contents: read
+jobs:
+  bumblebee-pollen-carryover-and-maternal-paternity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pollen/paternity analysis dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy statsmodels
+      - name: Analyze independent natural paternity and controlled ten-flower pollen-carryover experiments
+        run: .venv/bin/python scripts/joffard2026_pollen_carryover_paternity_v09.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: joffard2026-original-pollen-carryover-and-paternity-v09
+          path: analysis_results_joffard2026_pollen_paternity_v09/
+          retention-days: 30
+          if-no-files-found: warn
