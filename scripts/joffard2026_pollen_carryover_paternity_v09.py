@@ -26,7 +26,7 @@ GEN=np.random.default_rng(SEED)
 def load():
     d={}
     for name,(fid,sha) in FILES.items():
-        req=urllib.request.Request(ROOT+str(fid),headers={"User-Agent":"Peer-reviewed-pollen-transfer-audit-v09/0.1","Accept":"text/tab-separated-values"})
+        req=urllib.request.Request(ROOT+str(fid),headers={"User-Agent":"Peer-reviewed-pollen-transfer-audit-v09/0.1","Accept":"*/*"})
         with urllib.request.urlopen(req,timeout=80) as r:b=r.read(200000)
         if hashlib.sha256(b).hexdigest()!=sha:raise ValueError("immutable public source SHA mismatch "+name)
         txt=b.decode("utf-8-sig","replace").replace("\r\n","\n").replace("\r","\n")
