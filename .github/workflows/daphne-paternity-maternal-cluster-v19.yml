@@ -1,0 +1,29 @@
+name: "Daphne 2023 paternal dispersal versus maternal fruit cluster audit v0.19"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_jezoensis2023_paternity_maternal_cluster_v19.py
+      - .github/workflows/daphne-paternity-maternal-cluster-v19.yml
+permissions:
+  contents: read
+jobs:
+  original-paternity-distances:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install source-analysis dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas
+      - name: Reconstruct original high-confidence father distances without releasing raw rows
+        run: .venv/bin/python scripts/daphne_jezoensis2023_paternity_maternal_cluster_v19.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-2023-original-assigned-fathers-mother-cluster-v19
+          path: analysis_results_daphne_paternity_family_v19/
+          retention-days: 30
+          if-no-files-found: warn
