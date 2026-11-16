@@ -33,6 +33,18 @@ In exploratory regressions controlling genuine flower count and gametes per flow
 
 **Interpretation:** random fake visual display can increase insect attraction **without a detectable proportional improvement in viable maternal seeds or fathered offspring**, whereas observational actual flower number is associated with available reproductive substrate. This does **not locate the precise stigma-compatibility/pollen-tube bottleneck**, nor prove fake flowers are fitness-neutral.
 
+### Hand-pollen control: was female reproduction already pollen-limited?
+
+The original 2022 Silene data include **20 additional independent female plants receiving supplemental hand pollen**. AllFruits has **556 fruit records from 105 mothers**. Using the original README definition that nbOv is *unfertilized ovules*, filled seed fraction is nbSeeds/(nbSeeds+nbOv). Fruits were averaged *within each mother* before comparing group treatments, so fruits are not independent treatment units:
+
+| Female treatment | Distinct female mothers with source fruit measurements | Mean mother-level seed set |
+| --- | ---: | ---: |
+| Natural-pollen control FC | 42 | **0.6116** |
+| Fake-display FT | 43 | **0.6312** |
+| Extra compatible hand pollen FS | 20 | **0.5821** |
+
+FS minus FC: **−0.0295**, 95% independent-mother bootstrap **[−0.1113,+0.0507]**, permutation p=.459. FT minus FC: **+0.0196**, 95% bootstrap **[−0.0457,+0.0861]**, p=.564. The original authors likewise reported **no evidence for pollen limitation** in the experimental garden. This adds a crucial competing explanation: if female fruits already obtain sufficient effective pollen, attracting additional visitors need not increase seed filling. A nonsignificant result does not prove complete absence of pollen limitation or that attracted visits are inherently ineffective. FS versus FC compares **different mothers**, not a within-mother pollen intervention; sample size FS n20 limits power. Fruit seed set is different from total female viable-seed production including fruit number and germination.
+
 ## 2. Clarkia: compatible pollen addition converts to seeds in three of four species
 
 Every accepted pair represents *the same plant* and two different fruits, one control and one hand-supplemented. Treatment was assigned haphazardly, not necessarily through formal randomization. Each seed-set fraction is filled seeds per source counted or assigned ovules, from individual fruit, not whole-plant total seeds. Source 430 fruit rows -> 175 source matched pairs -> **156 with complete seed and ovule outcomes**, 38 background-design blocks. No missing records treated as 0.
