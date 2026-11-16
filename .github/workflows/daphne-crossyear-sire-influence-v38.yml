@@ -6,6 +6,8 @@ on:
       - research/angiosperm-reproductive-decoupling-20261115
     paths:
       - scripts/daphne_jezoensis_2018_2020_crossyear_sire_influence_v38.py
+      - scripts/verify_daphne_year_transfer_sire_v38.py
+      - results/2026-11-17_daphne_year_transfer_paternity_sire_influence_v38.md
       - scripts/daphne_jezoensis_2018_2020_flower_to_paternity_choice_v30.py
       - .github/workflows/daphne-crossyear-sire-influence-v38.yml
 permissions:
@@ -22,6 +24,8 @@ jobs:
           .venv/bin/pip install -q numpy pandas scipy
       - name: Transfer sire model coefficient across source years and drop one observed sire at a time
         run: .venv/bin/python scripts/daphne_jezoensis_2018_2020_crossyear_sire_influence_v38.py
+      - name: Verify exactly matched father counts, cross-year transfer, and one-sire sensitivity
+        run: .venv/bin/python scripts/verify_daphne_year_transfer_sire_v38.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
