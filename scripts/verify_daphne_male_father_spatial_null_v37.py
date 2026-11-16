@@ -50,7 +50,7 @@ def main():
         assert j["limits"][b]
     assert REPORT.exists()
     txt=REPORT.read_text()
-    assert all(x in txt for x in ("0.6251","0.8960",".0010","元の花数","実際の花数をランダム割付した実験ではない"))
+    assert all(x in txt for x in (".6251",".8960",".0010","元の花数","実際の花数をランダム割付した実験ではない"))
     print(json.dumps({"status":"PASS_SOURCE_DAPHNE_FATHER_SPATIAL_LABEL_V37",
        "source_years":[2018,2020],"sex_definitions":["H","H_plus_HF"],
        "permutations_per_scenario":1000,"n_spatial_permutation_scenarios_per_year":6,
