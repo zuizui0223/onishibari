@@ -92,13 +92,24 @@ def prepare():
         "n_total_indi_unique":int(total.indi.nunique()),
         "info_n":len(info),"n_info_id_unique":int(info.id.nunique()),
         "n_info_plantid_unique":int(info.plantid.nunique())},flush=True)
-    if total.ID.duplicated().any() or info.id.duplicated().any():
-        raise ValueError("Original canonical ID field not unique")
+    if total.ID.duplicated().any():
+        raise ValueError("Original total seeds table canonical ID unexpectedly duplicated")
+    n_ambiguous_by_name=info.groupby("id")["treatment"].nunique()
+    ambiguous=set(n_ambiguous_by_name[n_ambiguous_by_name>1].index)
+    print("SOURCE_INFO_DUPLICATION_AUDIT",{
+        "n_repeated_entries":int(info.id.duplicated().sum()),
+        "n_ambiguous_ids_with_conflicting_named_treatment":len(ambiguous),
+        "repeated_id_treatment_name_nunique_distribution":{
+           str(k):int(v) for k,v in n_ambiguous_by_name.value_counts().items()}},flush=True)
+    # Deduplicate only for the provenance mapping. The original file itself
+    # remains intact; no survival values are modified or counted as zeros.
+    info_for_mapping=info[~info.id.isin(ambiguous)].drop_duplicates("id")
     assert set(total.treatment.dropna().unique())<=set([1,2,5]),set(total.treatment.dropna().unique())
     assert set(flo.treatment.dropna().unique())<=set([1,2,5])
     # First confirm mapping numeric treatment -> site-level Net/Shade/Open
-    mapping=info.merge(total[["ID","treatment"]],left_on="id",right_on="ID",how="inner",validate="one_to_one",suffixes=("_name","_code"))
+    mapping=info_for_mapping.merge(total[["ID","treatment"]],left_on="id",right_on="ID",how="inner",validate="one_to_one",suffixes=("_name","_code"))
     ct=pd.crosstab(mapping.treatment_code,mapping.treatment_name)
+    print("SOURCE_TREATMENT_CROSSWALK",ct.to_dict(),flush=True)
     assignment={int(code):str(ct.columns[np.argmax(row.to_numpy())]) for code,row in ct.iterrows()}
     if any((row>0).sum()!=1 for _,row in ct.iterrows()) or len(set(assignment.values()))!=len(assignment):
         raise ValueError("source plant treatment mapping not one to one")
