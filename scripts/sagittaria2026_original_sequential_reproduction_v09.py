@@ -75,7 +75,7 @@ def prepare():
     info=d["plant information.csv"].copy()
     for q in [flo,total,info]:
         for c in q.columns:
-            if c.lower() in ("genotype","indi","plantid","id1"):
+            if c.lower() in ("genotype","indi","plantid","id1","id"):
                 q[c]=q[c].astype("string").str.strip()
     required_f=["ID1","ID2","treatment","xu","male","female","fruit","fruitset"]
     required_t=["genotype","indi","treatment","TFS","inflorno","femaleno","maleno","fitTFS","cormnumber"]
@@ -87,11 +87,17 @@ def prepare():
     for c in ["treatment","TFS","inflorno","femaleno","maleno","fitTFS","cormnumber"]:
         total[c]=pd.to_numeric(total[c],errors="coerce")
     info["liveor"]=pd.to_numeric(info.liveor,errors="coerce")
-    if total.indi.duplicated().any() or info.plantid.duplicated().any():raise ValueError("nonunique source plant IDs")
+    print("SOURCE_PLANT_ID_GRAIN",{
+        "total_n":len(total),"n_total_id_unique":int(total.ID.nunique()),
+        "n_total_indi_unique":int(total.indi.nunique()),
+        "info_n":len(info),"n_info_id_unique":int(info.id.nunique()),
+        "n_info_plantid_unique":int(info.plantid.nunique())},flush=True)
+    if total.ID.duplicated().any() or info.id.duplicated().any():
+        raise ValueError("Original canonical ID field not unique")
     assert set(total.treatment.dropna().unique())<=set([1,2,5]),set(total.treatment.dropna().unique())
     assert set(flo.treatment.dropna().unique())<=set([1,2,5])
     # First confirm mapping numeric treatment -> site-level Net/Shade/Open
-    mapping=info.merge(total[["indi","treatment"]],left_on="plantid",right_on="indi",how="inner",validate="one_to_one",suffixes=("_name","_code"))
+    mapping=info.merge(total[["ID","treatment"]],left_on="id",right_on="ID",how="inner",validate="one_to_one",suffixes=("_name","_code"))
     ct=pd.crosstab(mapping.treatment_code,mapping.treatment_name)
     assignment={int(code):str(ct.columns[np.argmax(row.to_numpy())]) for code,row in ct.iterrows()}
     if any((row>0).sum()!=1 for _,row in ct.iterrows()) or len(set(assignment.values()))!=len(assignment):
@@ -115,7 +121,7 @@ def main():
     }
     if len(flo)<200 or len(total)<70:raise ValueError("source sample unexpectedly low")
     # Meaning of 'xu' is sequential inflorescence order; confirm unique ID1,xu.
-    report["duplicate_plant_inflo_order"]=int(flo.duplicated(["ID1","xu"]).sum())
+    report["duplicate_plant_inflo_order"]=int(flo.duplicated(["treatment","ID1","xu"]).sum())
     report["missing_by_source"]={x:{str(k):int(z) for k,z in d.isna().sum().items() if z>0} for x,d in [("inflorescences",flo),("total",total),("plants",info)]}
     # Preserve missing fruit/female as missing rather than falsely coding failure.
     reproductive=flo.dropna(subset=["ID1","xu","female","fruit","treatment"]).copy()
@@ -125,8 +131,8 @@ def main():
     # Total source records should track genetically distinct individual clones, not inflorescences.
     reproductive["plant"]=reproductive["ID1"].astype("string")
     grouped=[]
-    for plant,g in reproductive.groupby("plant"):
-        tval=int(g.treatment.iloc[0]); gname=treatmap.get(tval,"unknown")
+    for (plant,treatment),g in reproductive.groupby(["plant","treatment"]):
+        tval=int(treatment); gname=treatmap.get(tval,"unknown")
         if g.treatment.nunique()!=1:raise ValueError("plant with multiple source treatments")
         genotype=str(g.ID2.iloc[0])
         first=g[g.xu==1];later=g[g.xu>1]
@@ -152,8 +158,9 @@ def main():
     report["n_genotypes_total"]=int(valid.genotype.nunique())
     report["genotypes_shared_between_treatments"]={
        str(k):int(v) for k,v in valid.groupby("genotype").treatment.nunique().value_counts().sort_index().items()}
-    plantdiff=frame.merge(valid[["indi","TFS","inflorno","femaleno","genotype","treatment_name"]],left_on="plant",
-                          right_on="indi",how="left",validate="one_to_one",suffixes=("","_total"))
+    plantdiff=frame.merge(valid[["indi","treatment","TFS","inflorno","femaleno","genotype","treatment_name"]],
+                          left_on=["plant","treatment_code"],right_on=["indi","treatment"],
+                          how="left",validate="one_to_one",suffixes=("","_total"))
     report["repro_plants_to_total_matched"]=int(plantdiff.TFS.notna().sum())
     if int(plantdiff.TFS.notna().sum())<60:raise ValueError("too many original plant-to-total mismatches")
     # Genotype-stratified summaries by environment, separately single vs multi inflorescence plants.
