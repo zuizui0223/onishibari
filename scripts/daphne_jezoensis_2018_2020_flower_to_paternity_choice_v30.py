@@ -42,7 +42,7 @@ LAMBDAS=(5.,10.,20.)
 def val(x):
     x=float(x)
     return round(x,6) if np.isfinite(x) else None
-def build(year,files):
+def build(year,files,include_HF=False):
     raw=files[FILENAMES[year]]
     adult=files["GenetID_geno_phenotype_1820Nopadult_211109.csv"]
     assert len(raw)==(257 if year==2018 else 327)
@@ -57,8 +57,9 @@ def build(year,files):
     ad["y"]=pd.to_numeric(ad["North.g"],errors="coerce")
     ad["flower"]=pd.to_numeric(ad[flowercol],errors="coerce")
     ad["sexcode"]=ad[sexcol].astype(str)
-    eligible=ad[(ad.sexcode=="H")&ad.flower.gt(0)&ad.x.notna()&ad.y.notna()].copy()
-    assert len(eligible)==(105 if year==2018 else 71)
+    sex_candidate_codes=["H","HF"] if include_HF else ["H"]
+    eligible=ad[(ad.sexcode.isin(sex_candidate_codes))&ad.flower.gt(0)&ad.x.notna()&ad.y.notna()].copy()
+    assert len(eligible)==((108 if year==2018 else 79) if include_HF else (105 if year==2018 else 71))
     eligible=eligible.reset_index(drop=True)
     assert eligible.genet.nunique()==len(eligible)
     raw=raw.copy()
@@ -76,8 +77,8 @@ def build(year,files):
     j=j.merge(father_ad,on="Father_key",how="left",validate="m:1")
     assert len(j)==len(assigned)
     assert j[["mx","my","fx","fy","father_sex"]].notna().all().all()
-    father_H=j[j.father_sex.eq("H")].copy()
-    assert len(father_H)==(180 if year==2018 else 227)
+    father_H=j[j.father_sex.isin(sex_candidate_codes)].copy()
+    assert len(father_H)==((183 if year==2018 else 235) if include_HF else (180 if year==2018 else 227))
     father_H["eligible"]=father_H.Father_key.isin(eligible.genet)
     rows=father_H[father_H.eligible].copy()
     # Exact unit: each row is confidently assigned offspring; repeats within
@@ -107,6 +108,7 @@ def build(year,files):
     logflower=np.log(eligible.flower.to_numpy(float))
     qc={
       "year":year,
+      "candidate_sex_codes":sex_candidate_codes,
       "original_seed_rows":len(raw),
       "original_95percent_assigned_rows":len(assigned),
       "assigned_to_H_sex_code":len(father_H),
