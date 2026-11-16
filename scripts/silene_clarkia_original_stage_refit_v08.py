@@ -18,7 +18,7 @@ Statistics are exploratory; same-genus Clarkia species not independent clades.
 """
 from __future__ import annotations
 from collections import Counter
-import hashlib,io,json,math,urllib.request,zipfile
+import hashlib,io,json,math,urllib.request,zipfile,copy
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -219,6 +219,7 @@ def silene():
     # Published female hand-cross positive control is essential: a null
     # dummy-display seed response can mean already adequate natural pollen,
     # rather than failed transport on newly attracted insects.
+    silene_rng_checkpoint=copy.deepcopy(RNG.bit_generator.state)
     fruit=files["allFruits_FloDis.txt"].copy()
     fruit["group"]=fruit.ID.astype("string").str.extract(r"^([A-Za-z]+)",expand=False)
     numeric(fruit,["nbSeeds","nbOv"])
@@ -247,6 +248,9 @@ def silene():
         "denominator":"source README says nbOv is unfertilized ovules; denominator nbSeeds+nbOv",
         "hand_pollen_controls_are_different_female_plants_not_within_mother_pairs":True,
         "source_method":"hand pollination tested absence/presence of pollen limitation; not a source of visit counts"}
+    # Keep prior Clarkia Monte Carlo draws unchanged across addition of this
+    # independent Silene positive-control check (no selective CI drift).
+    RNG.bit_generator.state=silene_rng_checkpoint
     p=files["paternity_FloDis.txt"].copy()
     moms=set(df.loc[df.group.isin(["FC","FT","FS"]),"ID"].astype(str))
     fathers=set(df.loc[df.group.isin(["MC","MT"]),"ID"].astype(str))
