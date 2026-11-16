@@ -1,0 +1,33 @@
+name: Joffard 2026 independent Silene pollen carryover and paternal diversity refit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/joffard2026_pollen_paternity_primary_refit_v09.py
+      - .github/workflows/angiosperm-joffard2026-original-stage-v09.yml
+
+permissions:
+  contents: read
+
+jobs:
+  bee-and-maternal-cluster-inference:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install cluster-robust modeling dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy statsmodels
+      - name: Fit within-bee pollen deposition and between-mother paternal diversity
+        run: .venv/bin/python scripts/joffard2026_pollen_paternity_primary_refit_v09.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: joffard2026-original-sequenced-pollen-and-mother-cluster-paternity
+          path: analysis_results_joffard2026_original_refit_v09/
+          if-no-files-found: warn
+          retention-days: 30
