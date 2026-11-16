@@ -23,6 +23,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
+from scipy.stats import norm
 
 OUT=Path("analysis_results_silene_clarkia_stage_v08");OUT.mkdir(exist_ok=True)
 N_BOOT=3500
@@ -223,7 +224,10 @@ def clarkia():
                 "control_seedset":float(con.n_seed/con.n_ovule),
                 "supp_ovules":float(supp.n_ovule),"control_ovules":float(con.n_ovule),
                 "any_assigned_ovule":bool((g.n_ovule_assigned==1).any()),
-                "any_herbivory":bool((g.herbivory==1).any())})
+                "any_herbivory":bool((g.herbivory==1).any()),
+                "bg_Cwt":float(con.bg_Cwt) if pd.notna(con.bg_Cwt) else float("nan"),
+                "n_grass":float(con.n_grass) if pd.notna(con.n_grass) else float("nan"),
+                "n_forb":float(con.n_forb) if pd.notna(con.n_forb) else float("nan")})
         elif len(g)==1 and g.treatment.iloc[0]=="cont_seed":stats["controls_only"]+=1
         else:stats["unrecognized_group"]+=1
     p=pd.DataFrame(pairs)
@@ -286,7 +290,48 @@ def clarkia():
     q=bh_adjust([v for _,v in pvals])
     for i,(sp,_) in enumerate(pvals):
         report["outcome_by_species"][sp]["exploratory_BH_q_over_four_species"]=val(q[i])
-    report["boundary_note"]="Fruit-level pollen supplementation estimates cannot be scaled to plant lifetime offspring without total seed counts on unsupplemented and entirely supplemented plants."
+    # Does an individual's REAL flower count moderate the *within-genet*
+    # improvement from supplementing only one flower? Size is observational.
+    # Paired design requires >=2 flower opportunities, so no 1-flower inference.
+    p["lnF_centered"]=np.log1p(p.n_flower)-p.groupby("species").n_flower.transform(
+        lambda z: np.log1p(z).mean())
+    formula="delta_seedset ~ C(species)*lnF_centered"
+    m=smf.ols(formula,data=p).fit(cov_type="cluster",cov_kwds={"groups":p.block})
+    def slopes(model,term):
+        out={}
+        index=list(model.params.index)
+        cov=model.cov_params().to_numpy()
+        for sp in ("C","S","U","X"):
+            v=np.zeros(len(index))
+            v[index.index(term)]=1
+            interact=f"C(species)[T.{sp}]:{term}"
+            if interact in index:v[index.index(interact)]+=1
+            b=float(v@model.params.to_numpy())
+            se=float(np.sqrt(v@cov@v))
+            pv=float(2*norm.sf(abs(b/se))) if se>0 else None
+            out[sp]={"slope_per_ln1p_real_flower":val(b),
+                "cluster_95":[val(b-1.96*se),val(b+1.96*se)],
+                "p":val(pv),"n_pairs":int((p.species==sp).sum()),
+                "real_flower_number_not_randomized":True}
+        return out
+    moderation={
+       "n_pairs":len(p),"n_blocks":int(p.block.nunique()),
+       "source_eligibility":"paired data require at least two reproductive flowers on plant; 80 control-only rows are excluded, and 19 additional pairs have incomplete seed/ovule outcomes",
+       "unadjusted_block_cluster":slopes(m,"lnF_centered"),
+       "formula_unadjusted":formula,
+       "model_R2":val(m.rsquared),
+       "four_species_not_independent_evolutionary_origins":True,
+       "no_individual_paternity_or_floral_biomass":True}
+    # Modest local-community context sensitivity (no causal identification).
+    p2=p.dropna(subset=["bg_Cwt","n_grass","n_forb"]).copy()
+    p2=p2[p2.bg_Cwt>=0]
+    if len(p2)>=120:
+        m2=smf.ols(formula+" + np.log1p(bg_Cwt) + n_grass + n_forb",
+             data=p2).fit(cov_type="cluster",cov_kwds={"groups":p2.block})
+        moderation["habitat_adjusted_block_cluster"]=slopes(m2,"lnF_centered")
+        moderation["habitat_adjusted_n_pairs"]=len(p2)
+    report["observational_flower_number_moderation_of_pollen_addition"]=moderation
+        report["boundary_note"]="Fruit-level pollen supplementation estimates cannot be scaled to plant lifetime offspring without total seed counts on unsupplemented and entirely supplemented plants."
     report["species_not_independent_phylogenetic_replicates"]=True
     return report
 
