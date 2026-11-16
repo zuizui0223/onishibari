@@ -137,6 +137,7 @@ def build(year,files,include_HF=False):
     return {"year":year,"counts":counts,"distance":distance,
             "logflowers":logflower,"qc":qc,
             "private_mother_xy":mother_xy,
+            "private_candidate_father_xy":xy,
             "private_mother_sex_codes":[str(g.mother_sex.iloc[0]) for _,g in moms]}
 
 def estimate(q,lam,weights=None,extra=False):
