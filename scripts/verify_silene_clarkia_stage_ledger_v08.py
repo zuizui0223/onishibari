@@ -15,7 +15,7 @@ def main():
     d=json.loads(SOURCE.read_text())
     rows=list(csv.DictReader(LEDGER.open(encoding="utf-8",newline="")))
     assert d["status"]=="success_original_raw_two_experiment_reanalysis"
-    assert len(rows)>=71,(len(rows),"ledger row count")
+    assert len(rows)>=73,(len(rows),"ledger row count")
     assert len(set(r["record"] for r in rows))==len(rows),"nonunique record names"
     assert d["silene_2022"]["raw_n"]==192
     assert d["clarkia_2025"]["n_complete_pairs"]==156
@@ -44,6 +44,17 @@ def main():
         chk(record,"ci_lower",src["unpaired_bootstrap_95"][0])
         chk(record,"ci_upper",src["unpaired_bootstrap_95"][1])
         chk(record,"p_unadjusted",src["two_sided_label_permutation_p"])
+    fruits=s["female_original_fruit_pollen_limitation_control"]
+    assert fruits["source_n_fruits"]==556 and fruits["n_mothers_with_valid_fruit"]==105
+    for rec,key in (
+        ("female_fullpollen_addition_vs_natural_per_fruit_seedset","hand_pollen_FS_vs_natural_FC"),
+        ("female_fake_visual_display_vs_natural_fruit_seedset","fake_display_FT_vs_natural_FC"),
+    ):
+        check=fruits[key]
+        chk(rec,"estimate",check["treatment_minus_control"])
+        chk(rec,"ci_lower",check["unpaired_bootstrap_95"][0])
+        chk(rec,"ci_upper",check["unpaired_bootstrap_95"][1])
+        chk(rec,"p_unadjusted",check["two_sided_label_permutation_p"])
     chk("real_flower_count_to_male_MEMM_siring","estimate",s["covariate_checks"]["male"]["real_flower_number"]["estimate"])
     chk("real_flower_count_to_female_viable_seed_index","estimate",s["covariate_checks"]["female"]["real_flower_number"]["estimate"])
     c=d["clarkia_2025"]
