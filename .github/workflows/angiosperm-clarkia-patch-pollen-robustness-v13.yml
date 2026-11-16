@@ -1,0 +1,33 @@
+name: "Clarkia concinna patch by pollen supply: interaction robustness and randomization blocks"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/clarkia_concinna_study5_robustness_v13.py
+      - scripts/clarkia_concinna_five_stage_refit_v13.py
+      - .github/workflows/angiosperm-clarkia-patch-pollen-robustness-v13.yml
+
+permissions:
+  contents: read
+
+jobs:
+  original-study-interaction-stress-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install study source statistics
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy statsmodels
+      - name: Evaluate treatment and patch contrast under date/site permutations
+        run: .venv/bin/python scripts/clarkia_concinna_study5_robustness_v13.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: clarkia-concinna-204-stigma-study5-specification-robustness-v13
+          path: analysis_results_clarkia_concinna_robustness_v13/
+          retention-days: 30
+          if-no-files-found: warn
