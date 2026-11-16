@@ -49,8 +49,10 @@ def familyboot(d,col):
         idx=RNG.integers(0,len(fam),len(fam))
         x=pd.concat([fam[j] for j in idx],ignore_index=True)
         if x.lnPTE.std()<1e-10:continue
-        try:r=smf.ols(f"{col} ~ lnPTE",data=x).fit().params["lnPTE"]
-        except Exception:continue
+        xv=x.lnPTE.to_numpy(float);yv=x[col].to_numpy(float)
+        center=xv-xv.mean();denom=float(np.dot(center,center))
+        if denom<1e-10:continue
+        r=float(np.dot(center,yv-yv.mean())/denom)
         if np.isfinite(r):values.append(float(r))
     return {"n_family_groups":len(fam),"n_valid":len(values),
             "CI95":val(np.quantile(values,[.025,.975])) if len(values)>BOOT*.95 else None}
