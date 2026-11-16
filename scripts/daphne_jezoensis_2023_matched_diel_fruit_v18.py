@@ -52,7 +52,10 @@ def clean(d):
     assert set(d["Treatment"])==set(GROUPS)
     assert set(d["Year"])=={2018,2020}
     assert d["Sex"].eq("F").all()
-    assert d.FruitNo.isna().sum()==8
+    d=d.copy()
+    d["FruitNo"]=pd.to_numeric(d["FruitNo"],errors="coerce")
+    d["FlowerNo"]=pd.to_numeric(d["FlowerNo"],errors="coerce")
+    assert d.FruitNo.isna().sum()==8, "8 source outcome entries require missing-value parsing"
     a=d.dropna(subset=["FlowerNo","FruitNo"]).copy()
     a["FlowerNo"]=pd.to_numeric(a.FlowerNo,errors="raise").astype(int)
     a["FruitNo"]=pd.to_numeric(a.FruitNo,errors="raise").astype(int)
@@ -177,7 +180,7 @@ def main():
      "source_original_2023_zenodo":"10.5281/zenodo.8253921",
      "zip_sha256":ZIP_SHA,"csv_sha256":SOURCE_CSV_SHA,
      "n_source_rows":len(raw),"n_rows_with_valid_mature_fruit":len(d),
-     "n_missing_fruit_excluded":int(raw.FruitNo.isna().sum()),
+     "n_missing_fruit_excluded":int(pd.to_numeric(raw.FruitNo,errors="coerce").isna().sum()),
      "n_distinct_female_ramets":int(d.RametID.nunique()),
      "n_plant_year_pairs":int(wide.shape[0]),
      "design":"same female plant receives day- and night-open on DIFFERENT inflorescences; paired maternal effect, not pollen sire effect",
