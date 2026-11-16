@@ -153,7 +153,7 @@ def study2(d):
     mself=smf.glm("self_any ~ ln_male",data=x,family=sm.families.Binomial()).fit(cov_type="HC3")
     mnear=smf.glm("neighbor_any ~ ln_male",data=x,family=sm.families.Binomial()).fit(cov_type="HC3")
     return {"source_manipulated_plant_stigmas":len(x),
-       "source_male_flower_groups":{str(int(k)):{**descriptive_group(g,[],"target dye rank")} if False else {
+       "source_male_flower_groups":{str(int(k)):{
           "n":len(g),"self_any_n":int(g.self_any.sum()),"self_any_fraction":scalar(g.self_any.mean()),
           "neighbor_any_fraction":scalar(g.neighbor_any.mean()),
           "self_rank_mean":scalar(g["target dye rank"].mean()),
@@ -259,11 +259,11 @@ def study5(d):
           "n_deposition_after_wilt":int(g.deposition_after_wilt.sum())}
     if set(x.groupby(["treatment","patch"],observed=True).size())!={34}:
         raise ValueError("source factorial arms not 34 replicates each")
-    formula="y ~ C(treatment, Treatment(reference='1')) * C(patch, Treatment(reference='large')) + st_dia + C(date)"
+    formula="y ~ C(treatment)*C(patch) + st_dia + C(date)"
     model=smf.ols(formula,data=x).fit(cov_type="HC3")
-    base6e="C(treatment, Treatment(reference='1'))[T.6e]"
-    base6="C(treatment, Treatment(reference='1'))[T.6]"
-    small="C(patch, Treatment(reference='large'))[T.small]"
+    base6e="C(treatment)[T.6e]"
+    base6="C(treatment)[T.6]"
+    small="C(patch)[T.small]"
     int6e=base6e+":"+small
     int6=base6+":"+small
     all_contrasts={
