@@ -164,6 +164,6 @@ def main():
         "not_focal_Daphne_pseudomezereum":True,
         "literal_na_is_missing_not_zero":True}}
     p=OUT/"daphne_2018_flower_opportunity_auc_source_v21.json"
-    p.write_text(json.dumps(res,ensure_ascii=False,indent=2)+"\n")
-    print("DAPHNE_FLOWER_DAYS_ORIGINAL_V21",json.dumps(res,ensure_ascii=False),flush=True)
+    p.write_text(json.dumps(res,ensure_ascii=False,indent=2,default=lambda x: x.item() if hasattr(x,"item") else str(x))+"\n")
+    print("DAPHNE_FLOWER_DAYS_ORIGINAL_V21",json.dumps(res,ensure_ascii=False,default=lambda x: x.item() if hasattr(x,"item") else str(x)),flush=True)
 if __name__=="__main__":main()
