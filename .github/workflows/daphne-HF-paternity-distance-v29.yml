@@ -5,6 +5,8 @@ on:
     branches: [research/angiosperm-reproductive-decoupling-20261115]
     paths:
       - scripts/daphne_jezoensis_2018_2020_HF_paternity_distance_v29.py
+      - scripts/verify_daphne_HF_true_paternity_local_v29.py
+      - results/2026-11-16_daphne_HF_true_paternity_local_fruit_v29.md
       - scripts/daphne_jezoensis_2018_2020_local_mate_fruit_v27.py
       - scripts/daphne_jezoensis_2018_2020_HF_fathers_v28.py
       - .github/workflows/daphne-HF-paternity-distance-v29.yml
@@ -22,6 +24,8 @@ jobs:
           .venv/bin/pip install -q numpy pandas scipy
       - name: Verify HF father distances and neighborhood sensitivity
         run: .venv/bin/python scripts/daphne_jezoensis_2018_2020_HF_paternity_distance_v29.py
+      - name: Verify source fatherhood counts, sparse-block and causal boundaries
+        run: .venv/bin/python scripts/verify_daphne_HF_true_paternity_local_v29.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
