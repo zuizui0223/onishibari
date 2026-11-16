@@ -22,7 +22,7 @@ def main():
     assert d["source_QA"]["n_duplicate_bee_positions"]==1
     assert d["held_out_bee_and_plant_ids_not_exported"] is True
     assert REPORT.exists() and "25" in REPORT.read_text() and "zero" in REPORT.read_text().lower()
-    assert len(r)>=107
+    assert len(r)>=108
     records={row["record"]:row for row in r}
     if len(r)!=len(records):raise AssertionError("duplicate ledger record")
     checks=[]
@@ -61,13 +61,21 @@ def main():
         check("joffard2026_CV_"+tag+"_MSE",c["mean_bee_mse_A_minus_B"],
               *c["paired_bee_bootstrap_95_mse_difference"])
         assert c["paired_bee_bootstrap_95_mse_difference"][0]<0<c["paired_bee_bootstrap_95_mse_difference"][1]
+    rec=d["recipient_plant_fixed_effect_sensitivity"]
+    assert rec["status"]=="success_exploratory_recipient_and_pollinator_fixed_effects"
+    assert rec["n_bees"]==25 and rec["n_recipient_plants"]==51
+    assert rec["n_unique_bee_position_cells"]==184
+    assert rec["n_discarded_ambiguous_recipient_cells"]==1
+    check("joffard2026_pollen_logpos_both_bee_recipient_FE",
+        rec["beta_logpos"],*rec["95_bee_cluster"],rec["p"])
+    assert rec["95_bee_cluster"][1]<0
     assert d["selected_by_exploratory_cv"]=="power_log_position"
     assert d["source_pollen_deposition_not_compatible_tubes_or_seeds"] is True
     print(json.dumps({
       "status":"PASS_original_source_pollen_carryover_CV_v11",
       "original_unique_bee_positions":d["source_QA"]["n_unique_bee_position_cells"],
       "independent_bees":25,"ledger_rows":len(r),
-      "dependent_analysis_rows_checked":9,"numeric_checks":len(checks),
+      "dependent_analysis_rows_checked":10,"numeric_checks":len(checks),
       "source_output_sha256":hashlib.sha256(SRC.read_bytes()).hexdigest(),
       "evidence_ledger_sha256":hashlib.sha256(LEDGER.read_bytes()).hexdigest(),
       "no_unique_exhaustion_kink_claimed":True,
