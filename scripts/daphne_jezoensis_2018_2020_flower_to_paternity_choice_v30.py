@@ -133,7 +133,9 @@ def build(year,files):
       eligible.flower.to_numpy(float)[top].sum()/eligible.flower.sum())
     qc["top10pct_H_genets_share_of_assigned_H_offspring"]=val(sire_count[top].sum()/sire_count.sum())
     return {"year":year,"counts":counts,"distance":distance,
-            "logflowers":logflower,"qc":qc}
+            "logflowers":logflower,"qc":qc,
+            "private_mother_xy":mother_xy,
+            "private_mother_sex_codes":[str(g.mother_sex.iloc[0]) for _,g in moms]}
 
 def estimate(q,lam,weights=None,extra=False):
     counts=q["counts"]
