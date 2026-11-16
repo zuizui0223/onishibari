@@ -6,6 +6,8 @@ on:
       - research/angiosperm-reproductive-decoupling-20261115
     paths:
       - scripts/daphne_jezoensis_2018_2020_father_spatial_permutation_v37.py
+      - scripts/verify_daphne_male_father_spatial_null_v37.py
+      - results/2026-11-17_daphne_male_father_spatial_label_falsification_v37.md
       - scripts/daphne_jezoensis_2018_2020_flower_to_paternity_choice_v30.py
       - .github/workflows/daphne-father-spatial-label-null-v37.yml
 permissions:
@@ -22,6 +24,8 @@ jobs:
           .venv/bin/pip install -q numpy pandas scipy
       - name: Preserve original source paternity while permuting local donor flower labels
         run: .venv/bin/python scripts/daphne_jezoensis_2018_2020_father_spatial_permutation_v37.py
+      - name: Assert original-source father counts, exchangeability limitations and null tails
+        run: .venv/bin/python scripts/verify_daphne_male_father_spatial_null_v37.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
