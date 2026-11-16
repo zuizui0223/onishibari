@@ -21,7 +21,7 @@ def main():
     assert d["source_QA"]["n_unique_bee_position_cells"]==185
     assert d["source_QA"]["n_duplicate_bee_positions"]==1
     assert d["held_out_bee_and_plant_ids_not_exported"] is True
-    assert REPORT.exists() and "test" in REPORT.read_text().lower()
+    assert REPORT.exists() and "25" in REPORT.read_text() and "zero" in REPORT.read_text().lower()
     assert len(r)>=107
     records={row["record"]:row for row in r}
     if len(r)!=len(records):raise AssertionError("duplicate ledger record")
