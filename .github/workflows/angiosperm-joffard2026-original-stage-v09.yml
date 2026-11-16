@@ -7,6 +7,9 @@ on:
       - research/angiosperm-reproductive-decoupling-20261115
     paths:
       - scripts/joffard2026_pollen_paternity_primary_refit_v09.py
+      - scripts/verify_joffard2026_stage_ledger_v09.py
+      - data/2026-11-15_stage_transition_evidence_v02.csv
+      - results/2026-11-16_joffard_pollen_carryover_paternity_original_v09.md
       - .github/workflows/angiosperm-joffard2026-original-stage-v09.yml
 
 permissions:
@@ -24,6 +27,8 @@ jobs:
           .venv/bin/pip install -q numpy pandas scipy statsmodels
       - name: Fit within-bee pollen deposition and between-mother paternal diversity
         run: .venv/bin/python scripts/joffard2026_pollen_paternity_primary_refit_v09.py
+      - name: Check new original-source statistics against committed cross-study evidence table
+        run: .venv/bin/python scripts/verify_joffard2026_stage_ledger_v09.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
