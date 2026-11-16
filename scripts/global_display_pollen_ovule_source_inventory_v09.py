@@ -38,8 +38,21 @@ def provenance_info():
     d,_=get(dataset_url,1_000_000)
     meta=json.loads(d)
     versions,_=get(dataset_url+"/versions",1_000_000)
-    v=json.loads(versions).get("_embedded",{}).get("stash:versions",[])
-    if not v:raise ValueError("no published versions in official API")
+    vdoc=json.loads(versions)
+    v=vdoc.get("_embedded",{}).get("stash:versions",[])
+    if not v:
+        limited={"status":"no_published_version_listed_by_official_api",
+          "doi":DOI,"dataset_meta_keys":list(meta)[:50],
+          "dataset_visibility":meta.get("visibility"),
+          "dataset_version_number":meta.get("versionNumber"),
+          "dataset_link_rels":list(meta.get("_links",{}).keys()),
+          "dataset_stash_version_link":meta.get("_links",{}).get("stash:version"),
+          "versions_total":vdoc.get("total"),"versions_count":vdoc.get("count"),
+          "versions_embedded_keys":list(vdoc.get("_embedded",{}).keys()),
+          "not_new_empirical_source_rows":True}
+        (OUT/"global_flower_pollen_ovule_source_inventory_v09.json").write_text(json.dumps(limited,indent=2)+"\n")
+        print("SOURCE_UNAVAILABLE_PUBLIC_VERSION",json.dumps(limited),flush=True)
+        return
     eligible=[]
     for item in v:
         href=item.get("_links",{}).get("self",{}).get("href","")
