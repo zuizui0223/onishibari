@@ -1,0 +1,29 @@
+name: "Pollen fate bottlenecks across 228 original angiosperm species (v0.14)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/johnson_harder2023_pollen_fates_v14.py
+      - .github/workflows/angiosperm-pollen-fates-228species-v14.yml
+permissions:
+  contents: read
+jobs:
+  paired-species-source-fate-analysis:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install statistical source libraries
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy statsmodels openpyxl
+      - name: Reanalyse original 228-species pollen RE PTE and RPE stage losses
+        run: .venv/bin/python scripts/johnson_harder2023_pollen_fates_v14.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pollen-fates-228-species-original-RE-PTE-export-v14
+          path: analysis_results_global_pollen_export_v14/
+          retention-days: 30
+          if-no-files-found: warn
