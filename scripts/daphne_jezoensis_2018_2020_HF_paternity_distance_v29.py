@@ -85,10 +85,13 @@ def per_year(yr,control,adult,parentage):
     rs=[spearman_safe(x,target) for x in (srcH,srcHconfirmed,srcHall)]
     samples=RNG.integers(0,len(fam),size=(BOOT,len(fam)))
     delta=[]
+    delta_all=[]
     for ix in samples:
         x0=spearman_safe(srcH[ix],target[ix])
         x1=spearman_safe(srcHconfirmed[ix],target[ix])
+        xall=spearman_safe(srcHall[ix],target[ix])
         if x0 is not None and x1 is not None:delta.append(x1-x0)
+        if x0 is not None and xall is not None:delta_all.append(xall-x0)
     # Grid block mean analysis at 20m/40m, two fixed origins each.
     blocks=[]
     for size in (20,40):
@@ -112,7 +115,9 @@ def per_year(yr,control,adult,parentage):
           "H_plus_only_HF_with_confirmed_paternity":rs[1],
           "H_plus_all_HF":rs[2],
           "confirmed_HF_increment_delta_rho":safe(rs[1]-rs[0]),
-          "confirmed_HF_increment_plant_boot_95%":ci(delta)},
+          "confirmed_HF_increment_plant_boot_95%":ci(delta),
+          "all_HF_increment_delta_rho":safe(rs[2]-rs[0]),
+          "all_HF_increment_plant_boot_95%":ci(delta_all)},
        "grid_mean_sensitivity":blocks,
        "limitations":{
           "observed_sire_filter_is_outcome_conditioned":True,
