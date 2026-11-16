@@ -111,6 +111,23 @@ def pollen():
     trim=x[x.grains<=q99].copy()
     ft=smf.ols("log_grains ~ pos + C(pollinator_ID)",data=trim).fit(
          cov_type="cluster",cov_kwds={"groups":trim.pollinator_ID})
+    # Leave-one-bee-out and exclude-first-visit sensitivity; no claim
+    # that the 1st and 10th visit involve identical bee cohorts.
+    loo=[]
+    for bee in x.pollinator_ID.unique():
+        subset=xy[xy.pollinator_ID!=bee].copy()
+        loo.append(pearson_FE_slope(subset,"pollinator_ID"))
+    withoutfirst=x[x.pos>=2].copy()
+    fit_withoutfirst=smf.ols("log_grains ~ pos + C(pollinator_ID)",
+        data=withoutfirst).fit(cov_type="cluster",
+                               cov_kwds={"groups":withoutfirst.pollinator_ID})
+    # Original archive contains one double same-bee / same-sequence-position
+    # record; average that one cell rather than inflate its influence.
+    collapsed=x.groupby(["pollinator_ID","pos"],as_index=False).agg(
+        log_grains=("log_grains","mean"),grains=("grains","mean"))
+    fit_collapsed=smf.ols("log_grains ~ pos + C(pollinator_ID)",
+       data=collapsed).fit(cov_type="cluster",
+           cov_kwds={"groups":collapsed.pollinator_ID})
     return {
        "source":"Joffard et al 2026 AJB doi:10.1002/ajb2.70276; data doi:10.57745/CF1VNW",
        "n_stigmas":len(x),"n_independent_bumblebees":x.pollinator_ID.nunique(),
@@ -119,6 +136,15 @@ def pollen():
        "grain_sum":float(x.grains.sum()),
        "bee_num_stigmas_per_sequence":{"min":int(count_per_poll.min()),"median":float(count_per_poll.median()),"max":int(count_per_poll.max())},
        "duplicate_pollinator_position_rows":int(repeated_pollinator_position),
+       "bee_cluster_influence_sensitivity":{
+         "leave_one_bee_out_beta_range":[float(min(loo)),float(max(loo))],
+         "drop_first_visit_n":len(withoutfirst),
+         "drop_first_visit_beta":float(fit_withoutfirst.params["pos"]),
+         "drop_first_visit_95":[float(v) for v in fit_withoutfirst.conf_int().loc["pos"]],
+         "collapse_duplicate_bee_position_n":len(collapsed),
+         "collapse_duplicate_beta":float(fit_collapsed.params["pos"]),
+         "collapse_duplicate_95":[float(v) for v in fit_collapsed.conf_int().loc["pos"]]},
+
        "bee_FE_log1p_grain_per_additional_position":{
          "beta":b,"cluster95":[float(ci.iloc[0]),float(ci.iloc[1])],"p":float(fit.pvalues["pos"]),
          "cluster_bootstrap95":bci,"within_bee_shuffle_p":pperm,
