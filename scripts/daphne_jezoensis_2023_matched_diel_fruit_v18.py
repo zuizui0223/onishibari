@@ -33,8 +33,9 @@ def fetch(url,cap=1000000):
 
 def load():
     manifest=json.loads(fetch(SOURCE,2500000))
-    entries=manifest["files"]["entries"]
-    url=entries["Data for Figures_Analyses .zip"]["links"]["content"]
+    file_inventory=manifest["files"]
+    entries=file_inventory.get("entries",{}) if isinstance(file_inventory,dict) else {x.get("key"):x for x in file_inventory}
+    url=entries["Data for Figures_Analyses .zip"]["links"].get("content") or entries["Data for Figures_Analyses .zip"]["links"].get("self")
     b=fetch(url,1500000)
     assert hashlib.sha256(b).hexdigest()==ZIP_SHA
     with zipfile.ZipFile(io.BytesIO(b)) as z:
