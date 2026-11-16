@@ -82,7 +82,7 @@ def year_profile(ctrl,ad,year):
         hit=merged[idcol].notna()
         af=pd.to_numeric(merged[col_fl],errors="coerce")
         ar=pd.to_numeric(merged[col_fr],errors="coerce")
-        nonmissing=hit&left.flow.notna()&left.fru.notna()&af.notna()&ar.notna()
+        nonmissing=hit&merged.flow.notna()&merged.fru.notna()&af.notna()&ar.notna()
         exact=nonmissing&merged.flow.eq(af)&merged.fru.eq(ar)
         sexmatch=hit&merged.Sex.astype(str).eq(merged[col_sex].astype(str))
         # Count plus alternative where fruit is measured at genus level and not
@@ -96,7 +96,7 @@ def year_profile(ctrl,ad,year):
           "both_source_counts_identical":int(exact.sum()),
           "sex_label_identical":int(sexmatch.sum()),
           "all_three_identical":int((exact&sexmatch).sum()),
-          "n_rows_original_female_with_ID_hit":int((hit&left.Sex.eq("F")).sum())
+          "n_rows_original_female_with_ID_hit":int((hit&merged.Sex.eq("F")).sum())
         })
     return ret
 
