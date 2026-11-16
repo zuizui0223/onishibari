@@ -34,7 +34,14 @@ def original():
         with urllib.request.urlopen(r,timeout=65) as response:blob=response.read(100000)
         if hashlib.sha256(blob).hexdigest()!=sha:
             raise ValueError("source original file checksum mismatch "+name)
-        d=pd.read_csv(io.BytesIO(blob),na_values=["NA","NaN"])
+        try:
+            decoded=blob.decode("utf-8-sig")
+            encoding="utf-8-sig"
+        except UnicodeDecodeError:
+            decoded=blob.decode("latin-1")
+            encoding="latin-1"
+        d=pd.read_csv(io.StringIO(decoded),na_values=["NA","NaN"])
+        print("SOURCE_FILE_ENCODING",name,encoding,flush=True)
         d.columns=[str(c).strip() for c in d.columns]
         tables[name]=d
     return tables
