@@ -5,6 +5,10 @@ on:
     branches: [research/angiosperm-reproductive-decoupling-20261115]
     paths:
       - scripts/johnson_harder2023_pollen_fates_v14.py
+      - scripts/johnson_harder2023_pollen_ovules_51_overlap_v14.py
+      - scripts/verify_johnson_harder_pollen_stage_v14.py
+      - data/2026-11-15_stage_transition_evidence_v02.csv
+      - results/2026-11-16_global_pollen_loss_location_v14.md
       - .github/workflows/angiosperm-pollen-fates-228species-v14.yml
 permissions:
   contents: read
@@ -20,10 +24,16 @@ jobs:
           .venv/bin/pip install -q numpy pandas scipy statsmodels openpyxl
       - name: Reanalyse original 228-species pollen RE PTE and RPE stage losses
         run: .venv/bin/python scripts/johnson_harder2023_pollen_fates_v14.py
+      - name: Fit 51-species pollen and ovule allocation and assess overlapping original taxa
+        run: .venv/bin/python scripts/johnson_harder2023_pollen_ovules_51_overlap_v14.py
+      - name: Verify 23 newly added source-backed comparative evidence records
+        run: .venv/bin/python scripts/verify_johnson_harder_pollen_stage_v14.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: pollen-fates-228-species-original-RE-PTE-export-v14
-          path: analysis_results_global_pollen_export_v14/
+          path: |
+            analysis_results_global_pollen_export_v14/
+            analysis_results_global_pollen_po_link_v14/
           retention-days: 30
           if-no-files-found: warn
