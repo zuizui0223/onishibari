@@ -178,7 +178,7 @@ def main():
     for code,name in sorted(treatmap.items()):
         w=frame[frame.treatment_code==code].copy()
         t=valid[valid.treatment==code].copy()
-        p=w[w.later_female>0].copy()
+        p=w[w.late_female>0].copy()
         a={
           "n_original_total_plants":len(t),"n_genotypes_original_total":int(t.genotype.nunique()),
           "n_eligible_reproductive_plants_with_first_female_flower":len(w),
