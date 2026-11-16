@@ -104,6 +104,6 @@ def main():
         "no_compatible_seeds_or_lifetime_male_fitness":True,
         "not_focal_D_pseudomezereum":True}}
     (OUT/"daphne_2018fruit_2020flower_common_support_v36.json").write_text(
-      json.dumps(out,indent=2,ensure_ascii=False)+"\n")
-    print("DAPHNE_FRUIT_COST_IDENTIFICATION_V36",json.dumps(out,ensure_ascii=False),flush=True)
+      json.dumps(out,indent=2,ensure_ascii=False,default=lambda x: x.item() if hasattr(x,"item") else str(x))+"\n")
+    print("DAPHNE_FRUIT_COST_IDENTIFICATION_V36",json.dumps(out,ensure_ascii=False,default=lambda x: x.item() if hasattr(x,"item") else str(x)),flush=True)
 if __name__=="__main__":main()
