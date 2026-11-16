@@ -23,6 +23,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
+import statsmodels.api as sm
 from scipy.stats import norm
 
 OUT=Path("analysis_results_silene_clarkia_stage_v08");OUT.mkdir(exist_ok=True)
@@ -159,6 +160,49 @@ def silene():
               "ci":[val(z) for z in cis.loc["logG"]],
               "p":val(model.pvalues["logG"])},
          "observational_real_flower_gamete_covariates_not_randomized":True}
+    # Separate mate acquisition from realized offspring: both are outcomes
+    # in the 2022 primary data, and author-reported p-values differ from a
+    # simple permutation of the unadjusted means.
+    results["mating_success_adjusted_checks"]={}
+    for sex,c,t,gametes in (("female","FC","FT","mean_nbOvTOT"),
+                            ("male","MC","MT","QttTot")):
+        df2=df[df.group.isin([c,t])].dropna(
+            subset=["MS_EchqueFem8","mean_nbFlo",gametes]).copy()
+        df2=df2[(df2.MS_EchqueFem8>=0)&(df2.mean_nbFlo>=0)&(df2[gametes]>=0)]
+        df2["treated"]=df2.group.eq(t).astype(int)
+        df2["logF"]=np.log1p(df2.mean_nbFlo)
+        df2["logG"]=np.log1p(df2[gametes])
+        mod=smf.ols("MS_EchqueFem8 ~ treated + logF + logG",data=df2).fit(cov_type="HC3")
+        results["mating_success_adjusted_checks"][sex]={
+            "n":len(df2),
+            "dummy_treatment":{ "beta":val(mod.params["treated"]),
+              "ci":[val(q) for q in mod.conf_int().loc["treated"]],
+              "p":val(mod.pvalues["treated"])},
+            "real_flower_number":{ "beta":val(mod.params["logF"]),
+              "ci":[val(q) for q in mod.conf_int().loc["logF"]],
+              "p":val(mod.pvalues["logF"])},
+            "gametes_per_flower":{ "beta":val(mod.params["logG"]),
+              "ci":[val(q) for q in mod.conf_int().loc["logG"]],
+              "p":val(mod.pvalues["logG"])},
+            "offspring_number_standardized_source_MS_EchqueFem8":True}
+    # Combined randomization check for pollinator attraction; counts are
+    # observed in the original source, not effective compatible deposition.
+    visits=df[df.group.isin(["FC","FT","MC","MT"])].dropna(
+        subset=["nbVis","mean_nbFlo"]).copy()
+    visits=visits[(visits.nbVis>=0)&(visits.mean_nbFlo>=0)]
+    visits["treated"]=visits.group.isin(["FT","MT"]).astype(int)
+    visits["sex"]=visits.group.str[0].map({"F":"female","M":"male"})
+    visits["logF"]=np.log1p(visits.mean_nbFlo)
+    mod=smf.glm("nbVis ~ treated + C(sex) + logF",
+        data=visits,family=sm.families.Poisson()).fit(cov_type="HC3")
+    b=float(mod.params["treated"]);lo,hi=mod.conf_int().loc["treated"]
+    results["pooled_visitor_count_robust_Poisson"]={
+        "n":len(visits),"number_potentially_ineffective_insects_not_pollen_delivery":True,
+        "treatment_count_IRR":val(math.exp(b)),
+        "IRR_95":[val(math.exp(lo)),val(math.exp(hi))],
+        "p":val(mod.pvalues["treated"]),
+        "fit_without_sex_x_treatment_interaction":True,
+        "exploratory_analysis_distinct_from_authors_LRT":True}
     male=df[df.group.isin(["MC","MT"])].copy().sort_values("mean_nbFlo",ascending=False)
     # Authors eliminated one MT extreme; only do deterministic prior-specified comparison.
     mt=male[male.group=="MT"].sort_values("mean_nbFlo",ascending=False)
