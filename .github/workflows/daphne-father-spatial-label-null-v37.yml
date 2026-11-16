@@ -1,0 +1,31 @@
+name: "Daphne male flower-siring father-site spatial label permutation v0.37"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/daphne_jezoensis_2018_2020_father_spatial_permutation_v37.py
+      - scripts/daphne_jezoensis_2018_2020_flower_to_paternity_choice_v30.py
+      - .github/workflows/daphne-father-spatial-label-null-v37.yml
+permissions:
+  contents: read
+jobs:
+  source-spatial-donor-null:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install original data analysis stack
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy
+      - name: Preserve original source paternity while permuting local donor flower labels
+        run: .venv/bin/python scripts/daphne_jezoensis_2018_2020_father_spatial_permutation_v37.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: original-daphne-fatherhood-spatial-null-v37
+          path: analysis_results_daphne_spatial_donor_permutation_v37/
+          retention-days: 30
+          if-no-files-found: warn
