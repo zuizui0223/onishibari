@@ -5,6 +5,7 @@ on:
     branches: [research/angiosperm-reproductive-decoupling-20261115]
     paths:
       - scripts/daphne_jezoensis2023_paternity_maternal_cluster_v19.py
+      - scripts/verify_daphne_jezoensis_paternity_v19.py
       - .github/workflows/daphne-paternity-maternal-cluster-v19.yml
 permissions:
   contents: read
@@ -20,6 +21,8 @@ jobs:
           .venv/bin/pip install -q numpy pandas
       - name: Reconstruct original high-confidence father distances without releasing raw rows
         run: .venv/bin/python scripts/daphne_jezoensis2023_paternity_maternal_cluster_v19.py
+      - name: Verify 470 original parentage assignments, six-group counts and mother-pair records
+        run: .venv/bin/python scripts/verify_daphne_jezoensis_paternity_v19.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
