@@ -78,9 +78,20 @@ def main():
         ent={"name":label,"file_id":fid,"source_bytes_declared":f.get("filesize"),
              "original_md5":f.get("md5"),"metadata_variables":f.get("variables"),
              "restricted":f.get("restricted")}
-        url=HOST+"/api/access/datafile/"+str(fid)+"?"+urllib.parse.urlencode({"format":"original"})
-        raw,access=read(url,"text/plain, text/tab-separated-values, application/octet-stream")
-        ent["original_access"]=access
+        endpoints=[
+          HOST+"/api/access/datafile/"+str(fid),
+          HOST+"/api/access/datafile/"+str(fid)+"?format=original",
+          HOST+"/api/access/datafile/"+str(fid)+"?format=RData"
+        ]
+        raw=None
+        ent["access_attempts"]=[]
+        for url in endpoints:
+            blob,access=read(url,"*/*")
+            ent["access_attempts"].append(access)
+            if blob is not None:
+                raw=blob
+                ent["successful_access"]=access
+                break
         if raw is not None:
             ent["bytes"]=len(raw)
             ent["sha256"]=hashlib.sha256(raw).hexdigest()
