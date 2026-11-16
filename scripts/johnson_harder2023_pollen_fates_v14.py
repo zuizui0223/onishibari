@@ -47,6 +47,16 @@ def fetch():
     v["logloss_transfer"]=-np.log(v.PTEfrac)
     v["logloss_total"]=-np.log(v.RPE)
     v["transfer_share"]=v.logloss_transfer/v.logloss_total
+    # Actual grain mass-balance per PRODUCED pollen, distinct from logarithmic
+    # efficiency shortfall. Stage losses must sum exactly to 1 with delivered.
+    v["unremoved"]=1-v.RE
+    v["removed_but_not_stigma"]=v.RE*(1-v.PTEfrac)
+    v["delivered"]=v.RPE
+    if not np.allclose(v.unremoved+v.removed_but_not_stigma+v.delivered,1.,atol=1e-12):
+        raise ValueError("source pollen fate stage mass balance invalid")
+    v["post_removal_lost_majority_of_all_losses"]=(
+        v.removed_but_not_stigma>v.unremoved)
+
     if not np.allclose(v.logloss_removal+v.logloss_transfer,v.logloss_total,atol=1e-11):
         raise ValueError("stage-loss identity invalid")
     if len(v)<190:raise ValueError("too few complete species")
@@ -84,7 +94,27 @@ def main():
       "fate_summary":{},
       "by_pollen_packaging":{},"by_grooming":{},"packaging_by_grooming":{}}
     t=report["fate_summary"]
-    t.update({"median_RE":val(v.RE.median()),"median_PTE_given_removal":val(v.PTEfrac.median()),
+    t.update({
+      "produced_pollen_mass_balance_species_equal_means":{
+        "not_removed_pct":val(100*v.unremoved.mean()),
+        "removed_not_delivered_pct":val(100*v.removed_but_not_stigma.mean()),
+        "delivered_to_conspecific_stigma_pct":val(100*v.delivered.mean()),
+        "sums_to_100":True},
+      "n_post_removal_loss_dominates_in_produced_grain_mass_balance":
+        int(v.post_removal_lost_majority_of_all_losses.sum()),
+      "fraction_post_removal_mass_loss_dominates":
+        val(v.post_removal_lost_majority_of_all_losses.mean()),
+      "fraction_family_equal_post_removal_mass_loss_dominates":
+        val(v.groupby("family").post_removal_lost_majority_of_all_losses.mean().mean()),
+      "mean_RPE_equal_family_weighting":
+        val(v.groupby("family").RPE.mean().mean()),
+      "families_by_species_sample_size":{
+        str(k):int(n) for k,n in v.family.value_counts().items()},
+      "mass_balance_fraction_post_removal_family_boot":
+        familyboot(v,lambda z:float(z.post_removal_lost_majority_of_all_losses.mean())),
+      "mass_balance_percent_lost_after_removal_family_boot":
+        familyboot(v,lambda z:float(100*z.removed_but_not_stigma.mean())),
+      "median_RE":val(v.RE.median()),"median_PTE_given_removal":val(v.PTEfrac.median()),
       "median_RPE_produced_to_stigma":val(v.RPE.median()),
       "mean_RPE":val(v.RPE.mean()),"geomean_RPE":val(np.exp(np.log(v.RPE).mean())),
       "median_transport_share_of_log_shortfall":val(v.transfer_share.median()),
@@ -97,6 +127,11 @@ def main():
             "n_species":len(x),"n_families":int(x.family.nunique()),
             "median_RE":val(x.RE.median()),"median_PTE":val(x.PTEfrac.median()),
             "median_RPE":val(x.RPE.median()),"median_transport_share":val(x.transfer_share.median()),
+            "mass_balance_pct_unremoved_species_mean":val(100*x.unremoved.mean()),
+            "mass_balance_pct_removed_not_delivered_species_mean":val(100*x.removed_but_not_stigma.mean()),
+            "mass_balance_pct_stigma_delivered_species_mean":val(100*x.delivered.mean()),
+            "mass_balance_fraction_with_larger_post_removal_loss":
+                val(x.post_removal_lost_majority_of_all_losses.mean()),
             "n_transport_stage_dominant":int((x.logloss_transfer>x.logloss_removal).sum()),
             "family_boot_CI_median_RPE":familyboot(x,lambda z:z.RPE.median())}
     for kind,x in v.groupby("groom"):
