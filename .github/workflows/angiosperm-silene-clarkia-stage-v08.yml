@@ -1,0 +1,33 @@
+name: Original Silene visual-only and four Clarkia pollen stage refit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/silene_clarkia_original_stage_refit_v08.py
+      - .github/workflows/angiosperm-silene-clarkia-stage-v08.yml
+
+permissions:
+  contents: read
+
+jobs:
+  randomization-and-pairs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install model and bootstrap dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas statsmodels
+      - name: Refit original individual experimental contrasts with honest biological denominators
+        run: .venv/bin/python scripts/silene_clarkia_original_stage_refit_v08.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: silene-clarkia-original-stage-refit-v08
+          path: analysis_results_silene_clarkia_stage_v08/
+          retention-days: 30
+          if-no-files-found: warn
