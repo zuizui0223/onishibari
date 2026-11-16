@@ -1,4 +1,4 @@
-name: Original 2026 Silene pollen carryover shape: held-out-bee validation
+name: "Original 2026 Silene pollen carryover shape: held-out-bee validation"
 
 on:
   workflow_dispatch:
