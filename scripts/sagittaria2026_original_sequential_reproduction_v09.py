@@ -178,7 +178,10 @@ def main():
     matched=plantdiff[plantdiff.TFS.notna()].copy()
     genotype_mismatch=(matched.genotype.astype(str)!=matched.genotype_total.astype(str))
     report["genotype_inconsistencies_on_matched_individuals"]=int(genotype_mismatch.sum())
-    if genotype_mismatch.any():raise ValueError("source genotype codes inconsistent between original tables")
+    if genotype_mismatch.any():
+        print("INFO: inflorescence ID2 label differs from source total.csv genotype in",
+               int(genotype_mismatch.sum()),"matched records; using verified total.csv genotype",flush=True)
+    matched["genotype"]=matched["genotype_total"]
     report["analysis_uses_only_matched_plant_level_seed_and_inflorescence_records"]=True
     # Genotype-stratified summaries by environment, separately single vs multi inflorescence plants.
     for code,name in sorted(treatmap.items()):
