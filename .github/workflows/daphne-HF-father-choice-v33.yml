@@ -6,6 +6,8 @@ on:
       - research/angiosperm-reproductive-decoupling-20261115
     paths:
       - scripts/daphne_jezoensis_2018_2020_HF_model_coding_v33.py
+      - scripts/verify_daphne_HF_risk_set_v33.py
+      - results/2026-11-16_daphne_HF_coding_father_choice_v33.md
       - scripts/daphne_jezoensis_2018_2020_flower_to_paternity_choice_v30.py
       - .github/workflows/daphne-HF-father-choice-v33.yml
 permissions:
@@ -22,6 +24,8 @@ jobs:
           .venv/bin/pip install -q numpy pandas scipy
       - name: Refitting H-plus-HF parentage and maternal fruit source tables
         run: .venv/bin/python scripts/daphne_jezoensis_2018_2020_HF_model_coding_v33.py
+      - name: Verify HF risk-set, fruit denominators and causal caveats
+        run: .venv/bin/python scripts/verify_daphne_HF_risk_set_v33.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
