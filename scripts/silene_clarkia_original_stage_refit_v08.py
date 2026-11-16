@@ -216,6 +216,37 @@ def silene():
               male[male.group=="MC"].MedMRS,
               mt.iloc[1:].MedMRS,log1p=True)}
         }
+    # Published female hand-cross positive control is essential: a null
+    # dummy-display seed response can mean already adequate natural pollen,
+    # rather than failed transport on newly attracted insects.
+    fruit=files["allFruits_FloDis.txt"].copy()
+    fruit["group"]=fruit.ID.astype("string").str.extract(r"^([A-Za-z]+)",expand=False)
+    numeric(fruit,["nbSeeds","nbOv"])
+    fruit["potential_ovules_from_seed_plus_unfertilized"]=fruit.nbSeeds+fruit.nbOv
+    good=fruit[
+        (fruit.nbSeeds>=0)&(fruit.nbOv>=0)&
+        (fruit.potential_ovules_from_seed_plus_unfertilized>0)].copy()
+    good["fraction_filled"]=good.nbSeeds/good.potential_ovules_from_seed_plus_unfertilized
+    if (good.fraction_filled>1).any():raise ValueError("fruit seed/ovule invalid")
+    # ID-level independent maternal-plant means; individual fruit n not used
+    # as if independent treatment replicates.
+    moms=good.groupby(["ID","group"],as_index=False).agg(
+        mean_filled=("fraction_filled","mean"),
+        n_assayed_fruit=("fraction_filled","size"))
+    results["female_original_fruit_pollen_limitation_control"]={
+        "source_n_fruits":len(fruit),
+        "valid_fruit_seed_ovule_rows":len(good),
+        "n_mothers_with_valid_fruit":int(moms.ID.nunique()),
+        "per_mother_fruit_fraction_by_treatment":means_by_treatment(moms,"mean_filled","group"),
+        "hand_pollen_FS_vs_natural_FC":difference_test(
+            moms[moms.group=="FC"].mean_filled,
+            moms[moms.group=="FS"].mean_filled),
+        "fake_display_FT_vs_natural_FC":difference_test(
+            moms[moms.group=="FC"].mean_filled,
+            moms[moms.group=="FT"].mean_filled),
+        "denominator":"source README says nbOv is unfertilized ovules; denominator nbSeeds+nbOv",
+        "hand_pollen_controls_are_different_female_plants_not_within_mother_pairs":True,
+        "source_method":"hand pollination tested absence/presence of pollen limitation; not a source of visit counts"}
     p=files["paternity_FloDis.txt"].copy()
     moms=set(df.loc[df.group.isin(["FC","FT","FS"]),"ID"].astype(str))
     fathers=set(df.loc[df.group.isin(["MC","MT"]),"ID"].astype(str))
