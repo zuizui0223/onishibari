@@ -143,20 +143,6 @@ def two_years(w):
     # Genet-resampling yields uncertainty on treatment-by-year contrast.
     rng=np.random.default_rng(20261117)
     all_ids=w.RametID.drop_duplicates().to_numpy()
-    yr={2018:[],2020:[]}
-    for _ in range(12000):
-        draw=all_ids[rng.integers(0,len(all_ids),len(all_ids))]
-        counts=pd.Series(draw).value_counts()
-        one=w.copy()
-        one["_n"]=one.RametID.map(counts).fillna(0).to_numpy()
-        means={}
-        for year in (2018,2020):
-            a=one[(one.Year==year)&(one._n>0)]
-            if len(a)>0:
-                means[year]=float(np.average(a.delta_night_minus_day,weights=a._n))
-                yr[year].append(means[year])
-        if len(means)==2:
-            pass
     # same sample set for both years in contrast: independent sequence
     difference=[]
     for _ in range(12000):
