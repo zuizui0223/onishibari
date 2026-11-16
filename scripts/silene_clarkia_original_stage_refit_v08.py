@@ -331,7 +331,7 @@ def clarkia():
         moderation["habitat_adjusted_block_cluster"]=slopes(m2,"lnF_centered")
         moderation["habitat_adjusted_n_pairs"]=len(p2)
     report["observational_flower_number_moderation_of_pollen_addition"]=moderation
-        report["boundary_note"]="Fruit-level pollen supplementation estimates cannot be scaled to plant lifetime offspring without total seed counts on unsupplemented and entirely supplemented plants."
+    report["boundary_note"]="Fruit-level pollen supplementation estimates cannot be scaled to plant lifetime offspring without total seed counts on unsupplemented and entirely supplemented plants."
     report["species_not_independent_phylogenetic_replicates"]=True
     return report
 
