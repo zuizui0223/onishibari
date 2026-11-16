@@ -74,11 +74,17 @@ def source():
     if ndupe!=1:raise ValueError("unexpected duplicate bee-position grain")
     # Duplicate bee + ordinal position: use the average of two measured stigmas.
     # A unique bee-position is treated as the observation grain.
-    a=df.groupby(["pollinator_ID","pos"],as_index=False).agg(grains=("grains","mean"))
+    a=df.groupby(["pollinator_ID","pos"],as_index=False).agg(
+       grains=("grains","mean"),
+       recipient_plant=("female_plant_ID","first"),
+       n_recipient_plants=("female_plant_ID","nunique"))
     a["y"]=np.log1p(a.grains)
     if len(a)!=185:raise ValueError("unexpected bee-position units")
     return a,{"n_original_stigmas":186,"n_bees":25,"n_duplicate_bee_positions":ndupe,
-              "n_unique_bee_position_cells":len(a),"original_data_sha256":EXPECTED_SHA}
+              "n_unique_bee_position_cells":len(a),
+              "n_original_recipient_plants":int(df.female_plant_ID.nunique()),
+              "n_ambiguous_recipient_on_collapsed_bee_position":int((a.n_recipient_plants>1).sum()),
+              "original_data_sha256":EXPECTED_SHA}
 
 def bee_demeaned(y,x,bee):
     """Within-bee intercept removal, preserving within-bee observation grain."""
@@ -147,6 +153,31 @@ def bootstrap_paired_rmse(a,b):
         "n_bees_for_which_A_has_lower_mse":int((diff<0).sum()),
         "not_a_significance_test_of_a_prior_hypothesis":True}
 
+def recipient_plant_sensitivity(frame):
+    """Add original 51 possible female recipient plant fixed intercepts.
+
+    Recipient plants are not randomized independent pollen donors and several
+    are visited by distinct bees. A crossed FE is an observational check only.
+    """
+    d=frame[frame.n_recipient_plants==1].copy()
+    d=d[d.recipient_plant.notna()]
+    if d.pollinator_ID.nunique()<20 or d.recipient_plant.nunique()<30:
+        return {"status":"not_fitted_insufficient_identifiable_recipient_groups"}
+    m=smf.ols("y ~ np.log(pos) + C(pollinator_ID) + C(recipient_plant)",
+              data=d).fit(cov_type="cluster",cov_kwds={"groups":d.pollinator_ID})
+    v=float(m.params["np.log(pos)"])
+    low,high=m.conf_int().loc["np.log(pos)"]
+    return {"status":"success_exploratory_recipient_and_pollinator_fixed_effects",
+      "n_unique_bee_position_cells":len(d),
+      "n_bees":int(d.pollinator_ID.nunique()),
+      "n_recipient_plants":int(d.recipient_plant.nunique()),
+      "n_discarded_ambiguous_recipient_cells":int(len(frame)-len(d)),
+      "beta_logpos":scalar(v),
+      "95_bee_cluster":[scalar(low),scalar(high)],
+      "p":scalar(m.pvalues["np.log(pos)"]),
+      "recipient_and_bee_effects_are_not_causal_controls":True,
+      "crossed_clustering_not_fully_modeled":True}
+
 def zeros_source(frame):
     original=frame.copy()
     original["zero"]=(original.grains==0).astype(int)
@@ -194,6 +225,7 @@ def main():
     report["selected_by_exploratory_cv"]=chosen
     report["best_mse"]=report["candidates"][chosen]["loo_bee_mean_MSE"]
     report["ordinal_zero_grain_risk"]=zeros_source(frame)
+    report["recipient_plant_fixed_effect_sensitivity"]=recipient_plant_sensitivity(frame)
     report["status"]="success_original_held_out_bee_shape_models"
     (OUT/"pollen_carryover_source_heldout_bee_shapes_v11.json").write_text(
         json.dumps(scalar(report),ensure_ascii=False,indent=2)+"\n")
