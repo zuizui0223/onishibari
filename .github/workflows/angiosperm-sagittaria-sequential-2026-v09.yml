@@ -1,0 +1,29 @@
+name: Sagittaria 2026 original sequential inflorescence fruit rescue and total seed output
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/sagittaria2026_original_sequential_reproduction_v09.py
+      - .github/workflows/angiosperm-sagittaria-sequential-2026-v09.yml
+permissions:
+  contents: read
+jobs:
+  genotype-aware-stage-reanalysis:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install original plant analysis dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas
+      - name: Recompute original sequential inflorescence fruit and whole-plant fitness accounting
+        run: .venv/bin/python scripts/sagittaria2026_original_sequential_reproduction_v09.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sagittaria2026-original-inflorescence-order-and-whole-seeds-v09
+          path: analysis_results_sagittaria2026_sequential_fitness_v09/
+          retention-days: 30
+          if-no-files-found: warn
