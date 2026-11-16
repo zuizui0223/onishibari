@@ -220,7 +220,7 @@ def main():
            "genotype_pair_bootstrap95":[v(z) for z in np.quantile(boot,[.025,.975])],
            "within_genotype_signflip_p":v(pval),
            "site_confounded_observational_contrast":True}
-    totalpairs=valid.rename(columns={"treatment_name":"treatment"})
+    totalpairs=valid[["genotype","treatment_name","TFS","inflorno"]].rename(columns={"treatment_name":"treatment"})
     for a,b in (("Net","Shade"),("Net","Open"),("Shade","Open")):
         contrast={}
         for field in ("TFS","inflorno"):
