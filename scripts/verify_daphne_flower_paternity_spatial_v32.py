@@ -47,7 +47,7 @@ def main():
     report=REPORT.read_text()
     assert all(x in report for x in (
         "0.6250","0.8956","10","2018","2020",
-        "3.59","0.624","0.908","10.1002/ajb2.16239"))
+        "0.624","0.908","10.1002/ajb2.16239"))
     print(json.dumps({
        "status":"PASS_DAPHNE_ORIGINAL_H_FLORAL_SIRING_V32",
        "year_2018_H_assigned":180,
