@@ -37,6 +37,7 @@ def main():
          "n_sex":{str(k):int(v) for k,v in d.groupby("Sex").RametID.nunique().items()},
          "year":{str(k):int(v) for k,v in d.Year.value_counts().items()},
          "source_date_example":str(d.Date.iloc[0]),
+         "source_date_examples":list(map(str,d.Date.drop_duplicates().head(16))),
          "n_source_dates":int(d.Date.nunique()),
          "n_duplicates_by_ramet_year_date":int(d.duplicated(["RametID","Year","Date"]).sum()),
          "n_complete_duplicate_rows":int(d.duplicated().sum()),
@@ -65,8 +66,8 @@ def main():
         except Exception:dt.append(None)
     out["date_parse_M_D_2015"]={"n_ok":int(sum(x is not None for x in dt)),
         "n_missing":int(sum(x is None for x in dt)),
-        "min_doy":int(min(x for x in dt if x is not None)),
-        "max_doy":int(max(x for x in dt if x is not None))}
+        "min_doy":int(min(x for x in dt if x is not None)) if any(x is not None for x in dt) else None,
+        "max_doy":int(max(x for x in dt if x is not None)) if any(x is not None for x in dt) else None}
     # If FlowerNo is not invariant, avoid automatic per-total normalization.
     out["can_normalize_per_ramet_total"]=(
         out["flower_total_invariant_by_ramet"]["n_with_different_totals"]==0 and
