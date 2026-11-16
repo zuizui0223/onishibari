@@ -1,0 +1,29 @@
+name: "Daphne fruiting cost: common-support and reverse-time bias diagnostics v0.36"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_jezoensis_lagged_fruit_common_support_v36.py
+      - .github/workflows/daphne-fruit-cost-identification-v36.yml
+permissions:
+  contents: read
+jobs:
+  original-fruit-size-identification:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare original data analysis
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy
+      - name: Check within-genet 2018 baseline matching and reverse-time association
+        run: .venv/bin/python scripts/daphne_jezoensis_lagged_fruit_common_support_v36.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-flower-cost-baseline-overlap-reverse-time-v36
+          path: analysis_results_daphne_lagged_fruiting_identification_v36/
+          retention-days: 30
+          if-no-files-found: warn
