@@ -173,10 +173,16 @@ def main():
                           left_on=["plant","treatment_code"],right_on=["indi","treatment"],
                           how="left",validate="one_to_one",suffixes=("","_total"))
     report["repro_plants_to_total_matched"]=int(plantdiff.TFS.notna().sum())
+    report["repro_plants_without_matched_total_seeds"]=int(plantdiff.TFS.isna().sum())
     if int(plantdiff.TFS.notna().sum())<60:raise ValueError("too many original plant-to-total mismatches")
+    matched=plantdiff[plantdiff.TFS.notna()].copy()
+    genotype_mismatch=(matched.genotype.astype(str)!=matched.genotype_total.astype(str))
+    report["genotype_inconsistencies_on_matched_individuals"]=int(genotype_mismatch.sum())
+    if genotype_mismatch.any():raise ValueError("source genotype codes inconsistent between original tables")
+    report["analysis_uses_only_matched_plant_level_seed_and_inflorescence_records"]=True
     # Genotype-stratified summaries by environment, separately single vs multi inflorescence plants.
     for code,name in sorted(treatmap.items()):
-        w=frame[frame.treatment_code==code].copy()
+        w=matched[matched.treatment_code==code].copy()
         t=valid[valid.treatment==code].copy()
         p=w[w.late_female>0].copy()
         a={
@@ -196,6 +202,32 @@ def main():
           "later_share_of_fruits_among_multi":bootstrap_by_genotype(p.dropna(subset=["late_share_of_total_fruit"]),"late_share_of_total_fruit"),
           "genotype_counts":int(w.genotype.nunique())}
         report["by_treatment"][name]=a
+    # Compare different sites only within the same SOURCE CLONAL GENOTYPE.
+    # Site is nevertheless fully confounded with treatment: differences are
+    # descriptive, not a causal isolated pollinator/light effect.
+    report["cross_site_common_genotype_contrasts"]={}
+    def genotype_pair_difference(frame,value,a,b):
+        wide=frame.pivot_table(index="genotype",columns="treatment",values=value,aggfunc="first")
+        if a not in wide or b not in wide:return {"n_shared_genotypes":0}
+        pairs=wide[[a,b]].dropna()
+        if len(pairs)<5:return {"n_shared_genotypes":len(pairs)}
+        delta=(pairs[a]-pairs[b]).to_numpy(float)
+        boot=delta[RNG.integers(0,len(delta),size=(N_BOOT,len(delta)))].mean(axis=1)
+        signs=RNG.choice([-1.,1.],size=(N_PERM,len(delta)))
+        null=(signs*delta).mean(axis=1)
+        pval=(int((np.abs(null)>=abs(delta.mean())-1e-12).sum())+1)/(N_PERM+1)
+        return {"n_shared_genotypes":len(pairs),"mean_a_minus_b":v(delta.mean()),
+           "genotype_pair_bootstrap95":[v(z) for z in np.quantile(boot,[.025,.975])],
+           "within_genotype_signflip_p":v(pval),
+           "site_confounded_observational_contrast":True}
+    totalpairs=valid.rename(columns={"treatment_name":"treatment"})
+    for a,b in (("Net","Shade"),("Net","Open"),("Shade","Open")):
+        contrast={}
+        for field in ("TFS","inflorno"):
+            contrast[field]=genotype_pair_difference(totalpairs,field,a,b)
+        for field in ("first_fruit_fraction","later_fruit_fraction","late_minus_first_fraction"):
+            contrast[field]=genotype_pair_difference(matched,field,a,b)
+        report["cross_site_common_genotype_contrasts"][a+"_minus_"+b]=contrast
     report["competing_denominators"]={
        "plant_total_TFS":"plant-level total seeds in original authors source; not sum of fruit rates",
        "fruit_in_inflorescence":"fruits from female flowers in a single inflorescence, not paternal fitness",
