@@ -12,7 +12,7 @@ Produces source design/denominator profile FIRST; analysis must not assign
 biological meanings to obscure columns before README verification.
 """
 from __future__ import annotations
-import csv,hashlib,io,json,urllib.request,zipfile
+import csv,hashlib,io,json,urllib.request,zipfile,re
 from collections import Counter
 from pathlib import Path
 import numpy as np,pandas as pd
@@ -86,7 +86,37 @@ def main():
                    "text_excerpt_for_authorized_protocol_review":txt[:9500],
                    "text_truncated":len(txt)>9500}
             else:
-                files[fn]={"sha256":observed,**describe(frame(b))}
+                data=frame(b)
+                profile={"sha256":observed,**describe(data)}
+                if name=="Silene_dioica_2022" and fn=="dataID_FloDis.txt":
+                    prefix=data["ID"].astype("string").str.extract(r"^([A-Za-z]+)",expand=False)
+                    profile["ID_alphabetic_prefix_aggregate"]=levels(prefix)
+                    profile["n_female_output_nonmissing"]=int(data["prodTOT"].notna().sum())
+                    profile["n_male_output_nonmissing"]=int(data["MedMRS"].notna().sum())
+                    profile["prefix_x_female_male_output_counts"]={}
+                    for key,g in data.groupby(prefix,dropna=False):
+                        profile["prefix_x_female_male_output_counts"][str(key)]={
+                            "n":len(g),"female_prodTOT":int(g["prodTOT"].notna().sum()),
+                            "male_MedMRS":int(g["MedMRS"].notna().sum())}
+                if name=="Clarkia_four_species_2024" and fn.endswith(".csv"):
+                    keys=["block","plot","focal_sp"]
+                    grouped=data.groupby(keys,dropna=False)
+                    profile["block_plot_focal_unit_multiplicity"]={str(k):int(v) for k,v in grouped.size().value_counts().sort_index().items()}
+                    patterns={}
+                    n_exact_paired=0
+                    for _,g in grouped:
+                        pattern="/".join(sorted(g["treatment"].astype(str)))
+                        patterns[pattern]=patterns.get(pattern,0)+1
+                        if len(g)==2 and set(g.treatment)=={"cont_seed","supp_seed"}:n_exact_paired+=1
+                    profile["plant_candidate_treatment_pattern_counts"]=patterns
+                    profile["n_exact_control_supplement_pairs_at_block_plot_species"]=n_exact_paired
+                    profile["n_seed_missing_by_treatment"]={str(k):int(v.n_seed.isna().sum()) for k,v in data.groupby("treatment")}
+                    profile["n_ovule_assigned_by_treatment"]={str(k):int((v.n_ovule_assigned==1).sum()) for k,v in data.groupby("treatment")}
+                    profile["n_flower_consistency_within_exact_pairs"]={
+                        "n_mismatch":sum(
+                            int(g.n_flower.nunique(dropna=True)>1)
+                            for _,g in grouped if len(g)==2 and set(g.treatment)=={"cont_seed","supp_seed"})}
+                files[fn]=profile
         if set(files)!=set(info["expected"]):raise ValueError("missing source file "+name)
         result["sources"][name]={"doi":info["doi"],"version":info["version"],"files":files}
         print("SOURCE_AUDIT",name,json.dumps(result["sources"][name],ensure_ascii=False)[:28000],flush=True)
