@@ -21,11 +21,11 @@ STUDIES={
 "Silene_dioica_2022":{"version":251371,"doi":"10.5061/dryad.0rxwdbs4d",
  "expected":{"allFruits_FloDis.txt":"9165c2c3c80d234b6395e91147d8f20a85fe210d0a76f28767e11b8790178bb2",
  "dataID_FloDis.txt":"1d245bb2dd6222bdaa05b0e23521eafd286cfa533b3826f8a5d8a65f715d3f9",
- "paternity_FloDis.txt":"3b440e3fad9cfd28026d30606e52b9a0f16959f",
+ "paternity_FloDis.txt":"2b440e3fad9cfd2801cba56e9de9941d13f4ee936cb9a79938d22610e62050b9",
  "README.md":"2456c5c16aec6bfc398dede02e0d99e7e3940cf607b4efdbcfa0892abfd8bfda"}},
 "Clarkia_four_species_2024":{"version":332601,"doi":"10.5061/dryad.k3j9kd56r",
  "expected":{"clarkia_data_2017_kingsnake.csv":"a6b82a14761f1de282148195d9a2d56f6ba355812419253b8a2cb24014fa0568",
- "README.md":"5a6d112a0f17cb2dcb8985469c0243b37819694258129f80f60fb2f958",
+ "README.md":"5a6d112a0f17baaf193aca4ded1df4289855e13a3cc88e32e2bd6e4b59aac337",
  "codeToPublish_16Sep.R":"b073d870a540036d72dba4d483cb8985469c0243b37819694258129f80f60fb2"}}
 }
 # Correct silently? Never. Check all via pinned member SHA, reject mismatch.
