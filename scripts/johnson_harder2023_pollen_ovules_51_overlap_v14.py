@@ -57,6 +57,11 @@ def familyboot(d,col):
 def main():
     a= dryad()
     b,_=fetch()
+    print("TAXON_SOURCE_FORMAT_DIAGNOSTIC",json.dumps({
+       "source228":b[["genusGBIF","speciesGBIF"]].head(5).astype(str).to_dict(orient="records"),
+       "source51":a[["genusGBIF","speciesGBIF"]].head(5).astype(str).to_dict(orient="records"),
+       "source228_dtypes":{k:str(v) for k,v in b[["genusGBIF","speciesGBIF"]].dtypes.items()},
+       "source51_dtypes":{k:str(v) for k,v in a[["genusGBIF","speciesGBIF"]].dtypes.items()}},ensure_ascii=False),flush=True)
     a["lnPollen"]=np.log(a.Pollen);a["lnOvules"]=np.log(a.Ovules)
     a["lnPTE"]=np.log(a.PTE);a["lnPO"]=a.lnPollen-a.lnOvules
     fam=a.family.nunique()
