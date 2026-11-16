@@ -132,7 +132,7 @@ def code_excerpt(rcode):
         for idx,line in enumerate(lines):
             if re.search(terms,line,re.I) and len(line)<180:
                 # No source-level data records here, only analysis code / comments
-                if re.search(r"^(?:\\s*#|\\s*(?:read\\.|data\\.|write\\.|table\\(|glm\\(|glmer\\(|lmer\\(|ggplot\\(|ggplot2|levels\\(|factor\\(|[\\w.]+\\s*<-))",line):
+                if line.lstrip().startswith(("#","read.","data.","write.","glm(","glmer(","lmer(","ggplot(","levels(","factor(")) or "<-" in line:
                     filtered.append({"line":idx+1,"text":line.strip()[:160]})
         excerpts[name]={"n_lines":len(lines),"candidate_lines":filtered[:70]}
     return excerpts
