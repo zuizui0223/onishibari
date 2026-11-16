@@ -6,6 +6,8 @@ on:
       - research/angiosperm-reproductive-decoupling-20261115
     paths:
       - scripts/daphne_jezoensis_2015_natural_flower_days_v23.py
+      - scripts/verify_daphne_2015_sex_opportunity_v23.py
+      - results/2026-11-16_daphne_sex_number_vs_duration_2015_2018_v23.md
       - .github/workflows/daphne-2015-natural-flower-days-v23.yml
 permissions:
   contents: read
@@ -21,6 +23,8 @@ jobs:
           .venv/bin/pip install -q numpy pandas scipy
       - name: Refit normalized and absolute flower-day distributions from source
         run: .venv/bin/python scripts/daphne_jezoensis_2015_natural_flower_days_v23.py
+      - name: Verify 166 F/H source counts and preserve non-fitness interpretation
+        run: .venv/bin/python scripts/verify_daphne_2015_sex_opportunity_v23.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
