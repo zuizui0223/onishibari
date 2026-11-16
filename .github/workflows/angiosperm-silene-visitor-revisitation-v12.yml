@@ -5,6 +5,9 @@ on:
     branches: [research/angiosperm-reproductive-decoupling-20261115]
     paths:
       - scripts/silene2022_visitor_vs_visit_mating_conversion_v12.py
+      - scripts/verify_silene_visit_fitness_ledger_v12.py
+      - data/2026-11-15_stage_transition_evidence_v02.csv
+      - results/2026-11-16_silene_real_visits_vs_genetic_fitness_v12.md
       - .github/workflows/angiosperm-silene-visitor-revisitation-v12.yml
 permissions:
   contents: read
@@ -20,6 +23,8 @@ jobs:
           .venv/bin/pip install -q numpy scipy pandas statsmodels
       - name: Fit pollen-mating conversion by source visitor count and total visits
         run: .venv/bin/python scripts/silene2022_visitor_vs_visit_mating_conversion_v12.py
+      - name: Verify 17 source-backed fitness ledger claims against fresh original model estimates
+        run: .venv/bin/python scripts/verify_silene_visit_fitness_ledger_v12.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
