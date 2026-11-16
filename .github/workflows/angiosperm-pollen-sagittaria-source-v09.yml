@@ -1,0 +1,25 @@
+name: Discover pollen 2022 global traits and Sagittaria 2026 sequential offspring data
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/pollen_2022_sagittaria_2026_source_discovery_v09.py
+      - .github/workflows/angiosperm-pollen-sagittaria-source-v09.yml
+permissions:
+  contents: read
+jobs:
+  source-discovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe official Dryad and Figshare published-source interfaces
+        run: python3 scripts/pollen_2022_sagittaria_2026_source_discovery_v09.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pollen-2022-sagittaria-2026-original-source-discovery-v09
+          path: analysis_results_pollen_allocation_multi_source_v09/
+          retention-days: 30
+          if-no-files-found: warn
