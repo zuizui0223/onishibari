@@ -5,6 +5,8 @@ on:
     branches: [research/angiosperm-reproductive-decoupling-20261115]
     paths:
       - scripts/daphne_jezoensis_lagged_fruit_common_support_v36.py
+      - scripts/verify_daphne_fruit_cost_overlap_v36.py
+      - results/2026-11-17_daphne_residual_female_sex_dynamics_cost_identification_v36.md
       - .github/workflows/daphne-fruit-cost-identification-v36.yml
 permissions:
   contents: read
@@ -20,6 +22,8 @@ jobs:
           .venv/bin/pip install -q numpy pandas scipy
       - name: Check within-genet 2018 baseline matching and reverse-time association
         run: .venv/bin/python scripts/daphne_jezoensis_lagged_fruit_common_support_v36.py
+      - name: Verify absent common-support and prevent causal overclaims
+        run: .venv/bin/python scripts/verify_daphne_fruit_cost_overlap_v36.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
