@@ -17,7 +17,7 @@ BOOT=2800
 def namekey(g,s):
     if pd.isna(g) or pd.isna(s):return None
     g=str(g).strip().lower().split()[0]
-    x=str(s).strip().lower().split()
+    x=str(s).strip().lower().replace("_"," ").split()
     if not g or not x:return None
     epi=x[1] if x[0]==g and len(x)>1 else x[0]
     if not epi.isalpha() or epi in ("sp","ssp","cf","aff"):return None
