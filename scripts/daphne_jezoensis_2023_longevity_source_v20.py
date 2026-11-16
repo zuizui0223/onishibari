@@ -70,10 +70,10 @@ def main():
            "n_rows":len(a),"n_ramets":int(a.RametID.nunique()),
            "n_unit_pairs":len(unit),
            "unique_dates":int(a.Date.nunique()),
-           "n_obs_FloweringNo_gt0":int((pd.to_numeric(a.FloweringNo)>0).sum()),
-           "mean_FloweringNo":round(float(pd.to_numeric(a.FloweringNo).mean()),5),
-           "mean_FlowerNo":round(float(pd.to_numeric(a.FlowerNo).mean()),5),
-           "median_FloweringNo":round(float(pd.to_numeric(a.FloweringNo).median()),5)})
+           "n_obs_FloweringNo_gt0":int((pd.to_numeric(a.FloweringNo,errors='coerce')>0).sum()),
+           "mean_FloweringNo":round(float(pd.to_numeric(a.FloweringNo,errors='coerce').mean()),5),
+           "mean_FlowerNo":round(float(pd.to_numeric(a.FlowerNo,errors='coerce').mean()),5),
+           "median_FloweringNo":round(float(pd.to_numeric(a.FloweringNo,errors='coerce').median()),5)})
     # Which pairs have both F bag & F outcross / H emasculate_bag & emasculate_outcross?
     combos=d.groupby(["RametID","Sex"]).Treatment.agg(lambda v:set(v)).reset_index()
     for sex,a,b in [("F","bag","outcross"),("H","emasculate_bag","emasculate_outcross"),
