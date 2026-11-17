@@ -1,0 +1,20 @@
+name: "Onishibari parentage-verified seed to reproductive adult source stage QC v0.49"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/onishibari-sex-system-20261114]
+    paths:
+      - analysis/audit_2027_seed_to_reproductive_adult_v49.py
+      - analysis/audit_2027_self_pollen_site_v47.py
+      - data/templates/2027_v45_seed_to_reproductive_adult_ledger_header.csv
+      - .github/workflows/onishibari-seed-to-adult-stage-qc-v49.yml
+permissions:
+  contents: read
+jobs:
+  synthetic-same-genet-seed-parentage-adult-stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test source pollen matching, stage progression, death and lost censoring (SYNTHETIC ONLY)
+        run: python3 analysis/audit_2027_seed_to_reproductive_adult_v49.py --self-test
