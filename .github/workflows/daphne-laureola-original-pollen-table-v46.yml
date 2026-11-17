@@ -1,0 +1,24 @@
+name: "Daphne laureola 2001 original controlled-pollination Table 3 audit v0.46"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/onishibari-sex-system-20261114]
+    paths:
+      - analysis/daphne_laureola_2001_pollination_table3_v46.py
+      - .github/workflows/daphne-laureola-original-pollen-table-v46.yml
+permissions:
+  contents: read
+jobs:
+  original-table-sexual-interference:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconstruct exact first-party treatment fruit counts and reproductive unit guards
+        run: python3 analysis/daphne_laureola_2001_pollination_table3_v46.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-laureola-2001-emasculation-self-geitonogamy-source-v46
+          path: analysis_results_daphne_pollen_clogging_prior_v46/
+          retention-days: 30
