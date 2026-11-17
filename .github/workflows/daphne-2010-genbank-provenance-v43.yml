@@ -6,6 +6,8 @@ on:
       - research/daphne-comparative-2026-11-15
     paths:
       - scripts/daphne_2010_genbank_provenance_v43.py
+      - scripts/verify_daphne_2010_barcode_provenance_v43.py
+      - results/2026-11-17_daphne_2010_barcode_sequence_recovery_audit_v43.md
       - .github/workflows/daphne-2010-genbank-provenance-v43.yml
 permissions:
   contents: read
@@ -17,6 +19,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Inspect original candidate GenBank record reference provenance
         run: python3 scripts/daphne_2010_genbank_provenance_v43.py
+      - name: Verify original-vs-unrelated GenBank archive provenance and absence limitations
+        run: python3 scripts/verify_daphne_2010_barcode_provenance_v43.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
