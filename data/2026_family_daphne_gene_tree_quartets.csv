@@ -1,0 +1,4 @@
+split,genes,denominator,percent,source_dataset,scope_note
+sureil+tangutica_vs_mucronata+laureola,151,162,93.21,10.5281/zenodo.17517526,nonfocal four Daphne taxa
+sureil+mucronata_vs_tangutica+laureola,10,162,6.17,10.5281/zenodo.17517526,nonfocal four Daphne taxa
+sureil+laureola_vs_tangutica+mucronata,1,162,0.62,10.5281/zenodo.17517526,nonfocal four Daphne taxa

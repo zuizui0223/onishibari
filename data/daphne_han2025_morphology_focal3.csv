@@ -1,0 +1,11 @@
+character,unit,Korean_C,Japanese_P,Kamchatka_K,CK_relationship,data_type,source,limitation
+rhizome,presence,present,absent,present,shared,discrete,Han2025_Table1,not independent of habitat
+upper_anthers,position,inside,half_exserted,inside,shared,discrete,Han2025_Table1,may vary with sex morph
+leaf_arrangement_during_flowering,description,palm_like,distributed_along_stem,palm_like,shared,discrete,Han2025_text,not precise individual measurement
+calyx_lobe_color,description,white,pale_green,white,shared,discrete,Han2025_Table1,anthocyanin variation possible
+calyx_tube_color,description,dark_red_purple,pale_green,white,different_from_both,discrete,Han2025_Table1,independent pigment history possible
+calyx_tube_min,mm,3.3,5,3.5,C_is_nearer_K,range_minimum,Han2025_Table1,values are literature ranges not distributions
+calyx_tube_max,mm,5.9,9,6,C_is_nearer_K,range_maximum,Han2025_Table1,sex and environment may affect measurement
+calyx_lobe_min,mm,1.7,2.5,2,C_is_nearer_K,range_minimum,Han2025_Table1,values are literature ranges not distributions
+calyx_lobe_max,mm,3.4,5.5,3.5,C_is_nearer_K,range_maximum,Han2025_Table1,sex and environment may affect measurement
+plant_height_upper_bound,cm,50,150,60,C_is_nearer_K,range_bound,Han2025_Table1,height not direct phylogenetic character

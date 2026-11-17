@@ -1,0 +1,31 @@
+name: Daphne nuclear proxy gene recovery panel
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/daphne-comparative-2026-11-15]
+    paths:
+      - scripts/daphne_353_proxy_loci.py
+      - .github/workflows/daphne-proxy-353-loci.yml
+
+permissions:
+  contents: read
+
+jobs:
+  proxy-panel:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install sequence parser
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install --quiet biopython
+      - name: Verify 2026 locus alignments and extract four-Daphne proxy reference panel
+        run: .venv/bin/python scripts/daphne_353_proxy_loci.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-353-proxy-reference-panel
+          path: analysis_results_proxy_loci/
+          if-no-files-found: warn

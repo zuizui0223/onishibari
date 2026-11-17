@@ -1,0 +1,25 @@
+name: "Daphne 2010 historical barcode GenBank index and genealogy audit v0.42"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/daphne-comparative-2026-11-15]
+    paths:
+      - scripts/daphne_2010_barcode_genbank_recovery_v42.py
+      - .github/workflows/daphne-2010-barcode-archive-v42.yml
+permissions:
+  contents: read
+jobs:
+  original-barcode-archive:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Query NCBI sequence index with original-publication author, year and gene labels
+        run: python3 scripts/daphne_2010_barcode_genbank_recovery_v42.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-2010-seven-barcodes-ncbi-index-v42
+          path: analysis_results_daphne_2010_barcode_archive_v42/
+          retention-days: 30
+          if-no-files-found: warn

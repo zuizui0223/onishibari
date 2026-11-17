@@ -1,0 +1,27 @@
+name: Daphne low-copy nuclear locus design sensitivity
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/daphne-comparative-2026-11-15]
+    paths:
+      - scripts/daphne_discordance_power.py
+      - .github/workflows/daphne-discordance-power.yml
+
+permissions:
+  contents: read
+
+jobs:
+  quant-design:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compute model-conditional gene tree asymmetry power and locus counts
+        run: python3 scripts/daphne_discordance_power.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-nuclear-gene-tree-design
+          path: analysis_results_nuclear_power/
+          if-no-files-found: warn
