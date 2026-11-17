@@ -96,3 +96,17 @@ python3 analysis/randomize_2027_pilot.py \
 **Mandatory controls:** The F hand-cross must demonstrate compatible pollen and appropriate assay execution in the same population/period. H hand-self vs H hand-cross needs both viable offspring and donor genotype QC before interpreting physiological SI, post-zygotic failure, or selfing reproductive assurance. Absence of spontaneous bagged fruit does not prove self incompatibility. Missing observations must not be recoded as seed zero. It is impossible to estimate adaptive maintenance vs low-cost developmental persistence of H pistils from this first-stage fertility assay alone.
 
 See: analysis/rare_H_pistil_fertility_detectability_v41.py and docs/2026-11-17_rare_H_pistil_viable_seed_detectability_v41.md. These are **prospective calculations, not observed 2027 results**.
+
+
+## 2026-11-17 addendum: within-flower versus between-flower self pollen (v0.45–0.46)
+
+The existing v1 five-arm schedule remains unchanged, but its single H hand-self route conflates pollen taken from the recipient's OWN flower and pollen from a DIFFERENT flower on the same genet. Old results make this distinction essential:
+
+- Kikuzawa (1989), DOI https://doi.org/10.2307/3565336, reported improved H fruit production after emasculation in historical D. kamtchatica var. jezoensis (current D. jezoensis) and proposed stigma clogging by self pollen. This mechanism is already prior art.
+- FFPRI Annual Report 2008 No.49 p.40 https://www.ffpri.go.jp/fsm/research/pubs/nenpo/documents/annual_rep_049.pdf states D. jezoensis H hand-self from the SAME flower gave no fruits, while the SAME plant's DIFFERENT flower pollen produced fruits (no flower/genet-level N given).
+- Alonso & Herrera (2001), AJB DOI https://doi.org/10.2307/2657083, used self pollen from different same-plant flowers in D. laureola: fruit 18.2% intact versus 33.7% emasculated (published H-plant-blocked P=.058; H n=5 genets). Cross-pollination 34.9% intact versus 40.3% emasculated (P=.58).
+- 2019 ESJ66 https://www.esj.ne.jp/meeting/abst/66/W01-2.html reported male H flower number predicts actual sired offspring, already establishing this phenomenon before later v0.30–38 secondary reanalyses.
+
+An optional NON-EXECUTED seven-flower-role H pilot (6 recipients and one separate same-genet pollen donor) is described in protocols/2027_same_vs_other_flower_self_pollen_v45.md and implemented in analysis/randomize_2027_self_pollen_site_v45.py (synthetic CI test only). H requires >=14 independently verified pre-dehiscence buds/genet to allow 7 counted roles at <=50% and <=10 manipulated buds; F continues five arms, requiring >=10 ready buds. Pollen collection from the dedicated donor counts as handling but that donor is NOT a maternal outcome and is not the natural-open control.
+
+The optional v45 pilot alone does NOT isolate stigma clogging, SI, inbreeding depression or female-pistil construction cost. Verify flower age, pollen quantity/viability, handling, genet provenance, pollen tube, embryo, mature genetically viable seed, and F outcross controls; add sham and emasculation factorial only in a later adequately replicated study. Current analysis/audit_2027_pilot_outcomes.py validates the older v1 treatment labels, so it MUST NOT be applied unchanged to v45 output. A new field execution/donor audit will be required. These are plans, not 2027 pollination observations.
