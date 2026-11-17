@@ -36,7 +36,7 @@ def read():
         r=csv.DictReader(h)
         assert r.fieldnames and set(r.fieldnames)==COLS, ("Unexpected columns",r.fieldnames)
         d=list(r)
-    assert len(d)==26 and len({v["claim_id"] for v in d})==26
+    assert len(d)==28 and len({v["claim_id"] for v in d})==28
     for v in d:
         assert all(str(t).strip() for t in v.values()),v["claim_id"]
         assert v["source_url"].startswith("https://"),v["claim_id"]
@@ -51,9 +51,9 @@ def byid(d):
 def checks(d):
     a=byid(d)
     assert set(a)=={
-      "P01","P02","P03","P04","P05","P06",
+      "P01","P02","P03","P04","P05","P06","P07",
       "J01","J02","J03","J04","J05","J06",
-      "K01","C01","C02","C03","I01","I02","I03",
+      "K01","C01","C02","C03","C04","I01","I02","I03",
       "L01","L02","M01","M02","M03","M04","M05"}
     # Focal contradiction is explicitly sourced, neither claims functional
     # fecundity of male-appearing flowers directly.
@@ -62,7 +62,7 @@ def checks(d):
     assert a["P04"]["observed_or_described_state"]=="ambiguous_dioecy"
     assert a["P02"]["source_year"]=="2010"
     assert a["P03"]["source_year"]=="2020"
-    assert all(a[k]["resolved_taxon_concept"]==P for k in ("P01","P02","P03","P04","P05","P06"))
+    assert all(a[k]["resolved_taxon_concept"]==P for k in ("P01","P02","P03","P04","P05","P06","P07"))
     assert all(a[k]["has_direct_functional_assay_for_claim"]=="false" for k in ("P01","P02","P03","P04","P05","P06"))
     assert a["P06"]["axis"]=="self_compatibility"
     assert a["P06"]["observed_or_described_state"]=="low_self_compatibility_reported_unquantified"
@@ -91,6 +91,9 @@ def checks(d):
     assert a["C01"]["observed_or_described_state"]=="unknown"
     assert a["C02"]["resolved_taxon_concept"]==C
     assert a["C03"]["resolved_taxon_concept"]==C
+    assert a["C04"]["resolved_taxon_concept"]==H
+    assert a["C04"]["observed_or_described_state"]=="summergreen_Japanese_koreana_not_genetically_confirmed_Korean_C"
+    assert a["P07"]["observed_or_described_state"]=="P_and_J_southern_northern_races_of_one_species_unpublished"
     assert a["L01"]["source_url"]=="https://doi.org/10.2307/2657083"
     assert a["L01"]["has_direct_functional_assay_for_claim"]=="true"
     assert a["L01"]["observed_or_described_state"]=="vector_required_self_compatible"
@@ -147,6 +150,8 @@ def summary(d):
         "Korean_var_koreana":"Daphne_kamtschatica_var_koreana_acceptance_by_POWO",
         "Korean_cp_and_nuclear_marker_not_same_individual_in_existing_source":True,
         "no_three_tip_linear_ancestral_order":True,
+        "P_jezoensis_same_species_claim_only_unpublished_phylogeny":True,
+        "Japanese_2020_koreana_montane_phenology_not_Korean_2025_taxon_assignment":True,
       },
       "next_data_gate":"Focal H-morph hand-cross and hand-self versus verified F positive control; genetically viable seed and actual dry cost, with vouchers",
       "not_an_original_field_experiment":True,
