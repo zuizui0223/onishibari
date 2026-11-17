@@ -36,6 +36,7 @@ ROWS=[
  ("CE",21.4,1575,13.7,31.9,1.4,16,299,.026,None,None,None,None,None,"similar"),
 ]
 SCORING={"CV":57,"RH":55,"NC":133,"CT":96,"CE":145}
+ADULT_GENOTYPED={"CV":43,"RH":20,"NC":29,"CT":26,"CE":20}
 FIS_DESC={
  "CE":"0.64 approx, near equilibrium, authors exception",
  "NC":"higher than other three sites but notably below estimated equilibrium",
@@ -67,6 +68,7 @@ def main():
         fexp_simple,_=expected_F_inbreeding(percent/100,0.,1.)
         print_row={
           "site":site,"sex_ratio_percent_female":percent,"adults_scored_for_sex":SCORING[site],
+          "adult_plants_genotyped_years_2003_2004":ADULT_GENOTYPED[site],
           "elevation_metres":elev,"H_mean_corolla_length_mm":length,
           "stigma_without_any_pollen_F_percent":noF,
           "stigma_without_any_pollen_H_percent":noH,
@@ -94,6 +96,8 @@ def main():
     assert len(details)==5
     assert sum(r["mating_H_n_maternal_seed_families"] for r in details)==88
     assert sum(r["mating_H_n_genotyped_seeds"] for r in details)==1678
+    assert sum(ADULT_GENOTYPED.values())==138
+    assert sum(SCORING.values())==486
     assert sum(r["F_n_seed_families"] or 0 for r in details)==12
     assert sum(r["F_n_genotyped_seeds"] or 0 for r in details)==265
     assert all(r["female_minus_H_no_pollen_percentage_points"]>=30 for r in details)
@@ -110,6 +114,7 @@ def main():
       "source_tables":"Table 1 and Table 2, paper pages 40-41",
       "n_geographic_populations":5,
       "n_adult_plants_scored_morph_sex_not_genotyped":sum(SCORING.values()),
+      "n_adult_plants_genotyped_for_FIS_years_2003_2004":sum(ADULT_GENOTYPED.values()),
       "n_H_maternal_seed_families":sum(r["mating_H_n_maternal_seed_families"] for r in details),
       "n_H_genotyped_mature_seeds":sum(r["mating_H_n_genotyped_seeds"] for r in details),
       "n_F_genotyped_mature_seeds":sum(r["F_n_genotyped_seeds"] or 0 for r in details),
