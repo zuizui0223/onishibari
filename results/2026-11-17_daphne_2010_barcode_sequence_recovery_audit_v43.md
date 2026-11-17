@@ -35,7 +35,7 @@ NCBI ESearch+ESummary (nuccore), 年次2008–2013（チーム検索は2008–20
 | 対象 | 検証件数 | 元の登録文献の著者・研究対象 |
 |---|---:|---|
 | GU736360 (D. tangutica) / GU736359 (D. mezereum) | **2件** | Zhang, Volis & Sun。チベット高原周辺の *Stellera chamaejasme* 系統研究 |
-| GQ1675xx中心のITS2候補（例 GQ167547 D. rodriguezii、GQ167544 D. oleoides、GQ167536 D. laureola） | **60件** | Alonso & Herrera。*Back-and-forth hermaphroditism: phylogenetic context of reproductive system evolution in subdioecious Daphne laureola* |
+| ITS2検索に該当した配列60件（例 GQ167547 D. rodriguezii、GQ167544 D. oleoides、GQ167536 D. laureola） | **60件** | Alonso & Herrera。*Back-and-forth hermaphroditism: phylogenetic context of reproductive system evolution in subdioecious Daphne laureola* |
 
 **全62件中、Kawahara・Yamashitaら元プロジェクト研究者名と最初のGenBank登録文献が一致したものは0件**。これは以前の14件の抜粋監査を**62件全部へ拡張**した結果であり、この検索範囲で未検証のITS2レコードは残らない。
 
@@ -57,7 +57,7 @@ Han et al. (2025) DOI https://doi.org/10.11110/kjpt.2025.55.3.157 の P=日本�
 - scripts/daphne_2010_barcode_genbank_recovery_v42.py
 - scripts/daphne_2010_genbank_provenance_v43.py
 - Source v42 CI SUCCESS https://github.com/zuizui0223/onishibari/actions/runs/44011060026
-- Source v43 full 62-record source and verifier: https://github.com/zuizui0223/onishibari/actions/runs/44011840289 (first source refit succeeded; original 14-record validator was outdated and failed; updated 62-record verifier rerun in workflow history)
+- Source v43 expanded complete 62-record source and validator **PASS** https://github.com/zuizui0223/onishibari/actions/runs/44012191524
 - JSON artifacts: analysis_results_daphne_2010_barcode_archive_v42/daphne_2010_barcode_genbank_recovery_index_v42.json; analysis_results_daphne_2010_barcode_archive_provenance_v43/historical_daphne_2010_barcode_record_provenance_v43.json
 
 検索索引の「0」と同一論文の複数マーカーを独立研究の実験数へ追加しない。元配列の新取得・分子系統の新推定・オニシバリの自家不和合性実験は未実施。Draft PR#2のみ、main不変更。
