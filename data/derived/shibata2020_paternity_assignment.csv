@@ -1,0 +1,5 @@
+source,taxon,site,year,progeny_analyzed,assigned_father,mean_parent_distance_m,source_table,source_url,notes
+Shibata2020,Daphne jezoensis,CTS,2015,222,133,6.9,Table 3-2,https://doi.org/10.14943/doctoral.k14152,Assigned paternity threshold > 0.80; data for D. jezoensis only
+Shibata2020,Daphne jezoensis,CTS,2016,214,124,9.8,Table 3-2,https://doi.org/10.14943/doctoral.k14152,Assigned paternity threshold > 0.80; data for D. jezoensis only
+Shibata2020,Daphne jezoensis,NOP,2015,200,113,10.7,Table 3-2,https://doi.org/10.14943/doctoral.k14152,Assigned paternity threshold > 0.80; data for D. jezoensis only
+Shibata2020,Daphne jezoensis,NOP,2016,178,112,11.4,Table 3-2,https://doi.org/10.14943/doctoral.k14152,Assigned paternity threshold > 0.80; data for D. jezoensis only

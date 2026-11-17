@@ -1,0 +1,21 @@
+name: "Onishibari 2027 pollen source donor and genetically viable seed QC v0.47"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/onishibari-sex-system-20261114]
+    paths:
+      - analysis/audit_2027_self_pollen_site_v47.py
+      - analysis/randomize_2027_self_pollen_site_v45.py
+      - data/templates/2027_v45_pollen_source_execution_header.csv
+      - data/templates/2027_v45_parentage_germination_followup_header.csv
+      - .github/workflows/onishibari-2027-pollen-source-outcome-qc-v47.yml
+permissions:
+  contents: read
+jobs:
+  qc-with-synthetic-only-flower-donor-fixtures:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify synthetic 2027 source donor, viable genotyped offspring and error gates
+        run: python3 analysis/audit_2027_self_pollen_site_v47.py --self-test

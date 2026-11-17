@@ -1,0 +1,11 @@
+locus,accession,forward_primer_5to3,reverse_primer_5to3,repeat_motif,repeat_count,observed_allele_min_bp,observed_allele_max_bp,annealing_c,dye,source_paper,scope
+Dp171,AB897817,GGAGAAGCTGTTGGAGTTGG,TGGAGTATTTGGATGCGGAG,AAG,10,300,334,58,FAM,https://pmc.ncbi.nlm.nih.gov/articles/PMC4103110/#T1,D. jezoensis; cross-amplification in D. pseudomezereum UNTESTED
+Dp180,AB897818,GAAGGGATCCAAATGTCCGG,CTCTGCAAGGTTTAGGTAAGGG,AT,11,187,215,59,FAM,https://pmc.ncbi.nlm.nih.gov/articles/PMC4103110/#T1,D. jezoensis; cross-amplification in D. pseudomezereum UNTESTED
+Dp214,AB897819,ATAAACAACGCGGAACCTGC,GCGCCGGATTACATTATGGG,AT,12,87,135,60,VIC,https://pmc.ncbi.nlm.nih.gov/articles/PMC4103110/#T1,D. jezoensis; cross-amplification in D. pseudomezereum UNTESTED
+Dp238,AB897820,ACGCCCTGTACTCGAATCAC,TCTCGAACTGATTTGCCTGTG,AAG,10,217,253,59,PET,https://pmc.ncbi.nlm.nih.gov/articles/PMC4103110/#T1,D. jezoensis; cross-amplification in D. pseudomezereum UNTESTED
+Dp251,AB897821,GCCTTGACTAGTTACACGGG,AACGGATGGGTCTAGGTTCC,AAT,13,192,195,59,NED,https://pmc.ncbi.nlm.nih.gov/articles/PMC4103110/#T1,D. jezoensis; cross-amplification in D. pseudomezereum UNTESTED
+Dp258,AB897822,TCCTCCGTCACTCAAGCATC,TACGAGTCAGAATACGCCGC,AG,18,150,176,60,FAM,https://pmc.ncbi.nlm.nih.gov/articles/PMC4103110/#T1,D. jezoensis; cross-amplification in D. pseudomezereum UNTESTED
+Dp315,AB897823,CCTGGCAGAAGTGATAGTGAC,TTCTTGTGCTTGGATTGGCG,AAG,10,160,191,59,VIC,https://pmc.ncbi.nlm.nih.gov/articles/PMC4103110/#T1,D. jezoensis; cross-amplification in D. pseudomezereum UNTESTED
+Dp336,AB897824,CGCGTATAAAGATGACATGCAG,GAAGCGTTTACCACTTAAGCTG,AT,10,144,144,59,FAM,https://pmc.ncbi.nlm.nih.gov/articles/PMC4103110/#T1,D. jezoensis; cross-amplification in D. pseudomezereum UNTESTED
+Dp504,AB897825,GCAAAGAAGGTCAATCAAGCTC,TTGCACATTGGGTTTGGTCC,AAG,10,136,163,59,PET,https://pmc.ncbi.nlm.nih.gov/articles/PMC4103110/#T1,D. jezoensis; cross-amplification in D. pseudomezereum UNTESTED
+Dp506,AB897826,TCTCCATTGCCTTCACTTGC,CGTAATTGTTGGCCGAATGTG,AG,11,227,241,59,NED,https://pmc.ncbi.nlm.nih.gov/articles/PMC4103110/#T1,D. jezoensis; cross-amplification in D. pseudomezereum UNTESTED

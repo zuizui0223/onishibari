@@ -1,0 +1,49 @@
+name: Daphne sequence evidence acquisition
+on:
+  push:
+    branches: [research/onishibari-sex-system-20261114]
+    paths: ['analysis/acquire_daphne_sequence_evidence.py', '.github/workflows/daphne_sequence_acquisition.yml']
+  pull_request:
+    paths: ['analysis/acquire_daphne_sequence_evidence.py', '.github/workflows/daphne_sequence_acquisition.yml']
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install accession parser
+        run: python -m pip install biopython==1.86
+      - name: Verify accession and taxon guard using synthetic fixture only
+        run: |
+          PYTHONPATH=analysis python - <<'PY'
+          from Bio.Seq import Seq
+          from Bio.SeqRecord import SeqRecord
+          from Bio.SeqFeature import SeqFeature,SimpleLocation
+          from acquire_daphne_sequence_evidence import summarize_record
+          r=SeqRecord(Seq('ATGAAATTTTAA'),id='PV752465.1')
+          r.annotations={'organism':'Daphne pseudomezereum'}
+          r.features=[SeqFeature(SimpleLocation(0,12),type='CDS',qualifiers={'gene':['matK']})]
+          x=summarize_record(r,'PV752465','Daphne pseudomezereum')
+          assert x['genes']['matK']=='ATGAAATTTTAA'
+          r.annotations['organism']='Daphne pseudomezereum var. koreana'
+          try: summarize_record(r,'PV752465','Daphne pseudomezereum')
+          except ValueError: pass
+          else: raise AssertionError('koreana was incorrectly accepted as target')
+          try: summarize_record(r,'ON244034','Daphne pseudomezereum var. koreana')
+          except ValueError: pass
+          else: raise AssertionError('wrong accession was accepted')
+          print('SYNTHETIC_ACCESSION_TESTS=PASS; not biological evidence')
+          PY
+      - name: Acquire and verify public sequences and published tree resources
+        run: python -u analysis/acquire_daphne_sequence_evidence.py
+      - name: Preserve verified data and explicit failure log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daphne-accession-verified-molecular-evidence
+          path: outputs/sequence_audit_20261114/
+          if-no-files-found: warn
+          retention-days: 90

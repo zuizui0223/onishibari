@@ -1,0 +1,6 @@
+taxon,study,trait,unit,female_mean,hermaphrodite_mean,female_error,hermaphrodite_error,error_type,female_n_flowers,female_n_plants,hermaphrodite_n_flowers,hermaphrodite_n_plants,source_url,scope_note
+Daphne jezoensis,Shibata_Kudo_2017,flower_width,mm,11.10,15.76,0.20,0.38,SE,,21,,21,https://doi.org/10.1093/aobpla/plw089,Flower trait study n 21 plants each sex; sex-specific means only
+Daphne jezoensis,Shibata_Kudo_2017,flower_tube_length,mm,6.55,8.47,0.13,0.21,SE,,21,,21,https://doi.org/10.1093/aobpla/plw089,Flower trait study n 21 plants each sex; sex-specific means only
+Daphne jezoensis,Shibata_Kudo_2017,flower_mass,mg,6.11,8.96,0.27,0.32,SE,,21,,21,https://doi.org/10.1093/aobpla/plw089,Flower trait study n 21 plants each sex; sex-specific means only
+Daphne laureola,Alonso_Herrera_2001,flower_tube_length,mm,4.9,8.1,0.45,0.92,SD,45,,56,,https://www.plant-animal.es/pdfs/Alonso%26Herrera2001AmJBot.pdf,Different population and distinct error definition from 2004 study
+Daphne laureola,Alonso_2004,flower_tube_length,mm,7.7,12.9,1.0,1.8,SD,632,65,629,68,https://doi.org/10.1093/aob/mch004,Distinct 2004 site/sampling design; cannot pool with 2001

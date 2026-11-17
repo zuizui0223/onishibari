@@ -1,0 +1,3 @@
+source_id,taxon,plot,model_component,intercept,log_own_flower_coefficient,log_local_female_flowers_coefficient,source_note,source_url
+Shibata2020,Daphne jezoensis,CTS,predicted_male_siring,-0.54,0.16,0.39,Chapter 3 p64 - local female flowers within 10m; potential incomplete candidate pollen donor sampling,https://doi.org/10.14943/doctoral.k14152
+Shibata2020,Daphne jezoensis,NOP,predicted_male_siring,2.02,0.18,,Chapter 3 p64 - female flower density term not retained; siring assignment ~60%,https://doi.org/10.14943/doctoral.k14152

@@ -1,0 +1,18 @@
+name: "Onishibari 2027 same- vs different-flower self-pollen site pilot v0.45"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/onishibari-sex-system-20261114]
+    paths:
+      - analysis/randomize_2027_self_pollen_site_v45.py
+      - .github/workflows/onishibari-2027-self-pollen-site-v45.yml
+permissions:
+  contents: read
+jobs:
+  exact-cap-self-donor-allocation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test synthetic verified-bud factorial with dedicated same-genet pollen donor
+        run: python3 analysis/randomize_2027_self_pollen_site_v45.py --self-test
