@@ -84,7 +84,7 @@ def assign(rows,seed=20271117):
             if arm:
                 status="ASSIGNED_NOT_APPLIED"
                 role=("pollen_source_only" if arm=="pollen_donor_same_genet"
-                      else "female_maternal_endpoint")
+                      else "maternal_outcome_receiver")
             elif r["voucher_checked"]!="yes" or morph not in ARMS:
                 status="SKIPPED_UNVERIFIED_MORPH_OR_VOUCHER";role="none"
             elif r["flower_stage"]!="predehiscence":
