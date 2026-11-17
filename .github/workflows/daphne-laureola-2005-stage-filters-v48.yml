@@ -1,0 +1,24 @@
+name: "Daphne laureola 2005 original mating stage 5-population source audit v0.48"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_laureola_2005_original_mating_late_filter_v48.py
+      - .github/workflows/daphne-laureola-2005-stage-filters-v48.yml
+permissions:
+  contents: read
+jobs:
+  source-mating-early-versus-late:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit source-published five-population stigma, mating and adult contrast
+        run: python3 scripts/daphne_laureola_2005_original_mating_late_filter_v48.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-laureola-2005-mature-seed-vs-adult-stage-v48
+          path: analysis_results_daphne_life_stage_filters_v48/
+          retention-days: 30
