@@ -1,0 +1,26 @@
+name: "Onishibari verified H-pistil function rare-event detection design v0.41"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/onishibari-sex-system-20261114
+    paths:
+      - analysis/rare_H_pistil_fertility_detectability_v41.py
+      - .github/workflows/onishibari-rare-H-pistil-power-v41.yml
+permissions:
+  contents: read
+jobs:
+  prospective-design-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run exact beta-binomial H function detectability and bud caps
+        run: python3 analysis/rare_H_pistil_fertility_detectability_v41.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: onishibari-2027-rare-functional-pistil-sample-detectability-v41
+          path: analysis_results_onishibari_rare_fertility_v41/
+          retention-days: 30
+          if-no-files-found: warn
