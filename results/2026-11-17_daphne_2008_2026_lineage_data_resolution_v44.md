@@ -16,11 +16,11 @@ Updated 2026-11-17 JST. Source-first audit of **published statements**, not orig
 
 ## The new 2010 raw-accession attempt in v0.42–43
 
-Original team author/period search of NCBI nuccore: **zero** entries indexed to exact Kawahara (2008–13) or Kawahara/Yamashita/Yoshimura (2008–15). A broad ITS2 query returned 60 records, plastid spacer query two. First 14 EFetch flatfiles were checked: two GU736359/360 map to Zhang/Volis/Sun Tibet-wide *Stellera* phylogeny, the other 12 GQ1675xx to Alonso/Herrera *Daphne laureola* mating-system study. **0/14** matched the Japanese 2010 project's first-reference authorship. These negative **indexed searches and nonmatching subset** do not prove the original FASTA does not exist, was never submitted, or cannot be retrieved under alternative names / later years.
+Original team author/period search of NCBI nuccore: **zero** entries indexed to exact Kawahara (2008–13) or Kawahara/Yamashita/Yoshimura (2008–15). A broad ITS2 query returned 60 records, plastid spacer query two. **All 62 indexed candidate EFetch GenBank flatfiles have now been checked**: two GU736359/360 map to Zhang/Volis/Sun Tibet-wide *Stellera* phylogeny, the other **60 ITS2 GQ1675xx** records to Alonso/Herrera *Daphne laureola* mating-system study. **0/62** matched the Japanese 2010 project's first-reference authorship. These negative **indexed searches and nonmatching records within this specific query** do not prove the original FASTA does not exist, was never submitted, or cannot be retrieved under alternative author names / years / taxa.
 
 Original-source machine results:
 - v0.42 https://github.com/zuizui0223/onishibari/actions/runs/44011060026
-- v0.43 direct provenance and validator **PASS** https://github.com/zuizui0223/onishibari/actions/runs/44011439558
+- v0.43 first 14-record validator PASS https://github.com/zuizui0223/onishibari/actions/runs/44011439558; expanded full-62 source originally refitted https://github.com/zuizui0223/onishibari/actions/runs/44011840289; see current v43 workflow for revised full-62 validator
 - Source-coded full report results/2026-11-17_daphne_2010_barcode_sequence_recovery_audit_v43.md.
 
 ## Mechanism implications
