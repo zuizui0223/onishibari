@@ -73,18 +73,21 @@ def main():
     for label in ("Daphne_plastid_spacer_2010","Daphne_ITS2_2010"):
         q=search(SEARCHES[label])
         # Keep broad count and only first records of the search.
-        ids=q["ids"][:(2 if "plastid" in label else 12)]
+        ids=q["ids"]
+        assert len(ids)==q["count_indexed_records"],"Some historical index hits were not retrieved; abort before completeness claims"
         if not ids:continue
-        sub=extract(fetch_flat(ids))
-        if len(sub)!=len(ids):
-            raise ValueError("GenBank flat-file records are missing: "+label+
-                             " "+str((len(sub),len(ids))))
-        for row in sub:
-            row["source_search_label"]=label
-            row["team_author_match_in_first_reference"]=team_match(row)
-            candidates.append(row)
+        for i in range(0,len(ids),12):
+            batch=ids[i:i+12]
+            sub=extract(fetch_flat(batch))
+            if len(sub)!=len(batch):
+                raise ValueError("GenBank flat-file records missing: "+label+" "+str((len(sub),len(batch))))
+            for row in sub:
+                row["source_search_label"]=label
+                row["team_author_match_in_first_reference"]=team_match(row)
+                candidates.append(row)
+            time.sleep(.55)
         time.sleep(.5)
-    assert len(candidates)>=10
+    assert len(candidates)>=60
     summary={
        "status":"GenBank_first_record_provenance_original_Daphne_2010_v43",
        "barcoding_presentation_doi":"10.11519/jfsc.121.0.332.0",
@@ -92,6 +95,9 @@ def main():
        "records_with_any_team_first_reference_name_match":
            sum(v["team_author_match_in_first_reference"] for v in candidates),
        "record_metadata":candidates,
+       "record_first_reference_title_tally":{name:sum(x["first_reference_title"]==name for x in candidates)
+            for name in sorted({x["first_reference_title"] for x in candidates}, key=str)},
+       "team_matching_accessions":[x["accession"] for x in candidates if x["team_author_match_in_first_reference"]],
        "strict_guard":{
          "original_seven_barcode_markers_six_plastid_one_multicopy_nuclear":True,
          "first_reference_metadata_not_exhaustive_source_provenance":True,
@@ -106,8 +112,11 @@ def main():
         "status":summary["status"],
         "n_records_inspected":len(candidates),
         "n_2010_team_author_name_first_reference":summary["records_with_any_team_first_reference_name_match"],
-        "candidates":[{"acc":a["accession"],"org":a["organism"],
+        "sample_candidates":[{"acc":a["accession"],"org":a["organism"],
           "authors":a["first_reference_authors"],"title":a["first_reference_title"]}
-          for a in candidates],"not_confirmed_2010_source":True
+          for a in candidates[:18]],
+        "team_name_matching_accessions":summary["team_matching_accessions"],
+        "reference_title_tally":summary["record_first_reference_title_tally"],
+        "not_confirmed_2010_source_without_voucher":True
     },ensure_ascii=False),flush=True)
 if __name__=="__main__":main()
