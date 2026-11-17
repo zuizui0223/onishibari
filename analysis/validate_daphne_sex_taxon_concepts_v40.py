@@ -36,7 +36,7 @@ def read():
         r=csv.DictReader(h)
         assert r.fieldnames and set(r.fieldnames)==COLS, ("Unexpected columns",r.fieldnames)
         d=list(r)
-    assert len(d)==32 and len({v["claim_id"] for v in d})==32
+    assert len(d)==34 and len({v["claim_id"] for v in d})==34
     for v in d:
         assert all(str(t).strip() for t in v.values()),v["claim_id"]
         assert v["source_url"].startswith("https://"),v["claim_id"]
@@ -54,7 +54,7 @@ def checks(d):
       "P01","P02","P03","P04","P05","P06","P07",
       "J01","J02","J03","J04","J05","J06","J07","J08","J09",
       "K01","C01","C02","C03","C04","I01","I02","I03",
-      "L01","L02","L03","M01","M02","M03","M04","M05"}
+      "L01","L02","L03","L04","L05","M01","M02","M03","M04","M05"}
     # Focal contradiction is explicitly sourced, neither claims functional
     # fecundity of male-appearing flowers directly.
     assert a["P02"]["observed_or_described_state"]=="gynodioecy"
@@ -85,6 +85,12 @@ def checks(d):
     assert a["J08"]["observed_or_described_state"]=="same_flower_self_zero_other_flower_same_plant_fruit_positive"
     assert a["J09"]["observed_or_described_state"]=="H_flower_number_predicts_paternity_ALREADY_REPORTED"
     assert a["L03"]["observed_or_described_state"]=="emasculation_geitonogamous_self_fruit_33_7_vs_18_2_percent"
+    assert a["L04"]["observed_or_described_state"]=="H_mature_seed_estimated_selfing_87_5_to_99_9_percent"
+    assert a["L04"]["has_direct_functional_assay_for_claim"]=="true"
+    assert a["L05"]["observed_or_described_state"]=="adult_FIS_below_mating_equilibrium_in_four_of_five"
+    assert a["L05"]["has_direct_functional_assay_for_claim"]=="false"
+    assert a["L04"]["source_url"]==a["L05"]["source_url"]
+    assert a["L04"]["source_year"]=="2005" and a["L05"]["source_year"]=="2005"
     assert a["K01"]["resolved_taxon_concept"]==K
     assert a["K01"]["observed_or_described_state"]=="hermaphrodite"
     assert a["K01"]["has_direct_functional_assay_for_claim"]=="false"
