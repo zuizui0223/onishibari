@@ -40,7 +40,8 @@ def read():
     for v in d:
         assert all(str(t).strip() for t in v.values()),v["claim_id"]
         assert v["source_url"].startswith("https://"),v["claim_id"]
-        assert v["has_direct_functional_assay_for_claim"] in ("True","False"),v["claim_id"]
+        v["has_direct_functional_assay_for_claim"]=v["has_direct_functional_assay_for_claim"].lower()
+        assert v["has_direct_functional_assay_for_claim"] in ("true","false"),v["claim_id"]
         assert "PLACEHOLDER" not in v["source_url"] and "unknown DOI" not in v["source_url"]
     return d
 
@@ -62,13 +63,13 @@ def checks(d):
     assert a["P02"]["source_year"]=="2010"
     assert a["P03"]["source_year"]=="2020"
     assert all(a[k]["resolved_taxon_concept"]==P for k in ("P01","P02","P03","P04","P05","P06"))
-    assert all(a[k]["has_direct_functional_assay_for_claim"]=="False" for k in ("P01","P02","P03","P04","P05","P06"))
+    assert all(a[k]["has_direct_functional_assay_for_claim"]=="false" for k in ("P01","P02","P03","P04","P05","P06"))
     assert a["P06"]["axis"]=="self_compatibility"
     assert a["P06"]["observed_or_described_state"]=="low_self_compatibility_reported_unquantified"
-    assert a["P06"]["has_direct_functional_assay_for_claim"]=="False"
+    assert a["P06"]["has_direct_functional_assay_for_claim"]=="false"
     assert a["M01"]["resolved_taxon_concept"]=="Daphne miyabeana"
     assert a["M02"]["observed_or_described_state"]=="self_compatible_spontaneous_selfing_low_vs_outcross"
-    assert a["M02"]["has_direct_functional_assay_for_claim"]=="True"
+    assert a["M02"]["has_direct_functional_assay_for_claim"]=="true"
     assert a["M03"]["axis"]=="pollination_function"
     # One historically named genotype must not count as independent
     # D. kamtschatica evidence for present-day D. kamtschatica.
@@ -77,9 +78,9 @@ def checks(d):
     assert a["J03"]["resolved_taxon_concept"]==J
     assert a["K01"]["resolved_taxon_concept"]==K
     assert a["K01"]["observed_or_described_state"]=="hermaphrodite"
-    assert a["K01"]["has_direct_functional_assay_for_claim"]=="False"
+    assert a["K01"]["has_direct_functional_assay_for_claim"]=="false"
     assert a["I02"]["resolved_taxon_concept"]==I
-    assert a["I02"]["has_direct_functional_assay_for_claim"]=="True"
+    assert a["I02"]["has_direct_functional_assay_for_claim"]=="true"
     assert a["I02"]["observed_or_described_state"]=="self_compatible_high_fruiting"
     assert a["J03"]["observed_or_described_state"]=="self_compatible_weak_assurance"
     # Honor Korean phylogeny/synonyms vs old Honshu unresolved var label.
@@ -88,7 +89,7 @@ def checks(d):
     assert a["C02"]["resolved_taxon_concept"]==C
     assert a["C03"]["resolved_taxon_concept"]==C
     assert a["L01"]["source_url"]=="https://doi.org/10.2307/2657083"
-    assert a["L01"]["has_direct_functional_assay_for_claim"]=="True"
+    assert a["L01"]["has_direct_functional_assay_for_claim"]=="true"
     assert a["L01"]["observed_or_described_state"]=="vector_required_self_compatible"
     assert a["P04"]["source_year"]=="undated"
     assert a["P05"]["source_year"]=="undated"
@@ -109,7 +110,7 @@ def summary(d):
           x["resolved_taxon_concept"]==k and x["axis"]=="sex_structure"))
           for k in sorted(group)}
     focal_direct=[x["claim_id"] for x in d if x["resolved_taxon_concept"]==P and
-       x["has_direct_functional_assay_for_claim"]=="True"]
+       x["has_direct_functional_assay_for_claim"]=="true"]
     assert focal_direct==[]
     result={
       "status":"PASS_DAPHNE_SEX_CONCEPT_PROVENANCE_V40",
