@@ -79,7 +79,7 @@ def time_and_stage(rows):
         for dt,r in history:
             f=r["fate_status"]
             stage=STAGES[r["stage"]]
-            if was_dead and f=="alive":raise ValueError("Offspring revived after confirmed death")
+            if was_dead and f!="dead":raise ValueError("A confirmed dead offspring cannot later be lost, pending or alive")
             if f=="alive":
                 if stage<last_stage:raise ValueError("Development stage regressed in a living offspring")
                 last_stage=stage
@@ -114,6 +114,7 @@ def audit(schedule,executions,followups,ledger):
     n_lost_or_pending_seed_histories=0
     n_strict_germ,n_strict_established,n_strict_adult,n_strict_repro=0,0,0,0
     censored_lost=0
+    n_seed_histories_with_growth_context_changes=0
     for flower,seedset in byflower.items():
         plan=assigned[flower]
         arm=plan["planned_treatment"]
@@ -172,6 +173,8 @@ def audit(schedule,executions,followups,ledger):
         for sk in seeds:
             h=byseed[sk]
             n=1;all_seed_count+=1
+            if len({r["growth_context"] for _,r in h})>1:
+                n_seed_histories_with_growth_context_changes+=1
             alive=[r for _,r in h if r["fate_status"]=="alive"]
             stage_high=max([STAGES[r["stage"]] for r in alive],default=-1)
             if stage_high>=0:n_ever_mature+=1
@@ -224,6 +227,7 @@ def audit(schedule,executions,followups,ledger):
           "offspring_parentage_confirmed_reproduction":n_strict_repro},
       "missing_or_censored_seed_histories":n_lost_or_pending_seed_histories,
       "lost_or_unlocated_not_assumed_dead":censored_lost,
+      "seed_histories_with_growth_context_changes":n_seed_histories_with_growth_context_changes,
       "known_source_or_aggregate_problems_count":len(failed_parentage),
       "group_summaries":[{
          "morph":k[0],"planned_treatment":k[1],
