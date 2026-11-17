@@ -19,7 +19,8 @@ def main():
     assert d["GU736360"]["organism"]=="Daphne tangutica"
     assert d["GU736359"]["organism"]=="Daphne mezereum"
     assert len([x for x in d if x.startswith("GU")])==2
-    assert len([x for x in d if x.startswith("GQ")])==60
+    assert sum(v["source_search_label"]=="Daphne_ITS2_2010" for v in d.values())==60
+    assert sum(v["source_search_label"]=="Daphne_plastid_spacer_2010" for v in d.values())==2
     assert len(a["team_matching_accessions"])==0
     tallies=a["record_first_reference_title_tally"]
     assert len(tallies)==2
@@ -30,7 +31,7 @@ def main():
     assert d["GQ167547"]["organism"]=="Daphne rodriguezii"
     assert d["GQ167544"]["organism"]=="Daphne oleoides"
     for k,v in d.items():
-        if k.startswith("GQ"):
+        if v["source_search_label"]=="Daphne_ITS2_2010":
             assert "Alonso" in v["first_reference_authors"]
             assert "Hermaphroditism" in v["first_reference_title"].title()
         assert not v["team_author_match_in_first_reference"]
