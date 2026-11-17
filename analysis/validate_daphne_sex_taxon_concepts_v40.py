@@ -31,12 +31,12 @@ I="Daphne kiusiana"
 L="Daphne laureola"
 
 def read():
-    txt=INPUT.read_text(encoding="utf8-sig")
+    txt=INPUT.read_text(encoding="utf-8-sig")
     with io.StringIO(txt,newline="") as h:
         r=csv.DictReader(h)
         assert r.fieldnames and set(r.fieldnames)==COLS, ("Unexpected columns",r.fieldnames)
         d=list(r)
-    assert len(d)==20 and len({v["claim_id"] for v in d})==20
+    assert len(d)==24 and len({v["claim_id"] for v in d})==24
     for v in d:
         assert all(str(t).strip() for t in v.values()),v["claim_id"]
         assert v["source_url"].startswith("https://"),v["claim_id"]
@@ -50,10 +50,10 @@ def byid(d):
 def checks(d):
     a=byid(d)
     assert set(a)=={
-      "P01","P02","P03","P04","P05",
+      "P01","P02","P03","P04","P05","P06",
       "J01","J02","J03","J04","J05","J06",
       "K01","C01","C02","C03","I01","I02","I03",
-      "L01","L02"}
+      "L01","L02","M01","M02","M03"}
     # Focal contradiction is explicitly sourced, neither claims functional
     # fecundity of male-appearing flowers directly.
     assert a["P02"]["observed_or_described_state"]=="gynodioecy"
@@ -61,8 +61,15 @@ def checks(d):
     assert a["P04"]["observed_or_described_state"]=="ambiguous_dioecy"
     assert a["P02"]["source_year"]=="2010"
     assert a["P03"]["source_year"]=="2020"
-    assert all(a[k]["resolved_taxon_concept"]==P for k in ("P01","P02","P03","P04","P05"))
-    assert all(a[k]["has_direct_functional_assay_for_claim"]=="False" for k in ("P01","P02","P03","P04","P05"))
+    assert all(a[k]["resolved_taxon_concept"]==P for k in ("P01","P02","P03","P04","P05","P06"))
+    assert all(a[k]["has_direct_functional_assay_for_claim"]=="False" for k in ("P01","P02","P03","P04","P05","P06"))
+    assert a["P06"]["axis"]=="self_compatibility"
+    assert a["P06"]["observed_or_described_state"]=="low_self_compatibility_reported_unquantified"
+    assert a["P06"]["has_direct_functional_assay_for_claim"]=="False"
+    assert a["M01"]["resolved_taxon_concept"]=="Daphne miyabeana"
+    assert a["M02"]["observed_or_described_state"]=="self_compatible_spontaneous_selfing_low_vs_outcross"
+    assert a["M02"]["has_direct_functional_assay_for_claim"]=="True"
+    assert a["M03"]["axis"]=="pollination_function"
     # One historically named genotype must not count as independent
     # D. kamtschatica evidence for present-day D. kamtschatica.
     assert a["J01"]["name_as_printed"]=="Daphne kamtchatica var. jezoensis"
@@ -89,7 +96,7 @@ def checks(d):
     # Verify no false line of ancestry from mere 3 tips.
     assert "dioecy"!=a["J01"]["observed_or_described_state"]
     # Every named external taxon used in a planned staged comparison is distinct.
-    assert len({P,J,K,I,C,H})==6
+    assert len({P,J,K,I,C,H,"Daphne miyabeana"})==7
 
 def summary(d):
     a=byid(d)
@@ -119,7 +126,7 @@ def summary(d):
          "botanical_garden_statement":"dioecy_unclear",
          "focal_direct_cross_viable_offspring_assays_in_ledger":0,
          "focal_residual_pistil_ability_to_produce_viable_seed":"UNKNOWN",
-         "focal_self_compatibility":"UNKNOWN",
+         "focal_self_compatibility":"LOW_REPORTED_2011_KAKEN_UNQUANTIFIED_NOT_CONFIRMED_PHYSIOLOGICAL_SI",
          "focal_hermaphrodite_functionality":"UNKNOWN",
          "NOT_a_reclassification_from_this_meta_analysis":True
        },
