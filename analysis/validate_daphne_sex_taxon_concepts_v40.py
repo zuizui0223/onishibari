@@ -36,7 +36,7 @@ def read():
         r=csv.DictReader(h)
         assert r.fieldnames and set(r.fieldnames)==COLS, ("Unexpected columns",r.fieldnames)
         d=list(r)
-    assert len(d)==28 and len({v["claim_id"] for v in d})==28
+    assert len(d)==32 and len({v["claim_id"] for v in d})==32
     for v in d:
         assert all(str(t).strip() for t in v.values()),v["claim_id"]
         assert v["source_url"].startswith("https://"),v["claim_id"]
@@ -52,9 +52,9 @@ def checks(d):
     a=byid(d)
     assert set(a)=={
       "P01","P02","P03","P04","P05","P06","P07",
-      "J01","J02","J03","J04","J05","J06",
+      "J01","J02","J03","J04","J05","J06","J07","J08","J09",
       "K01","C01","C02","C03","C04","I01","I02","I03",
-      "L01","L02","M01","M02","M03","M04","M05"}
+      "L01","L02","L03","M01","M02","M03","M04","M05"}
     # Focal contradiction is explicitly sourced, neither claims functional
     # fecundity of male-appearing flowers directly.
     assert a["P02"]["observed_or_described_state"]=="gynodioecy"
@@ -79,6 +79,12 @@ def checks(d):
     assert a["J01"]["name_as_printed"]=="Daphne kamtchatica var. jezoensis"
     assert a["J01"]["resolved_taxon_concept"]==J
     assert a["J03"]["resolved_taxon_concept"]==J
+    assert all(a[k]["resolved_taxon_concept"]==J for k in ("J07","J08","J09"))
+    assert all(a[k]["has_direct_functional_assay_for_claim"]=="true" for k in ("J07","J08","J09","L03"))
+    assert a["J07"]["name_as_printed"]=="Daphne kamtchatica var. jezoensis"
+    assert a["J08"]["observed_or_described_state"]=="same_flower_self_zero_other_flower_same_plant_fruit_positive"
+    assert a["J09"]["observed_or_described_state"]=="H_flower_number_predicts_paternity_ALREADY_REPORTED"
+    assert a["L03"]["observed_or_described_state"]=="emasculation_geitonogamous_self_fruit_33_7_vs_18_2_percent"
     assert a["K01"]["resolved_taxon_concept"]==K
     assert a["K01"]["observed_or_described_state"]=="hermaphrodite"
     assert a["K01"]["has_direct_functional_assay_for_claim"]=="false"
@@ -143,7 +149,11 @@ def summary(d):
         "same_morphological_gynodioecy_does_not_force_same_function":True,
         "D_miyabeana_2011_gyn_vs_2022_dioecy_claim_conflict":True,
         "historic_var_jezoensis_alias_is_modern_jezoensis":True,
-        "modern_D_kamtschatica_sensu_stricto_not_empirically_selfing_assayed_here":True
+        "modern_D_kamtschatica_sensu_stricto_not_empirically_selfing_assayed_here":True,
+        "1989_jezoensis_emasculation_pollen_clogging_previously_published":True,
+        "2008_jezoensis_same_vs_other_self_source_treatments_non_equivalent":True,
+        "2019_jezoensis_H_flower_number_paternity_association_already_reported":True,
+        "2001_laureola_H_geitonogamous_self_emasculation_result_with_only_five_H_plants":True
       },
       "taxonomy_guard":{
         "Honshu_var_koreana":"UNRESOLVED_OTU_NOT_AUTOMATICALLY_KOREAN_C",
