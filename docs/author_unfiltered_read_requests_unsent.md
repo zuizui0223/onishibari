@@ -43,3 +43,35 @@ Best regards,
 - 2025 correspondence email also appears in official academic listings and earlier publications (e.g., https://www.e-kjpt.org/upload/pdf/kjpt-54-3-217.pdf).
 
 Do not send without user review. Addresses are the published academic corresponding contacts; no private addresses are used.
+
+
+## C. For 2008–2010 Japanese Daphne reproductive studies and unpublished P/J phylogeny (draft only)
+
+Potential public project researchers: Naoko Yamashita (FFPRI), Thomas Ting Lei (Ryukoku University), and Takayuki Kawahara (FFPRI; original phylogenetic contribution in Lei et al. 2020). **Do not invent or autofill private email addresses. No correspondence has been sent.** Check current institutional public contact and research reuse policies before any outreach.
+
+Suggested Japanese inquiry (unsent):
+
+件名：オニシバリ・近縁ジンチョウゲ属の2008–2010年交配実験資料と系統配列についてのお問い合わせ
+
+先生
+
+突然のご連絡失礼いたします。現在、オニシバリ（Daphne pseudomezereum）の形態的性型と実際の雄・雌繁殖機能、ならびにナニワズ（D. jezoensis）・コショウノキ（D. kiusiana）・カラスシキミ（D. miyabeana）との比較を検討しております。
+
+科研費基盤研究(B) 20380093（2008–2010年度）の2011年研究成果報告書に、4種が雌性両全性異株であり、オニシバリおよびナニワズの自家和合性が比較的低い旨が記されていることを確認いたしました。2010年の森林総研関西支所研究情報96号にも関連する説明がございます。
+
+この結果を正確に理解したく、もし記録が残されていれば、オニシバリに関する「両性株・雌株の個体別の形態判定基準」「人工自家／人工他家受粉・袋掛け対照ごとの花数と果実数」「花粉管・成熟種子・発芽や交配相手の確認」「採集voucher、集団、観察年に対応する情報」について、公開可能な実験方法・論文・集計表・補足資料等をご教示いただけないでしょうか。これらが未公開資料の場合、アクセスや再利用条件について相談できれば幸いです。
+
+また、Lei et al. (2020, Physiologia Plantarum, DOI:10.1111/ppl.12972)では、オニシバリとナニワズを南北レースとして扱う分子系統解析が未発表データとして引用されています。利用可能な元配列のアクセッション、葉緑体と核マーカーの名称、voucherと分類同定の対応、系統樹やNEXUS/FASTAなどのアーカイブの有無についてもご存知でしたら教えていただければ大変ありがたく存じます。日本の山地で「Daphne koreana」と呼ばれた標本と、最近再分類された韓国産D. kamtschatica var. koreanaとの対応についても検証したいと考えています。
+
+既往研究結果を優先して正しく引用し、共同解析や引用条件など先生方のご意向を尊重したいと考えております。
+
+お忙しいところ恐縮ですが、何卒よろしくお願いいたします。
+
+[所属・氏名・連絡先]
+
+Verified public source notes:
+- Original JSPS project 20380093: https://kaken.nii.ac.jp/file/KAKENHI-PROJECT-20380093/20380093seika.pdf
+- FFPRI 2010 researcher note: https://www.ffpri.go.jp/fsm/research/pubs/joho/documents/res_info_096.pdf
+- Lei et al. 2020 open full text: https://doi.org/10.1111/ppl.12972
+
+No external email message has been drafted, sent, queued, or saved by this repository action; this section is a plain-text request for review.
