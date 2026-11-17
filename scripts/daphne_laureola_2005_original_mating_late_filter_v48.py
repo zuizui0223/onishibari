@@ -35,6 +35,15 @@ ROWS=[
  ("CT",28.1,1640,12.8,73.6,11.1,20,372,.125,None,4,84,.972,None,"low"),
  ("CE",21.4,1575,13.7,31.9,1.4,16,299,.026,None,None,None,None,None,"similar"),
 ]
+# Parentheses in published Table 2 are source bootstrap standard deviations,
+# not uncertainty estimated from seed-level independent Bernoulli trials.
+T_ESTIMATE_SD={
+  "CV":{"H_t_s":.039,"H_t_m":.040,"F_t_s":.149,"F_t_m":.141},
+  "RH":{"H_t_s":.016,"H_t_m":.012,"F_t_s":.394,"F_t_m":.387},
+  "NC":{"H_t_s":.142,"H_t_m":.142,"F_t_s":None,"F_t_m":None},
+  "CT":{"H_t_s":.061,"H_t_m":None,"F_t_s":.149,"F_t_m":None},
+  "CE":{"H_t_s":.021,"H_t_m":None,"F_t_s":None,"F_t_m":None},
+}
 SCORING={"CV":57,"RH":55,"NC":133,"CT":96,"CE":145}
 ADULT_GENOTYPED={"CV":43,"RH":20,"NC":29,"CT":26,"CE":20}
 FIS_DESC={
@@ -79,6 +88,7 @@ def main():
           "H_t_m_multilocus_as_reported_or_null":tHm,
           "H_selected_t_for_pop_outcross_scenario":th,
           "H_estimated_fraction_mature_genotyped_seeds_selfed":val(1-th),
+          "source_published_t_estimate_bootstrap_SD":T_ESTIMATE_SD[site],
           "F_n_seed_families":Ffam,
           "F_n_genotyped_seeds":Fseed,
           "F_t_s_as_reported":tFs,
@@ -111,6 +121,7 @@ def main():
       "status":"PASS_2005_DAPHNE_LAUREOLA_SOURCE_MATING_STAGE_AUDIT_V48",
       "published_article":"Medrano Alonso Herrera (2005) Heredity 94 37-43",
       "doi":DOI,"printed_source_pdf":SOURCE,
+      "original_source_t_estimate_parentheses_are_bootstrap_SD_not_independent_seed_SE":True,
       "source_tables":"Table 1 and Table 2, paper pages 40-41",
       "n_geographic_populations":5,
       "n_adult_plants_scored_morph_sex_not_genotyped":sum(SCORING.values()),
