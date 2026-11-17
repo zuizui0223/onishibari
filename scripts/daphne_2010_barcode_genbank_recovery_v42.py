@@ -53,7 +53,7 @@ def get(operation,params):
 
 def search(term):
     node,url=get("esearch.fcgi",{"db":"nuccore","term":term,
-                                 "retmode":"xml","retmax":30})
+                                 "retmode":"xml","retmax":200})
     assert node.tag=="eSearchResult"
     count=int(node.findtext("Count","0"))
     ids=[q.text for q in node.findall("./IdList/Id")]
@@ -61,7 +61,7 @@ def search(term):
     if status:raise RuntimeError("NCBI search error: "+status[:200])
     return {"search_query":term,"count_indexed_records":count,
       "ids":ids,"query_url":url,
-      "capped_at_30":count>30}
+      "capped_at_200":count>200}
 
 def describe(ids):
     if not ids:return []
