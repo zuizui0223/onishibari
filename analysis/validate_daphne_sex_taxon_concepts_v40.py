@@ -36,7 +36,7 @@ def read():
         r=csv.DictReader(h)
         assert r.fieldnames and set(r.fieldnames)==COLS, ("Unexpected columns",r.fieldnames)
         d=list(r)
-    assert len(d)==24 and len({v["claim_id"] for v in d})==24
+    assert len(d)==26 and len({v["claim_id"] for v in d})==26
     for v in d:
         assert all(str(t).strip() for t in v.values()),v["claim_id"]
         assert v["source_url"].startswith("https://"),v["claim_id"]
@@ -54,7 +54,7 @@ def checks(d):
       "P01","P02","P03","P04","P05","P06",
       "J01","J02","J03","J04","J05","J06",
       "K01","C01","C02","C03","I01","I02","I03",
-      "L01","L02","M01","M02","M03"}
+      "L01","L02","M01","M02","M03","M04","M05"}
     # Focal contradiction is explicitly sourced, neither claims functional
     # fecundity of male-appearing flowers directly.
     assert a["P02"]["observed_or_described_state"]=="gynodioecy"
@@ -71,6 +71,9 @@ def checks(d):
     assert a["M02"]["observed_or_described_state"]=="self_compatible_spontaneous_selfing_low_vs_outcross"
     assert a["M02"]["has_direct_functional_assay_for_claim"]=="true"
     assert a["M03"]["axis"]=="pollination_function"
+    assert a["M04"]["observed_or_described_state"]=="gynodioecy"
+    assert a["M05"]["observed_or_described_state"]=="dioecy"
+    assert all(a[k]["resolved_taxon_concept"]=="Daphne miyabeana" for k in ("M01","M02","M03","M04","M05"))
     # One historically named genotype must not count as independent
     # D. kamtschatica evidence for present-day D. kamtschatica.
     assert a["J01"]["name_as_printed"]=="Daphne kamtchatica var. jezoensis"
@@ -135,6 +138,7 @@ def summary(d):
         "D_jezoensis":"male_biased_H_can_be_self_compatible_but_low_seeding_and_inbreeding_depression",
         "D_kiusiana":"H_hand_cross_has_substantial_fruit_in_reported_populations",
         "same_morphological_gynodioecy_does_not_force_same_function":True,
+        "D_miyabeana_2011_gyn_vs_2022_dioecy_claim_conflict":True,
         "historic_var_jezoensis_alias_is_modern_jezoensis":True,
         "modern_D_kamtschatica_sensu_stricto_not_empirically_selfing_assayed_here":True
       },
