@@ -109,7 +109,7 @@ def main():
       "doi":DOI,"printed_source_pdf":SOURCE,
       "source_tables":"Table 1 and Table 2, paper pages 40-41",
       "n_geographic_populations":5,
-      "n_adult_genet_morph_sex_scored":sum(SCORING.values()),
+      "n_adult_plants_scored_morph_sex_not_genotyped":sum(SCORING.values()),
       "n_H_maternal_seed_families":sum(r["mating_H_n_maternal_seed_families"] for r in details),
       "n_H_genotyped_mature_seeds":sum(r["mating_H_n_genotyped_seeds"] for r in details),
       "n_F_genotyped_mature_seeds":sum(r["F_n_genotyped_seeds"] or 0 for r in details),
