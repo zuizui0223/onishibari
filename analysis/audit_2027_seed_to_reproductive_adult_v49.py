@@ -121,6 +121,11 @@ def audit(schedule,executions,followups,ledger):
         exec_issues,execution_ok,executed_on=exec_flags(plan,ef,execs)
         fr=follows.get(flower)
         follow_issues,completed,counts=outcome(fr,arm)
+        # Preserve source/aggregate QC defects as noncausal, nonzero flags.
+        failed_parentage.extend("execution_"+str(flag) for flag in exec_issues)
+        failed_parentage.extend("followup_"+str(flag) for flag in follow_issues)
+        if completed and executed_on is not None and counts["date"]<executed_on:
+            raise ValueError("Mother seed/germination followup predates actual pollination")
         # An individual offspring ledger is NOT assumed complete. Its known
         # germinated and mature seed counts cannot exceed the mother's
         # verified completed aggregate. All unobserved seeds stay unknown.
@@ -128,6 +133,8 @@ def audit(schedule,executions,followups,ledger):
         earliest_germ=0;verified_strict_germ=0;all_mature=0
         for sk in seeds:
             h=byseed[sk]
+            if executed_on is not None and any(dt<executed_on and r["fate_status"]=="alive" for dt,r in h):
+                raise ValueError("Observed seed life stage predates actual pollination")
             alive=[r for _,r in h if r["fate_status"]=="alive"]
             if not alive:continue
             all_mature+=1
@@ -139,6 +146,19 @@ def audit(schedule,executions,followups,ledger):
                 arm_compatible(arm,verified_route)):
                 verified_strict_germ+=1
         if completed:
+            # Only when all seeds and their exact germination events are
+            # accounted for, completed aggregate cannot precede germination.
+            direct_germ_dates=[]
+            for sk in seeds:
+                stamps=[dt for dt,r in byseed[sk]
+                        if r["stage"]=="germinated" and r["fate_status"]=="alive"]
+                if stamps:direct_germ_dates.append(min(stamps))
+            if (len(seeds)==counts["mature"] and earliest_germ>0 and
+                counts["germinated"] is not None and
+                earliest_germ==counts["germinated"] and
+                len(direct_germ_dates)==earliest_germ and
+                max(direct_germ_dates)>counts["date"]):
+                raise ValueError("Mother aggregate counts seed germination before explicit seed event")
             if all_mature>counts["mature"]:
                 raise ValueError("Individual seed identities exceed mother's recorded mature seed count")
             if counts["germinated"] is not None and earliest_germ>counts["germinated"]:
@@ -261,7 +281,7 @@ def synthetic_test():
         execs.append(e)
         if arm==DONOR:continue
         f={k:a[k] for k in ID}
-        f.update(assessment_date="2027-07-15",followup_status="completed",
+        f.update(assessment_date="2028-04-15",followup_status="completed",
           fruit_mature="1" if arm=="bag_hand_cross" else "0",
           mature_seed_count="1" if arm=="bag_hand_cross" else "0",
           germinated_seed_count="1" if arm=="bag_hand_cross" else "0",
@@ -284,6 +304,15 @@ def synthetic_test():
       row("2032-04-20","reproductive_adult","alive",rc="flowering_observed"),
       row("2033-04-20","reproductive_adult","alive",rc="offspring_parentage_confirmed")
     ]
+    # A completed maternal count cannot claim the exact known child's
+    # germination occurred before the documented first germination date.
+    too_early=[dict(x) for x in outcomes]
+    for x in too_early:
+        if x["genet_id"]=="H_SYNTH" and x["fruit_mature"]=="1":
+            x["assessment_date"]="2027-07-15"
+    try:audit(plans,execs,too_early,ledger)
+    except ValueError:pass
+    else:raise AssertionError("Future germination incorrectly reported as an early observed fact")
     a=audit(plans,execs,outcomes,ledger)
     assert a["source_route_checked_and_per_protocol_strict_counts"]["germinated"]==1
     assert a["source_route_checked_and_per_protocol_strict_counts"]["reproductive_adult"]==1
@@ -327,6 +356,7 @@ def synthetic_test():
       "dead_offspring_does_not_revive":True,
       "dedicated_pollen_source_never_maternal":True,
       "no_more_seed_identities_than_mother_fruit_count":True,
+      "source_maternal_followup_must_postdate_explicit_seed_germination":True,
       "no_actual_2027_experiment_observed":True}
 
 def main():
