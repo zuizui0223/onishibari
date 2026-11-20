@@ -1,0 +1,31 @@
+name: Visitor scarcity versus reproductive outcome per garden site
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/visitor_scarcity_real_data_pilot.py
+      - .github/workflows/angiosperm-visitor-scarcity-pilot.yml
+
+permissions:
+  contents: read
+
+jobs:
+  observed-visitor-outcomes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install statistics
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -q scipy
+      - name: Link visitor-detection window summaries to plant-specific reproductive outcomes without site coordinates
+        run: .venv/bin/python scripts/visitor_scarcity_real_data_pilot.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-2025-visitor-scarcity-vs-fruitset-local-pilot
+          path: analysis_results_visitor_link/
+          if-no-files-found: warn

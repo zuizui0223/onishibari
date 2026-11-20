@@ -1,0 +1,31 @@
+name: UK PoMS 2023 spatially aggregated MODIS NDVI pilot
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/ukpoms_2023_modis_1km.py
+      - .github/workflows/angiosperm-ukpoms-2023-modis.yml
+
+permissions:
+  contents: read
+
+jobs:
+  UK-FITs-seasonal-NDVI:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 27
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install STAC, raster projection and predictive model dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -q pystac-client planetary-computer rasterio pyproj numpy scipy pandas scikit-learn
+      - name: Read 2023 MODIS seasonal NDVI over public 1km grids and compare to habitat and flower supply
+        run: .venv/bin/python scripts/ukpoms_2023_modis_1km.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ukpoms-2023-1km-NDVI-plus-floral-habitat-QA
+          path: analysis_results_ukpoms_ndvi2023/
+          if-no-files-found: warn

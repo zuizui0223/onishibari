@@ -1,0 +1,32 @@
+name: UK PoMS does flower supply reduce zero-visitor observations
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/ukpoms_zero_visits_logistic.py
+      - .github/workflows/angiosperm-poms-zero-visits.yml
+
+permissions:
+  contents: read
+
+jobs:
+  nonzero-encounter:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install source and GLM statistical packages
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy scikit-learn statsmodels patsy
+      - name: Fit source-constrained zero-visitor-binomial models with cluster robust errors
+        run: |
+          OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 .venv/bin/python scripts/ukpoms_zero_visits_logistic.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ukpoms-zero-visitor-flower-units-logistic
+          path: analysis_results_zero_visit/
+          if-no-files-found: warn

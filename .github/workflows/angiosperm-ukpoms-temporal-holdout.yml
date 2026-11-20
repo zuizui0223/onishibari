@@ -1,0 +1,31 @@
+name: UK PoMS 2023 future-year holdout floral resources versus habitat
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/ukpoms_temporal_holdout.py
+      - .github/workflows/angiosperm-ukpoms-temporal-holdout.yml
+
+permissions:
+  contents: read
+
+jobs:
+  temporal-validation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install source model dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q pandas numpy scipy scikit-learn
+      - name: Fit 2017-2022 and test on all 2023 PoMS 1km survey cases
+        run: .venv/bin/python scripts/ukpoms_temporal_holdout.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ukpoms-2023-year-holdout-resources-vs-habitat
+          path: analysis_results_ukpoms_temporal/
+          if-no-files-found: warn

@@ -1,0 +1,33 @@
+name: Floral attraction vs effective pollen transfer mathematical identifiability
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/effective_visits_flower_coverage_frontier.py
+      - scripts/silene_latifolia_tradeoff_source_audit.py
+      - .github/workflows/angiosperm-effective-visit-quality.yml
+
+permissions:
+  contents: read
+
+jobs:
+  pure-model-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Derive and test visitor dilution, pollen quality and budget constraints
+        run: python3 scripts/effective_visits_flower_coverage_frontier.py
+      - name: Check original Silene male floral-mass and related pollen estimates with proper measurement boundaries
+        run: python3 scripts/silene_latifolia_tradeoff_source_audit.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: floral-attraction-effective-compatibility-resource-model
+          path: |
+            analysis_results_visitation_quality_frontier/
+            analysis_results_silene_flower_cost_carryover/
+          if-no-files-found: error
+          retention-days: 30

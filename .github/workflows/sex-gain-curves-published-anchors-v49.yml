@@ -1,0 +1,26 @@
+name: "Sex-specific investment to genetic fitness: published gain-curve anchor audit v0.49"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - data/2026-11-20_sex_gain_curve_primary_anchors_v49.csv
+      - scripts/sex_gain_curve_primary_summary_v49.py
+      - results/2026-11-20_sex_gain_curve_primary_anchors_v49.md
+      - .github/workflows/sex-gain-curves-published-anchors-v49.yml
+permissions:
+  contents: read
+jobs:
+  verified-publication-summary-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify public literature values and derived doubling multipliers
+        run: python3 scripts/sex_gain_curve_primary_summary_v49.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sex-gain-curves-v49-publication-summary-only
+          path: analysis_results_sex_gain_curve_v49/
+          retention-days: 30

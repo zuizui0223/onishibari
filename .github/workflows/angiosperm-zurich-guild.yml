@@ -1,0 +1,31 @@
+name: 2016 Zurich NDVI visitor guild reliability pilot
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/zurich2016_visitor_guild_ndvi.py
+      - .github/workflows/angiosperm-zurich-guild.yml
+
+permissions:
+  contents: read
+
+jobs:
+  guild-greenness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install public source image access and statistics
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q pystac-client planetary-computer rasterio scipy numpy
+      - name: Stratify real visitors by guild and join 2016 same-season MODIS greenness
+        run: .venv/bin/python scripts/zurich2016_visitor_guild_ndvi.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-2016-garden-NDVI-visiting-guilds
+          path: analysis_results_zurich_guild/
+          if-no-files-found: warn

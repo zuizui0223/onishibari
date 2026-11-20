@@ -1,0 +1,28 @@
+name: Audit global species flower display pollen ovule primary source
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/global_display_pollen_ovule_source_inventory_v09.py
+      - .github/workflows/angiosperm-global-pollen-display-v09.yml
+
+permissions:
+  contents: read
+
+jobs:
+  original-1241-species-source-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inventory authors original pollen and ovule trait archive
+        run: python3 scripts/global_display_pollen_ovule_source_inventory_v09.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: global-pollen-display-ovule-original-source-v09
+          path: analysis_results_global_flower_pollen_inventory_v09/
+          retention-days: 30
+          if-no-files-found: warn

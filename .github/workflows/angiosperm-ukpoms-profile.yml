@@ -1,0 +1,27 @@
+name: Audit UK PoMS 2017-2023 10min visit data grain and flower availability
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/ukpoms_fitcounts_profile.py
+      - .github/workflows/angiosperm-ukpoms-profile.yml
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-effort-zeroes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check official observation rows, visit categories, floral units and missingness
+        run: python3 scripts/ukpoms_fitcounts_profile.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ukpoms-2017-23-grain-habitat-floral-audit
+          path: analysis_results_ukpoms_profile/
+          if-no-files-found: warn

@@ -1,0 +1,31 @@
+name: BAAD direct woody biomass versus sexual system pilot
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/baad_wang_biomass_pilot.py
+      - .github/workflows/angiosperm-baad-wang.yml
+
+permissions:
+  contents: read
+
+jobs:
+  sampled-individual-direct-mass:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install numerical tools
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -q numpy
+      - name: Audit woody individual dry-mass data versus species sexual-system labels
+        run: .venv/bin/python scripts/baad_wang_biomass_pilot.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-BAAD-direct-mass-vs-sex-system
+          path: analysis_results_baad_wang/
+          if-no-files-found: warn

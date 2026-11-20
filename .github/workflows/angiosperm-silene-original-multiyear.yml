@@ -1,0 +1,32 @@
+name: Silene latifolia primary individual multi-year fitness versus floral display audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/silene_latifolia_original_multiyear_refit.py
+      - .github/workflows/angiosperm-silene-original-multiyear.yml
+
+permissions:
+  contents: read
+
+jobs:
+  original-individual-followup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install survival regression dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas statsmodels
+      - name: Check 2004–2007 original individual survival and selection-line correlation
+        run: .venv/bin/python scripts/silene_latifolia_original_multiyear_refit.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: silene-original-genet-floral-display-2007-survival
+          path: analysis_results_silene_multiyear_original/
+          if-no-files-found: warn
+          retention-days: 30

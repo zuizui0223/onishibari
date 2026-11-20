@@ -1,0 +1,31 @@
+name: Zurich 2016 per-floral-unit visits versus fruit and seed outcomes
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/zurich2016_display_to_seed.py
+      - .github/workflows/angiosperm-zurich-display-seed.yml
+
+permissions:
+  contents: read
+
+jobs:
+  flower-effort-standardized-outcomes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install rank statistics
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy scipy
+      - name: Compare per-hour and per-unit-hour visitor rates to four species seed and fruit outcomes
+        run: .venv/bin/python scripts/zurich2016_display_to_seed.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zurich2016-per-floral-unit-visitors-and-seed-success
+          path: analysis_results_zurich_flower_to_seed/
+          if-no-files-found: warn
