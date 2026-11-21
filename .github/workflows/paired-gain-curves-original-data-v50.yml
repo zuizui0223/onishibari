@@ -1,0 +1,65 @@
+name: "Paired sex gain curves from original public data v0.50"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/pulsatilla_paired_gain_refit_v50.py
+      - scripts/ambrosia_allocation_refit_v50.py
+      - scripts/plot_pulsatilla_gain_curves_v50.py
+      - data/2026-11-21_pulsatilla_paired_gain_refit_v50.json
+      - data/2026-11-21_ambrosia_allocation_refit_v50.json
+      - results/2026-11-21_paired_gain_curves_original_data_v50.md
+      - .github/workflows/paired-gain-curves-original-data-v50.yml
+permissions:
+  contents: read
+jobs:
+  reproduce-public-original-data:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install analysis dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 matplotlib==3.10.8
+      - name: Refit paired organ-count curves from pinned Zenodo archives
+        run: python scripts/pulsatilla_paired_gain_refit_v50.py --output analysis_results_gain_curves_v50/pulsatilla.json
+      - name: Refit archived allocation contrasts from pinned Dryad members
+        run: python scripts/ambrosia_allocation_refit_v50.py --output analysis_results_gain_curves_v50/ambrosia.json
+      - name: Verify regenerated aggregates against checked-in results
+        run: |
+          python - <<'PY'
+          import json, math
+          from pathlib import Path
+          pairs = [
+              ('pulsatilla', 'data/2026-11-21_pulsatilla_paired_gain_refit_v50.json'),
+              ('ambrosia', 'data/2026-11-21_ambrosia_allocation_refit_v50.json'),
+          ]
+          def compare(actual, expected, path='root'):
+              if isinstance(expected, dict):
+                  assert actual.keys() == expected.keys(), path
+                  for key in expected:
+                      compare(actual[key], expected[key], path+'.'+key)
+              elif isinstance(expected, list):
+                  assert len(actual) == len(expected), path
+                  for i, (a, e) in enumerate(zip(actual, expected)):
+                      compare(a, e, path+f'[{i}]')
+              elif isinstance(expected, float):
+                  assert math.isfinite(actual) and math.isclose(actual, expected, rel_tol=5e-4, abs_tol=5e-5), path
+              else:
+                  assert actual == expected, path
+          for label, path in pairs:
+              actual = json.loads(Path(f'analysis_results_gain_curves_v50/{label}.json').read_text())
+              compare(actual, json.loads(Path(path).read_text()))
+              print(label, 'original-data re-execution matches saved aggregate results')
+          PY
+      - name: Render aggregate figure
+        run: python scripts/plot_pulsatilla_gain_curves_v50.py --source analysis_results_gain_curves_v50/pulsatilla.json --output analysis_results_gain_curves_v50/pulsatilla_gain_curves
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: paired-gain-curves-v50-aggregate-only
+          path: analysis_results_gain_curves_v50/
+          retention-days: 30
