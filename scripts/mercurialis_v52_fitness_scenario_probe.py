@@ -18,7 +18,9 @@ def num(v):
  except (ValueError,TypeError):return None
 parents={(r["Population"],r["ID"]):r for r in field}
 pairs=collections.defaultdict(dict)
-for r in fitness:pairs[(r["Population"],r["ID"])][r["Inbreeding"]]=r
+for r in fitness:
+ population = r["Population"].replace("3G_P","Population ")
+ pairs[(population,r["ID"])][r["Inbreeding"]]=r
 assert len(pairs)==181 and all(set(v)=={"ID=0","ID=1"} for v in pairs.values())
 if set(pairs)!=set(parents):
  print("JOIN_KEY_DIAGNOSTIC",json.dumps({
