@@ -1,0 +1,66 @@
+name: "Selfing pathway across pollination systems v0.51"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/mercurialis_selfing_refit_v51.py
+      - scripts/pulsatilla_selfing_refit_v51.py
+      - scripts/plot_selfing_pathway_v51.py
+      - data/2026-11-22_mercurialis_selfing_refit_v51.json
+      - data/2026-11-22_pulsatilla_selfing_refit_v51.json
+      - figures/2026-11-22_selfing_pathway_v51.svg
+      - results/2026-11-22_selfing_pathway_cross_pollination_v51.md
+      - .github/workflows/selfing-pathway-cross-pollination-v51.yml
+permissions:
+  contents: read
+jobs:
+  reproduce-public-original-data:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install analysis dependencies
+        run: python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 matplotlib==3.10.8
+      - name: Refit assigned-seed selfing in three Mercurialis arrays
+        run: python scripts/mercurialis_selfing_refit_v51.py --output analysis_results_selfing_v51/mercurialis.json
+      - name: Refit Pulsatilla typed-seed associations and retained-family contrasts
+        run: python scripts/pulsatilla_selfing_refit_v51.py --cache-dir "$RUNNER_TEMP/onishibari-v51-sources" --output analysis_results_selfing_v51/pulsatilla.json
+      - name: Compare original-source re-execution to saved aggregates
+        run: |
+          python - <<'PY'
+          import json, math
+          from pathlib import Path
+          pairs = [
+              ('mercurialis', 'data/2026-11-22_mercurialis_selfing_refit_v51.json'),
+              ('pulsatilla', 'data/2026-11-22_pulsatilla_selfing_refit_v51.json'),
+          ]
+          def compare(actual, expected, path='root'):
+              if isinstance(expected, dict):
+                  assert actual.keys() == expected.keys(), path
+                  for key in expected:
+                      compare(actual[key], expected[key], path+'.'+key)
+              elif isinstance(expected, list):
+                  assert len(actual) == len(expected), path
+                  for i, (a, e) in enumerate(zip(actual, expected)):
+                      compare(a, e, path+f'[{i}]')
+              elif isinstance(expected, float):
+                  assert math.isfinite(actual) and math.isclose(actual, expected, rel_tol=5e-4, abs_tol=5e-5), path
+              else:
+                  assert actual == expected, path
+          for label, path in pairs:
+              actual = json.loads(Path(f'analysis_results_selfing_v51/{label}.json').read_text())
+              compare(actual, json.loads(Path(path).read_text()))
+              print(label, 'original-data re-execution matches saved aggregate results')
+          PY
+      - name: Render aggregate comparison
+        run: python scripts/plot_selfing_pathway_v51.py --mercurialis analysis_results_selfing_v51/mercurialis.json --pulsatilla analysis_results_selfing_v51/pulsatilla.json --output analysis_results_selfing_v51/selfing_pathway
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: selfing-pathway-v51-aggregate-only
+          path: analysis_results_selfing_v51/
+          retention-days: 30

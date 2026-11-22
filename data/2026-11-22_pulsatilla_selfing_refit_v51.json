@@ -1,0 +1,204 @@
+{
+  "design": {
+    "population_seasons": 1,
+    "census_flowers": 175,
+    "census_flowering_plants": 135,
+    "single_flowered_census": 104,
+    "single_flowered_outcomes": 87,
+    "exact_census_outcome_id_matches": 85,
+    "unmatched_retained_by_arm": {
+      "intact": 1,
+      "half": 0,
+      "all": 1
+    },
+    "by_flower_gender": {
+      "H": {
+        "census_104": {
+          "intact": 54,
+          "half": 15,
+          "all": 12
+        },
+        "retained_87": {
+          "intact": 46,
+          "half": 12,
+          "all": 8
+        },
+        "census_minus_retained": {
+          "intact": 8,
+          "half": 3,
+          "all": 4
+        }
+      },
+      "M": {
+        "census_104": {
+          "intact": 17,
+          "half": 6,
+          "all": 0
+        },
+        "retained_87": {
+          "intact": 15,
+          "half": 6,
+          "all": 0
+        },
+        "census_minus_retained": {
+          "intact": 2,
+          "half": 0,
+          "all": 0
+        }
+      }
+    },
+    "phenotype_file_families_linked_to_cb_by_id_and_traits": 60,
+    "typed_vs_phenotype_exact_id_matches": 59,
+    "typed_vs_phenotype_unique_observation_matches": 60
+  },
+  "seed": 20261122,
+  "bootstrap_draws": 10000,
+  "typed_seed_counts": {
+    "intact": {
+      "flowers": 43,
+      "selfed": 265,
+      "typed": 486
+    },
+    "half": {
+      "flowers": 11,
+      "selfed": 31,
+      "typed": 109
+    },
+    "all": {
+      "flowers": 6,
+      "selfed": 0,
+      "typed": 49
+    }
+  },
+  "authors_six_seed_threshold": {
+    "flowers": 53,
+    "typed": 621,
+    "selfed": 289
+  },
+  "intact_adjusted_associations": {
+    "flowers": 43,
+    "typed_seeds": 486,
+    "selfed_typed_seeds": 265,
+    "organ_date_support": {
+      "Stamen_number_func": [
+        103.0,
+        269.0
+      ],
+      "Pistil_number": [
+        5.0,
+        395.0
+      ],
+      "Flowering_date": [
+        148.0,
+        174.0
+      ]
+    },
+    "selfing_odds_ratio": {
+      "50_more_stamens": {
+        "estimate": 1.0583545077807717,
+        "flower_percentile_95": [
+          0.5060133891271567,
+          1.9327372135442957
+        ]
+      },
+      "100_more_pistils": {
+        "estimate": 0.6276254008381809,
+        "flower_percentile_95": [
+          0.2947081134451676,
+          1.2142938465892799
+        ]
+      },
+      "7_days_later": {
+        "estimate": 0.582436275914558,
+        "flower_percentile_95": [
+          0.2897128931237909,
+          0.9179621152643027
+        ]
+      }
+    }
+  },
+  "typed_arm_contrast_jecol_60": {
+    "n": {
+      "intact": 43,
+      "half": 11,
+      "all": 6
+    },
+    "group_means": {
+      "intact": {
+        "Mature_seed_number": 92.90697674418605,
+        "outcrossed_harvest": 46.41512170000542,
+        "discounted_harvest": 48.73971445221445
+      },
+      "half": {
+        "Mature_seed_number": 76.0909090909091,
+        "outcrossed_harvest": 57.93155329518966,
+        "discounted_harvest": 58.839521084975644
+      },
+      "all": {
+        "Mature_seed_number": 88.0,
+        "outcrossed_harvest": 88.0,
+        "discounted_harvest": 88.0
+      }
+    },
+    "all_minus_intact": {
+      "Mature_seed_number": {
+        "estimate": -4.9069767441860535,
+        "flower_percentile_95": [
+          -33.38575581395349,
+          24.66705426356589
+        ]
+      },
+      "outcrossed_harvest": {
+        "estimate": 41.58487829999458,
+        "flower_percentile_95": [
+          13.229908163541879,
+          69.69386936706704
+        ]
+      },
+      "discounted_harvest": {
+        "estimate": 39.26028554778555,
+        "flower_percentile_95": [
+          11.050274679293572,
+          67.22200923640312
+        ]
+      }
+    }
+  },
+  "decomposition_audit": {
+    "cb_n": 66,
+    "cb_implied_outcrossed_below_zero": 1,
+    "cb_implied_outcrossed_min": -0.9473684210526336,
+    "cb_implied_selfed_below_zero": 6,
+    "cb_all_removed_positive_implied_selfed": 3,
+    "cb_vs_typed_rate_absolute_difference_median": 0.012086046381462337,
+    "cb_vs_typed_rate_absolute_difference_max": 0.24999999999999994,
+    "cb_vs_typed_weighted_absolute_difference_median": 1.152499999999999,
+    "cb_vs_typed_weighted_absolute_difference_max": 18.049999999999997
+  },
+  "source_files": {
+    "census": {
+      "zenodo_record": "10121671",
+      "file": "population.csv",
+      "sha256": "f03cfd1f7f7d4c829dc21691298fa7cbb0930f3719cf5cadeb4b8fc6bd85cbc2"
+    },
+    "selfing": {
+      "zenodo_record": "12748590",
+      "file": "Data_selfing.csv",
+      "sha256": "6c6d15b649e157930242f73075a6c77fd93192aa2aba527f320f7a8176f1272e"
+    },
+    "phenotypes": {
+      "zenodo_record": "12748590",
+      "file": "Data_phenotypic_selection.csv",
+      "sha256": "e49fef29cefa6e1ed419500a0e312a49524f04876cca5eb21dda14657fe11a98"
+    },
+    "fitness": {
+      "zenodo_record": "15183584",
+      "file": "Fitness_landscape_Zenodo.zip",
+      "sha256": "2cb1c78efe86128255dabed72d01799cfe71e10208386f55319f708a8535c141"
+    }
+  },
+  "cb_member": {
+    "file": "Fitness_landscape_Zenodo/Data_RS.csv",
+    "sha256": "49b6c5147aadf0d3c9de5bacda59b1cd8f25df0d49f521cea5d577668d6a27ba"
+  }
+}
