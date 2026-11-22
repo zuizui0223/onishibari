@@ -125,6 +125,15 @@ def main():
     o1=s1["observed"][i1];o2=s2["observed"][i2]
     exp1=s1["expected"][i1];exp2=s2["expected"][i2]
     overlap=int(((o1>0)&(o2>0)).sum())
+    obs_success_a=(o1>0)
+    obs_success_b=(o2>0)
+    k1=int(obs_success_a.sum())
+    k2=int(obs_success_b.sum())
+    binary_table=np.array([[int((~obs_success_a&~obs_success_b).sum()),
+                            int((~obs_success_a&obs_success_b).sum())],
+                           [int((obs_success_a&~obs_success_b).sum()),
+                            int((obs_success_a&obs_success_b).sum())]])
+    binary_OR,binary_fisher_p=fisher_exact(binary_table)
     rng=np.random.default_rng(SEED)
     sim1=simulate(s1,rng)[:,i1]
     sim2=simulate(s2,rng)[:,i2]
@@ -137,6 +146,39 @@ def main():
     p_two=float((1+np.sum(np.abs(valid)>=abs(primary)))/(1+len(valid)))
     overlap_null=((sim1>0)&(sim2>0)).sum(axis=1)
     p_overlap_up=float((1+np.sum(overlap_null>=overlap))/(N_SIM+1))
+    # The maternal-iid null cannot reproduce extra within-mother siring
+    # concentration. Diagnose the extent BEFORE claiming sire turnover.
+    null_unique_years={str(year):{
+      "actual_sires_detected_in_both_year_eligible_subset":
+          int((stats[year]["observed"][idx[year]]>0).sum()),
+      "iid_model_null_sires_mean":float((sim1 if year==2018 else sim2).astype(bool).sum(axis=1).mean()),
+      "iid_model_null_sires_interval95":np.quantile(
+          (sim1 if year==2018 else sim2).astype(bool).sum(axis=1),[.025,.975]).tolist()
+      } for year in (2018,2020)}
+    # Fixed yearly winner totals: under the exchangeable label null, the
+    # overlap is Hypergeometric(k1, k2, N). This is a robust baseline
+    # against the wrong assumption that each maternal seed is independent.
+    label_null=np.empty(N_SIM,dtype=int)
+    for draw in range(N_SIM):
+        ix=rng.choice(len(common),k2,replace=False)
+        label_null[draw]=int(obs_success_a[ix].sum())
+    # More conservative opportunity-aware, fixed-successful-sire-total null:
+    # shuffle paternal winner labels only among fathers with similar
+    # expected sire counts in each year (five prespecified rank strata).
+    def stratified_set(original,expected):
+        n=len(original)
+        ranks=np.empty(n,dtype=int)
+        ranks[np.argsort(expected)]=np.arange(n)
+        bins=np.minimum(ranks*5//n,4)
+        out=np.broadcast_to(original,(N_SIM,n)).copy()
+        for b in range(5):
+            inds=np.where(bins==b)[0]
+            out[:,inds]=rng.permuted(out[:,inds].copy(),axis=1)
+        assert (out.sum(axis=1)==original.sum()).all()
+        return out
+    strat1=stratified_set(obs_success_a,exp1)
+    strat2=stratified_set(obs_success_b,exp2)
+    strat_overlap=np.sum(strat1 & strat2,axis=1)
     # One-donor exclusion affects the biological question (a post-hoc
     # influence probe), not the prespecified Monte Carlo p-value.
     loo=[]
@@ -168,6 +210,18 @@ def main():
         "raw_assigned_sire_count_spearman":stat(spearmanr(o1,o2).statistic),
         "expected_sire_count_spearman":stat(spearmanr(exp1,exp2).statistic),
         "overlapping_sires_with_at_least_one_assigned_both_years":overlap,
+        "observed_successful_same_H_sires_2018":k1,
+        "observed_successful_same_H_sires_2020":k2,
+        "binary_2018_rows_2020_cols":binary_table.tolist(),
+        "binary_sire_success_fisher_two_sided_p":float(binary_fisher_p),
+        "binary_sire_success_fisher_OR":stat(binary_OR),
+        "random_fixed_margins_overlap_expected":float(k1*k2/len(common)),
+        "random_fixed_margins_overlap_95":np.quantile(label_null,[.025,.975]).tolist(),
+        "random_fixed_margins_overlap_lower_p":float((1+np.sum(label_null<=overlap))/(N_SIM+1)),
+        "model_iid_null_sire_occupancy_miscalibration_audit":null_unique_years,
+        "fixed_yearly_success_and_five_expected_opportunity_strata_overlap_mean":float(strat_overlap.mean()),
+        "fixed_yearly_success_and_five_expected_opportunity_strata_overlap_95":np.quantile(strat_overlap,[.025,.975]).tolist(),
+        "fixed_yearly_success_and_five_expected_opportunity_strata_overlap_lower_p":float((1+np.sum(strat_overlap<=overlap))/(N_SIM+1)),
         "null_overlap_mean":float(overlap_null.mean()),
         "null_overlap_95percent":np.quantile(overlap_null,[.025,.975]).tolist(),
         "null_overlap_upper_tail_p":p_overlap_up,
