@@ -1,0 +1,28 @@
+name: Daphne residual sire repeatability 2018 vs 2020 v53
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_jezoensis_crossyear_sire_repeatability_v53.py
+      - .github/workflows/daphne-crossyear-sire-repeatability-v53.yml
+permissions: {contents: read}
+jobs:
+  original-source-conditional-null:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned scientific dependencies
+        run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Refit two year models and 10k maternal-family parentage null
+        run: python scripts/daphne_jezoensis_crossyear_sire_repeatability_v53.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-sire-repeatability-v53-aggregate-only
+          path: analysis_results_daphne_stable_sire_v53/
+          retention-days: 30
