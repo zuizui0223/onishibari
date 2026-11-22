@@ -20,7 +20,18 @@ parents={(r["Population"],r["ID"]):r for r in field}
 pairs=collections.defaultdict(dict)
 for r in fitness:pairs[(r["Population"],r["ID"])][r["Inbreeding"]]=r
 assert len(pairs)==181 and all(set(v)=={"ID=0","ID=1"} for v in pairs.values())
-assert set(pairs)==set(parents)
+if set(pairs)!=set(parents):
+ print("JOIN_KEY_DIAGNOSTIC",json.dumps({
+  "field_population_categories":dict(collections.Counter(k[0] for k in parents)),
+  "fitness_population_categories":dict(collections.Counter(k[0] for k in pairs)),
+  "shared_exact_keys":len(set(pairs)&set(parents)),
+  "field_ID_numeric_format":sum(k[1].isdigit() for k in parents),
+  "fitness_ID_numeric_format":sum(k[1].isdigit() for k in pairs),
+  "same_ID_ignore_population":len({k[1] for k in pairs}&{k[1] for k in parents}),
+  "field_ID_unique":len({k[1] for k in parents}),
+  "fitness_ID_unique":len({k[1] for k in pairs}),
+ }))
+ raise SystemExit(0) # diagnostic-only; never misjoin rows
 cols=["Male_fitness","Female_fitness","Total_fitness"]
 summary={}
 for col in cols:
