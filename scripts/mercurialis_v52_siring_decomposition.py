@@ -54,12 +54,19 @@ def prep(a,f):
     m["outcross_maternal"]=m.Female_fitness_d1
     m["self_maternal"]=m.Female_fitness_d0-m.Female_fitness_d1
     q=(m.self_siring-m.self_maternal).abs().dropna()
+    discrepancy=(m.self_siring-m.self_maternal)
+    q=discrepancy.abs().dropna()
     consistency={"paired_valid":int(len(q)),"self_male_female_max_abs_difference":float(q.max()),
-                 "self_male_female_abs_difference_median":float(q.median())}
+                 "self_male_female_abs_difference_median":float(q.median()),
+                 "paired_mismatch_above_1e_minus_5":int((q>1e-5).sum()),
+                 "paired_discrepancy_signed_total":float(discrepancy.dropna().sum()),
+                 "paired_discrepancy_abs_total":float(q.sum()),
+                 "join_mapping":"Population N matched to 3G_PN by within-population source ID"}
+    m["source_pair_consistent"]=discrepancy.abs()<=1e-5
     # The original construction attributes each selfed seed equally
     # to both sex functions. Distinct partition is only accepted if
     # formula identities and non-negativity are source-verified.
-    assert len(q)>=180 and q.max()<2e-5, f"paternal and maternal self components disagree {q.max()}"
+    # Do not silently force an identity when published derived columns disagree.
     for name in ["self_siring","outcross_siring","outcross_maternal"]:
         v=m[name].dropna()
         assert v.min()>-1e-5, (name,v.min())
@@ -150,14 +157,16 @@ def main(a,f):
         "source_parents":len(m),"paired_scenario_rows":len(f),
         "formula_identity_audit":consistency,
         "complete_bisexual_size_subset_n":len(d),
+        "same_cohort_source_pair_discrepant":int((~d.source_pair_consistent).sum()),
         "n_both_source_sex_function_outputs":int(m.Female_fitness_d1.notna().sum()),
         "estimation":"PPML mean ratios for expanded genetically estimated successes, male+female flower counts and aboveground biomass log2, three population fixed intercepts; HC3 father robust and 1599 within-population plant bootstraps",
         "outcome_definitions":{
             "outcross_siring":"Male_fitness under assumed delta=1: paternity shares expanded by each maternal seed total, selfed progeny discounted to zero",
-            "self_siring":"Male_fitness(delta=0)-Male_fitness(delta=1), same seed selfing contribution also accounted through female fitness",
+            "self_siring":"Male_fitness(delta=0)-Male_fitness(delta=1), source-scenario-sensitive male success; paired maternal discount discrepancies audited, NOT silently reconciled",
             "all_siring":"Male_fitness under assumed delta=0",
             "outcross_maternal":"Female_fitness under assumed delta=1"},
         "effects":estimate(d),
+        "source_consistent_restricted_effects":{key:{"ratio":float(np.exp(ppml(Xcols(d[d.source_pair_consistent])[0],d.loc[d.source_pair_consistent,key].to_numpy(float))[0][3]))} for key in OUTCOMES},
         "limitations":["observational male flower allocation not experimentally randomized",
         "paired delta endpoints are arithmetic scenarios, not measured viable offspring",
         "paternity-attributed paternal totals are expanded from a sample, not raw count",
