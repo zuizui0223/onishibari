@@ -145,6 +145,38 @@ def estimate(df):
     for outcome in OUTCOMES:
         results[outcome]["resample_success"]=len(B[outcome])
         results[outcome]["within_array_father_bootstrap95"]=np.quantile(B[outcome],[.025,.975]).tolist()
+    # Comparisons preserve paired fathers in each bootstrap resampling.
+    # Unlike subtracting marginal CIs, these describe each *difference*.
+    contrasts={}
+    for first,second in [("outcross_siring","self_siring"),
+                         ("outcross_siring","outcross_maternal")]:
+        a=np.asarray(B[first],float)
+        b=np.asarray(B[second],float)
+        assert len(a)==len(b)==DRAWS
+        delta=np.log(a)-np.log(b)
+        contrasts[first+"_vs_"+second]={
+           "ratio_of_two_gain_ratios":float(results[first]["per_male_flower_doubling_ratio"]/results[second]["per_male_flower_doubling_ratio"]),
+           "within_array_father_paired_bootstrap95":np.exp(np.quantile(delta,[.025,.975])).tolist(),
+           "bootstrap_fraction_contrast_positive":float((delta>0).mean())}
+    # Single-donor influence check on the primary outcross paternal result.
+    loo=[]
+    for i in range(n):
+        idx=np.arange(n)!=i
+        b,_,_=ppml(X[idx],df.outcross_siring.to_numpy(float)[idx])
+        loo.append(float(np.exp(b[3])))
+    results["outcross_siring"]["leave_one_father_out_ratio_range"]=[float(min(loo)),float(max(loo))]
+    # Separate-array slopes have just ~50 parents each: descriptive checks,
+    # NOT replication by three independent taxa or landscapes.
+    each={}
+    for lab,g in zip(["Population 1","Population 2","Population 3"],group):
+        xs=X[g][:,[3,4,5]]
+        xx=np.column_stack([np.ones(len(g)),xs])
+        beta,se,disp=ppml(xx,df.outcross_siring.to_numpy(float)[g])
+        each[lab]={"n":len(g),"ratio":float(np.exp(beta[1])),
+                   "hc3_95":np.exp([beta[1]-1.96*se[1],beta[1]+1.96*se[1]]).tolist(),
+                   "dispersion":disp}
+    results["outcross_siring"]["by_array_outcross_siring"]=each
+    results["paired_gain_contrasts"]=contrasts
     return results
 
 def main(a,f):
