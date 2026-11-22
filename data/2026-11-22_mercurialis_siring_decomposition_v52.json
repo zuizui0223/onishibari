@@ -1,0 +1,171 @@
+{
+  "status": "original_data_secondary_v52",
+  "source_doi": "10.1111/nph.70356",
+  "zenodo_version": "10.5281/zenodo.15644955",
+  "archive_sha256": "a18b7d296110be1e9817d6e1a3994365a4e7ae0aab50435e7e6883e1f3de4042",
+  "source_parents": 181,
+  "paired_scenario_rows": 362,
+  "formula_identity_audit": {
+    "paired_valid": 180,
+    "self_male_female_max_abs_difference": 5,
+    "self_male_female_abs_difference_median": 0,
+    "paired_mismatch_above_1e_minus_5": 1,
+    "paired_discrepancy_signed_total": -4.999999996999873,
+    "paired_discrepancy_abs_total": 5.000000603000228,
+    "join_mapping": "Population N matched to 3G_PN by within-population source ID",
+    "selfing_rate_discount_max_error": 5.526315516313218e-10
+  },
+  "complete_bisexual_size_subset_n": 167,
+  "same_cohort_source_pair_discrepant": 1,
+  "n_both_source_sex_function_outputs": 180,
+  "estimation": "PPML mean ratios for expanded genetically estimated successes, male+female flower counts and aboveground biomass log2, three population fixed intercepts; HC3 father robust and 1599 within-population plant bootstraps",
+  "outcome_definitions": {
+    "outcross_siring": "Male_fitness under assumed delta=1: paternity shares expanded by each maternal seed total, selfed progeny discounted to zero",
+    "self_siring": "Male_fitness(delta=0)-Male_fitness(delta=1), source-scenario-sensitive male success; paired maternal discount discrepancies audited, NOT silently reconciled",
+    "all_siring": "Male_fitness under assumed delta=0",
+    "outcross_maternal": "Female_fitness under assumed delta=1"
+  },
+  "effects": {
+    "outcross_siring": {
+      "per_male_flower_doubling_ratio": 1.401157907370663,
+      "hc3_95": [
+        1.1803959882111892,
+        1.663207517642024
+      ],
+      "ppml_log2_male_b": 0.3372989714750874,
+      "ppml_male_hc3_se": 0.087475590069776,
+      "pearson_dispersion": 84.4314996758986,
+      "mean_expanded_source_success": 75.10875586501199,
+      "nonzero": 128,
+      "resample_success": 1599,
+      "within_array_father_bootstrap95": [
+        1.196145036895707,
+        1.6164719144985147
+      ],
+      "leave_one_father_out_ratio_range": [
+        1.3318039901280034,
+        1.439918551810605
+      ],
+      "by_array_outcross_siring": {
+        "Population 1": {
+          "n": 60,
+          "ratio": 1.2298936671888308,
+          "hc3_95": [
+            0.9751829176171672,
+            1.5511330287524734
+          ],
+          "dispersion": 73.47935095735839
+        },
+        "Population 2": {
+          "n": 52,
+          "ratio": 1.3481990720030135,
+          "hc3_95": [
+            1.0799745615604568,
+            1.6830403256197766
+          ],
+          "dispersion": 92.22605270529975
+        },
+        "Population 3": {
+          "n": 55,
+          "ratio": 1.7228238921449242,
+          "hc3_95": [
+            1.064729251452749,
+            2.7876778620438847
+          ],
+          "dispersion": 98.15506514383443
+        }
+      }
+    },
+    "self_siring": {
+      "per_male_flower_doubling_ratio": 1.3048262999420395,
+      "hc3_95": [
+        1.0876653726957817,
+        1.5653451105100498
+      ],
+      "ppml_log2_male_b": 0.2660699284229106,
+      "ppml_male_hc3_se": 0.0928774153976213,
+      "pearson_dispersion": 35.898952407538054,
+      "mean_expanded_source_success": 29.5730629647485,
+      "nonzero": 108,
+      "resample_success": 1599,
+      "within_array_father_bootstrap95": [
+        1.092470976386307,
+        1.5746920673879532
+      ]
+    },
+    "all_siring": {
+      "per_male_flower_doubling_ratio": 1.291496839280619,
+      "hc3_95": [
+        1.1343976684772694,
+        1.4703521809162208
+      ],
+      "ppml_log2_male_b": 0.25580188622642663,
+      "ppml_male_hc3_se": 0.06617471838636678,
+      "pearson_dispersion": 83.80230353320754,
+      "mean_expanded_source_success": 104.68181882976049,
+      "nonzero": 145,
+      "resample_success": 1599,
+      "within_array_father_bootstrap95": [
+        1.1401163834927641,
+        1.4516563739086243
+      ]
+    },
+    "outcross_maternal": {
+      "per_male_flower_doubling_ratio": 0.9625029775077166,
+      "hc3_95": [
+        0.8627774167291479,
+        1.0737554828721823
+      ],
+      "ppml_log2_male_b": -0.038218119310471886,
+      "ppml_male_hc3_se": 0.055807362155782934,
+      "pearson_dispersion": 22.245706597958975,
+      "mean_expanded_source_success": 82.58262565802396,
+      "nonzero": 153,
+      "resample_success": 1599,
+      "within_array_father_bootstrap95": [
+        0.8707089768494882,
+        1.0183773267645022
+      ]
+    },
+    "paired_gain_contrasts": {
+      "outcross_siring_vs_self_siring": {
+        "ratio_of_two_gain_ratios": 1.0738271503516619,
+        "within_array_father_paired_bootstrap95": [
+          0.8581979555909831,
+          1.3225744903437555
+        ],
+        "bootstrap_fraction_contrast_positive": 0.6966854283927455
+      },
+      "outcross_siring_vs_outcross_maternal": {
+        "ratio_of_two_gain_ratios": 1.4557439718251983,
+        "within_array_father_paired_bootstrap95": [
+          1.2100541897582848,
+          1.7760329473760883
+        ],
+        "bootstrap_fraction_contrast_positive": 1
+      }
+    }
+  },
+  "source_consistent_restricted_effects": {
+    "outcross_siring": {
+      "ratio": 1.4144156812229236
+    },
+    "self_siring": {
+      "ratio": 1.3046249610238225
+    },
+    "all_siring": {
+      "ratio": 1.2938152580595628
+    },
+    "outcross_maternal": {
+      "ratio": 0.9624865776099599
+    }
+  },
+  "limitations": [
+    "observational male flower allocation not experimentally randomized",
+    "paired delta endpoints are arithmetic scenarios, not measured viable offspring",
+    "paternity-attributed paternal totals are expanded from a sample, not raw count",
+    "three garden arrays not independent species and not enough for population-level cluster inference",
+    "fixed network, related genets and paternity assignment errors not in plant HC3 or plant bootstrap",
+    "male flower number not floral dry biomass"
+  ]
+}
