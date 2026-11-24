@@ -22,7 +22,7 @@ if __name__=="__main__":
             assert cv["beta_binomial"]["avg_log_predictive_score_per_genet"]>=cv["zero_inflated_beta_binomial"]["avg_log_predictive_score_per_genet"]-1e-5
         assert cv["beta_binomial"]["heldout_genets"]==z["genets"]
     a=x["previous_microscopy_published_thesis_stage_evidence"]
-    assert a["genets_H"]==6 and a["pistils_H"]==55 and a["genets_F"]==11 and a["pistils_F"]==11
+    assert a["genets_H"]==6 and a["original_2016_hand_outcross_microscopy_pistils_H"]==55 and a["genets_F"]==11 and a["pistils_F"]==11
     for z in x["within_source_between_year_morph_parameter_transfer"]["H"]:
         pred=z["models"]["beta_binomial"]
         assert abs(pred["target_predicted_zero_fraction"]-pred["target_observed_zero_fraction"])<.005
