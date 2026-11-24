@@ -111,6 +111,47 @@ def bound_samples(arr,delta,K,mode):
          UNMATCHED_N["intact"]*K)/INIT_N["intact"]
     return la-ui,ua-li
 
+def structural_complete_emasculation_bounds(arr,delta,K,mode):
+    """Biologically constrained alternative: removal of ALL stamens before
+    dehiscence on original single-flower plants prevents WITHIN-FLOWER selfing.
+    Set all-removed typed and known-untyped self fraction 0, retaining their
+    exact mature counts. Assume no unobserved geitonogamy or handling error.
+    Other groups still have uncertain typed self fraction, known untyped
+    self fraction [0,1], and unmatched effective-seed cap [0,K].
+    """
+    assert mode in ("seed_only","nested")
+    if mode=="seed_only":
+        sum_all=arr["all"]["seed_only_mature_total"]
+        sum_i=(arr["intact"]["seed_only_mature_total"]
+               -delta*arr["intact"]["seed_only_weighted_self_sum"])
+    else:
+        sum_all=arr["all"]["nested_mature_total"]
+        sum_i=(arr["intact"]["nested_mature_total"]
+               -delta*arr["intact"]["nested_weighted_self_sum"])
+    lower=(sum_all+113)/12-(sum_i+126+9*K)/54
+    upper=(sum_all+113+5*K)/12-(sum_i+(1-delta)*126)/54
+    assert np.all(lower<=upper+1e-10)
+    return lower,upper
+
+def structural_critical_delta(arr,K,mode):
+    if mode=="seed_only":
+        aM=arr["all"]["seed_only_mature_total"]
+        iM=arr["intact"]["seed_only_mature_total"]
+        iQ=arr["intact"]["seed_only_weighted_self_sum"]
+    else:
+        aM=arr["all"]["nested_mature_total"]
+        iM=arr["intact"]["nested_mature_total"]
+        iQ=arr["intact"]["nested_weighted_self_sum"]
+    intercept=(aM+113)/12-(iM+126+9*K)/54
+    slope=iQ/54
+    assert np.all(slope>0)
+    roots=-intercept/slope
+    return {
+       "threshold_delta_when_all_removed_selfing_structural_zero":summaries(roots),
+       "fraction_no_delta_0_1_can_ensure_positive":float((roots>1).mean()),
+       "fraction_delta95_exceeds_threshold":float((roots<.95).mean())
+    }
+
 def critical_delta(arr,K,mode):
     if mode=="seed_only":
         nameM="seed_only_mature_total";nameS="seed_only_weighted_self_sum"
@@ -165,26 +206,38 @@ def main():
                 assert abs(high-verified["sharp_treatment_mean_difference_upper"])<1e-8
             modes={}
             for mode in ("seed_only","nested"):
-                lo,hi=bound_samples(draws,d,K,mode)
-                assert np.all(lo<=hi+1e-8)
-                modes[mode]={
-                  "lower_bound_samples":summaries(lo),
-                  "upper_bound_samples":summaries(hi),
-                  "joint_probability_bounds_strictly_positive":float((lo>0).mean()),
-                  "joint_probability_bounds_strictly_negative":float((hi<0).mean()),
-                  "partial_identification_disagreement_fraction":float(((lo<=0)&(hi>=0)).mean()),
-                  "source_MC_draws":N_DRAWS,
-                }
+                for condition,fn in (
+                    ("Beta_per_flower_unknown_selfing_all_arms",bound_samples),
+                    ("structural_emasculation_zero_within_flower_selfing",structural_complete_emasculation_bounds)
+                ):
+                    lo,hi=fn(draws,d,K,mode)
+                    assert np.all(lo<=hi+1e-8)
+                    modes[condition+"_"+mode]={
+                      "lower_bound_samples":summaries(lo),
+                      "upper_bound_samples":summaries(hi),
+                      "joint_probability_bounds_strictly_positive":float((lo>0).mean()),
+                      "joint_probability_bounds_strictly_negative":float((hi<0).mean()),
+                      "partial_identification_disagreement_fraction":float(((lo<=0)&(hi>=0)).mean()),
+                      "source_MC_draws":N_DRAWS,
+                    }
+            structpoint_lo=(src["all"]["m"].sum()+113)/12-(sum_intact+126+9*K)/54
+            structpoint_hi=(src["all"]["m"].sum()+113+5*K)/12-(sum_intact+(1-d)*126)/54
             b[key]={"K_unmatched_effective_seeds_max_each":int(K),
                     "v62_point_id_lower":original["sharp_treatment_mean_difference_lower"],
                     "v62_point_id_upper":original["sharp_treatment_mean_difference_upper"],
+                    "structural_emasculation_point_lower":float(structpoint_lo),
+                    "structural_emasculation_point_upper":float(structpoint_hi),
                     "uncertainty":modes,
-                    "threshold_delta":{mode:critical_delta(draws,K,mode) for mode in ("seed_only","nested")} if K in (0,10,20,25) else None}
+                    "threshold_delta":{
+                        "Beta_unknown_all_selfing":{mode:critical_delta(draws,K,mode) for mode in ("seed_only","nested")},
+                        "complete_emasculation_structural_zero":{mode:structural_critical_delta(draws,K,mode) for mode in ("seed_only","nested")}
+                    } if K in (0,10,20,25) else None}
         deltas[str(float(d))]=b
     # v62 means and v61 random seed sample source audited independently.
     at=deltas["0.95"]["0"]
     assert abs(at["v62_point_id_lower"]-3.6173834653001293)<1e-9
-    assert at["uncertainty"]["seed_only"]["joint_probability_bounds_strictly_positive"]<1
+    assert at["uncertainty"]["Beta_per_flower_unknown_selfing_all_arms_seed_only"]["joint_probability_bounds_strictly_positive"]<1
+    assert at["uncertainty"]["structural_emasculation_zero_within_flower_selfing_seed_only"]["joint_probability_bounds_strictly_positive"]>0.5
     assert (deltas["0.95"]["25"]["v62_point_id_lower"]<0<
             deltas["0.95"]["25"]["v62_point_id_upper"])
     return {
@@ -206,6 +259,9 @@ def main():
       "delta_x_missing_cap_uncertainty":deltas,
       "limits":{
         "seed_origin_Jeffreys_beta_is_prior_dependent":True,
+        "full_stamens_removed_before_dehiscence_as_in_2024_article":True,
+        "structural_zero_assumes_no_unobserved_self_pollen_from_same_genet_or_handling_error":True,
+        "Beta_all_removed_selfing_scenario_is_deliberately_liberal_even_when_all_stamens_removed":True,
         "seed_only_has_fixed_observed_typed_flower_mature_seed_totals":True,
         "nested_bootstrap_adds_sampling_variation_as_sensitivity_not_design_based_trial_CI":True,
         "per_seed_sampling_exchangeability_assumed":True,
@@ -224,15 +280,24 @@ if __name__=="__main__":
     v.output.parent.mkdir(parents=True,exist_ok=True)
     results=main()
     v.output.write_text(json.dumps(results,indent=2,ensure_ascii=False,allow_nan=False)+"\n")
-    subset={}
+    # One readable, short log for scientific review; full validated
+    # anonymous aggregates in a separate single JSON log record.
+    review={}
     for delta in ("0.0","0.75","0.9","0.95","0.99","1.0"):
         q=results["delta_x_missing_cap_uncertainty"][delta]
-        subset[delta]={
-           k:{"v62_point":[q[k]["v62_point_id_lower"],q[k]["v62_point_id_upper"]],
-              "seed_only":{a:q[k]["uncertainty"]["seed_only"][a] for a in
-                     ("lower_bound_samples","joint_probability_bounds_strictly_positive")},
-              "nested":{a:q[k]["uncertainty"]["nested"][a] for a in
-                     ("lower_bound_samples","joint_probability_bounds_strictly_positive")}}
-           for k in ("0","10","20","25","50")}
-        subset[delta]["threshold_K0"]=q["0"]["threshold_delta"]
-    print("PULSATILLA_V63_UNCERTAINTY_SUMMARY",json.dumps(subset,ensure_ascii=False,allow_nan=False),flush=True)
+        review[delta]={}
+        for K in ("0","10","20","25","50"):
+            z=q[K]
+            review[delta][K]={
+              "v62_point":[z["v62_point_id_lower"],z["v62_point_id_upper"]],
+              "structural_point":[z["structural_emasculation_point_lower"],z["structural_emasculation_point_upper"]],
+              "Beta_unknown_all":{m:{"lower":z["uncertainty"]["Beta_per_flower_unknown_selfing_all_arms_"+m]["lower_bound_samples"],
+                                    "positive":z["uncertainty"]["Beta_per_flower_unknown_selfing_all_arms_"+m]["joint_probability_bounds_strictly_positive"]}
+                              for m in ("seed_only","nested")},
+              "all_stamens_removed_structural_zero":{m:{"lower":z["uncertainty"]["structural_emasculation_zero_within_flower_selfing_"+m]["lower_bound_samples"],
+                                                       "positive":z["uncertainty"]["structural_emasculation_zero_within_flower_selfing_"+m]["joint_probability_bounds_strictly_positive"]}
+                                                 for m in ("seed_only","nested")}
+            }
+        review[delta]["threshold_K0"]=q["0"]["threshold_delta"]
+    print("PULSATILLA_V63_UNCERTAINTY_SUMMARY",json.dumps(review,ensure_ascii=False,allow_nan=False),flush=True)
+    print("PULSATILLA_V63_FULL_AGGREGATE",json.dumps(results,ensure_ascii=False,allow_nan=False,separators=(",",":")),flush=True)
