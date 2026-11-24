@@ -11,9 +11,10 @@ Observed (natural fruits y_i) <= (natural flowers n_i). Compare:
   Binomial: one common per-flower fruit probability p;
   Beta-binomial: genotype-specific latent fruit chance varying continuously;
   Zero-inflated binomial: a point-mass of structurally zero genets pi;
-  Zero-inflated beta-binomial: mixture of both (full-fit only diagnostic).
-The 2-parameter BB and 2-parameter ZIB can both produce many zeros.
-10-fold repeated 5-fold heldout-GENET CV distinguishes predictive fit from
+  Zero-inflated beta-binomial: mixture of both, tested with heldout genets.
+The 2-parameter BB and 2-parameter ZIB can both produce many zeros; the
+3-parameter ZIBB model allows both and is tested for heldout predictions.
+Two repetitions of 5-fold heldout-GENET CV distinguish predictive fit from
 in-sample zero description. Report same-source bootstrap uncertainty of
 paired cross-validated per-genet predictive log score differences.
 A positive ZIB pi never proves permanent anatomical sterility.
@@ -34,7 +35,7 @@ from daphne_jezoensis_2018_2020_HF_fathers_v28 import data,ZIP_SHA
 from daphne_v64_natural_fruit_gate import make,YEARS,SEXES
 
 OUT=Path("analysis_results_daphne_zero_activation_v65")
-MODELS=("binomial","beta_binomial","zero_inflated_binomial")
+MODELS=("binomial","beta_binomial","zero_inflated_binomial","zero_inflated_beta_binomial")
 FULL_DIAGNOSTIC="zero_inflated_beta_binomial"
 SEED=20261124
 CV_REPEATS=2
@@ -159,7 +160,9 @@ def crossvalidate(n,y,rng):
     result["comparisons"]={
       "beta_binomial_minus_binomial":diff("beta_binomial","binomial"),
       "zero_inflated_binomial_minus_binomial":diff("zero_inflated_binomial","binomial"),
-      "zero_inflated_binomial_minus_beta_binomial":diff("zero_inflated_binomial","beta_binomial")
+      "zero_inflated_binomial_minus_beta_binomial":diff("zero_inflated_binomial","beta_binomial"),
+      "zero_inflated_beta_binomial_minus_beta_binomial":diff("zero_inflated_beta_binomial","beta_binomial"),
+      "zero_inflated_beta_binomial_minus_zero_inflated_binomial":diff("zero_inflated_beta_binomial","zero_inflated_binomial")
     }
     result["folds"]=CV_FOLDS
     result["repeats"]=CV_REPEATS
@@ -170,7 +173,7 @@ def analyze(record,year,sex,rng):
     exp=EXPECTED[(year,sex)]
     assert (len(n),int(n.sum()),int(y.sum()),int((y>0).sum()))==exp
     fits={}
-    for model in list(MODELS)+[FULL_DIAGNOSTIC]:
+    for model in MODELS:
         param,ll,ok=fit(n,y,model)
         k=len(param)
         fits[model]={
