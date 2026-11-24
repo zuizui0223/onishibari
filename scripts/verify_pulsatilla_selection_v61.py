@@ -20,9 +20,9 @@ def contrast_sensitivity(v,delta,q_all,q_intact,lost_all_mean):
     sumA=comp["typed_sum_all"]+A["known_mature_outcome_untyped_harvest_seeds_sum"]*(1-delta*q_all)
     sumI=comp["typed_sum_intact"]+I["known_mature_outcome_untyped_harvest_seeds_sum"]*(1-delta*q_intact)
     sumA+=A["no_matching_mature_outcome_in_source"]*lost_all_mean
-    return (I["original_assigned_single_flower_bisexual"]/
-            A["original_assigned_single_flower_bisexual"]*sumA-sumI)/
-            I["no_matching_mature_outcome_in_source"]
+    return ((I["original_assigned_single_flower_bisexual"] /
+             A["original_assigned_single_flower_bisexual"] * sumA - sumI) /
+             I["no_matching_mature_outcome_in_source"])
 if __name__=="__main__":
     q=argparse.ArgumentParser()
     q.add_argument("--actual",type=Path,required=True)
