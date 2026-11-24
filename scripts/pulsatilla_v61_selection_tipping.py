@@ -65,7 +65,6 @@ def source(cache):
     # The one mismatched ID between phenotype and selfing was already
     # cross-audited by v51 using unique organ and date descriptors. Use
     # the 2024 phenotypes file for typed seed counts / mature seed count.
-    assert len(p.Ind_ID.intersection(cb.Ind_ID)) if False else True
     # All outcome and genotype records must have treatment consistent
     # whenever they carry the same source ID.
     joined=p[["Ind_ID","arm"]].merge(cb[["Ind_ID","arm"]],on="Ind_ID",how="inner",validate="one_to_one")
@@ -128,12 +127,12 @@ def observed_scores(typed,delta):
         ans[arm]=y*(1-delta*s)
     return ans
 
-def tipping(data):
-    total={arm:len(data[arm]) for arm in ARMS}
-    typed_n={arm:int((data.arm==arm).sum()) for arm in ARMS}
+def tipping(original_census,typed):
+    total={arm:int((original_census.arm==arm).sum()) for arm in ARMS}
+    typed_n={arm:int((typed.arm==arm).sum()) for arm in ARMS}
     rs={}
     for delta in DELTA:
-        scores=observed_scores(data,delta)
+        scores=observed_scores(typed,delta)
         sum_all=float(scores["all"].sum())
         sum_intact=float(scores["intact"].sum())
         nm_all=total["all"]-typed_n["all"]
@@ -149,7 +148,6 @@ def tipping(data):
         for miss_all in [0,10,25,50,100]:
             thr=((total["intact"]/total["all"])*(sum_all+nm_all*miss_all)-sum_intact)/nm_intact
             threshold[str(miss_all)]=float(thr)
-        known_all_untyped = None # separately report observed available matured
         rs[str(delta)]={
           "typed_n":typed_n,
           "genotype_complete_case_means":
@@ -239,7 +237,7 @@ def main():
     cache=Path(tempfile.gettempdir())/"onishibari_pulsatilla_v61_pinned"
     p,typed,cb,joined=source(cache)
     arms=arm_table(p,typed,cb)
-    scenarios=tipping(typed)
+    scenarios=tipping(p,typed)
     # tipping expects numeric info for N assigned (the underlying function
     # only needs source enrolled arm counts); keep original assigned census.
     return {
