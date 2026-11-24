@@ -39,6 +39,27 @@ record=json.loads(get(API))
 fs=record["files"];en=fs.get("entries",{}) if isinstance(fs,dict) else {x["key"]:x for x in fs}
 sourcezip=get(en["Data for Figures_Analyses .zip"]["links"].get("content") or en["Data for Figures_Analyses .zip"]["links"]["self"])
 with zipfile.ZipFile(io.BytesIO(sourcezip)) as z:
+    import hashlib
+    sample_members=[p for p in z.namelist() if Path(p).name=="Sample_DATA.201820_seed.csv"]
+    assert len(sample_members)==1
+    sample_raw=z.read(sample_members[0])
+    samples=pd.read_csv(io.BytesIO(sample_raw))
+    assert {"DNAID","Info"}<=set(samples)
+    assert not samples.DNAID.duplicated().any()
+    for year in (2018,2020):
+        fname=f"NF{year}_2_primer16_res1.2.3_var1_150000_220702.csv"
+        original=src[fname]
+        jj=original.merge(samples[["DNAID","Info"]],on="DNAID",how="left",validate="one_to_one")
+        assert len(jj)==len(original)
+        assign=jj.loc[jj.Father.notna()&jj.Probability.ge(.95)]
+        print("TREATMENT_SOURCE_JOIN_V54",json.dumps({
+            "year":year,"archive_member_sha256":hashlib.sha256(sample_raw).hexdigest(),
+            "sample_table_rows":len(samples),
+            "source_csv_rows":len(original),
+            "unmatched_info":int(jj.Info.isna().sum()),
+            "all_treatment_counts":{str(k):int(v) for k,v in jj.Info.fillna("_unmatched").value_counts().items()},
+            "p095_assigned_treatment_counts":{str(k):int(v) for k,v in assign.Info.fillna("_unmatched").value_counts().items()},
+        },ensure_ascii=False))
     matches=[]
     for p in z.namelist():
         if not p.lower().endswith((".r",".rmd",".txt")):continue
