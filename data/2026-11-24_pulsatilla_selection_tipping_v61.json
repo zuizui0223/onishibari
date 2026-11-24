@@ -1,0 +1,476 @@
+{
+  "status": "published_Pulsatilla_stamen_removal_selection_tipping_v61",
+  "source_dois": [
+    "10.1111/1365-2745.14378",
+    "10.1016/j.cub.2025.04.022"
+  ],
+  "provenance": {
+    "census": {
+      "record": "10121671",
+      "filename": "population.csv",
+      "sha256": "f03cfd1f7f7d4c829dc21691298fa7cbb0930f3719cf5cadeb4b8fc6bd85cbc2"
+    },
+    "selfing": {
+      "record": "12748590",
+      "filename": "Data_selfing.csv",
+      "sha256": "6c6d15b649e157930242f73075a6c77fd93192aa2aba527f320f7a8176f1272e"
+    },
+    "phenotypes": {
+      "record": "12748590",
+      "filename": "Data_phenotypic_selection.csv",
+      "sha256": "e49fef29cefa6e1ed419500a0e312a49524f04876cca5eb21dda14657fe11a98"
+    },
+    "fitness": {
+      "record": "15183584",
+      "filename": "Fitness_landscape_Zenodo.zip",
+      "sha256": "2cb1c78efe86128255dabed72d01799cfe71e10208386f55319f708a8535c141"
+    }
+  },
+  "Fitness_data_RS_zip_member_sha256": "49b6c5147aadf0d3c9de5bacda59b1cd8f25df0d49f521cea5d577668d6a27ba",
+  "source_single_flower_bisexual_original_assigned": 81,
+  "source_mature_outcomes_all_genders": 87,
+  "source_genotyped_bisexual_original_2024": 60,
+  "source_genotyped_bisexual_confirmed_original_census_ID": 59,
+  "source_genotyped_bisexual_without_exact_original_census_ID": 1,
+  "source_genotyped_without_original_census_ID_by_arm": {
+    "intact": 1,
+    "half": 0,
+    "all": 0
+  },
+  "source_original_assigned_outcome_overlap": 64,
+  "cohort_flow_by_arm": {
+    "intact": {
+      "original_assigned_single_flower_bisexual": 54,
+      "genotyped_mature_outcome": 42,
+      "mature_outcome_known_but_selfing_untyped": 3,
+      "no_matching_mature_outcome_in_source": 9,
+      "extra_outcome_not_in_original_104_single_flower_census": 1,
+      "genotyped_fraction_of_original": 0.7777777777777778,
+      "genotyped_fraction_of_matureoutcome_matched": 0.9333333333333333,
+      "known_mature_outcome_untyped_harvest_seeds_sum": 126,
+      "known_mature_outcome_untyped_harvest_seeds_mean": 42,
+      "known_untyped_mature_seed_minmax": [
+        18,
+        56
+      ],
+      "typed_harvested_seeds_sum": 3933,
+      "typed_selfed_genotyped_seeds_sum": 254,
+      "typed_genotyped_seeds_sum": 472,
+      "not_genotyped_original_flower_total": 12,
+      "census_and_followup_coding_verified": true
+    },
+    "half": {
+      "original_assigned_single_flower_bisexual": 15,
+      "genotyped_mature_outcome": 11,
+      "mature_outcome_known_but_selfing_untyped": 1,
+      "no_matching_mature_outcome_in_source": 3,
+      "extra_outcome_not_in_original_104_single_flower_census": 0,
+      "genotyped_fraction_of_original": 0.7333333333333333,
+      "genotyped_fraction_of_matureoutcome_matched": 0.9166666666666666,
+      "known_mature_outcome_untyped_harvest_seeds_sum": 43,
+      "known_mature_outcome_untyped_harvest_seeds_mean": 43,
+      "known_untyped_mature_seed_minmax": [
+        43,
+        43
+      ],
+      "typed_harvested_seeds_sum": 837,
+      "typed_selfed_genotyped_seeds_sum": 31,
+      "typed_genotyped_seeds_sum": 109,
+      "not_genotyped_original_flower_total": 4,
+      "census_and_followup_coding_verified": true
+    },
+    "all": {
+      "original_assigned_single_flower_bisexual": 12,
+      "genotyped_mature_outcome": 6,
+      "mature_outcome_known_but_selfing_untyped": 1,
+      "no_matching_mature_outcome_in_source": 5,
+      "extra_outcome_not_in_original_104_single_flower_census": 1,
+      "genotyped_fraction_of_original": 0.5,
+      "genotyped_fraction_of_matureoutcome_matched": 0.8571428571428571,
+      "known_mature_outcome_untyped_harvest_seeds_sum": 113,
+      "known_mature_outcome_untyped_harvest_seeds_mean": 113,
+      "known_untyped_mature_seed_minmax": [
+        113,
+        113
+      ],
+      "typed_harvested_seeds_sum": 528,
+      "typed_selfed_genotyped_seeds_sum": 0,
+      "typed_genotyped_seeds_sum": 49,
+      "not_genotyped_original_flower_total": 6,
+      "census_and_followup_coding_verified": true
+    }
+  },
+  "tipping_by_delta_original_assigned": {
+    "0.0": {
+      "typed_n": {
+        "intact": 42,
+        "half": 11,
+        "all": 6
+      },
+      "genotype_complete_case_means": {
+        "intact": 93.64285714285714,
+        "half": 76.0909090909091,
+        "all": 88
+      },
+      "typed_all_minus_intact": -5.642857142857139,
+      "original_assigned_outcross_contrast_formula": "(S_all+6*m_all)/12 -(S_intact+12*m_intact)/54",
+      "typed_sum_all": 528,
+      "typed_sum_intact": 3933,
+      "non_genotyped_all": 6,
+      "non_genotyped_intact": 12,
+      "intact_missing_mean_for_original_contrast_zero_conditional_on_all_missing_mean": {
+        "0": -129.75,
+        "10": -107.25,
+        "25": -73.5,
+        "50": -17.25,
+        "100": 95.25
+      },
+      "adversarial_all_missing_zero_intact_missing_zero_contrast": -28.83333333333333,
+      "not_a_recovered_original_assigned_cohort_mean": true
+    },
+    "0.25": {
+      "typed_n": {
+        "intact": 42,
+        "half": 11,
+        "all": 6
+      },
+      "genotype_complete_case_means": {
+        "intact": 82.03312213580071,
+        "half": 71.55107014197924,
+        "all": 88
+      },
+      "typed_all_minus_intact": 5.96687786419929,
+      "original_assigned_outcross_contrast_formula": "(S_all+6*m_all)/12 -(S_intact+12*m_intact)/54",
+      "typed_sum_all": 528,
+      "typed_sum_intact": 3445.3911297036298,
+      "non_genotyped_all": 6,
+      "non_genotyped_intact": 12,
+      "intact_missing_mean_for_original_contrast_zero_conditional_on_all_missing_mean": {
+        "0": -89.11592747530248,
+        "10": -66.61592747530248,
+        "25": -32.86592747530248,
+        "50": 23.38407252469752,
+        "100": 135.88407252469753
+      },
+      "adversarial_all_missing_zero_intact_missing_zero_contrast": -19.803539438956108,
+      "not_a_recovered_original_assigned_cohort_mean": true
+    },
+    "0.5": {
+      "typed_n": {
+        "intact": 42,
+        "half": 11,
+        "all": 6
+      },
+      "genotype_complete_case_means": {
+        "intact": 70.42338712874428,
+        "half": 67.01123119304937,
+        "all": 88
+      },
+      "typed_all_minus_intact": 17.57661287125572,
+      "original_assigned_outcross_contrast_formula": "(S_all+6*m_all)/12 -(S_intact+12*m_intact)/54",
+      "typed_sum_all": 528,
+      "typed_sum_intact": 2957.78225940726,
+      "non_genotyped_all": 6,
+      "non_genotyped_intact": 12,
+      "intact_missing_mean_for_original_contrast_zero_conditional_on_all_missing_mean": {
+        "0": -48.481854950605,
+        "10": -25.981854950604998,
+        "25": 7.768145049395002,
+        "50": 64.018145049395,
+        "100": 176.518145049395
+      },
+      "adversarial_all_missing_zero_intact_missing_zero_contrast": -10.773745544578887,
+      "not_a_recovered_original_assigned_cohort_mean": true
+    },
+    "0.75": {
+      "typed_n": {
+        "intact": 42,
+        "half": 11,
+        "all": 6
+      },
+      "genotype_complete_case_means": {
+        "intact": 58.81365212168784,
+        "half": 62.471392244119514,
+        "all": 88
+      },
+      "typed_all_minus_intact": 29.186347878312162,
+      "original_assigned_outcross_contrast_formula": "(S_all+6*m_all)/12 -(S_intact+12*m_intact)/54",
+      "typed_sum_all": 528,
+      "typed_sum_intact": 2470.1733891108893,
+      "non_genotyped_all": 6,
+      "non_genotyped_intact": 12,
+      "intact_missing_mean_for_original_contrast_zero_conditional_on_all_missing_mean": {
+        "0": -7.84778242590744,
+        "10": 14.65221757409256,
+        "25": 48.40221757409256,
+        "50": 104.65221757409256,
+        "100": 217.15221757409256
+      },
+      "adversarial_all_missing_zero_intact_missing_zero_contrast": -1.7439516502016517,
+      "not_a_recovered_original_assigned_cohort_mean": true
+    },
+    "0.95": {
+      "typed_n": {
+        "intact": 42,
+        "half": 11,
+        "all": 6
+      },
+      "genotype_complete_case_means": {
+        "intact": 49.52586411604269,
+        "half": 58.839521084975644,
+        "all": 88
+      },
+      "typed_all_minus_intact": 38.47413588395731,
+      "original_assigned_outcross_contrast_formula": "(S_all+6*m_all)/12 -(S_intact+12*m_intact)/54",
+      "typed_sum_all": 528,
+      "typed_sum_intact": 2080.086292873793,
+      "non_genotyped_all": 6,
+      "non_genotyped_intact": 12,
+      "intact_missing_mean_for_original_contrast_zero_conditional_on_all_missing_mean": {
+        "0": 24.65947559385059,
+        "10": 47.159475593850594,
+        "25": 80.90947559385059,
+        "50": 137.1594755938506,
+        "100": 249.6594755938506
+      },
+      "adversarial_all_missing_zero_intact_missing_zero_contrast": 5.479883465300134,
+      "not_a_recovered_original_assigned_cohort_mean": true
+    },
+    "1.0": {
+      "typed_n": {
+        "intact": 42,
+        "half": 11,
+        "all": 6
+      },
+      "genotype_complete_case_means": {
+        "intact": 47.2039171146314,
+        "half": 57.93155329518966,
+        "all": 88
+      },
+      "typed_all_minus_intact": 40.7960828853686,
+      "original_assigned_outcross_contrast_formula": "(S_all+6*m_all)/12 -(S_intact+12*m_intact)/54",
+      "typed_sum_all": 528,
+      "typed_sum_intact": 1982.5645188145188,
+      "non_genotyped_all": 6,
+      "non_genotyped_intact": 12,
+      "intact_missing_mean_for_original_contrast_zero_conditional_on_all_missing_mean": {
+        "0": 32.7862900987901,
+        "10": 55.2862900987901,
+        "25": 89.0362900987901,
+        "50": 145.2862900987901,
+        "100": 257.78629009879006
+      },
+      "adversarial_all_missing_zero_intact_missing_zero_contrast": 7.285842244175576,
+      "not_a_recovered_original_assigned_cohort_mean": true
+    }
+  },
+  "followed_untyped_mature_outcomes_delta95_partial_bounds": {
+    "intact": {
+      "known_followed_untyped_mature_harvest_sum": 126,
+      "known_followed_untyped_delta95_lower_if_all_selfed": 6.300000000000001,
+      "known_followed_untyped_delta95_upper_if_all_outcrossed": 126,
+      "unmatched_original_census_flowers": 9,
+      "not_assigned_zero_unmatched_outcome_by_default": true
+    },
+    "all": {
+      "known_followed_untyped_mature_harvest_sum": 113,
+      "known_followed_untyped_delta95_lower_if_all_selfed": 5.65,
+      "known_followed_untyped_delta95_upper_if_all_outcrossed": 113,
+      "unmatched_original_census_flowers": 5,
+      "not_assigned_zero_unmatched_outcome_by_default": true
+    }
+  },
+  "nested_typed_flower_and_typed_seed_bootstrap": {
+    "0.0": {
+      "delta": 0,
+      "all_minus_intact_genotype_complete_case_Beta_plant_bootstrap95": [
+        -34.38095238095238,
+        23.07142857142857
+      ],
+      "all_minus_intact_genotype_complete_case_Beta_plant_bootstrap_mean": -5.690116071428571,
+      "all_minus_intact_bootstrap_probability_positive": 0.3536875,
+      "source_female_mature_seeds_not_recruitment_or_seedling_survival": true,
+      "genotyped_flower_selected_subset_only": true,
+      "source_hermaphrodite_flower_resample_independent_not_typed_seed_independent": true,
+      "arms": {
+        "intact": {
+          "n": 42,
+          "model_free_assigned_genotype_outcross_point": 93.64285714285714,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 93.5814806547619,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            77.2375,
+            110.28571428571429
+          ],
+          "draws": 16000
+        },
+        "half": {
+          "n": 11,
+          "model_free_assigned_genotype_outcross_point": 76.0909090909091,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 76.17367045454544,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            47,
+            106.18181818181819
+          ],
+          "draws": 16000
+        },
+        "all": {
+          "n": 6,
+          "model_free_assigned_genotype_outcross_point": 88,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 87.89136458333333,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            64.66666666666667,
+            111.66666666666667
+          ],
+          "draws": 16000
+        }
+      }
+    },
+    "0.5": {
+      "delta": 0.5,
+      "all_minus_intact_genotype_complete_case_Beta_plant_bootstrap95": [
+        -12.082667281766941,
+        42.97271476057427
+      ],
+      "all_minus_intact_genotype_complete_case_Beta_plant_bootstrap_mean": 15.218163106108982,
+      "all_minus_intact_bootstrap_probability_positive": 0.8553125,
+      "source_female_mature_seeds_not_recruitment_or_seedling_survival": true,
+      "genotyped_flower_selected_subset_only": true,
+      "source_hermaphrodite_flower_resample_independent_not_typed_seed_independent": true,
+      "arms": {
+        "intact": {
+          "n": 42,
+          "model_free_assigned_genotype_outcross_point": 70.42338712874428,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 70.30825103439274,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            56.354901947102995,
+            85.07234016793691
+          ],
+          "draws": 16000
+        },
+        "half": {
+          "n": 11,
+          "model_free_assigned_genotype_outcross_point": 67.01123119304937,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 66.3269071279444,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            38.78325184564629,
+            96.53659888439276
+          ],
+          "draws": 16000
+        },
+        "all": {
+          "n": 6,
+          "model_free_assigned_genotype_outcross_point": 88,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 85.52641414050173,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            62.53588261843008,
+            109.58468225889806
+          ],
+          "draws": 16000
+        }
+      }
+    },
+    "0.95": {
+      "delta": 0.95,
+      "all_minus_intact_genotype_complete_case_Beta_plant_bootstrap95": [
+        5.843554079021675,
+        61.43657957858624
+      ],
+      "all_minus_intact_genotype_complete_case_Beta_plant_bootstrap_mean": 33.777244941978765,
+      "all_minus_intact_bootstrap_probability_positive": 0.9920625,
+      "source_female_mature_seeds_not_recruitment_or_seedling_survival": true,
+      "genotyped_flower_selected_subset_only": true,
+      "source_hermaphrodite_flower_resample_independent_not_typed_seed_independent": true,
+      "arms": {
+        "intact": {
+          "n": 42,
+          "model_free_assigned_genotype_outcross_point": 49.52586411604269,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 49.47571095114614,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            35.62755335127717,
+            64.86136692426089
+          ],
+          "draws": 16000
+        },
+        "half": {
+          "n": 11,
+          "model_free_assigned_genotype_outcross_point": 58.839521084975644,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 57.58485157775742,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            28.74605903938501,
+            89.43729694819643
+          ],
+          "draws": 16000
+        },
+        "all": {
+          "n": 6,
+          "model_free_assigned_genotype_outcross_point": 88,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 83.25295589312492,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            59.952986635386225,
+            107.11383860815552
+          ],
+          "draws": 16000
+        }
+      }
+    },
+    "1.0": {
+      "delta": 1,
+      "all_minus_intact_genotype_complete_case_Beta_plant_bootstrap95": [
+        7.794629405200571,
+        63.68388159763759
+      ],
+      "all_minus_intact_genotype_complete_case_Beta_plant_bootstrap_mean": 35.884180017464516,
+      "all_minus_intact_bootstrap_probability_positive": 0.994,
+      "source_female_mature_seeds_not_recruitment_or_seedling_survival": true,
+      "genotyped_flower_selected_subset_only": true,
+      "source_hermaphrodite_flower_resample_independent_not_typed_seed_independent": true,
+      "arms": {
+        "intact": {
+          "n": 42,
+          "model_free_assigned_genotype_outcross_point": 47.2039171146314,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 47.11332942898381,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            33.02943875231881,
+            63.04983780679754
+          ],
+          "draws": 16000
+        },
+        "half": {
+          "n": 11,
+          "model_free_assigned_genotype_outcross_point": 57.93155329518966,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 56.824326923488535,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            27.245258475376897,
+            89.10016846000775
+          ],
+          "draws": 16000
+        },
+        "all": {
+          "n": 6,
+          "model_free_assigned_genotype_outcross_point": 88,
+          "Jeffreys_beta_and_whole_flower_bootstrap_mean": 82.9975094464483,
+          "Jeffreys_beta_and_whole_flower_bootstrap95": [
+            60.14542797769585,
+            106.89839131358373
+          ],
+          "draws": 16000
+        }
+      }
+    }
+  },
+  "limitations": {
+    "one_published_population_one_season_same_as_v50_v51": true,
+    "all_originally_assigned_mature_progeny_not_observed": true,
+    "flower_outcomes_complete_case_not_intention_to_treat": true,
+    "any_genotyped_flower_without_exact_original_enrollment_ID_excluded_from_assigned_contrast": true,
+    "original_2024_and_2025_scenarios_have_nonidentical_selfing_rates": true,
+    "typed_seed_origin_not_true_seedling_survival": true,
+    "selfed_seed_Beta_Jeffreys_uncertainty_conditions_on_assumed_independent_genotyped_seeds": true,
+    "no_SSR_genotyping_call_uncertainty_or_paternal_assignments_propagated": true,
+    "missing_all_and_intact_mean_values_are_hypothetical_MNAR_scenarios": true,
+    "inbreeding_depression_delta_values_not_new_2022_offspring_survival_measurements": true,
+    "random_removal_is_treatment_not_random_genotyping_recovery": true,
+    "not_Daphne_pseudomezereum_or_Daphne_jezoensis": true,
+    "individual_plant_IDs_and_raw_primary_records_never_output": true
+  }
+}
