@@ -1,0 +1,17 @@
+name: Independent Oenothera parent offspring ID and allele integrity v57
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/oenothera_v57_genotype_key_audit.py
+      - .github/workflows/oenothera-v57-allele-key-audit.yml
+permissions: {contents: read}
+jobs:
+  verify-original-parent-offspring-genotypes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: MD5-pin genotype workbook and inspect parent family linkage privately
+        run: python3 scripts/oenothera_v57_genotype_key_audit.py
