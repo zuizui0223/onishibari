@@ -64,9 +64,39 @@ def parentage_keys(p,o):
                 diagnostics["suffix_redacted_"+re.sub("[0-9]","#",re.sub("[a-z]","a",re.sub("[A-Z]","A",suffix)))]+=1
         else:
             malformed.append(oid)
+    def mask(z):
+        return "".join("#" if ch.isdigit() else "A" if ch.isalpha() else ch for ch in str(z))
+    parent_patterns=collections.Counter(mask(v) for v in rawparents)
+    offspring_patterns=collections.Counter(mask(v) for v in offs)
+    mother_labels=[v.split("_")[0] for v in offs]
+    # Text normalization rules are checked only as cohort-level match counts;
+    # no original genet or offspring identifiers are emitted.
+    from oenothera_v57_source_schema import download,FILES
+    import csv
+    dry=download("multiplePaternity.csv",FILES["multiplePaternity.csv"]).decode("utf-8-sig")
+    dry=dry.replace("\\r\\n","\\n").replace("\\r","\\n")
+    meta=list(csv.DictReader(io.StringIO(dry,newline="")))
+    plantIDs=[str(t["plantID"]) for t in meta]
+    def numeric(x):return "".join(ch for ch in str(x) if ch.isdigit())
+    knownp=set(rawparents)
+    plant_parent_straight=sum(x in knownp for x in plantIDs)
+    plant_off_mother_straight=sum(x in set(mother_labels) for x in plantIDs)
+    match_off_to_parent_digits=sum(any(numeric(y)==numeric(x) for y in rawparents) for x in mother_labels)
+    match_off_to_parent_first4=sum(any(y[:4]==x for y in rawparents) for x in mother_labels)
+    match_off_to_parent_last4=sum(any(y[-4:]==x for y in rawparents) for x in mother_labels)
     parent_ids=collections.Counter(map(len,rawparents))
     output={
        "original_parent_rows":len(p),"unique_parent_ids":len(mothers),
+       "parent_id_shape_counts":dict(parent_patterns),
+       "offspring_id_shape_counts":dict(offspring_patterns),
+       "offspring_maternal_prefix_unique":len(set(mother_labels)),
+       "offspring_maternal_prefix_length_counts":dict(collections.Counter(len(x) for x in mother_labels)),
+       "dryad_plant_id_shape_counts":dict(collections.Counter(mask(x) for x in plantIDs)),
+       "dryad_plantID_exact_in_parent":plant_parent_straight,
+       "dryad_plantID_exact_in_offspring_mother_prefix":plant_off_mother_straight,
+       "offspring_maternal_match_by_digit_only":match_off_to_parent_digits,
+       "offspring_maternal_match_to_parent_first4":match_off_to_parent_first4,
+       "offspring_maternal_match_to_parent_last4":match_off_to_parent_last4,
        "original_offspring_rows":len(o),
        "parent_id_length_counts":dict(parent_ids),
        "offspring_exact_parent_prefix_matches":len(exact_parent_prefix),
