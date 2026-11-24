@@ -71,31 +71,49 @@ def member_slots(counts):
     assert np.array_equal(np.bincount(father,minlength=k),counts.sum(axis=0))
     return mother.astype(np.int32),father.astype(np.int32)
 
+def equal_mother_pair_fraction(counts):
+    n=counts.sum(axis=1)
+    family_pairs=n*(n-1)//2
+    i=family_pairs>0
+    assert i.sum()>0
+    numerator=np.sum(counts*(counts-1)//2,axis=1)
+    return float(np.mean(numerator[i]/family_pairs[i]))
+
 def family_pair_fraction_slots(mother,father,n_moms,n_fathers,total_pairs):
-    k=np.bincount(mother*n_fathers+father,minlength=n_moms*n_fathers)
-    return float(np.dot(k,k-1)/2/total_pairs)
+    k=np.bincount(mother*n_fathers+father,minlength=n_moms*n_fathers).reshape(n_moms,n_fathers)
+    n=k.sum(axis=1)
+    family_pairs=n*(n-1)//2
+    same_by_mother=np.sum(k*(k-1)//2,axis=1)
+    i=family_pairs>0
+    return (float(same_by_mother.sum()/total_pairs),
+            float(np.mean(same_by_mother[i]/family_pairs[i])))
 
 def random_margins_null(counts,draws,rng,pairs_total):
     m,f=member_slots(counts)
-    vals=np.empty(draws)
+    vals=np.empty((draws,2))
     for i in range(draws):
         vals[i]=family_pair_fraction_slots(m,rng.permutation(f),*counts.shape,pairs_total)
     return vals
 
 def independent_null(counts,p,rng,pairs_total):
-    draws=np.zeros(INDEPENDENT_NULL_DRAWS,dtype=np.int32)
-    for n,prob in zip(counts.sum(axis=1),p):
+    nrows=counts.sum(axis=1)
+    family_pairs=nrows*(nrows-1)//2
+    eligible=family_pairs>0
+    draws=np.zeros((INDEPENDENT_NULL_DRAWS,2))
+    for n,npair,prob in zip(nrows,family_pairs,p):
         if n<2:continue
         k=rng.multinomial(int(n),prob,size=INDEPENDENT_NULL_DRAWS)
-        draws+=np.sum(k*(k-1)//2,axis=1)
-    return draws/pairs_total
+        paired=np.sum(k*(k-1)//2,axis=1)
+        draws[:,0]+=paired/pairs_total
+        draws[:,1]+=paired/npair/int(eligible.sum())
+    return draws
 
 def mcmc_fixed_margins(counts,dist,lam,seed,draws=MCMC_DRAWS):
     rng=np.random.default_rng(seed)
     mother,father=member_slots(counts)
     n=len(mother);m,k=counts.shape
     pairs_total=int(np.sum(counts.sum(axis=1)*(counts.sum(axis=1)-1)//2))
-    sample=np.empty(draws)
+    sample=np.empty((draws,2))
     # Start one chain at the observed configuration (potentially highly
     # clustered), one at the uniform shuffled configuration; stationarity
     # and sensitivity to starts can be inspected from chain means.
@@ -122,8 +140,10 @@ def mcmc_fixed_margins(counts,dist,lam,seed,draws=MCMC_DRAWS):
     assert np.array_equal(np.bincount(mother,minlength=m),counts.sum(axis=1))
     return sample,{"attempted_valid_label_swaps":attempts,"accepted_swaps":accepted,
                    "conditional_swap_acceptance":float(accepted/max(1,attempts)),
-                   "chain_pair_mean":float(sample.mean()),
-                   "chain_pair_95":np.quantile(sample,[.025,.975]).tolist(),
+                   "chain_pair_mean":float(sample[:,0].mean()),
+                   "chain_pair_95":np.quantile(sample[:,0],[.025,.975]).tolist(),
+                   "chain_mother_equal_mean":float(sample[:,1].mean()),
+                   "chain_mother_equal_95":np.quantile(sample[:,1],[.025,.975]).tolist(),
                    "chain_start":"observed" if chain_id==0 else "uniform_randomized"}
 
 def analyse_year(q,year):
@@ -132,6 +152,7 @@ def analyse_year(q,year):
     assert int(counts.sum())==(180 if year==2018 else 206)
     assert k==(105 if year==2018 else 71)
     obs,pairs_total,pairs_same=pair_fraction(counts)
+    equal_obs=equal_mother_pair_fraction(counts)
     mother_sizes=counts.sum(axis=1)
     donor_sizes=counts.sum(axis=0)
     beta=float(estimate(q,LAMBDA_PRIMARY)["beta_hat"])
@@ -151,10 +172,12 @@ def analyse_year(q,year):
             chains.append(vals);meta.append(stat)
         combined=np.concatenate(chains)
         lam_results[str(int(lam))]={
-            **rate_samples(combined,obs),
+            **rate_samples(combined[:,0],obs),
+            "mother_equal_metric":rate_samples(combined[:,1],equal_obs),
             "chains":meta,
             "chain_mean_absolute_difference":float(abs(meta[0]["chain_pair_mean"]-meta[1]["chain_pair_mean"])),
-            "source_data_observed_start_and_random_start_in_same_window":bool(abs(meta[0]["chain_pair_mean"]-meta[1]["chain_pair_mean"])<0.05)
+            "chain_mother_equal_mean_absolute_difference":float(abs(meta[0]["chain_mother_equal_mean"]-meta[1]["chain_mother_equal_mean"])),
+            "source_data_observed_start_and_random_start_in_same_window":bool(abs(meta[0]["chain_pair_mean"]-meta[1]["chain_pair_mean"])<0.05 and abs(meta[0]["chain_mother_equal_mean"]-meta[1]["chain_mother_equal_mean"])<0.05)
         }
     # F sex mother subgroup source descriptive only; mothers, not offspring,
     # are the relevant biological clusters and the source fraction can be
@@ -180,10 +203,13 @@ def analyse_year(q,year):
         "within_family_sibling_pairs":pairs_total,
         "same_father_sibling_pairs_observed":pairs_same,
         "same_father_sibling_pair_fraction_observed":obs,
+        "mother_equal_same_father_pair_fraction_observed":equal_obs,
         "fitted_flower_coefficient_at_lambda10m":beta,
         "inference":"Only children with SSR-assigned strictly H-coded fathers; conditional on available candidate father set and sampled maternal families",
-        "independent_mother_genet_null":rate_samples(nullA,obs),
-        "exact_global_father_mother_totals_exchangeable_null":rate_samples(nullB,obs),
+        "independent_mother_genet_null":rate_samples(nullA[:,0],obs),
+        "independent_mother_genet_null_mother_equal":rate_samples(nullA[:,1],equal_obs),
+        "exact_global_father_mother_totals_exchangeable_null":rate_samples(nullB[:,0],obs),
+        "exact_global_father_mother_totals_exchangeable_null_mother_equal":rate_samples(nullB[:,1],equal_obs),
         "spatially_weighted_exact_margins_nulls":lam_results,
         "source_mother_sex_strata_descriptive":groups,
         "limitations":["No independently marked individual pollinator visitation events",
@@ -193,6 +219,7 @@ def analyse_year(q,year):
             "Paternity concentrates through maternal mating compatibility or temporal phenology as well as insect carryover",
             "Fixed margin null conditions on realized globally successful sires",
             "Metropolis swaps approximate but do not prove exact mixed equilibrium",
+            "Mother-equal pair metric is restricted to mothers with at least two assigned H-sired offspring",
             "Maternal genotype and paternal source identity not output"]}
 
 def main():
