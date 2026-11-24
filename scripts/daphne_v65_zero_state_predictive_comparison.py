@@ -26,12 +26,13 @@ genets and must not be counted as independent populations.
 Do not export original IDs, coordinates, genotype/individual source rows.
 """
 from __future__ import annotations
-import argparse,json
+import argparse,json,hashlib,io,zipfile,time,urllib.request
 from pathlib import Path
 import numpy as np
+import pandas as pd
 from scipy.optimize import minimize
 from scipy.special import expit,logit,betaln,gammaln,logsumexp
-from daphne_jezoensis_2018_2020_HF_fathers_v28 import data,ZIP_SHA
+from daphne_jezoensis_2018_2020_HF_fathers_v28 import ZIP_SHA,HASHES
 from daphne_v64_natural_fruit_gate import make,YEARS,SEXES
 
 OUT=Path("analysis_results_daphne_zero_activation_v65")
@@ -45,6 +46,42 @@ EXPECTED={(2018,"H"):(105,4765,53,14),
           (2018,"F"):(63,619,255,37),
           (2020,"H"):(71,2573,28,9),
           (2020,"F"):(57,719,205,32)}
+
+def pinned_adults_only():
+    """Obtain the ORIGINAL author ZIP via official SHA-pinned direct file links;
+    metadata API can be 403/rate-limited independently of static file serving.
+    No source adult rows saved or printed or checked into the repository.
+    """
+    name="Data%20for%20Figures_Analyses%20.zip"
+    urls=[
+      "https://zenodo.org/records/8253921/files/"+name+"?download=1",
+      "https://zenodo.org/api/records/8253921/files/"+name+"/content",
+      "https://zenodo.org/record/8253921/files/"+name+"?download=1"
+    ]
+    exceptions=[]
+    for url in urls:
+        for retry in range(2):
+            try:
+                req=urllib.request.Request(url,headers={
+                    "User-Agent":"Mozilla/5.0 original-source-hash-pinned ecological-reanalysis",
+                    "Accept":"application/zip,application/octet-stream,*/*"})
+                with urllib.request.urlopen(req,timeout=60) as res:
+                    blob=res.read(2100000)
+                if hashlib.sha256(blob).hexdigest()!=ZIP_SHA:
+                    raise ValueError("Original author archive digest mismatch")
+                with zipfile.ZipFile(io.BytesIO(blob)) as z:
+                    result=[]
+                    for member in z.namelist():
+                        if Path(member).name=="GenetID_geno_phenotype_1820Nopadult_211109.csv":
+                            raw=z.read(member)
+                            assert hashlib.sha256(raw).hexdigest()==HASHES[Path(member).name]
+                            result.append(pd.read_csv(io.BytesIO(raw),encoding="utf-8-sig"))
+                    assert len(result)==1 and len(result[0])==492
+                    return result[0]
+            except (OSError,ValueError,zipfile.BadZipFile) as exc:
+                exceptions.append(type(exc).__name__)
+                if retry==0:time.sleep(2)
+    raise RuntimeError("Source author ZIP inaccessible through ALL official direct endpoints; no fallback to invented or unverified adult data. Attempt error types: "+",".join(exceptions))
 
 def logpmf(n,y,model,params):
     n=np.asarray(n,float)
@@ -197,12 +234,34 @@ def analyze(record,year,sex,rng):
     }
 
 def main():
-    source=data()
-    adults=source["GenetID_geno_phenotype_1820Nopadult_211109.csv"]
+    adults=pinned_adults_only()
     assert len(adults)==492
     rng=np.random.default_rng(SEED)
-    out=[analyze(make(adults,year,sex),year,sex,rng)
+    cohorts={(year,sex):make(adults,year,sex) for year in YEARS for sex in SEXES}
+    out=[analyze(cohorts[(year,sex)],year,sex,rng)
          for year in YEARS for sex in SEXES]
+    transfer={}
+    for sex in SEXES:
+        runs=[]
+        for sourceyear,targetyear in ((2018,2020),(2020,2018)):
+            orig=cohorts[(sourceyear,sex)]
+            target=cohorts[(targetyear,sex)]
+            models={}
+            for model in MODELS:
+                coef,_,success=fit(orig["n"],orig["y"],model)
+                pred=logpmf(target["n"],target["y"],model,coef)
+                zerop=np.exp(logpmf(target["n"],np.zeros(len(target["n"]),int),model,coef))
+                models[model]={
+                   "yeartrained":sourceyear,"yeartested":targetyear,
+                   "train_model_converged":success,
+                   "train_parameters":summarize_params(model,coef),
+                   "target_mean_logpredictive_per_genet":float(pred.mean()),
+                   "target_predicted_zero_fraction":float(zerop.mean()),
+                   "target_observed_zero_fraction":float(np.mean(target["y"]==0))
+                }
+            runs.append({"trained_on":sourceyear,"tested_on":targetyear,
+                         "target_genets":len(target["n"]),"models":models})
+        transfer[sex]=runs
     return {
       "status":"original_Daphne_jezoensis_zero_activation_vs_continuous_heterogeneity_v65",
       "source_article":"10.1002/ajb2.16239",
@@ -212,6 +271,7 @@ def main():
       "source_original_2018_2020_adult_genets":len(adults),
       "seed":SEED,"fixed_model_designs":list(MODELS)+[FULL_DIAGNOSTIC],
       "sex_year":out,
+      "within_source_between_year_morph_parameter_transfer":transfer,
       "previous_microscopy_published_thesis_stage_evidence":{
         "original_2016_hand_outcross_microscopy_pistils_H":55,
         "genets_H":6,
@@ -232,6 +292,7 @@ def main():
         "one_originating_source_per_two_repeated_years":True,
         "crossval_holds_adult_genets_within_sex_year_not_external_location":True,
         "2018_2020_overlap_not_between_year_external_independence":True,
+        "year_transfer_reuses_same_geographic_population_and_some_genet_overlap":True,
         "true_seedling_survival_and_pollen_tube_to_fruit_transition_not_observed":True,
         "doctorate_2020_pollen_tube_micro_data_not_available_as_child_adult_join":True,
         "no_original_sensitive_raw_ID_SSR_alleles_or_coords_output":True,
