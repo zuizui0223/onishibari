@@ -226,3 +226,4 @@ if __name__=="__main__":
                for x in v["symmetric_missing_outcome_hypothetical_cap_scenarios"]]
     } for k,v in result["δ_sensitivity"].items()}
     print("PULSATILLA_V62_PARTIAL_IDENTIFICATION",json.dumps(summary,allow_nan=False,ensure_ascii=False),flush=True)
+    print("PULSATILLA_V62_FULL_AGGREGATE_JSON",json.dumps(result,allow_nan=False,ensure_ascii=False,separators=(",",":")),flush=True)
