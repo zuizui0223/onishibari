@@ -87,7 +87,7 @@ def primary(d):
         mom=par[mother[ix]]
         for locus in range(LOC):
             c=child[ix,locus]
-            mother_inconsistent[ix,locus]=not np.any(c[:,None]==mom[None,:])
+            mother_inconsistent[ix,locus]=not np.any(c[:,None]==mom[locus][None,:])
             for f in range(n_par):
                 exact[ix,f,locus]=meiosis_probability(mom[locus],par[f,locus],c)
         exact[ix,mother[ix],:]=0
