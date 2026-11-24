@@ -214,11 +214,13 @@ def analyse_year(q,year):
         "source_mother_sex_strata_descriptive":groups,
         "limitations":["No independently marked individual pollinator visitation events",
             "Paternity assigned at >=0.95, father candidates incomplete",
-            "Source offspring may be multiple seeds from same maternal fruit",
+            "Published Daphne fruits are single-seeded; offspring can come from multiple separate fruits of a mother",
             "Source is published paternity diversity experiment, not newly collected field data",
             "Paternity concentrates through maternal mating compatibility or temporal phenology as well as insect carryover",
             "Fixed margin null conditions on realized globally successful sires",
             "Metropolis swaps approximate but do not prove exact mixed equilibrium",
+            "Source parentage may pool natural/day-open/night-open treatments on the same maternal genet",
+            "Original MasterBayes sire assignment includes a distance prior; the source father labels are not distance-blind",
             "Mother-equal pair metric is restricted to mothers with at least two assigned H-sired offspring",
             "Maternal genotype and paternal source identity not output"]}
 

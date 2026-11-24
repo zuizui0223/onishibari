@@ -1,0 +1,174 @@
+{
+  "source_parentage_article": "10.1002/ajb2.16239",
+  "source_zenodo": "10.5281/zenodo.8253921",
+  "audit_job": "https://github.com/zuizui0223/onishibari/actions/runs/45311901700",
+  "no_original_identifiers_stored": true,
+  "by_year": [
+    {
+      "source_offspring_identifier_integrity": {
+        "all_rows": {
+          "n_rows": 257,
+          "identical_full_rows": 0,
+          "SeedID": {
+            "unique": 257,
+            "repeated_values": 0,
+            "missing": 0
+          },
+          "Offspring": {
+            "unique": 257,
+            "repeated_values": 0,
+            "missing": 0
+          },
+          "DNAID": {
+            "unique": 257,
+            "repeated_values": 0,
+            "missing": 0
+          }
+        },
+        "paternity_assigned_at095": {
+          "n_rows": 209,
+          "identical_full_rows": 0,
+          "SeedID": {
+            "unique": 209,
+            "repeated_values": 0,
+            "missing": 0
+          },
+          "Offspring": {
+            "unique": 209,
+            "repeated_values": 0,
+            "missing": 0
+          },
+          "DNAID": {
+            "unique": 209,
+            "repeated_values": 0,
+            "missing": 0
+          }
+        }
+      },
+      "year": 2018,
+      "n_mothers": 39,
+      "offspring": 180,
+      "source_original_assigned_file_columns": [
+        "SeedID",
+        "Offspring",
+        "DNAID",
+        "Mother",
+        "Father",
+        "Probability"
+      ],
+      "source_offspring_id_columns": [
+        "SeedID",
+        "Offspring"
+      ],
+      "total_pairs": 592,
+      "total_same_father_pairs": 188,
+      "pair_weighted_fraction": 0.31756756756756754,
+      "mother_equal_fraction": 0.3842683242683242,
+      "mother_equal_median": 0.2,
+      "mothers_with_two_or_more_offspring": 30,
+      "mothers_with_five_or_more_offspring": 15,
+      "mother_seed_count_quantiles": [
+        1,
+        2,
+        4,
+        5.5,
+        9.400000000000006,
+        16
+      ],
+      "largest_mother_family_size": 16,
+      "top1_mother_fraction_of_all_within_mother_pairs": 0.20270270270270271,
+      "top3_mothers_fraction_of_all_within_mother_pairs": 0.44594594594594594,
+      "top1_mother_fraction_of_all_same_father_pairs": 0.2978723404255319,
+      "top3_mothers_fraction_of_all_same_father_pairs": 0.5106382978723404,
+      "leave_one_mother_out_pooled_ratio_range": [
+        0.25680933852140075,
+        0.3686440677966102
+      ],
+      "remove_largest_sampled_mother_pooled_ratio": 0.3686440677966102,
+      "share_of_mothers_with_all_offspring_same_father_if_n_ge_2": 0.2
+    },
+    {
+      "source_offspring_identifier_integrity": {
+        "all_rows": {
+          "n_rows": 327,
+          "identical_full_rows": 0,
+          "SeedID": {
+            "unique": 327,
+            "repeated_values": 0,
+            "missing": 0
+          },
+          "Offspring": {
+            "unique": 327,
+            "repeated_values": 0,
+            "missing": 0
+          },
+          "DNAID": {
+            "unique": 327,
+            "repeated_values": 0,
+            "missing": 0
+          }
+        },
+        "paternity_assigned_at095": {
+          "n_rows": 261,
+          "identical_full_rows": 0,
+          "SeedID": {
+            "unique": 261,
+            "repeated_values": 0,
+            "missing": 0
+          },
+          "Offspring": {
+            "unique": 261,
+            "repeated_values": 0,
+            "missing": 0
+          },
+          "DNAID": {
+            "unique": 261,
+            "repeated_values": 0,
+            "missing": 0
+          }
+        }
+      },
+      "year": 2020,
+      "n_mothers": 33,
+      "offspring": 206,
+      "source_original_assigned_file_columns": [
+        "SeedID",
+        "Offspring",
+        "DNAID",
+        "Mother",
+        "Father",
+        "Probability"
+      ],
+      "source_offspring_id_columns": [
+        "SeedID",
+        "Offspring"
+      ],
+      "total_pairs": 1594,
+      "total_same_father_pairs": 1105,
+      "pair_weighted_fraction": 0.6932245922208281,
+      "mother_equal_fraction": 0.5059894089008135,
+      "mother_equal_median": 0.4,
+      "mothers_with_two_or_more_offspring": 22,
+      "mothers_with_five_or_more_offspring": 15,
+      "mother_seed_count_quantiles": [
+        1,
+        1,
+        4,
+        8,
+        10.600000000000001,
+        42
+      ],
+      "largest_mother_family_size": 42,
+      "top1_mother_fraction_of_all_within_mother_pairs": 0.5401505646173149,
+      "top3_mothers_fraction_of_all_within_mother_pairs": 0.7885821831869511,
+      "top1_mother_fraction_of_all_same_father_pairs": 0.6036199095022624,
+      "top3_mothers_fraction_of_all_same_father_pairs": 0.8561085972850678,
+      "leave_one_mother_out_pooled_ratio_range": [
+        0.597544338335607,
+        0.7170963364993216
+      ],
+      "remove_largest_sampled_mother_pooled_ratio": 0.597544338335607,
+      "share_of_mothers_with_all_offspring_same_father_if_n_ge_2": 0.13636363636363635
+    }
+  ]
+}
