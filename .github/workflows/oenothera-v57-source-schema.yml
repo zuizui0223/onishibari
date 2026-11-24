@@ -1,0 +1,17 @@
+name: Independent Oenothera SSR source inventory v57
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/oenothera_v57_source_schema.py
+      - .github/workflows/oenothera-v57-source-schema.yml
+permissions: {contents: read}
+jobs:
+  verify-original-individual-SSR-data:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source MD5, inspect workbook and treatment only without raw SSR export
+        run: python3 scripts/oenothera_v57_source_schema.py
