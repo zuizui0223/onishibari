@@ -140,7 +140,7 @@ def main():
     v62=v62_main()
     rng=np.random.default_rng(SEED)
     draws=pairs_by_arm(src,rng)
-    expected={a:v62["cohort_flow_by_arm"][a] for a in ARMS}
+    expected={a:v62["enrollment_and_outcome_link"][a] for a in ARMS}
     assert [expected[a]["genotyped_mature_outcome"] for a in ARMS]==[42,11,6]
     assert [expected[a]["mature_outcome_known_but_selfing_untyped"] for a in ARMS]==[3,1,1]
     assert [expected[a]["no_matching_mature_outcome_in_source"] for a in ARMS]==[9,3,5]
@@ -190,7 +190,7 @@ def main():
       "status":"v63_Pulsatilla_seed_origin_uncertainty_on_sharp_original_treatment_bounds",
       "original_study":"10.1111/1365-2745.14378",
       "overlapping_study":"10.1016/j.cub.2025.04.022",
-      "reused_v61_source_sha256":{k:v62["provenance"][k]["sha256"] for k in ("census","phenotypes","fitness")},
+      "reused_v61_source_sha256":{k:v62["original_sources"][k]["sha256"] for k in ("census","phenotypes","fitness")},
       "source_first_81_enrolled_bisexual":81,
       "original_treatment_n":INIT_N,
       "exact_enrollment_linked_typed_n":TYPED_N,
