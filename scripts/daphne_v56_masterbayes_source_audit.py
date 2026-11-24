@@ -41,6 +41,25 @@ def source_index(z):
     print("PINNED_ARCHIVE_CONTENT_INDEX_V56",json.dumps({
        "archive_sha256":ZIP_SHA,"files":entries,"n_files":len(entries)},ensure_ascii=False))
 
+def source_csv_genotype_inventory(z):
+    for member in z.namelist():
+        file=Path(member).name
+        if not file.lower().endswith(".csv"):continue
+        try:
+            df=pd.read_csv(io.BytesIO(z.read(member)),encoding="utf-8-sig")
+        except Exception as exc:
+            print("SOURCE_CSV_READABILITY_V56",json.dumps({"name":file,"reason":type(exc).__name__}))
+            continue
+        cols=list(map(str,df.columns))
+        alleles=[k for k in cols if re.match(r"^DpJe.*\.(x|y)$",k)]
+        possible=[k for k in cols if re.search(r"offspring|mother|father|dnaid|sample|genet|seed|probability|sex|info",k,re.I)]
+        ssr_pairs=len({re.sub(r"\.(x|y)$","",k) for k in alleles})
+        print("SOURCE_CSV_GENETIC_SCHEMA_V56",json.dumps({
+            "file":file,"rows":len(df),"cols":len(cols),"titles":cols if len(cols)<=75 else cols[:75],
+            "ssr_allele_columns":len(alleles),"ssr_loci_count":ssr_pairs,
+            "nonmissing_allele_cells":int(df[alleles].notna().sum().sum()) if alleles else 0,
+            "candidate_join_fieldnames":possible[:25]},ensure_ascii=False))
+
 def original_codebook_audit(z):
     hits=[]
     pattern=re.compile(r"MasterBayes|masterbayes|posterior|paternity|geneal|lambda|distance|probab|beta|seed|father|genotyp",re.I)
@@ -97,5 +116,6 @@ def confidence_and_genotypes(d):
 if __name__=="__main__":
     with sourcezip() as z:
         source_index(z)
+        source_csv_genotype_inventory(z)
         original_codebook_audit(z)
     confidence_and_genotypes(data())
