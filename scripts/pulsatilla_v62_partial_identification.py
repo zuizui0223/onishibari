@@ -59,14 +59,18 @@ def load():
 def terms(v,delta):
     d=v["tipping_by_delta_original_assigned"][str(float(delta))]
     g=v["cohort_flow_by_arm"]
-    assert d["typed_n"]["intact"]==42 and d["typed_n"]["all"]==6
+    assert [d["typed_n"][a] for a in ("intact","half","all")]==[42,11,6]
+    def typed_sum(a):
+        if a=="half":
+            return d["genotype_complete_case_means"]["half"]*d["typed_n"]["half"]
+        return d["typed_sum_"+a]
     return {
       a:{
         "enrolled_n":g[a]["original_assigned_single_flower_bisexual"],
-        "typed_effective_mature_seed_sum":d["typed_sum_"+a],
+        "typed_effective_mature_seed_sum":typed_sum(a),
         "known_untyped_mature_seed_sum":g[a]["known_mature_outcome_untyped_harvest_seeds_sum"],
         "lost_no_mature_outcome_n":g[a]["no_matching_mature_outcome_in_source"]
-      } for a in ("all","intact")
+      } for a in ("all","half","intact")
     }
 
 def sharp(v,delta,cap_lost_all,cap_lost_intact):
@@ -98,6 +102,27 @@ def sharp(v,delta,cap_lost_all,cap_lost_intact):
       "sign_under_assumed_missingness_cap":status,
       "all_assigned_mean_range":[y_a_min,y_a_max],
       "intact_assigned_mean_range":[y_i_min,y_i_max],
+    }
+
+
+def pairwise(v,delta,K,first,second):
+    """Sharp bounds for any contrast first-minus-second, at shared lost cap K."""
+    q=terms(v,delta)
+    def support(arm):
+        a=q[arm]
+        lo=(a["typed_effective_mature_seed_sum"]+(1-delta)*a["known_untyped_mature_seed_sum"])/a["enrolled_n"]
+        hi=(a["typed_effective_mature_seed_sum"]+a["known_untyped_mature_seed_sum"]+
+          a["lost_no_mature_outcome_n"]*K)/a["enrolled_n"]
+        return lo,hi
+    al,au=support(first)
+    bl,bu=support(second)
+    low=al-bu;high=au-bl
+    assert low<=high+1e-9
+    return {
+       "delta":delta,"first_arm":first,"second_arm":second,
+       "untracked_per_flower_hypothetical_cap":K,
+       "first_minus_second_lower":low,"first_minus_second_upper":high,
+       "sign":"guaranteed_positive" if low>1e-10 else ("guaranteed_negative" if high< -1e-10 else "unknown")
     }
 
 def boundary(v,delta):
@@ -144,12 +169,23 @@ def main():
             sharp(v,d,cap_a,cap_i)
             for cap_a in (0,25,50,100) for cap_i in (0,10,20,25,50,100)
           ],
+          "dose_response_sharp_pairwise_at_shared_lost_cap":[
+            {"K":K,
+             "all_vs_half":pairwise(v,d,K,"all","half"),
+             "half_vs_intact":pairwise(v,d,K,"half","intact"),
+             "all_gt_half_gt_intact_guaranteed":
+                pairwise(v,d,K,"all","half")["sign"]=="guaranteed_positive" and
+                pairwise(v,d,K,"half","intact")["sign"]=="guaranteed_positive"}
+            for K in CAPS
+          ],
         }
     assert scenarios["0.95"]["boundaries"]["max_intact_missing_effective_seeds_for_guaranteed_positive"]>21
     assert scenarios["0.95"]["boundaries"]["max_intact_missing_effective_seeds_for_guaranteed_positive"]<22
     assert sharp(v,.95,0,0)["sharp_treatment_mean_difference_lower"]>0
     assert sharp(v,.95,25,25)["sharp_treatment_mean_difference_lower"]<0
     assert sharp(v,.95,25,25)["sharp_treatment_mean_difference_upper"]>0
+    assert scenarios["0.95"]["dose_response_sharp_pairwise_at_shared_lost_cap"][0]["all_vs_half"]["sign"]=="unknown"
+    assert scenarios["0.95"]["dose_response_sharp_pairwise_at_shared_lost_cap"][0]["half_vs_intact"]["sign"]=="guaranteed_positive"
     return {
       "status":"v62_original_enrolled_Pulsatilla_female_treatment_partial_identification",
       "original_sources":v["provenance"],
