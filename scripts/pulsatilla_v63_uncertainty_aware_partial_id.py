@@ -32,7 +32,7 @@ import argparse,json,tempfile
 from pathlib import Path
 import numpy as np
 from pulsatilla_v61_selection_tipping import source
-from pulsatilla_v62_partial_identification import load,sharp
+from pulsatilla_v62_partial_identification import main as v62_main,sharp
 
 OUT=Path("analysis_results_pulsatilla_uncertainty_partial_id_v63")
 SEED=20261124
@@ -137,7 +137,7 @@ def critical_delta(arr,K,mode):
 
 def main():
     src=get_source()
-    v62=load()
+    v62=v62_main()
     rng=np.random.default_rng(SEED)
     draws=pairs_by_arm(src,rng)
     expected={a:v62["cohort_flow_by_arm"][a] for a in ARMS}
