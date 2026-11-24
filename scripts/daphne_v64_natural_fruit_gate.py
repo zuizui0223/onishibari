@@ -190,6 +190,27 @@ def analyze(q,year,sex,rng):
               "blocks":s["blocks"],"fruit_positive_blocks":s["fruit_blocks"],
               "single_genet_blocks":s["single_genet_blocks"],
               "summary":simulation_summary(observed,sim)}
+            # Simultaneous control for coarse location AND within-year
+            # flower crop rank, without assigning arbitrary biological
+            # neighborhoods to the raw coordinates. Many single-genet
+            # strata reduce testing opportunity; report loss of support.
+            halves=np.minimum(1,np.argsort(np.argsort(n,kind="stable"),kind="stable")*2//len(n))
+            joint=s["strata"]*2+halves
+            _,joint=np.unique(joint,return_inverse=True)
+            group_sizes=np.bincount(joint)
+            sampleable=np.isin(joint,np.flatnonzero(group_sizes>1))
+            # Fruits fixed in singleton groups contribute no randomness.
+            fruit_in_sampleable=int(y[sampleable].sum())
+            simjoint=sample_within(n,y,joint,rng)
+            by_sex["null_tests"][name+"_plus_flower_half"]={
+              "available":True,"spatial_block_size_m":side,
+              "shift_m":origin_shift,
+              "blocks_after_joint_flower_size":len(group_sizes),
+              "singleton_genet_strata":int((group_sizes==1).sum()),
+              "n_genets_in_multigenet_strata":int(sampleable.sum()),
+              "n_fruits_in_multigenet_strata":fruit_in_sampleable,
+              "null_test_reduced_randomization_due_to_fine_strata":True,
+              "summary":simulation_summary(observed,simjoint)}
     return by_sex
 
 def temporal(d):
