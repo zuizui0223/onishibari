@@ -25,7 +25,20 @@ for year in (2018,2020):
     raw=f[name]
     c=[k for k in raw.columns if "offspring" in k.lower() or
        "seed" in k.lower() or "sample" in k.lower()]
+    assigned=raw.loc[raw.Father.notna()&raw.Probability.ge(.95)].copy()
+    exact_h_set=set(q["qc"].get("candidate_sex_codes",[]))
+    # Parent sample identifiers are assessed only for uniqueness counts;
+    # never printed or written.
+    unique_audit={}
+    for frame_name,frame in [("all_rows",raw),("paternity_assigned_at095",assigned)]:
+        unique_audit[frame_name]={
+            "n_rows":len(frame),"identical_full_rows":int(frame.duplicated().sum()),
+            **{name:{"unique":int(frame[name].nunique(dropna=True)),
+                      "repeated_values":int(frame[name].duplicated(keep=False).sum()),
+                      "missing":int(frame[name].isna().sum())}
+                for name in ["SeedID","Offspring","DNAID"] if name in frame}}
     result={
+        "source_offspring_identifier_integrity":unique_audit,
       "year":year,"n_mothers":len(m),"offspring":int(m.sum()),
       "source_original_assigned_file_columns":list(map(str,raw.columns)),
       "source_offspring_id_columns":c,
