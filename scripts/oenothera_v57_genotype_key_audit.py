@@ -74,7 +74,7 @@ def parentage_keys(p,o):
     from oenothera_v57_source_schema import download,FILES
     import csv
     dry=download("multiplePaternity.csv",FILES["multiplePaternity.csv"]).decode("utf-8-sig")
-    dry=dry.replace("\\r\\n","\\n").replace("\\r","\\n")
+    dry=dry.replace(chr(13)+chr(10),chr(10)).replace(chr(13),chr(10))
     meta=list(csv.DictReader(io.StringIO(dry,newline="")))
     plantIDs=[str(t["plantID"]) for t in meta]
     def numeric(x):return "".join(ch for ch in str(x) if ch.isdigit())
