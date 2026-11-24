@@ -1,0 +1,21 @@
+name: Daphne original seed treatment-label schema audit v54
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_v54_seed_treatment_schema.py
+      - .github/workflows/daphne-seed-treatment-schema-v54.yml
+permissions: {contents: read}
+jobs:
+  audit-original-maternal-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Print aggregate seed-label structures and mother sex classes only
+        run: python scripts/daphne_v54_seed_treatment_schema.py
