@@ -1,0 +1,16 @@
+name: Pulsatilla v61 source-pinned enrollment and tipping numerical gate
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - .github/workflows/pulsatilla-v61-numerical-gate.yml
+permissions: {contents: read}
+jobs:
+  verify-cumulative-v61-source-aggregate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Numerically audit source-enrollment lineage and measured follow-up seed tipping
+        run: python3 scripts/verify_pulsatilla_selection_v61.py --actual data/2026-11-24_pulsatilla_selection_tipping_v61.json
