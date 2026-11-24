@@ -149,7 +149,19 @@ def main():
         b={}
         for K in CAPS:
             key=str(int(K))
-            original=sharp(v62,d,K,K)
+            # v62 only archives a finite coarse δ grid. For additional
+            # δ=0.9/0.99, reconstruct the same sharp bound from source
+            # typed flower data (never interpolate an observed outcome).
+            sum_all=float(np.sum(src["all"]["m"]*(1-d*src["all"]["k"]/src["all"]["n"])))
+            sum_intact=float(np.sum(src["intact"]["m"]*(1-d*src["intact"]["k"]/src["intact"]["n"])))
+            low=(sum_all+(1-d)*113.)/12-(sum_intact+126.+9*K)/54
+            high=(sum_all+113.+5*K)/12-(sum_intact+(1-d)*126.)/54
+            original={"sharp_treatment_mean_difference_lower":low,
+                      "sharp_treatment_mean_difference_upper":high}
+            if str(float(d)) in v62["δ_sensitivity"]:
+                verified=sharp(v62,d,K,K)
+                assert abs(low-verified["sharp_treatment_mean_difference_lower"])<1e-8
+                assert abs(high-verified["sharp_treatment_mean_difference_upper"])<1e-8
             modes={}
             for mode in ("seed_only","nested"):
                 lo,hi=bound_samples(draws,d,K,mode)
