@@ -1,0 +1,656 @@
+{
+  "status": "source_original_Daphne_treatment_specific_full_sibling_structure_v55",
+  "doi_paper": "10.1002/ajb2.16239",
+  "doi_original": "10.5281/zenodo.8253921",
+  "zip_sha256": "97a403f17ac4025e0a5834485cc9ceb820fa760ed5c38452d4a866abc7d8eec8",
+  "sample_treatment_csv_sha256": "739dafbbee07de46ee3c6a10086b754f1e33b697d111a9ec8ee22d5a8a35d9b1",
+  "sample_metadata_table_rows": 646,
+  "years": [
+    {
+      "year": 2018,
+      "source_all_genotyped_treatment_counts": {
+        "Natural": 158,
+        "Day open": 37,
+        "Night open": 62
+      },
+      "source_p095_treatment_counts": {
+        "Natural": 132,
+        "Day open": 32,
+        "Night open": 45
+      },
+      "strict_H_father_p095_by_treatment": {
+        "Natural": 110,
+        "Day open": 30,
+        "Night open": 40
+      },
+      "strict_H_father_total": 180,
+      "full_data_reference_beta": 0.625023,
+      "by_treatment": [
+        {
+          "treatment": "Natural",
+          "mothers": 27,
+          "offspring": 110,
+          "mothers_with_2_or_more": 18,
+          "pairs_all": 332,
+          "same_father_pairs": 89,
+          "pooled_pair_observed": 0.2680722891566265,
+          "mother_equal_observed": 0.44343033509700175,
+          "model_beta_10m": 0.614363,
+          "iid_null_mother_equal": {
+            "null_mean": 0.02786663580246913,
+            "null_sd": 0.01845206824611923,
+            "null_95": [
+              0.005379188712522046,
+              0.08117890211640202
+            ],
+            "one_sided_excess_p": 0.00009999000099990002,
+            "two_sided_centered_p": 0.00009999000099990002,
+            "observed_minus_null_mean": 0.41556369929453263,
+            "draws": 10000
+          },
+          "fixed_margin_uniform_null_mother_equal": {
+            "null_mean": 0.028761607142857144,
+            "null_sd": 0.01867819415364052,
+            "null_95": [
+              0.006147486772486776,
+              0.08269675925925922
+            ],
+            "one_sided_excess_p": 0.00009999000099990002,
+            "two_sided_centered_p": 0.00009999000099990002,
+            "observed_minus_null_mean": 0.4146687279541446,
+            "draws": 10000
+          },
+          "spatial_fixed_margin_nulls": {
+            "5": {
+              "pooled_pair_null": {
+                "null_mean": 0.07506400602409638,
+                "null_sd": 0.01477058135047504,
+                "null_95": [
+                  0.04819277108433735,
+                  0.10542168674698796
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.19300828313253013,
+                "draws": 1600
+              },
+              "mother_equal_null": {
+                "null_mean": 0.08283527612433861,
+                "null_sd": 0.025841950330910805,
+                "null_95": [
+                  0.044769069664902995,
+                  0.14607694003527336
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.36059505897266314,
+                "draws": 1600
+              },
+              "chain_mother_equal_means": [
+                0.08266258818342152,
+                0.08300796406525572
+              ],
+              "chain_mother_equal_mean_diff": 0.0003453758818341979,
+              "chain_acceptance": [
+                0.2668582691691507,
+                0.2670201082678122
+              ],
+              "n_draws": 1600
+            },
+            "10": {
+              "pooled_pair_null": {
+                "null_mean": 0.05193900602409638,
+                "null_sd": 0.01264714342747308,
+                "null_95": [
+                  0.030120481927710843,
+                  0.0783132530120482
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.21613328313253014,
+                "draws": 1600
+              },
+              "mother_equal_null": {
+                "null_mean": 0.05473890817901235,
+                "null_sd": 0.022705802111862967,
+                "null_95": [
+                  0.02246086860670194,
+                  0.10993110670193998
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.3886914269179894,
+                "draws": 1600
+              },
+              "chain_mother_equal_means": [
+                0.054353036816578486,
+                0.055124779541446206
+              ],
+              "chain_mother_equal_mean_diff": 0.0007717427248677203,
+              "chain_acceptance": [
+                0.4167237934102478,
+                0.41162430058286786
+              ],
+              "n_draws": 1600
+            },
+            "20": {
+              "pooled_pair_null": {
+                "null_mean": 0.03694088855421687,
+                "null_sd": 0.010694832848767228,
+                "null_95": [
+                  0.018072289156626505,
+                  0.060240963855421686
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.23113140060240964,
+                "draws": 1600
+              },
+              "mother_equal_null": {
+                "null_mean": 0.037604428461199296,
+                "null_sd": 0.019968907300905482,
+                "null_95": [
+                  0.01201444003527337,
+                  0.09266754850088178
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.4058259066358024,
+                "draws": 1600
+              },
+              "chain_mother_equal_means": [
+                0.037517609126984125,
+                0.03769124779541446
+              ],
+              "chain_mother_equal_mean_diff": 0.00017363866843033565,
+              "chain_acceptance": [
+                0.6166197552829996,
+                0.6140821352437873
+              ],
+              "n_draws": 1600
+            }
+          }
+        },
+        {
+          "treatment": "Day open",
+          "mothers": 10,
+          "offspring": 30,
+          "mothers_with_2_or_more": 9,
+          "pairs_all": 52,
+          "same_father_pairs": 21,
+          "pooled_pair_observed": 0.40384615384615385,
+          "mother_equal_observed": 0.2751322751322751,
+          "model_beta_10m": 0.44695,
+          "iid_null_mother_equal": {
+            "null_mean": 0.02067415343915344,
+            "null_sd": 0.03976224020443915,
+            "null_95": [
+              0,
+              0.12248677248677248
+            ],
+            "one_sided_excess_p": 0.00009999000099990002,
+            "two_sided_centered_p": 0.00009999000099990002,
+            "observed_minus_null_mean": 0.25445812169312165,
+            "draws": 10000
+          },
+          "fixed_margin_uniform_null_mother_equal": {
+            "null_mean": 0.052106216931216934,
+            "null_sd": 0.059761664720853494,
+            "null_95": [
+              0,
+              0.22619047619047616
+            ],
+            "one_sided_excess_p": 0.0020997900209979003,
+            "two_sided_centered_p": 0.0020997900209979003,
+            "observed_minus_null_mean": 0.2230260582010582,
+            "draws": 10000
+          },
+          "spatial_fixed_margin_nulls": {
+            "10": {
+              "pooled_pair_null": {
+                "null_mean": 0.0735096153846154,
+                "null_sd": 0.03609649577387172,
+                "null_95": [
+                  0.019230769230769232,
+                  0.15384615384615385
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.33033653846153843,
+                "draws": 1600
+              },
+              "mother_equal_null": {
+                "null_mean": 0.04870535714285715,
+                "null_sd": 0.051587710086783256,
+                "null_95": [
+                  0.003968253968253968,
+                  0.16349206349206347
+                ],
+                "one_sided_excess_p": 0.0012492192379762648,
+                "two_sided_centered_p": 0.0012492192379762648,
+                "observed_minus_null_mean": 0.22642691798941797,
+                "draws": 1600
+              },
+              "chain_mother_equal_means": [
+                0.04923379629629629,
+                0.048176917989418
+              ],
+              "chain_mother_equal_mean_diff": 0.0010568783068782908,
+              "chain_acceptance": [
+                0.6301087867025091,
+                0.6322336220394845
+              ],
+              "n_draws": 1600
+            }
+          }
+        },
+        {
+          "treatment": "Night open",
+          "mothers": 10,
+          "offspring": 40,
+          "mothers_with_2_or_more": 8,
+          "pairs_all": 102,
+          "same_father_pairs": 44,
+          "pooled_pair_observed": 0.43137254901960786,
+          "mother_equal_observed": 0.4991883116883117,
+          "model_beta_10m": 0.808868,
+          "iid_null_mother_equal": {
+            "null_mean": 0.0365508170995671,
+            "null_sd": 0.035690719910298596,
+            "null_95": [
+              0.0022727272727272726,
+              0.14004329004329005
+            ],
+            "one_sided_excess_p": 0.00009999000099990002,
+            "two_sided_centered_p": 0.00009999000099990002,
+            "observed_minus_null_mean": 0.4626374945887446,
+            "draws": 10000
+          },
+          "fixed_margin_uniform_null_mother_equal": {
+            "null_mean": 0.06508566017316017,
+            "null_sd": 0.04591588315437036,
+            "null_95": [
+              0.010497835497835497,
+              0.18966450216450217
+            ],
+            "one_sided_excess_p": 0.00009999000099990002,
+            "two_sided_centered_p": 0.00009999000099990002,
+            "observed_minus_null_mean": 0.4341026515151515,
+            "draws": 10000
+          },
+          "spatial_fixed_margin_nulls": {
+            "10": {
+              "pooled_pair_null": {
+                "null_mean": 0.07658700980392157,
+                "null_sd": 0.0257052215817819,
+                "null_95": [
+                  0.0392156862745098,
+                  0.13725490196078433
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.3547855392156863,
+                "draws": 1600
+              },
+              "mother_equal_null": {
+                "null_mean": 0.07526951433982683,
+                "null_sd": 0.047669373412733924,
+                "null_95": [
+                  0.015043290043290043,
+                  0.205261093073593
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.42391879734848487,
+                "draws": 1600
+              },
+              "chain_mother_equal_means": [
+                0.07476481331168831,
+                0.07577421536796536
+              ],
+              "chain_mother_equal_mean_diff": 0.001009402056277045,
+              "chain_acceptance": [
+                0.6637559214600968,
+                0.6619185511273287
+              ],
+              "n_draws": 1600
+            }
+          }
+        }
+      ],
+      "mother_treatment_stratified_observed_equal": 0.4128983714698,
+      "mother_treatment_stratified_null_mean_equal": 0.05788013360647289,
+      "n_informative_mother_treatment_groups": 35,
+      "note": "Null father totals constrained within each original pollination treatment; natural and day/night arms differ in source experimental design"
+    },
+    {
+      "year": 2020,
+      "source_all_genotyped_treatment_counts": {
+        "Natural": 199,
+        "Day open": 67,
+        "Night open": 61
+      },
+      "source_p095_treatment_counts": {
+        "Natural": 163,
+        "Day open": 52,
+        "Night open": 46
+      },
+      "strict_H_father_p095_by_treatment": {
+        "Natural": 131,
+        "Day open": 38,
+        "Night open": 37
+      },
+      "strict_H_father_total": 206,
+      "full_data_reference_beta": 0.895633,
+      "by_treatment": [
+        {
+          "treatment": "Natural",
+          "mothers": 27,
+          "offspring": 131,
+          "mothers_with_2_or_more": 18,
+          "pairs_all": 564,
+          "same_father_pairs": 365,
+          "pooled_pair_observed": 0.6471631205673759,
+          "mother_equal_observed": 0.4936476566911349,
+          "model_beta_10m": 0.65786,
+          "iid_null_mother_equal": {
+            "null_mean": 0.053543627039895146,
+            "null_sd": 0.0251371228277948,
+            "null_95": [
+              0.020106704554168322,
+              0.11711477264013492
+            ],
+            "one_sided_excess_p": 0.00009999000099990002,
+            "two_sided_centered_p": 0.00009999000099990002,
+            "observed_minus_null_mean": 0.4401040296512398,
+            "draws": 10000
+          },
+          "fixed_margin_uniform_null_mother_equal": {
+            "null_mean": 0.07105423552293119,
+            "null_sd": 0.026092227890181816,
+            "null_95": [
+              0.03561895263888017,
+              0.1365071174129145
+            ],
+            "one_sided_excess_p": 0.00009999000099990002,
+            "two_sided_centered_p": 0.00009999000099990002,
+            "observed_minus_null_mean": 0.42259342116820375,
+            "draws": 10000
+          },
+          "spatial_fixed_margin_nulls": {
+            "5": {
+              "pooled_pair_null": {
+                "null_mean": 0.2533133865248227,
+                "null_sd": 0.04037137304175096,
+                "null_95": [
+                  0.18262411347517732,
+                  0.33865248226950356
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.3938497340425532,
+                "draws": 1600
+              },
+              "mother_equal_null": {
+                "null_mean": 0.21393142508156096,
+                "null_sd": 0.041740780845891036,
+                "null_95": [
+                  0.1463451457292037,
+                  0.3046187809774766
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.27971623160957393,
+                "draws": 1600
+              },
+              "chain_mother_equal_means": [
+                0.21833921535053782,
+                0.2095236348125841
+              ],
+              "chain_mother_equal_mean_diff": 0.008815580537953727,
+              "chain_acceptance": [
+                0.18453264188877805,
+                0.18695942798112175
+              ],
+              "n_draws": 1600
+            },
+            "10": {
+              "pooled_pair_null": {
+                "null_mean": 0.15563608156028366,
+                "null_sd": 0.028842806284325947,
+                "null_95": [
+                  0.10815602836879433,
+                  0.2198581560283688
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.49152703900709227,
+                "draws": 1600
+              },
+              "mother_equal_null": {
+                "null_mean": 0.14452049436741465,
+                "null_sd": 0.034323650242260244,
+                "null_95": [
+                  0.09056870028790318,
+                  0.2235965808882472
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.34912716232372026,
+                "draws": 1600
+              },
+              "chain_mother_equal_means": [
+                0.14612574415654125,
+                0.14291524457828808
+              ],
+              "chain_mother_equal_mean_diff": 0.003210499578253173,
+              "chain_acceptance": [
+                0.3649433359039443,
+                0.3665211731372999
+              ],
+              "n_draws": 1600
+            },
+            "20": {
+              "pooled_pair_null": {
+                "null_mean": 0.1024612145390071,
+                "null_sd": 0.020332978040168037,
+                "null_95": [
+                  0.06914893617021277,
+                  0.14716312056737588
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.5447019060283688,
+                "draws": 1600
+              },
+              "mother_equal_null": {
+                "null_mean": 0.09754337129925897,
+                "null_sd": 0.02972397828204768,
+                "null_95": [
+                  0.05286654066545371,
+                  0.1678054091641048
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.3961042853918759,
+                "draws": 1600
+              },
+              "chain_mother_equal_means": [
+                0.09813606802148468,
+                0.09695067457703326
+              ],
+              "chain_mother_equal_mean_diff": 0.001185393444451427,
+              "chain_acceptance": [
+                0.5978203983622202,
+                0.6029894033491155
+              ],
+              "n_draws": 1600
+            }
+          }
+        },
+        {
+          "treatment": "Day open",
+          "mothers": 6,
+          "offspring": 38,
+          "mothers_with_2_or_more": 4,
+          "pairs_all": 243,
+          "same_father_pairs": 136,
+          "pooled_pair_observed": 0.5596707818930041,
+          "mother_equal_observed": 0.5904761904761905,
+          "model_beta_10m": 1.428131,
+          "iid_null_mother_equal": {
+            "null_mean": 0.1434647619047619,
+            "null_sd": 0.08117982486522961,
+            "null_95": [
+              0.024970238095238125,
+              0.32380952380952377
+            ],
+            "one_sided_excess_p": 0.00009999000099990002,
+            "two_sided_centered_p": 0.00009999000099990002,
+            "observed_minus_null_mean": 0.4470114285714286,
+            "draws": 10000
+          },
+          "fixed_margin_uniform_null_mother_equal": {
+            "null_mean": 0.3123261904761905,
+            "null_sd": 0.08001972449149186,
+            "null_95": [
+              0.1880952380952381,
+              0.49047619047619045
+            ],
+            "one_sided_excess_p": 0.0033996600339966003,
+            "two_sided_centered_p": 0.0033996600339966003,
+            "observed_minus_null_mean": 0.27815,
+            "draws": 10000
+          },
+          "spatial_fixed_margin_nulls": {
+            "10": {
+              "pooled_pair_null": {
+                "null_mean": 0.4045241769547326,
+                "null_sd": 0.06102058780906686,
+                "null_95": [
+                  0.3004115226337449,
+                  0.5308641975308642
+                ],
+                "one_sided_excess_p": 0.010618363522798251,
+                "two_sided_centered_p": 0.011867582760774516,
+                "observed_minus_null_mean": 0.15514660493827154,
+                "draws": 1600
+              },
+              "mother_equal_null": {
+                "null_mean": 0.4070379464285715,
+                "null_sd": 0.08751377911202694,
+                "null_95": [
+                  0.24999999999999997,
+                  0.5916666666666667
+                ],
+                "one_sided_excess_p": 0.02623360399750156,
+                "two_sided_centered_p": 0.03247970018738289,
+                "observed_minus_null_mean": 0.183438244047619,
+                "draws": 1600
+              },
+              "chain_mother_equal_means": [
+                0.40683035714285715,
+                0.40724553571428573
+              ],
+              "chain_mother_equal_mean_diff": 0.00041517857142858716,
+              "chain_acceptance": [
+                0.5224886070933228,
+                0.5209531092167248
+              ],
+              "n_draws": 1600
+            }
+          }
+        },
+        {
+          "treatment": "Night open",
+          "mothers": 4,
+          "offspring": 37,
+          "mothers_with_2_or_more": 3,
+          "pairs_all": 279,
+          "same_father_pairs": 256,
+          "pooled_pair_observed": 0.9175627240143369,
+          "mother_equal_observed": 0.6717171717171717,
+          "model_beta_10m": 1.514444,
+          "iid_null_mother_equal": {
+            "null_mean": 0.18671914862914862,
+            "null_sd": 0.12486003802730557,
+            "null_95": [
+              0.027561327561327564,
+              0.4066414141414141
+            ],
+            "one_sided_excess_p": 0.00009999000099990002,
+            "two_sided_centered_p": 0.00009999000099990002,
+            "observed_minus_null_mean": 0.4849980230880231,
+            "draws": 10000
+          },
+          "fixed_margin_uniform_null_mother_equal": {
+            "null_mean": 0.4474615295815296,
+            "null_sd": 0.1024325667083463,
+            "null_95": [
+              0.3024531024531025,
+              0.6438852813852812
+            ],
+            "one_sided_excess_p": 0.009999000099990002,
+            "two_sided_centered_p": 0.009999000099990002,
+            "observed_minus_null_mean": 0.22425564213564209,
+            "draws": 10000
+          },
+          "spatial_fixed_margin_nulls": {
+            "10": {
+              "pooled_pair_null": {
+                "null_mean": 0.5481227598566308,
+                "null_sd": 0.046777250880586825,
+                "null_95": [
+                  0.4731182795698925,
+                  0.6594982078853047
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.3694399641577061,
+                "draws": 1600
+              },
+              "mother_equal_null": {
+                "null_mean": 0.4398236832611832,
+                "null_sd": 0.05123024820324049,
+                "null_95": [
+                  0.3088023088023088,
+                  0.506774891774891
+                ],
+                "one_sided_excess_p": 0.0006246096189881324,
+                "two_sided_centered_p": 0.0006246096189881324,
+                "observed_minus_null_mean": 0.2318934884559885,
+                "draws": 1600
+              },
+              "chain_mother_equal_means": [
+                0.4396118326118325,
+                0.44003553391053385
+              ],
+              "chain_mother_equal_mean_diff": 0.00042370129870134,
+              "chain_acceptance": [
+                0.4162043429145224,
+                0.4210513153946184
+              ],
+              "n_draws": 1600
+            }
+          }
+        }
+      ],
+      "mother_treatment_stratified_observed_equal": 0.5305085638998682,
+      "mother_treatment_stratified_null_mean_equal": 0.22195966936445197,
+      "n_informative_mother_treatment_groups": 25,
+      "note": "Null father totals constrained within each original pollination treatment; natural and day/night arms differ in source experimental design"
+    }
+  ],
+  "limits": {
+    "original_parentage_source_uses_spatial_prior": true,
+    "source_one_seed_per_fruit": true,
+    "day_night_treatments_share_mother_genets": true,
+    "natural_only_is_primary_unmixed_exposure_analysis": true,
+    "natural_and_exposure_treatments_cannot_be_merged_for_behavior_causation": true,
+    "maternal_genet_sample_sizes_unequal_and_some_very_small": true,
+    "father_total_is_conditioned_on_observed_success_within_each_treatment": true,
+    "individual_pollen_transfer_or_visitor_identity_not_observed": true,
+    "no_maternal_ID_sire_ID_genotype_or_site_coordinates_exported": true,
+    "focal_Daphne_pseudomezereum_not_measured": true
+  }
+}
