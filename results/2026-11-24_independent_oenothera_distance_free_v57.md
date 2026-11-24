@@ -1,5 +1,8 @@
 # v0.57｜独立種Oenotheraの実SSR親子データを用いた「距離なし父株照合」の適用可能性と限界
 
+> **続報 v0.58**：7 SSRのいずれか1座位を省いても同じ唯一父株を保持するのは元の274子中108子。予測に使っていないSSR座位へのログ予測利得は26母株bootstrapで正（ε=0.02、+0.586 nats [0.477,0.691]）。「父性の情報」と「父親の確定」を分けて解釈する。[追加検証レポート](2026-11-24_oenothera_locus_robustness_v58.md)。
+
+
 2026-11-24 JST。今回初めて既存の *Daphne* 研究から**独立した原研究**を導入した。対象は自家不和合性一年草 *Oenothera harringtonii*（マツヨイグサ属）。既刊論文：Rhodes, Fant & Skogen (2017), *Molecular Ecology* 26:4296–4308、DOI [10.1111/mec.14115](https://doi.org/10.1111/mec.14115)。オリジナル公開データ：[Dryad 10.5061/dryad.p24q3](https://doi.org/10.5061/dryad.p24q3)、公開固定コピー[Zenodo 4942351](https://zenodo.org/records/4942351)。本稿は**元論文の独立な生態系再現実験を新たに行ったわけでなく、その公開個体データに実施した二次解析**である。ナニワズ *Daphne jezoensis* やオニシバリ *D. pseudomezereum* の子のSSR結果ではない。
 
 ## 主張の上限と重要な結論

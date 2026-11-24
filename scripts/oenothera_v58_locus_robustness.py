@@ -197,8 +197,6 @@ def mother_negative_control(dat,fully_mc,incompat,draws=MOTHER_NEGATIVE_DRAWS):
     for k in range(draws):
         # Swap real mothers among observed maternal-genet pool, forcing each
         # child to be paired with a different original mother genotype.
-        wrong=eligible_mom[rng.integers(len(eligible_mom)-1,size=len(mi))]
-        wrong+=(wrong>=mi) if False else 0 # no index arithmetic on parent ID
         # Correct exclusion by indexing the *position in the sorted mother
         # pool*, not raw 323-parent indices.
         eligible_pos=np.searchsorted(eligible_mom,mi)
