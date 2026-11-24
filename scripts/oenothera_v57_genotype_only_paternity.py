@@ -98,6 +98,19 @@ def primary(d):
     compatible=(zeros==0).sum(axis=1)
     near1=(zeros<=1).sum(axis=1)
     minm=np.min(zeros,axis=1)
+    per_locus=[]
+    for locus in range(LOC):
+        pp=par[:,locus,:]
+        cc=child[:,locus,:]
+        per_locus.append({
+            "locus_index_one_based":locus+1,
+            "mother_offspring_mendelian_mismatch":int(mother_inconsistent[:,locus].sum()),
+            "adult_zero_coded_allele_cells":int((pp==0).sum()),
+            "offspring_zero_coded_allele_cells":int((cc==0).sum()),
+            "adult_observed_allele_diversity":int(len(np.unique(pp))),
+            "offspring_observed_allele_diversity":int(len(np.unique(cc))),
+            "offspring_with_at_least_one_exact_father_after_omitting_this_locus":
+                int(((zeros[:,np.arange(n_par)!=0] if False else ((exact[:,:,np.arange(LOC)!=locus]==0).sum(axis=2)).min(axis=1))==0).sum())})
     by_treat={}
     for label in ("c","de","ne"):
         v=np.array(d["child_treatment"])==label
@@ -119,6 +132,8 @@ def primary(d):
        "offspring_with_multiple_zero_mismatch_fathers":int((compatible>1).sum()),
        "all_offspring_median_compatible_fathers":float(np.median(compatible)),
        "all_offspring_max_compatible_fathers":int(compatible.max()),
+       "mother_offspring_mismatch_count_per_child":{str(int(k)):int(v) for k,v in collections.Counter(mother_inconsistent.sum(axis=1)).items()},
+       "maternal_compatibility_by_locus":per_locus,
        "mean_minimal_paternal_locus_mismatches":float(minm.mean()),
        "offspring_with_min_2_plus_father_mismatch":int((minm>=2).sum()),
        "by_original_pollination_treatment":by_treat,
