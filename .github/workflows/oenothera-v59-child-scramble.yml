@@ -5,6 +5,9 @@ on:
     branches: [research/angiosperm-reproductive-decoupling-20261115]
     paths:
       - scripts/oenothera_v59_within_mother_allele_scramble.py
+      - scripts/verify_oenothera_v59.py
+      - data/2026-11-24_oenothera_child_specific_v59.json
+      - results/2026-11-24_oenothera_child_specific_paternity_signal_v59.md
       - .github/workflows/oenothera-v59-child-scramble.yml
 permissions: {contents: read}
 jobs:
@@ -20,6 +23,8 @@ jobs:
         run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
       - name: Verify published raw SSR and permute withheld alleles within original maternal families
         run: python scripts/oenothera_v59_within_mother_allele_scramble.py
+      - name: Verify fresh original-source calculations against pinned v59 JSON
+        run: python scripts/verify_oenothera_v59.py --actual analysis_results_oenothera_child_specific_genetic_signal_v59/oenothera_v59_within_family_allele_scramble.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
