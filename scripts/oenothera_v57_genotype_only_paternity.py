@@ -216,7 +216,37 @@ def family_weights(d,exact,eps):
           "mean_source_MLTR_correlated_paternity":float(np.mean([v["source_mltr_correlatedPaternity"] for v in gref])) if gref else None,
           "median_children_per_family":float(np.median([v["n_offspring"] for v in g]))
         }
+    # Matched, repeated-mother comparison: both pollinator exclusion
+    # treatments were applied to the same maternal genet, so maternal
+    # isolation and SSR genotype are held constant by design.
+    bymom=collections.defaultdict(dict)
+    for z in per_group:bymom[z["key"][0]][z["treat"]]=z
+    def pair_test(metric):
+        dif=[]
+        for group in bymom.values():
+            if "de" not in group or "ne" not in group:continue
+            a,b=group["de"][metric],group["ne"][metric]
+            if a is None or b is None:continue
+            dif.append(float(b-a))  # night excluded (bee) minus day excluded (moth)
+        vals=np.array(dif,float)
+        assert len(vals)>=8
+        rng=np.random.default_rng(14115+int(round(eps*100000))+len(vals))
+        bi=rng.integers(len(vals),size=(9999,len(vals)))
+        boot=vals[bi].mean(axis=1)
+        swap=rng.choice([-1.,1.],size=(19999,len(vals)))
+        null=(swap*vals).mean(axis=1)
+        return {
+          "paired_maternal_genets":len(vals),
+          "night_excluded_bee_minus_day_excluded_moth_mean":float(vals.mean()),
+          "paired_mother_boot_95":np.quantile(boot,[.025,.975]).tolist(),
+          "paired_signflip_two_sided_p":float((1+(np.abs(null)>=abs(vals.mean())).sum())/(1+len(null))),
+          "positive_mother_differences":int((vals>0).sum()),
+          "negative_mother_differences":int((vals<0).sum()),
+          "not_independent_family_units":True}
+    pair={"distance_free_genotype_only":pair_test("p_same"),
+          "published_same_family_MLTR":pair_test("source_mltr_correlatedPaternity")}
     return {
+       "within_mother_paired_exclusion_test":pair,
        "genotyping_error_floor":eps,
        "method":"un-calibrated prior-free per-parent transmission product with epsilon floor, exclude mother, normalize across all sampled adults",
        "all_source_families":len(all_group),
