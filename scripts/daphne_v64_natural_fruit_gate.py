@@ -156,6 +156,26 @@ def analyze(q,year,sex,rng):
         sims=sample_within(n,y,lab,rng)
         by_sex["null_tests"][name]={"strata":int(len(np.unique(lab))),
                     "summary":simulation_summary(observed,sims)}
+    # Source-independent outlier guard: re-run a flower-budget conditional
+    # null after withholding the largest observed maternal fruit producer.
+    # This changes the population being described, and is NOT a genotype
+    # dropout/assignment correction.
+    largest=int(np.argmax(y))
+    keep=np.arange(len(y))!=largest
+    ry=y[keep];rn=n[keep]
+    if ry.sum()>0:
+        rob=obs_metrics(ry)
+        by_sex["single_largest_fruit_genet_excluded"]={
+          "n_retained_genets":len(rn),
+          "n_retained_fruits":int(ry.sum()),
+          "n_original_fruits_removed_by_one_genet":int(y[largest]),
+          "observed":rob,
+          "flower_budget_global_null":simulation_summary(
+               rob,sample_within(rn,ry,np.zeros(len(rn),dtype=int),rng)),
+          "flower_quartile_conditional_null":simulation_summary(
+               rob,sample_within(rn,ry,flower_quartiles(rn),rng)),
+          "not_outlier_independent_population_replication":True
+        }
     for side in (10,20):
         for origin_shift in (0,side/2):
             s=spatial(q,side,origin_shift)
