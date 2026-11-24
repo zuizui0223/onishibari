@@ -1,0 +1,23 @@
+name: Pulsatilla original cohort sharp missing-outcome identification v62
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/pulsatilla_v62_partial_identification.py
+      - .github/workflows/pulsatilla-v62-partial-identification.yml
+permissions: {contents: read}
+jobs:
+  known-outcome-and-untracked-cap-bounds:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Recompute partial-identification regions on source-verified v61 enrollment data
+        run: python3 scripts/pulsatilla_v62_partial_identification.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pulsatilla-v62-conditional-bounds
+          path: analysis_results_pulsatilla_identification_v62/
+          retention-days: 30
