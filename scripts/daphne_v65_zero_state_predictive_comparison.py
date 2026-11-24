@@ -246,9 +246,6 @@ def main():
         for sourceyear,targetyear in ((2018,2020),(2020,2018)):
             orig=cohorts[(sourceyear,sex)]
             target=cohorts[(targetyear,sex)]
-            common=set(orig["ids"]) & set(target["ids"])
-            newgenets=np.asarray([id not in common for id in target["ids"]],dtype=bool)
-            assert newgenets.any() and newgenets.sum()<len(newgenets)
             models={}
             for model in MODELS:
                 coef,_,success=fit(orig["n"],orig["y"],model)
@@ -260,17 +257,10 @@ def main():
                    "train_parameters":summarize_params(model,coef),
                    "target_mean_logpredictive_per_genet":float(pred.mean()),
                    "target_predicted_zero_fraction":float(zerop.mean()),
-                   "target_observed_zero_fraction":float(np.mean(target["y"]==0)),
-                   "target_never_seen_in_source_year_mean_logscore":float(pred[newgenets].mean()),
-                   "target_never_seen_in_source_year_predicted_zero_fraction":float(zerop[newgenets].mean()),
-                   "target_never_seen_in_source_year_actual_zero_fraction":float(np.mean(target["y"][newgenets]==0))
+                   "target_observed_zero_fraction":float(np.mean(target["y"]==0))
                 }
             runs.append({"trained_on":sourceyear,"tested_on":targetyear,
-                         "target_genets":len(target["n"]),
-                         "overlapping_same_genets_in_both_years":len(common),
-                         "target_genets_absent_in_source_year":int(newgenets.sum()),
-                         "positive_fruit_genets_unseen_in_source_year":int((target["y"][newgenets]>0).sum()),
-                         "models":models})
+                         "target_genets":len(target["n"]),"models":models})
         transfer[sex]=runs
     return {
       "status":"original_Daphne_jezoensis_zero_activation_vs_continuous_heterogeneity_v65",
@@ -303,7 +293,6 @@ def main():
         "crossval_holds_adult_genets_within_sex_year_not_external_location":True,
         "2018_2020_overlap_not_between_year_external_independence":True,
         "year_transfer_reuses_same_geographic_population_and_some_genet_overlap":True,
-        "new_genet_year_transfer_excludes_overlap_but_not_shared_genetic_environment":True,
         "true_seedling_survival_and_pollen_tube_to_fruit_transition_not_observed":True,
         "doctorate_2020_pollen_tube_micro_data_not_available_as_child_adult_join":True,
         "no_original_sensitive_raw_ID_SSR_alleles_or_coords_output":True,
