@@ -5,6 +5,9 @@ on:
     branches: [research/angiosperm-reproductive-decoupling-20261115]
     paths:
       - scripts/oenothera_v57_genotype_only_paternity.py
+      - scripts/verify_oenothera_v57.py
+      - data/2026-11-24_oenothera_genotype_only_v57.json
+      - results/2026-11-24_independent_oenothera_distance_free_v57.md
       - .github/workflows/oenothera-v57-genotype-only.yml
 permissions: {contents: read}
 jobs:
@@ -20,6 +23,8 @@ jobs:
         run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
       - name: Original 7 SSR distance-free candidate compatibility and family cofather correlation
         run: python scripts/oenothera_v57_genotype_only_paternity.py
+      - name: Check all source-provenance and numerical results against saved aggregate
+        run: python scripts/verify_oenothera_v57.py --actual analysis_results_independent_oenothera_v57/oenothera_genotype_distance_free_v57.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
