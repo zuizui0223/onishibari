@@ -149,18 +149,21 @@ def family_weights(d,exact,eps):
           "n_offspring":len(ids),
           "p_same":float(upper.mean()),
           "effective_donors_average":float(1/np.mean(np.sum(w*w,axis=1))),
-          "source_mltr_correlatedPaternity":float(d["source_ref"][key]),
+          "source_mltr_correlatedPaternity":float(d["source_ref"][key]) if key in d["source_ref"] else None,
           "treat":key[1]})
-    corr=np.array([z["source_mltr_correlatedPaternity"] for z in per_group])
-    est=np.array([z["p_same"] for z in per_group])
+    matched=[z for z in per_group if z["source_mltr_correlatedPaternity"] is not None]
+    corr=np.array([z["source_mltr_correlatedPaternity"] for z in matched])
+    est=np.array([z["p_same"] for z in matched])
     all_group=set(d["family"])
     by={}
     for t in ("c","de","ne"):
         g=[z for z in per_group if z["treat"]==t]
+        gref=[z for z in g if z["source_mltr_correlatedPaternity"] is not None]
         by[t]={
           "families_with_two_or_more_children":len(g),
           "mean_genotype_only_pair_cofather_weight":float(np.mean([v["p_same"] for v in g])),
-          "mean_source_MLTR_correlated_paternity":float(np.mean([v["source_mltr_correlatedPaternity"] for v in g])),
+          "families_in_published_MLTR_subset":len(gref),
+          "mean_source_MLTR_correlated_paternity":float(np.mean([v["source_mltr_correlatedPaternity"] for v in gref])) if gref else None,
           "median_children_per_family":float(np.median([v["n_offspring"] for v in g]))
         }
     return {
@@ -169,6 +172,8 @@ def family_weights(d,exact,eps):
        "all_source_families":len(all_group),
        "all_source_MLTR_families":len(d["source_ref"]),
        "families_with_pair_information":len(per_group),
+       "genotyped_families_with_original_MLTR_match":len(matched),
+       "genotyped_families_not_in_original_MLTR_table":len(per_group)-len(matched),
        "families_posterior_correlated_paternity_spearman":float(spearmanr(corr,est).statistic),
        "families_posterior_correlated_paternity_pearson":float(pearsonr(corr,est).statistic),
        "estimated_mean_pair_cofather_weight":float(est.mean()),
