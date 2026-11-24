@@ -1,0 +1,368 @@
+{
+  "status": "v56_Daphne_source_paternity_confidence_adversarial_bounds",
+  "source_zenodo": "10.5281/zenodo.8253921",
+  "source_zip_sha256": "97a403f17ac4025e0a5834485cc9ceb820fa760ed5c38452d4a866abc7d8eec8",
+  "source_paper": "10.1002/ajb2.16239",
+  "source_sample_646_has_genotypes": false,
+  "source_adult_16_SSR_alleles_present": true,
+  "source_offspring_16_SSR_alleles_present": false,
+  "has_independent_original_parentage_inference_without_spatial_prior": false,
+  "method": "Natural-only, strict H candidate sires; source MasterBayes confidence threshold sweep with exact maternal sizes/sire totals and spatial 5m margin-preserving swaps; relaxed adversarial labels",
+  "source_archive_alternative_paternity_sets_available": false,
+  "draws_per_chain": 500,
+  "chains": 2,
+  "rng_seed": 20261124,
+  "by_year": [
+    {
+      "year": 2018,
+      "strict_H_eligible_father_genets": 105,
+      "natural_only_high_confidence_thresholds": [
+        {
+          "threshold": 0.95,
+          "n_confident_strictH_natural_offspring": 110,
+          "n_mothers": 27,
+          "mothers_with_ge2": 18,
+          "confidence_min": 0.957777777777778,
+          "confidence_mean": 0.9984393939393938,
+          "sum_source_posterior_expected_wrong_sire_calls": 0.1716666666666703,
+          "posterior_model_based_probability": true,
+          "same_father_pairs_pooled": 0.2680722891566265,
+          "mother_equal_sibling_observed": 0.44343033509700175,
+          "null_fixed_sire_totals_spatial_lambda5": {
+            "null_mean": 0.0833302028218695,
+            "null_sd": 0.0259085908417918,
+            "null_95": [
+              0.045758377425044086,
+              0.14607694003527336
+            ],
+            "one_sided_excess_p": 0.000999000999000999,
+            "two_sided_centered_p": 0.000999000999000999,
+            "observed_minus_null_mean": 0.36010013227513227,
+            "draws": 1000
+          },
+          "chain_mean_difference": 0.0028494708994709073,
+          "chain_acceptance": [
+            0.2662089724864508,
+            0.2664865947863254
+          ],
+          "chain_starts": [
+            "observed",
+            "uniform_randomized"
+          ],
+          "adversarial_paternity_relabelling_bound": {
+            "original_mother_equal": 0.44343033509700175,
+            "upper_null": 0.14607694003527336,
+            "minimum_reassignment_for_upper_null": 13,
+            "minimum_fraction_of_assigned_natural_seeds": 0.11818181818181818,
+            "new_mother_equal_after_relabel": 0.14528218694885361,
+            "note": "Any reassigned donor genotype/location is unconstrained; source father total NOT retained; this is a deliberately liberal adversarial bound, not a corrected pedigree"
+          }
+        },
+        {
+          "threshold": 0.975,
+          "n_confident_strictH_natural_offspring": 107,
+          "n_mothers": 26,
+          "mothers_with_ge2": 17,
+          "confidence_min": 0.980833333333333,
+          "confidence_mean": 0.9993431983385254,
+          "sum_source_posterior_expected_wrong_sire_calls": 0.07027777777778121,
+          "posterior_model_based_probability": true,
+          "same_father_pairs_pooled": 0.25925925925925924,
+          "mother_equal_sibling_observed": 0.40859010270774976,
+          "null_fixed_sire_totals_spatial_lambda5": {
+            "null_mean": 0.0860422268907563,
+            "null_sd": 0.024176040543458347,
+            "null_95": [
+              0.04732609710550887,
+              0.14444911297852472
+            ],
+            "one_sided_excess_p": 0.000999000999000999,
+            "two_sided_centered_p": 0.000999000999000999,
+            "observed_minus_null_mean": 0.32254787581699346,
+            "draws": 1000
+          },
+          "chain_mean_difference": 0.0006250700280111959,
+          "chain_acceptance": [
+            0.2734446469078874,
+            0.27568435847667494
+          ],
+          "chain_starts": [
+            "observed",
+            "uniform_randomized"
+          ],
+          "adversarial_paternity_relabelling_bound": {
+            "original_mother_equal": 0.40859010270774976,
+            "upper_null": 0.14444911297852472,
+            "minimum_reassignment_for_upper_null": 13,
+            "minimum_fraction_of_assigned_natural_seeds": 0.12149532710280374,
+            "new_mother_equal_after_relabel": 0.1419234360410831,
+            "note": "Any reassigned donor genotype/location is unconstrained; source father total NOT retained; this is a deliberately liberal adversarial bound, not a corrected pedigree"
+          }
+        },
+        {
+          "threshold": 0.99,
+          "n_confident_strictH_natural_offspring": 106,
+          "n_mothers": 25,
+          "mothers_with_ge2": 17,
+          "confidence_min": 0.991388888888889,
+          "confidence_mean": 0.9995178197064989,
+          "sum_source_posterior_expected_wrong_sire_calls": 0.051111111111114216,
+          "posterior_model_based_probability": true,
+          "same_father_pairs_pooled": 0.25925925925925924,
+          "mother_equal_sibling_observed": 0.40859010270774976,
+          "null_fixed_sire_totals_spatial_lambda5": {
+            "null_mean": 0.08648886554621849,
+            "null_sd": 0.02670412298159028,
+            "null_95": [
+              0.04348622782446312,
+              0.14869456115779645
+            ],
+            "one_sided_excess_p": 0.000999000999000999,
+            "two_sided_centered_p": 0.000999000999000999,
+            "observed_minus_null_mean": 0.3221012371615313,
+            "draws": 1000
+          },
+          "chain_mean_difference": 0.00030527544351073577,
+          "chain_acceptance": [
+            0.27364884995828864,
+            0.27429850590868865
+          ],
+          "chain_starts": [
+            "observed",
+            "uniform_randomized"
+          ],
+          "adversarial_paternity_relabelling_bound": {
+            "original_mother_equal": 0.40859010270774976,
+            "upper_null": 0.14869456115779645,
+            "minimum_reassignment_for_upper_null": 13,
+            "minimum_fraction_of_assigned_natural_seeds": 0.12264150943396226,
+            "new_mother_equal_after_relabel": 0.1419234360410831,
+            "note": "Any reassigned donor genotype/location is unconstrained; source father total NOT retained; this is a deliberately liberal adversarial bound, not a corrected pedigree"
+          }
+        },
+        {
+          "threshold": 0.995,
+          "n_confident_strictH_natural_offspring": 101,
+          "n_mothers": 24,
+          "mothers_with_ge2": 17,
+          "confidence_min": 0.996388888888889,
+          "confidence_mean": 0.9998432343234324,
+          "sum_source_posterior_expected_wrong_sire_calls": 0.01583333333333614,
+          "posterior_model_based_probability": true,
+          "same_father_pairs_pooled": 0.26621160409556316,
+          "mother_equal_sibling_observed": 0.3978524743230625,
+          "null_fixed_sire_totals_spatial_lambda5": {
+            "null_mean": 0.09174178338001868,
+            "null_sd": 0.02643164248795377,
+            "null_95": [
+              0.0488655462184874,
+              0.1520576563958917
+            ],
+            "one_sided_excess_p": 0.000999000999000999,
+            "two_sided_centered_p": 0.000999000999000999,
+            "observed_minus_null_mean": 0.3061106909430438,
+            "draws": 1000
+          },
+          "chain_mean_difference": 0.0002557422969187706,
+          "chain_acceptance": [
+            0.27164099049435325,
+            0.2698572290367987
+          ],
+          "chain_starts": [
+            "observed",
+            "uniform_randomized"
+          ],
+          "adversarial_paternity_relabelling_bound": {
+            "original_mother_equal": 0.3978524743230625,
+            "upper_null": 0.1520576563958917,
+            "minimum_reassignment_for_upper_null": 12,
+            "minimum_fraction_of_assigned_natural_seeds": 0.1188118811881188,
+            "new_mother_equal_after_relabel": 0.14098972922502334,
+            "note": "Any reassigned donor genotype/location is unconstrained; source father total NOT retained; this is a deliberately liberal adversarial bound, not a corrected pedigree"
+          }
+        }
+      ]
+    },
+    {
+      "year": 2020,
+      "strict_H_eligible_father_genets": 71,
+      "natural_only_high_confidence_thresholds": [
+        {
+          "threshold": 0.95,
+          "n_confident_strictH_natural_offspring": 131,
+          "n_mothers": 27,
+          "mothers_with_ge2": 18,
+          "confidence_min": 0.955833333333333,
+          "confidence_mean": 0.9989270568278202,
+          "sum_source_posterior_expected_wrong_sire_calls": 0.14055555555555832,
+          "posterior_model_based_probability": true,
+          "same_father_pairs_pooled": 0.6471631205673759,
+          "mother_equal_sibling_observed": 0.4936476566911349,
+          "null_fixed_sire_totals_spatial_lambda5": {
+            "null_mean": 0.2144292502317865,
+            "null_sd": 0.040139331827490826,
+            "null_95": [
+              0.14929498574426112,
+              0.29934821820691393
+            ],
+            "one_sided_excess_p": 0.000999000999000999,
+            "two_sided_centered_p": 0.000999000999000999,
+            "observed_minus_null_mean": 0.2792184064593484,
+            "draws": 1000
+          },
+          "chain_mean_difference": 0.00487799074248349,
+          "chain_acceptance": [
+            0.18409329951122935,
+            0.1869705027518397
+          ],
+          "chain_starts": [
+            "observed",
+            "uniform_randomized"
+          ],
+          "adversarial_paternity_relabelling_bound": {
+            "original_mother_equal": 0.4936476566911349,
+            "upper_null": 0.29934821820691393,
+            "minimum_reassignment_for_upper_null": 7,
+            "minimum_fraction_of_assigned_natural_seeds": 0.05343511450381679,
+            "new_mother_equal_after_relabel": 0.294705857749336,
+            "note": "Any reassigned donor genotype/location is unconstrained; source father total NOT retained; this is a deliberately liberal adversarial bound, not a corrected pedigree"
+          }
+        },
+        {
+          "threshold": 0.975,
+          "n_confident_strictH_natural_offspring": 129,
+          "n_mothers": 27,
+          "mothers_with_ge2": 18,
+          "confidence_min": 0.976944444444444,
+          "confidence_mean": 0.999513350559862,
+          "sum_source_posterior_expected_wrong_sire_calls": 0.06277777777778026,
+          "posterior_model_based_probability": true,
+          "same_father_pairs_pooled": 0.662431941923775,
+          "mother_equal_sibling_observed": 0.5094164557932674,
+          "null_fixed_sire_totals_spatial_lambda5": {
+            "null_mean": 0.22332668507016334,
+            "null_sd": 0.0462191629430743,
+            "null_95": [
+              0.15006273483628554,
+              0.3219673529637298
+            ],
+            "one_sided_excess_p": 0.000999000999000999,
+            "two_sided_centered_p": 0.000999000999000999,
+            "observed_minus_null_mean": 0.2860897707231041,
+            "draws": 1000
+          },
+          "chain_mean_difference": 0.0055351813511233805,
+          "chain_acceptance": [
+            0.18222711690890195,
+            0.18634118349527362
+          ],
+          "chain_starts": [
+            "observed",
+            "uniform_randomized"
+          ],
+          "adversarial_paternity_relabelling_bound": {
+            "original_mother_equal": 0.5094164557932674,
+            "upper_null": 0.3219673529637298,
+            "minimum_reassignment_for_upper_null": 6,
+            "minimum_fraction_of_assigned_natural_seeds": 0.046511627906976744,
+            "new_mother_equal_after_relabel": 0.31497201134882297,
+            "note": "Any reassigned donor genotype/location is unconstrained; source father total NOT retained; this is a deliberately liberal adversarial bound, not a corrected pedigree"
+          }
+        },
+        {
+          "threshold": 0.99,
+          "n_confident_strictH_natural_offspring": 128,
+          "n_mothers": 27,
+          "mothers_with_ge2": 18,
+          "confidence_min": 0.993333333333333,
+          "confidence_mean": 0.9996896701388889,
+          "sum_source_posterior_expected_wrong_sire_calls": 0.03972222222222421,
+          "posterior_model_based_probability": true,
+          "same_father_pairs_pooled": 0.6624087591240876,
+          "mother_equal_sibling_observed": 0.5001571965340081,
+          "null_fixed_sire_totals_spatial_lambda5": {
+            "null_mean": 0.22467058891189326,
+            "null_sd": 0.04441441943864055,
+            "null_95": [
+              0.148668430335097,
+              0.321709560233111
+            ],
+            "one_sided_excess_p": 0.000999000999000999,
+            "two_sided_centered_p": 0.000999000999000999,
+            "observed_minus_null_mean": 0.27548660762211485,
+            "draws": 1000
+          },
+          "chain_mean_difference": 0.0019794647649720443,
+          "chain_acceptance": [
+            0.18032126335691537,
+            0.18242954656643862
+          ],
+          "chain_starts": [
+            "observed",
+            "uniform_randomized"
+          ],
+          "adversarial_paternity_relabelling_bound": {
+            "original_mother_equal": 0.5001571965340081,
+            "upper_null": 0.321709560233111,
+            "minimum_reassignment_for_upper_null": 6,
+            "minimum_fraction_of_assigned_natural_seeds": 0.046875,
+            "new_mother_equal_after_relabel": 0.3057127520895637,
+            "note": "Any reassigned donor genotype/location is unconstrained; source father total NOT retained; this is a deliberately liberal adversarial bound, not a corrected pedigree"
+          }
+        },
+        {
+          "threshold": 0.995,
+          "n_confident_strictH_natural_offspring": 126,
+          "n_mothers": 27,
+          "mothers_with_ge2": 18,
+          "confidence_min": 0.995555555555556,
+          "confidence_mean": 0.9997795414462082,
+          "sum_source_posterior_expected_wrong_sire_calls": 0.027777777777779122,
+          "posterior_model_based_probability": true,
+          "same_father_pairs_pooled": 0.6728624535315985,
+          "mother_equal_sibling_observed": 0.5030231577333026,
+          "null_fixed_sire_totals_spatial_lambda5": {
+            "null_mean": 0.21471109194080207,
+            "null_sd": 0.044855262987424385,
+            "null_95": [
+              0.1393580822022851,
+              0.30491258339084426
+            ],
+            "one_sided_excess_p": 0.000999000999000999,
+            "two_sided_centered_p": 0.000999000999000999,
+            "observed_minus_null_mean": 0.28831206579250057,
+            "draws": 1000
+          },
+          "chain_mean_difference": 0.005417138256268689,
+          "chain_acceptance": [
+            0.1802645059141287,
+            0.1782483440880254
+          ],
+          "chain_starts": [
+            "observed",
+            "uniform_randomized"
+          ],
+          "adversarial_paternity_relabelling_bound": {
+            "original_mother_equal": 0.5030231577333026,
+            "upper_null": 0.30491258339084426,
+            "minimum_reassignment_for_upper_null": 7,
+            "minimum_fraction_of_assigned_natural_seeds": 0.05555555555555555,
+            "new_mother_equal_after_relabel": 0.29667395138409636,
+            "note": "Any reassigned donor genotype/location is unconstrained; source father total NOT retained; this is a deliberately liberal adversarial bound, not a corrected pedigree"
+          }
+        }
+      ]
+    }
+  ],
+  "limitations": {
+    "paternity_posterior_from_same_source_distance_prior": true,
+    "source_parentage_genetics_cannot_be_recomputed_with_no_offspring_allele_data": true,
+    "MCMC_draws_correlated_not_independent_genet_samples": true,
+    "original_mate_genotype_compatibility_unavailable_for_adversarial_changes": true,
+    "source_posterior_expected_wrong_under_model_not_bound_under_misspecification": true,
+    "natural_pollination_only_not_independent_site_replication": true,
+    "source_distance_kernel_in_null_not_distance_blind_genetic_assignment": true,
+    "no_source_individual_identifiers_or_coordinates_in_output": true,
+    "no_focal_D_pseudomezereum_reproductive_measurement": true
+  }
+}
