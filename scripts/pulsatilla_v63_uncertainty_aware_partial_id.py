@@ -159,7 +159,8 @@ def main():
             original={"sharp_treatment_mean_difference_lower":low,
                       "sharp_treatment_mean_difference_upper":high}
             if str(float(d)) in v62["δ_sensitivity"]:
-                verified=sharp(v62,d,K,K)
+                archived=v62["δ_sensitivity"][str(float(d))]["symmetric_missing_outcome_hypothetical_cap_scenarios"]
+                verified=next(x for x in archived if x["hypothetical_cap_effective_seeds_per_untracked_all_flower"]==K)
                 assert abs(low-verified["sharp_treatment_mean_difference_lower"])<1e-8
                 assert abs(high-verified["sharp_treatment_mean_difference_upper"])<1e-8
             modes={}
