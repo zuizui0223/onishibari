@@ -14,7 +14,7 @@ frequencies have not been modeled. Never report individual parental or
 offspring IDs, allele genotypes or sample-level parentage.
 """
 from __future__ import annotations
-import collections,csv,hashlib,io,json,math
+import argparse,collections,csv,hashlib,io,json,math
 from pathlib import Path
 import numpy as np
 from scipy.stats import spearmanr,pearsonr
