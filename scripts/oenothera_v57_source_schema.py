@@ -81,7 +81,9 @@ def spreadsheet(raw):
             out.append(summary)
     return out
 def csv_summary(name,raw):
-    rr=list(csv.DictReader(io.StringIO(raw.decode("utf-8-sig"))))
+    text=raw.decode("utf-8-sig")
+    text=text.replace("\r\n","\n").replace("\r","\n")
+    rr=list(csv.DictReader(io.StringIO(text,newline="")))
     cols=list(rr[0]) if rr else []
     out={"file":name,"rows":len(rr),"columns":cols}
     for k in cols:
