@@ -1,0 +1,20 @@
+name: Daphne v65 source-pinned stored numerical results validation
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - data/2026-11-24_daphne_zero_state_models_v65.json
+      - scripts/verify_daphne_zero_models_v65.py
+      - results/2026-11-24_daphne_zero_state_model_v65.md
+      - docs/2026-11-24_onishibari_posttube_stage_protocol_v65.md
+      - .github/workflows/daphne-v65-offline-numerical-gate.yml
+permissions: {contents: read}
+jobs:
+  audit-originally-source-verified-aggregate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify source-anchored v65 cohort sizes and competing zero-process models
+        run: python3 scripts/verify_daphne_zero_models_v65.py
