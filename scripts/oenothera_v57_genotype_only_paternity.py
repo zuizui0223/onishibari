@@ -81,23 +81,52 @@ def primary(d):
     child=d["offspring_genotype"]
     mother=d["mother_index"]
     n_par=len(par);n_off=len(child)
-    exact=np.zeros((n_off,n_par,LOC),dtype=float)
+    # 0 is an untyped SSR allele sentinel in this published workbook, NOT
+    # a biological microsatellite size. Both mother/offspring alleles must
+    # be nonzero before exact Mendelian exclusion is meaningful.
+    exact=np.ones((n_off,n_par,LOC),dtype=float)
+    father_locus_informative=np.zeros((n_off,n_par,LOC),dtype=bool)
+    mother_child_locus_informative=np.zeros((n_off,LOC),dtype=bool)
     mother_inconsistent=np.zeros((n_off,LOC),dtype=bool)
     for ix in range(n_off):
         mom=par[mother[ix]]
         for locus in range(LOC):
             c=child[ix,locus]
+            if 0 in mom[locus] or 0 in c:
+                continue
+            mother_child_locus_informative[ix,locus]=True
             mother_inconsistent[ix,locus]=not np.any(c[:,None]==mom[locus][None,:])
+            typed_fathers=[]
             for f in range(n_par):
-                exact[ix,f,locus]=meiosis_probability(mom[locus],par[f,locus],c)
+                if 0 in par[f,locus]:
+                    continue
+                father_locus_informative[ix,f,locus]=True
+                prob=meiosis_probability(mom[locus],par[f,locus],c)
+                exact[ix,f,locus]=prob
+                if f!=mother[ix]:
+                    typed_fathers.append(prob)
+            # Missing paternal allele = uninformative locus, not a perfect
+            # paternal genetic match. Replace by random sampled-father mean
+            # likelihood (source population) so missing genotypes cannot gain
+            # a favorable sire-score merely by being untyped.
+            background=float(np.mean(typed_fathers)) if typed_fathers else 0.
+            for f in range(n_par):
+                if not father_locus_informative[ix,f,locus]:
+                    exact[ix,f,locus]=background
         exact[ix,mother[ix],:]=0
-    # Fixed father's true Mendelian match could be absent if parent unsampled
-    # or allele calling error; do not impute a father for that offspring.
-    zeros=(exact==0).sum(axis=2)
+    # Strict Mendelian exclusion requires at least five informative loci
+    # in both child/mother and candidate sire; partial founder genotypes
+    # are not mistaken for 0-mismatch certainty.
+    zeros=((exact==0) & father_locus_informative).sum(axis=2)
+    usable=father_locus_informative.sum(axis=2)
     zeros[np.arange(n_off),mother]=LOC+1
-    compatible=(zeros==0).sum(axis=1)
-    near1=(zeros<=1).sum(axis=1)
-    minm=np.min(zeros,axis=1)
+    usable[np.arange(n_off),mother]=0
+    valid=(usable>=5)
+    compat=(zeros==0)&valid
+    near=(zeros<=1)&valid
+    compatible=compat.sum(axis=1)
+    near1=near.sum(axis=1)
+    minm=np.where(valid,zeros,LOC+1).min(axis=1)
     per_locus=[]
     for locus in range(LOC):
         pp=par[:,locus,:]
@@ -109,8 +138,10 @@ def primary(d):
             "offspring_zero_coded_allele_cells":int((cc==0).sum()),
             "adult_observed_allele_diversity":int(len(np.unique(pp))),
             "offspring_observed_allele_diversity":int(len(np.unique(cc))),
-            "offspring_with_at_least_one_exact_father_after_omitting_this_locus":
-                int(((zeros[:,np.arange(n_par)!=0] if False else ((exact[:,:,np.arange(LOC)!=locus]==0).sum(axis=2)).min(axis=1))==0).sum())})
+            "offspring_mother_locus_fully_called":int(mother_child_locus_informative[:,locus].sum()),
+            "offspring_with_at_least_one_zero_mismatch_father_after_omitting_this_locus":
+                int(((((exact[:,:,np.arange(LOC)!=locus]==0)&father_locus_informative[:,:,np.arange(LOC)!=locus]).sum(axis=2)==0)&
+                     (father_locus_informative[:,:,np.arange(LOC)!=locus].sum(axis=2)>=4)).any(axis=1).sum())})
     by_treat={}
     for label in ("c","de","ne"):
         v=np.array(d["child_treatment"])==label
@@ -133,6 +164,10 @@ def primary(d):
        "all_offspring_median_compatible_fathers":float(np.median(compatible)),
        "all_offspring_max_compatible_fathers":int(compatible.max()),
        "mother_offspring_mismatch_count_per_child":{str(int(k)):int(v) for k,v in collections.Counter(mother_inconsistent.sum(axis=1)).items()},
+       "source_zero_coded_alleles_are_treated_as_missing":True,
+       "candidate_father_minimum_complete_informative_loci":5,
+       "mother_child_observed_loci_median":float(np.median(mother_child_locus_informative.sum(axis=1))),
+       "mother_child_observed_loci_min":int(mother_child_locus_informative.sum(axis=1).min()),
        "maternal_compatibility_by_locus":per_locus,
        "mean_minimal_paternal_locus_mismatches":float(minm.mean()),
        "offspring_with_min_2_plus_father_mismatch":int((minm>=2).sum()),
@@ -214,6 +249,8 @@ def main():
         "no_spatial_prior_or_locations_used":True,
         "paternity_sample_source_published_2017_not_new_2026_fielddata":True,
         "candidate_fathers_only_sampled_adults_no_external_pollen":True,
+        "zero_encoded_SSR_alleles_are_missing_not_true_size_zero":True,
+        "strict_sire_compatibility_requires_at_least_5_informative_loci":True,
         "Mendelian_disagreements_may_mean_genotyping_error_mutation_or_nonmatches":True,
         "soft_error_floors_not_empirical_paternity_posteriors":True,
         "same_source_MLTR_correlatedPaternity_not_independent_same_family_replicate":True,
