@@ -19,9 +19,9 @@ for year in [2018,2020]:
         print("LABEL_CODE_AUDIT_V54",json.dumps({
            "year":year,"column":column,"rows":len(r),
            "type":str(r[column].dtype),
-           "redacted_label_patterns":dict(pattern.value_counts().head(20)),
-           "nonidentifying_alpha_prefix_counts":dict(short.value_counts().head(20)),
-           "first_character_frequency":dict(val.str[0].value_counts().head(20))},ensure_ascii=False))
+           "redacted_label_patterns":{str(k):int(v) for k,v in pattern.value_counts().head(20).items()},
+           "nonidentifying_alpha_prefix_counts":{str(k):int(v) for k,v in short.value_counts().head(20).items()},
+           "first_character_frequency":{str(k):int(v) for k,v in val.str[0].value_counts().head(20).items()}},ensure_ascii=False))
     codes=adult[["GenetID2",f"Sex_{year}.g"]].copy()
     codes["Mother_key"]=stringify(codes.GenetID2)
     r["Mother_key"]=stringify(r.Mother)
@@ -29,8 +29,8 @@ for year in [2018,2020]:
     s=r.loc[r.Father.notna()&r.Probability.ge(.95)]
     print("MOTHER_SEX_SOURCE_V54",json.dumps({
         "year":year,
-        "mother_sex_by_all_seed_rows":dict(j[f"Sex_{year}.g"].fillna("_unknown").value_counts()),
-        "mother_sex_by_p095_seed_rows":dict(j.loc[j.Father.notna()&j.Probability.ge(.95),f"Sex_{year}.g"].fillna("_unknown").value_counts()),
+        "mother_sex_by_all_seed_rows":{str(k):int(v) for k,v in j[f"Sex_{year}.g"].fillna("_unknown").value_counts().items()},
+        "mother_sex_by_p095_seed_rows":{str(k):int(v) for k,v in j.loc[j.Father.notna()&j.Probability.ge(.95),f"Sex_{year}.g"].fillna("_unknown").value_counts().items()},
         "unique_source_mothers":int(r.Mother.nunique()),
         "assigned_p095":int(len(s))
         },ensure_ascii=False))
