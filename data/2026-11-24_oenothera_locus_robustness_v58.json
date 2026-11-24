@@ -286,14 +286,14 @@
   ],
   "wrong_mother_negative_control": {
     "actual_mother_offspring_with_one_or_more_mendelian_exclusions": 1,
-    "wrong_mother_randomized_offspring_with_mendelian_exclusions_mean": 514.423711855928,
+    "wrong_mother_randomized_offspring_with_mendelian_exclusions_mean": 514.3831915957979,
     "wrong_mother_randomized_offspring_with_mendelian_exclusions95": [
       510,
       518
     ],
-    "randomized_min": 506,
+    "randomized_min": 507,
     "randomized_draws": 1999,
-    "wrong_mother_randomized_incompatible_loci_total_mean": 1760.1610805402702,
+    "wrong_mother_randomized_incompatible_loci_total_mean": 1760.175087543772,
     "original_mother_child_completely_typed_locus_pairs": 3445,
     "randomized_p_lower_one_sided": 0.0005,
     "no_raw_mother_identity_emitted": true
