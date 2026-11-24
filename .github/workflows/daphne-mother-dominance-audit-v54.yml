@@ -1,0 +1,21 @@
+name: Daphne sibling pair mother dominance audit v54
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_v54_mother_dominance_audit.py
+      - .github/workflows/daphne-mother-dominance-audit-v54.yml
+permissions: {contents: read}
+jobs:
+  mother-dominance-source-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Audit source family sizes and pair concentration without IDs
+        run: python scripts/daphne_v54_mother_dominance_audit.py
