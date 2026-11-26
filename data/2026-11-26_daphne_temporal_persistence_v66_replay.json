@@ -1,0 +1,437 @@
+{
+  "source_doi": "10.1002/ajb2.16239",
+  "source_record": "10.5281/zenodo.8253921",
+  "status": "v66_annual_persistence_paired_genet_models",
+  "seed": 20261126,
+  "bootstrap_draws": 5000,
+  "overlap_simulations": 10000,
+  "by_sex": [
+    {
+      "sex": "H",
+      "paired_genets": 45,
+      "flower_totals": [
+        2404,
+        1979
+      ],
+      "fruit_totals": [
+        31,
+        22
+      ],
+      "positive_genets": [
+        6,
+        6
+      ],
+      "positive_both": 1,
+      "flower_count_spearman": 0.35668831985633753,
+      "fruit_rate_spearman_descriptive": 0.013207547169811323,
+      "joint_models": {
+        "independent": {
+          "parameters": {
+            "mean": 0.008244249699277187,
+            "concentration": 16.732157672080415,
+            "weight_persistent": 0
+          },
+          "joint_loglikelihood": -53.26924629211017,
+          "AIC": 110.53849258422034,
+          "optimizer_success": true
+        },
+        "persistent": {
+          "parameters": {
+            "mean": 0.009569888677607673,
+            "concentration": 20.16563816534927,
+            "weight_persistent": 1
+          },
+          "joint_loglikelihood": -62.515550777264785,
+          "AIC": 129.03110155452958,
+          "optimizer_success": true
+        },
+        "mixture": {
+          "parameters": {
+            "mean": 0.008244313556702985,
+            "concentration": 16.732025583644212,
+            "weight_persistent": 8.315280276641321e-7
+          },
+          "joint_loglikelihood": -53.269247259765834,
+          "AIC": 112.53849451953167,
+          "optimizer_success": true
+        }
+      },
+      "leave_one_genet_out": {
+        "independent": {
+          "joint_mean_logscore": -1.2453901112962922,
+          "conditional_mean_logscore_18_to_20": -0.6302049969881585,
+          "conditional_mean_logscore_20_to_18": -0.6151851143081337,
+          "optimizer_success_count": 44
+        },
+        "persistent": {
+          "joint_mean_logscore": -1.4624101938096437,
+          "conditional_mean_logscore_18_to_20": -0.8212195494578467,
+          "conditional_mean_logscore_20_to_18": -0.8301214729156092,
+          "optimizer_success_count": 45
+        },
+        "mixture": {
+          "joint_mean_logscore": -1.245390110140376,
+          "conditional_mean_logscore_18_to_20": -0.6302047213838371,
+          "conditional_mean_logscore_20_to_18": -0.6151854060970366,
+          "optimizer_success_count": 45
+        }
+      },
+      "comparisons": {
+        "persistent_minus_independent": {
+          "joint": {
+            "mean": -0.21702008251335161,
+            "genet_resample95": [
+              -0.6240226876459639,
+              0.024779360000767987
+            ],
+            "positive_genets": 22
+          },
+          "conditional_2018_to_2020": {
+            "mean": -0.19101455246968824,
+            "genet_resample95": [
+              -0.5686440077678402,
+              0.026650772515551847
+            ],
+            "positive_genets": 33
+          },
+          "conditional_2020_to_2018": {
+            "mean": -0.21493635860747512,
+            "genet_resample95": [
+              -0.6369139803488166,
+              0.035601500754743345
+            ],
+            "positive_genets": 32
+          }
+        },
+        "mixture_minus_independent": {
+          "joint": {
+            "mean": 1.155916510811286e-9,
+            "genet_resample95": [
+              -7.754189428415447e-7,
+              7.817057170503403e-7
+            ],
+            "positive_genets": 21
+          },
+          "conditional_2018_to_2020": {
+            "mean": 2.75604321392046e-7,
+            "genet_resample95": [
+              -2.3794377718372604e-7,
+              8.19957832580385e-7
+            ],
+            "positive_genets": 23
+          },
+          "conditional_2020_to_2018": {
+            "mean": -2.917889029037545e-7,
+            "genet_resample95": [
+              -8.459786385000341e-7,
+              3.091948336526672e-7
+            ],
+            "positive_genets": 17
+          }
+        }
+      },
+      "simulated_overlap": {
+        "independent": {
+          "mean": 0.9383,
+          "interval95": [
+            0,
+            3
+          ],
+          "tail_le_observed": 0.7578242175782421
+        },
+        "persistent": {
+          "mean": 3.2712,
+          "interval95": [
+            0,
+            7
+          ],
+          "tail_le_observed": 0.14458554144585542
+        }
+      },
+      "new_genet_only_crossyear_transfer": [
+        {
+          "train_year": 2018,
+          "test_year": 2020,
+          "unseen_genets": 26,
+          "unseen_fruit_positive": 3,
+          "models": {
+            "binomial": {
+              "mean_logscore": -0.4277999755185577,
+              "predicted_zero_fraction": 0.8207814838414571,
+              "observed_zero_fraction": 0.8846153846153846,
+              "optimizer_success": true
+            },
+            "beta_binomial": {
+              "mean_logscore": -0.45723174624118906,
+              "predicted_zero_fraction": 0.905674823416984,
+              "observed_zero_fraction": 0.8846153846153846,
+              "optimizer_success": true
+            },
+            "zero_inflated_binomial": {
+              "mean_logscore": -0.4201031191906802,
+              "predicted_zero_fraction": 0.9027318265428222,
+              "observed_zero_fraction": 0.8846153846153846,
+              "optimizer_success": true
+            },
+            "zero_inflated_beta_binomial": {
+              "mean_logscore": -0.45723192275080154,
+              "predicted_zero_fraction": 0.9056754197852667,
+              "observed_zero_fraction": 0.8846153846153846,
+              "optimizer_success": true
+            }
+          }
+        },
+        {
+          "train_year": 2020,
+          "test_year": 2018,
+          "unseen_genets": 60,
+          "unseen_fruit_positive": 8,
+          "models": {
+            "binomial": {
+              "mean_logscore": -1.0664824035979525,
+              "predicted_zero_fraction": 0.7488642432830056,
+              "observed_zero_fraction": 0.8666666666666667,
+              "optimizer_success": true
+            },
+            "beta_binomial": {
+              "mean_logscore": -0.5460362072164955,
+              "predicted_zero_fraction": 0.8772175095950987,
+              "observed_zero_fraction": 0.8666666666666667,
+              "optimizer_success": true
+            },
+            "zero_inflated_binomial": {
+              "mean_logscore": -0.9208500166255933,
+              "predicted_zero_fraction": 0.8786757888784679,
+              "observed_zero_fraction": 0.8666666666666667,
+              "optimizer_success": true
+            },
+            "zero_inflated_beta_binomial": {
+              "mean_logscore": -0.5561436183920432,
+              "predicted_zero_fraction": 0.8779847283912172,
+              "observed_zero_fraction": 0.8666666666666667,
+              "optimizer_success": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "sex": "F",
+      "paired_genets": 19,
+      "flower_totals": [
+        134,
+        339
+      ],
+      "fruit_totals": [
+        42,
+        87
+      ],
+      "positive_genets": [
+        9,
+        10
+      ],
+      "positive_both": 4,
+      "flower_count_spearman": 0.07971768908150241,
+      "fruit_rate_spearman_descriptive": 0.19964740817791557,
+      "joint_models": {
+        "independent": {
+          "parameters": {
+            "mean": 0.24318163860109063,
+            "concentration": 1.29893598490557,
+            "weight_persistent": 0
+          },
+          "joint_loglikelihood": -71.15454883225557,
+          "AIC": 146.30909766451114,
+          "optimizer_success": true
+        },
+        "persistent": {
+          "parameters": {
+            "mean": 0.26576912733803787,
+            "concentration": 2.3809094337527577,
+            "weight_persistent": 1
+          },
+          "joint_loglikelihood": -79.77061923147697,
+          "AIC": 163.54123846295394,
+          "optimizer_success": true
+        },
+        "mixture": {
+          "parameters": {
+            "mean": 0.23607673092007464,
+            "concentration": 1.3776308832448614,
+            "weight_persistent": 0.3713008679829111
+          },
+          "joint_loglikelihood": -69.42642739454708,
+          "AIC": 144.85285478909415,
+          "optimizer_success": true
+        }
+      },
+      "leave_one_genet_out": {
+        "independent": {
+          "joint_mean_logscore": -3.8679490782162897,
+          "conditional_mean_logscore_18_to_20": -2.1986209113759005,
+          "conditional_mean_logscore_20_to_18": -1.6693281668403885,
+          "optimizer_success_count": 19
+        },
+        "persistent": {
+          "joint_mean_logscore": -4.332240753969323,
+          "conditional_mean_logscore_18_to_20": -2.5860481090747953,
+          "conditional_mean_logscore_20_to_18": -2.06124575117826,
+          "optimizer_success_count": 19
+        },
+        "mixture": {
+          "joint_mean_logscore": -3.811408876930586,
+          "conditional_mean_logscore_18_to_20": -2.1436240145529375,
+          "conditional_mean_logscore_20_to_18": -1.6175316216106097,
+          "optimizer_success_count": 19
+        }
+      },
+      "comparisons": {
+        "persistent_minus_independent": {
+          "joint": {
+            "mean": -0.4642916757530332,
+            "genet_resample95": [
+              -1.2799186526709672,
+              0.3089228345084061
+            ],
+            "positive_genets": 11
+          },
+          "conditional_2018_to_2020": {
+            "mean": -0.38742719769889494,
+            "genet_resample95": [
+              -1.2242448729986932,
+              0.388253843654517
+            ],
+            "positive_genets": 12
+          },
+          "conditional_2020_to_2018": {
+            "mean": -0.391917584337871,
+            "genet_resample95": [
+              -1.1957409788843743,
+              0.3527064894662912
+            ],
+            "positive_genets": 11
+          }
+        },
+        "mixture_minus_independent": {
+          "joint": {
+            "mean": 0.05654020128570284,
+            "genet_resample95": [
+              -0.15639231260824374,
+              0.28385649239098876
+            ],
+            "positive_genets": 12
+          },
+          "conditional_2018_to_2020": {
+            "mean": 0.05499689682296327,
+            "genet_resample95": [
+              -0.15738019909066212,
+              0.28257961114625413
+            ],
+            "positive_genets": 11
+          },
+          "conditional_2020_to_2018": {
+            "mean": 0.05179654522977902,
+            "genet_resample95": [
+              -0.15880354653927245,
+              0.27943551664912614
+            ],
+            "positive_genets": 11
+          }
+        }
+      },
+      "simulated_overlap": {
+        "independent": {
+          "mean": 5.5385,
+          "interval95": [
+            2,
+            9
+          ],
+          "tail_le_observed": 0.3080691930806919
+        },
+        "persistent": {
+          "mean": 8.1828,
+          "interval95": [
+            4,
+            12
+          ],
+          "tail_le_observed": 0.0341965803419658
+        }
+      },
+      "new_genet_only_crossyear_transfer": [
+        {
+          "train_year": 2018,
+          "test_year": 2020,
+          "unseen_genets": 38,
+          "unseen_fruit_positive": 22,
+          "models": {
+            "binomial": {
+              "mean_logscore": -3.741380320963654,
+              "predicted_zero_fraction": 0.04311002597356998,
+              "observed_zero_fraction": 0.42105263157894735,
+              "optimizer_success": true
+            },
+            "beta_binomial": {
+              "mean_logscore": -1.9525382558248452,
+              "predicted_zero_fraction": 0.28734032834749285,
+              "observed_zero_fraction": 0.42105263157894735,
+              "optimizer_success": true
+            },
+            "zero_inflated_binomial": {
+              "mean_logscore": -2.352494500160248,
+              "predicted_zero_fraction": 0.3652747662408173,
+              "observed_zero_fraction": 0.42105263157894735,
+              "optimizer_success": true
+            },
+            "zero_inflated_beta_binomial": {
+              "mean_logscore": -1.9981605988992142,
+              "predicted_zero_fraction": 0.35946810031753595,
+              "observed_zero_fraction": 0.42105263157894735,
+              "optimizer_success": true
+            }
+          }
+        },
+        {
+          "train_year": 2020,
+          "test_year": 2018,
+          "unseen_genets": 44,
+          "unseen_fruit_positive": 28,
+          "models": {
+            "binomial": {
+              "mean_logscore": -3.316261749022367,
+              "predicted_zero_fraction": 0.19202761120097145,
+              "observed_zero_fraction": 0.36363636363636365,
+              "optimizer_success": true
+            },
+            "beta_binomial": {
+              "mean_logscore": -2.0869758809063654,
+              "predicted_zero_fraction": 0.45733062357099913,
+              "observed_zero_fraction": 0.36363636363636365,
+              "optimizer_success": true
+            },
+            "zero_inflated_binomial": {
+              "mean_logscore": -2.157628509816605,
+              "predicted_zero_fraction": 0.4699483464344913,
+              "observed_zero_fraction": 0.36363636363636365,
+              "optimizer_success": true
+            },
+            "zero_inflated_beta_binomial": {
+              "mean_logscore": -2.0172854321480895,
+              "predicted_zero_fraction": 0.46991150241291474,
+              "observed_zero_fraction": 0.36363636363636365,
+              "optimizer_success": true
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "common beta prior across years; year-specific environment can differ",
+    "mixture weight is statistical persistence component, not actual proportion permanently fertile",
+    "shared population and survival/flowering selection, only two observed years",
+    "within-cohort leave-one-genet-out not independent population",
+    "overlap simulation plug-in uncertainty not propagated",
+    "genet resampling intervals descriptive conditional on fitted CV",
+    "natural mature fruit counts not fertilization, recruitment or D. pseudomezereum data"
+  ]
+}
