@@ -1,0 +1,17 @@
+name: Daphne v66 replay numerical audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/verify_daphne_temporal_persistence_v66.py
+      - data/2026-11-26_daphne_temporal_persistence_v66_replay.json
+      - .github/workflows/daphne-v66-replay-audit.yml
+permissions: {contents: read}
+jobs:
+  compare-two-original-source-runs:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit archived original-source rerun against first run with documented numerical tolerance
+        run: python3 scripts/verify_daphne_temporal_persistence_v66.py --actual data/2026-11-26_daphne_temporal_persistence_v66_replay.json

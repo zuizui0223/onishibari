@@ -1,0 +1,191 @@
+{
+  "status": "source_Oenothera_SSR_paternal_multilocus_identity_coherence_v60",
+  "source_study": "10.1111/mec.14115",
+  "source_Dryad": "10.5061/dryad.p24q3",
+  "source_fixed_Zenodo_record": 4942351,
+  "source_genotypes_sha256": "8348dd28cbc4532cea22f80676d241cea322527bec35e8ec1995edd812be30e7",
+  "source_paternity_reference_sha256": "c703d56287b62f7550931e46f54591fa7a872438420bf401814eea3186320eb6",
+  "parents": 323,
+  "offspring": 521,
+  "maternal_genets": 26,
+  "source_SSR_loci": 7,
+  "maternal_offspring_informative_locus_pairs": 3445,
+  "permutation_design": {
+    "total_adults": 323,
+    "maternal_known_adults_held_fixed": 26,
+    "nonmaternal_adult_candidates_permuted": 297,
+    "nonmaternal_prefix_groups": 2,
+    "nonmaternal_prefix_group_size_quantiles": [
+      101,
+      124.75,
+      148.5,
+      172.25,
+      196
+    ],
+    "unshufflable_nonmaternal_prefix_groups": 0,
+    "fraction_nonmaternal_candidate_rows_in_prefix_groups_ge2": 1,
+    "no_sensitive_source_prefix_labels_emitted": true
+  },
+  "coherent_permutation_metmorphic_max_absolute_score_difference": 2.220446049250313e-16,
+  "coherent_permutation_test_passed": true,
+  "results": {
+    "global": {
+      "null_type": "independent whole-diploid paternal locus genotype permutations among nonmaternal adults; original maternal donors frozen",
+      "average_fraction_nonmaternal_sire_label_moved_per_locus": 0.9967282323172046,
+      "epsilon_sensitivity": [
+        {
+          "epsilon": 0.002,
+          "source_original_evaluation_mean_nats": 0.6518456957530187,
+          "independently_shuffled_sire_locus_null_mean_nats": -0.3147982147559359,
+          "child_specific_paternal_identity_coherence_increment_nats": 0.9666439105089546,
+          "null_95percent_across_locus_permutes": [
+            -0.3780287405263743,
+            -0.2506127622267168
+          ],
+          "null_max": -0.1996942667230136,
+          "conditional_null_upper_p": 0.0025,
+          "number_null_locus_permutations": 399,
+          "equal_mother_resample_95increment": [
+            0.7797527811638058,
+            1.1515865117745108
+          ],
+          "mothers_observed_minus_null_positive": 25,
+          "mothers_observed_minus_null_negative": 1,
+          "mothers_observed_minus_null_zero": 0,
+          "no_paternity_truth_labels_available": true,
+          "prior_free_genotype_only_smoothing_uncalibrated": true
+        },
+        {
+          "epsilon": 0.02,
+          "source_original_evaluation_mean_nats": 0.5860018809991241,
+          "independently_shuffled_sire_locus_null_mean_nats": 0.08872165026147327,
+          "child_specific_paternal_identity_coherence_increment_nats": 0.4972802307376508,
+          "null_95percent_across_locus_permutes": [
+            0.06448953158045918,
+            0.1136998301682288
+          ],
+          "null_max": 0.12550984136054477,
+          "conditional_null_upper_p": 0.0025,
+          "number_null_locus_permutations": 399,
+          "equal_mother_resample_95increment": [
+            0.3984166983351123,
+            0.6012449636521786
+          ],
+          "mothers_observed_minus_null_positive": 25,
+          "mothers_observed_minus_null_negative": 1,
+          "mothers_observed_minus_null_zero": 0,
+          "no_paternity_truth_labels_available": true,
+          "prior_free_genotype_only_smoothing_uncalibrated": true
+        },
+        {
+          "epsilon": 0.1,
+          "source_original_evaluation_mean_nats": 0.16173739262660944,
+          "independently_shuffled_sire_locus_null_mean_nats": 0.039954005722764044,
+          "child_specific_paternal_identity_coherence_increment_nats": 0.1217833869038454,
+          "null_95percent_across_locus_permutes": [
+            0.034516001983439355,
+            0.046093317061249195
+          ],
+          "null_max": 0.04929229012488253,
+          "conditional_null_upper_p": 0.0025,
+          "number_null_locus_permutations": 399,
+          "equal_mother_resample_95increment": [
+            0.09328026123100307,
+            0.1530080819339671
+          ],
+          "mothers_observed_minus_null_positive": 25,
+          "mothers_observed_minus_null_negative": 1,
+          "mothers_observed_minus_null_zero": 0,
+          "no_paternity_truth_labels_available": true,
+          "prior_free_genotype_only_smoothing_uncalibrated": true
+        }
+      ]
+    },
+    "within_prefix": {
+      "null_type": "independent whole-diploid paternal locus genotype permutations among nonmaternal adults; original maternal donors frozen",
+      "average_fraction_nonmaternal_sire_label_moved_per_locus": 0.9934661087543293,
+      "epsilon_sensitivity": [
+        {
+          "epsilon": 0.002,
+          "source_original_evaluation_mean_nats": 0.6518456957530187,
+          "independently_shuffled_sire_locus_null_mean_nats": -0.30650986553199366,
+          "child_specific_paternal_identity_coherence_increment_nats": 0.9583555612850123,
+          "null_95percent_across_locus_permutes": [
+            -0.36669135005622966,
+            -0.2417384815719224
+          ],
+          "null_max": -0.19362521568133853,
+          "conditional_null_upper_p": 0.0025,
+          "number_null_locus_permutations": 399,
+          "equal_mother_resample_95increment": [
+            0.7703703265792282,
+            1.1434091791546395
+          ],
+          "mothers_observed_minus_null_positive": 25,
+          "mothers_observed_minus_null_negative": 1,
+          "mothers_observed_minus_null_zero": 0,
+          "no_paternity_truth_labels_available": true,
+          "prior_free_genotype_only_smoothing_uncalibrated": true
+        },
+        {
+          "epsilon": 0.02,
+          "source_original_evaluation_mean_nats": 0.5860018809991241,
+          "independently_shuffled_sire_locus_null_mean_nats": 0.09242122235486146,
+          "child_specific_paternal_identity_coherence_increment_nats": 0.49358065864426265,
+          "null_95percent_across_locus_permutes": [
+            0.06734510011271637,
+            0.11658734742194392
+          ],
+          "null_max": 0.12933121203969694,
+          "conditional_null_upper_p": 0.0025,
+          "number_null_locus_permutations": 399,
+          "equal_mother_resample_95increment": [
+            0.39380747344826744,
+            0.5941487486610348
+          ],
+          "mothers_observed_minus_null_positive": 25,
+          "mothers_observed_minus_null_negative": 1,
+          "mothers_observed_minus_null_zero": 0,
+          "no_paternity_truth_labels_available": true,
+          "prior_free_genotype_only_smoothing_uncalibrated": true
+        },
+        {
+          "epsilon": 0.1,
+          "source_original_evaluation_mean_nats": 0.16173739262660944,
+          "independently_shuffled_sire_locus_null_mean_nats": 0.04133671094271648,
+          "child_specific_paternal_identity_coherence_increment_nats": 0.12040068168389295,
+          "null_95percent_across_locus_permutes": [
+            0.03531907059512824,
+            0.046929132784992555
+          ],
+          "null_max": 0.04989241151463968,
+          "conditional_null_upper_p": 0.0025,
+          "number_null_locus_permutations": 399,
+          "equal_mother_resample_95increment": [
+            0.09148666883809455,
+            0.15162848661061082
+          ],
+          "mothers_observed_minus_null_positive": 25,
+          "mothers_observed_minus_null_negative": 1,
+          "mothers_observed_minus_null_zero": 0,
+          "no_paternity_truth_labels_available": true,
+          "prior_free_genotype_only_smoothing_uncalibrated": true
+        }
+      ]
+    }
+  },
+  "limits": {
+    "one_2017_published_Oenothera_dataset": true,
+    "no_Daphne_offspring_genotypes_used_or_new_sire_reassignment": true,
+    "paternal_diploid_allele_pair_per_marker_kept_intact": true,
+    "all_26_maternal_source_donor_genotypes_held_fixed": true,
+    "paternal_marker_exchange_removes_individual_cross_locus_identity_only_for_297_nother_genets": true,
+    "original_maternal_child_genetic_profiles_and_treatments_unchanged": true,
+    "prefix_groups_unverified_as_true_genetic_or_geographic_population": true,
+    "marker_identity_predictive_signal_could_include_genetic_relatedness_and_population_structure": true,
+    "no_true_paternity_posterior_or_survival_recruitment": true,
+    "mother_genet_resampling_not_offspring_independent": true,
+    "no_original_identifiers_alleles_genotypes_or_coords_output": true,
+    "focal_D_pseudomezereum_not_measured": true
+  }
+}

@@ -1,0 +1,33 @@
+name: Daphne original H/F residual maternal fruit gate audit v64
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_v64_natural_fruit_gate.py
+      - scripts/verify_daphne_fruit_activation_v64.py
+      - data/2026-11-24_daphne_fruit_activation_v64.json
+      - results/2026-11-24_daphne_rare_fruit_activation_v64.md
+      - .github/workflows/daphne-v64-natural-fruit-gate.yml
+permissions: {contents: read}
+jobs:
+  source-backed-reproductive-gating:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned numeric stack
+        run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Recompute source-verified H/F fruit activation and exact fruit/flower conditional nulls
+        run: python scripts/daphne_v64_natural_fruit_gate.py
+      - name: Verify exact original source H/F fruits and all numeric conditional-null aggregates
+        run: python scripts/verify_daphne_fruit_activation_v64.py --actual analysis_results_daphne_fruit_activation_v64/daphne_natural_fruit_activation_conditioned_v64.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-v64-fruit-gate-aggregate-only
+          path: analysis_results_daphne_fruit_activation_v64/
+          retention-days: 30

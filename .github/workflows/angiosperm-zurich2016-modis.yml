@@ -1,0 +1,31 @@
+name: 2016 time-matched NDVI versus measured garden visits
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/zurich2016_modis_visits.py
+      - .github/workflows/angiosperm-zurich2016-modis.yml
+
+permissions:
+  contents: read
+
+jobs:
+  time-matched-modis-gardens:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install MODIS remote read and statistics
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -q pystac-client planetary-computer rasterio scipy numpy
+      - name: Match MODIS June-July 2016 pixels to known visitation dates (private garden positions never exported)
+        run: .venv/bin/python scripts/zurich2016_modis_visits.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-zurich2016-time-matched-MODIS-visitation
+          path: analysis_results_zurich_2016_modis/
+          if-no-files-found: warn

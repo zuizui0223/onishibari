@@ -1,0 +1,21 @@
+name: Daphne original MasterBayes prior/alternative assignment audit v56
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_v56_masterbayes_source_audit.py
+      - .github/workflows/daphne-v56-masterbayes-audit.yml
+permissions: {contents: read}
+jobs:
+  source-method-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Verify pinned source and audit alternative paternity options
+        run: python scripts/daphne_v56_masterbayes_source_audit.py

@@ -1,0 +1,33 @@
+name: Mercurialis outcross vs self paternal gain v0.52
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/mercurialis_v52_siring_decomposition.py
+      - scripts/verify_mercurialis_siring_v52.py
+      - data/2026-11-22_mercurialis_siring_decomposition_v52.json
+      - results/2026-11-22_mercurialis_outcross_siring_components_v52.md
+      - .github/workflows/mercurialis-siring-decomposition-v52.yml
+permissions: {contents: read}
+jobs:
+  source-backed-sex-gain-components:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install deterministic scientific runtime
+        run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Verify paired source scenarios and calculate outcross vs self paternal gain
+        run: python scripts/mercurialis_v52_siring_decomposition.py --output analysis_results_v52/mercurialis_siring_decomposition_v52.json
+      - name: Verify fresh output against the checked-in aggregate (numeric and source identity gates)
+        run: python scripts/verify_mercurialis_siring_v52.py --actual analysis_results_v52/mercurialis_siring_decomposition_v52.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mercurialis-v52-aggregate-only
+          path: analysis_results_v52/
+          retention-days: 30

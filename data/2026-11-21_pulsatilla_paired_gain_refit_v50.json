@@ -1,0 +1,189 @@
+{
+  "status": "original_public_data_secondary_refit_v50",
+  "article_dois": [
+    "10.1086/737646",
+    "10.1016/j.cub.2025.04.022"
+  ],
+  "archive_provenance": {
+    "amnat": {
+      "record": "15549445",
+      "filename": "AmNat_R3_Zenodo.zip",
+      "sha256": "c31152fb988d5602113c91628806691519e3700351df3b79a403822ca942a463"
+    },
+    "cub": {
+      "record": "15183584",
+      "filename": "Fitness_landscape_Zenodo.zip",
+      "sha256": "2cb1c78efe86128255dabed72d01799cfe71e10208386f55319f708a8535c141"
+    }
+  },
+  "interpretation": {
+    "resampling_unit": "Same focal-plant indices for all sex functions and outcome definitions in each draw.",
+    "uncertainty": "Conditional on the observed mating network, estimated paternity, rounded primary outcomes and fixed inbreeding depression delta=0.95.",
+    "sampling_scope": "One population in 2022; companion paper is overlapping, not independent replication.",
+    "investment": "Pistil and calibrated stamen counts; not individually measured floral dry mass.",
+    "success": "Archived seasonal reproductive-success estimates; not observed survival or lifetime fitness.",
+    "covariates": "Univariate organ-count curves; no causal interpretation or adjustment for plant size and flowering time."
+  },
+  "archive_members_sha256": {
+    "AmNat_R3_Zenodo/data_Ind_fitness_SexFunction.csv": "236395d3fdb44d6101a47111b2fc8136839517976a03787f7174008068b68ad0",
+    "AmNat_R3_Zenodo/code_Fig.1 Gain curve_revision.R": "383d2a5c98ece40f279ec6b48b7edd74f9209ce66d7bc1cddfe3289ea8eeea55",
+    "Fitness_landscape_Zenodo/Data_RS.csv": "49b6c5147aadf0d3c9de5bacda59b1cd8f25df0d49f521cea5d577668d6a27ba"
+  },
+  "population_n": 135,
+  "exclusions": {
+    "manipulated": 42,
+    "unmanipulated_incomplete": 4
+  },
+  "seed": 20261121,
+  "n89_allocation": {
+    "female": {
+      "positive": 70,
+      "min_positive": 1.0,
+      "max": 983.0
+    },
+    "male": {
+      "positive": 89,
+      "min_positive": 103.0,
+      "max": 581.0
+    }
+  },
+  "n89_zero_success": {
+    "female": 32,
+    "male": 4
+  },
+  "cub_n": 87,
+  "cub_population_overlap": 87,
+  "cub_analysis_overlap": 59,
+  "n59_positive_pistils": 44,
+  "n89_flower_numbers": {
+    "1": 68,
+    "2": 18,
+    "3": 2,
+    "4": 1
+  },
+  "n89_selfing_missing_with_nonzero_female_fitness": 2,
+  "primary_n89": {
+    "n": 89,
+    "replicates": 10000,
+    "results": {
+      "female_discounted": {
+        "b_or_contrast": 1.2577261475243895,
+        "paired_percentile_95": [
+          1.0825580656194171,
+          1.761094307155076
+        ],
+        "nls_se": 0.10363463579050222,
+        "draws_near_lower_bound": 0,
+        "draws_near_upper_bound": 0
+      },
+      "male_discounted": {
+        "b_or_contrast": 0.49834292725260926,
+        "paired_percentile_95": [
+          -0.10578416790086974,
+          1.0383063691600465
+        ],
+        "nls_se": 0.2577453338607279,
+        "draws_near_lower_bound": 0,
+        "draws_near_upper_bound": 0
+      },
+      "female_minus_male_discounted": {
+        "b_or_contrast": 0.7593832202717803,
+        "paired_percentile_95": [
+          0.17026865629696933,
+          1.6343509001451642
+        ]
+      }
+    }
+  },
+  "outcome_sensitivity_shared_n59": {
+    "n": 59,
+    "replicates": 10000,
+    "results": {
+      "female_discounted": {
+        "b_or_contrast": 3.313907184734288,
+        "paired_percentile_95": [
+          1.6064949460000177,
+          4.5167316921813105
+        ],
+        "nls_se": 0.3997041318841482,
+        "draws_near_lower_bound": 0,
+        "draws_near_upper_bound": 0
+      },
+      "male_discounted": {
+        "b_or_contrast": 0.3877335102358501,
+        "paired_percentile_95": [
+          -0.6643322501026947,
+          1.7595134892340965
+        ],
+        "nls_se": 0.7555574370119469,
+        "draws_near_lower_bound": 0,
+        "draws_near_upper_bound": 0
+      },
+      "female_mature": {
+        "b_or_contrast": 1.0941434793466465,
+        "paired_percentile_95": [
+          0.5686480332473866,
+          1.615909755254958
+        ],
+        "nls_se": 0.20498535238816468,
+        "draws_near_lower_bound": 1,
+        "draws_near_upper_bound": 0
+      },
+      "male_mature": {
+        "b_or_contrast": 0.11562171354991652,
+        "paired_percentile_95": [
+          -0.6375376983175917,
+          0.9320004812851654
+        ],
+        "nls_se": 0.485825679423455,
+        "draws_near_lower_bound": 0,
+        "draws_near_upper_bound": 0
+      },
+      "female_minus_male_discounted": {
+        "b_or_contrast": 2.926173674498438,
+        "paired_percentile_95": [
+          0.7635267882826097,
+          4.631271262414259
+        ]
+      },
+      "female_minus_male_mature": {
+        "b_or_contrast": 0.97852176579673,
+        "paired_percentile_95": [
+          -0.05651789883995765,
+          1.9638131213364423
+        ]
+      },
+      "female_discounted_minus_mature": {
+        "b_or_contrast": 2.219763705387641,
+        "paired_percentile_95": [
+          0.7725968249190405,
+          3.45778257535847
+        ]
+      },
+      "male_discounted_minus_mature": {
+        "b_or_contrast": 0.2721117966859336,
+        "paired_percentile_95": [
+          -0.4509791238144643,
+          1.232761328261689
+        ]
+      },
+      "female_minus_male_discounted_minus_mature": {
+        "b_or_contrast": 1.947651908701708,
+        "paired_percentile_95": [
+          0.22730110682092303,
+          3.433768352250157
+        ]
+      }
+    }
+  },
+  "companion_n87_replication": {
+    "female_0": 0.8485933065036629,
+    "female_95": 1.9142086306950177,
+    "male_0": 0.519226086609666,
+    "male_95": 0.47030684897134745
+  },
+  "n89_leave_one_out_difference_range": [
+    0.647329329964875,
+    0.9473643302727269
+  ]
+}

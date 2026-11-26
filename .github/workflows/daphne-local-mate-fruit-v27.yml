@@ -1,0 +1,30 @@
+name: "Daphne 2018-2020 local pollen-donor opportunity versus female fruit v0.27"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/daphne_jezoensis_2018_2020_local_mate_fruit_v27.py
+      - .github/workflows/daphne-local-mate-fruit-v27.yml
+permissions:
+  contents: read
+jobs:
+  source-maternal-local-mates:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install original-data analysis libraries
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy
+      - name: Verify original adult/maternal source and local donor estimates
+        run: .venv/bin/python scripts/daphne_jezoensis_2018_2020_local_mate_fruit_v27.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-female-natural-fruits-versus-local-H-floral-opportunity-v27
+          path: analysis_results_daphne_2018_2020_local_mates_v27/
+          retention-days: 30
+          if-no-files-found: warn

@@ -1,0 +1,29 @@
+name: "Daphne 2015 female pollen-receiver versus donor flowering synchrony v0.24"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_jezoensis_2015_sex_synchrony_v24.py
+      - .github/workflows/daphne-2015-sex-synchrony-v24.yml
+permissions:
+  contents: read
+jobs:
+  original-synchrony:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build source analysis environment
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy
+      - name: Source-pinned census, plant-bootstrap sex-bloom overlap
+        run: .venv/bin/python scripts/daphne_jezoensis_2015_sex_synchrony_v24.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-2015-sex-temporal-flowering-overlap-original-v24
+          path: analysis_results_daphne_2015_sex_synchrony_v24/
+          retention-days: 30
+          if-no-files-found: warn

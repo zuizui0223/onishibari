@@ -1,0 +1,32 @@
+name: UK PoMS floral units and diminishing per-unit visitation test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/ukpoms_flower_visit_elasticity.py
+      - .github/workflows/angiosperm-poms-floral-elasticity.yml
+
+permissions:
+  contents: read
+
+jobs:
+  flower-scaling:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install statsmodels and source table dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -q numpy pandas scipy scikit-learn statsmodels patsy
+      - name: Estimate cluster-robust flower-count elasticity including within-square sensitivity
+        run: |
+          OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 .venv/bin/python scripts/ukpoms_flower_visit_elasticity.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ukpoms-2017-2023-floral-unit-visitation-elasticity
+          path: analysis_results_flower_scaling/
+          if-no-files-found: warn

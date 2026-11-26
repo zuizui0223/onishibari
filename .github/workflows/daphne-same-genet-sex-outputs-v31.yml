@@ -1,0 +1,29 @@
+name: "Daphne same-genet hermaphrodite fruit versus sampled paternal seed audit v0.31"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_jezoensis_2018_2020_same_genet_sex_outputs_v31.py
+      - .github/workflows/daphne-same-genet-sex-outputs-v31.yml
+permissions:
+  contents: read
+jobs:
+  original-source-hermaphrodite-two-sex-functions:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Original source environment
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy
+      - name: Source-authenticated same-genet paternal assignment and natural-fruit overlap
+        run: .venv/bin/python scripts/daphne_jezoensis_2018_2020_same_genet_sex_outputs_v31.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Daphne-hermaphrodite-paternal-fruit-joint-records-v31
+          path: analysis_results_daphne_same_genet_dual_fitness_v31/
+          retention-days: 30
+          if-no-files-found: warn

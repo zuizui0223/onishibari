@@ -1,0 +1,34 @@
+name: Flower investment stage switch and Silene published-stat audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/flower_investment_switch_frontier.py
+      - scripts/audit_silene_dummy_flower_chisquare.py
+      - .github/workflows/angiosperm-investment-switch-audit.yml
+
+permissions:
+  contents: read
+
+jobs:
+  budget-and-sex-gate-model:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check analytically derived gate, resource cost and stochastic pollination scenarios
+        run: python3 scripts/flower_investment_switch_frontier.py
+      - name: Check Silene artificial-display experiment's quoted chi-square p-values
+        run: python3 scripts/audit_silene_dummy_flower_chisquare.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: floral-investment-cost-gates-sex-and-stochasticity
+          path: |
+            analysis_results_allocation_gate/
+            analysis_results_silene_stat_audit/
+          retention-days: 30
+          if-no-files-found: warn

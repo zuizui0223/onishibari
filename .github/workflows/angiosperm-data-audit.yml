@@ -1,0 +1,27 @@
+name: Angiosperm reproductive systems source coverage audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/reproductive_data_coverage.py
+      - .github/workflows/angiosperm-data-audit.yml
+
+permissions:
+  contents: read
+
+jobs:
+  verified-sources:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit source tables, real column definitions, overlap, missing data
+        run: python3 scripts/reproductive_data_coverage.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-reproduction-coverage-evidence
+          path: analysis_results_broad/
+          if-no-files-found: warn

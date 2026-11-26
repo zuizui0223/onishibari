@@ -1,0 +1,33 @@
+name: Pulsatilla observed-seed origin uncertainty in missingness sharp bounds v63
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/pulsatilla_v63_uncertainty_aware_partial_id.py
+      - scripts/verify_pulsatilla_v63.py
+      - data/2026-11-24_pulsatilla_origin_uncertainty_v63.json
+      - results/2026-11-24_pulsatilla_uncertainty_structural_zero_v63.md
+      - .github/workflows/pulsatilla-v63-uncertainty-partial-id.yml
+permissions: {contents: read}
+jobs:
+  seed_origin_uncertainty_and_original_missing_cohort:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned source scientific stack
+        run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Download SHA-pinned exact source and simulate original-cohort seed-origin posterior & attrition risk
+        run: python scripts/pulsatilla_v63_uncertainty_aware_partial_id.py
+      - name: Compare fresh original-source Monte Carlo to locked full numerical JSON
+        run: python scripts/verify_pulsatilla_v63.py --actual analysis_results_pulsatilla_uncertainty_partial_id_v63/pulsatilla_seed_origin_missing_robustness_v63.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pulsatilla-v63-uncertainty-aggregate-only
+          path: analysis_results_pulsatilla_uncertainty_partial_id_v63/
+          retention-days: 30

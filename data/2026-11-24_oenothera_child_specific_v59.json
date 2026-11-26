@@ -1,0 +1,329 @@
+{
+  "status": "original_Oenothera_v59_within_family_child_allele_scrambling_negative_control",
+  "source_paper": "10.1111/mec.14115",
+  "source_Dryad": "10.5061/dryad.p24q3",
+  "source_fixed_Zenodo": "4942351",
+  "source_genotypes_sha256": "8348dd28cbc4532cea22f80676d241cea322527bec35e8ec1995edd812be30e7",
+  "source_correlated_paternity_sha256": "c703d56287b62f7550931e46f54591fa7a872438420bf401814eea3186320eb6",
+  "parent_genets": 323,
+  "offspring_genotyped": 521,
+  "independent_mothers": 26,
+  "loci": 7,
+  "informative_mother_offspring_locus_pairs": 3445,
+  "seed": 20261124,
+  "results": {
+    "same_mother_same_treatment": {
+      "design": {
+        "grouping": "same_mother_same_treatment",
+        "groups": 68,
+        "groups_with_two_or_more_children": 68,
+        "singletons": 0,
+        "mothers": 26,
+        "group_size_quantiles": [
+          2,
+          8,
+          8,
+          8,
+          8
+        ]
+      },
+      "epsilon_sensitivity": [
+        {
+          "epsilon": 0.002,
+          "grouping": "same_mother_same_treatment",
+          "number_independent_maternal_genets": 26,
+          "child_locus_pairs_evaluable": 3445,
+          "original_heldout_log_score_nats_mother_equal": 0.6518456957530187,
+          "within_group_shuffled_expected_log_score_nats_mother_equal": -0.10736069746874519,
+          "child_specific_increment_over_mother_group_null_nats": 0.7592063932217639,
+          "mother_bootstrap_95_increment": [
+            0.6088239074305972,
+            0.9068338348759372
+          ],
+          "mothers_with_positive_increment": 25,
+          "mothers_with_negative_increment": 1,
+          "mothers_with_zero_increment": 0,
+          "null_exact_within_group_uniform_permutations": 2999,
+          "permutation_null_score_mean": -0.10719918749194586,
+          "permutation_null_score95": [
+            -0.1485982785848788,
+            -0.06660609450388397
+          ],
+          "conditional_permutation_upper_tail_p": 0.0003333333333333333,
+          "permutation_null_mother_equal_score_sd": 0.021107704103251884,
+          "per_locus_observed_log_gain_vs_uniform_fathers": [
+            0.3176760411329209,
+            0.9136254304272716,
+            0.5952196350015445,
+            0.8940860572697724,
+            0.5580345793582637,
+            0.36201490754378907,
+            0.9221647439689917
+          ],
+          "per_locus_sib_permutation_expected_log_gain_vs_uniform_fathers": [
+            -0.41115260664409564,
+            -0.10897693941717325,
+            -0.12881552152707973,
+            -0.029365751993104285,
+            -0.19943443683273465,
+            -0.02328786256648706,
+            -0.05535208634394286
+          ],
+          "source_mendelian_father_scores_not_calibrated_posterior": true,
+          "marginal_maternal_genotype_and_treatment_unchanged_in_primary": true
+        },
+        {
+          "epsilon": 0.02,
+          "grouping": "same_mother_same_treatment",
+          "number_independent_maternal_genets": 26,
+          "child_locus_pairs_evaluable": 3445,
+          "original_heldout_log_score_nats_mother_equal": 0.5860018809991241,
+          "within_group_shuffled_expected_log_score_nats_mother_equal": 0.23051802817282774,
+          "child_specific_increment_over_mother_group_null_nats": 0.35548385282629635,
+          "mother_bootstrap_95_increment": [
+            0.28233978018372424,
+            0.4295466044691774
+          ],
+          "mothers_with_positive_increment": 26,
+          "mothers_with_negative_increment": 0,
+          "mothers_with_zero_increment": 0,
+          "null_exact_within_group_uniform_permutations": 2999,
+          "permutation_null_score_mean": 0.23045158463304624,
+          "permutation_null_score95": [
+            0.21039221394916435,
+            0.2506083303154177
+          ],
+          "conditional_permutation_upper_tail_p": 0.0003333333333333333,
+          "permutation_null_mother_equal_score_sd": 0.010189035527560605,
+          "per_locus_observed_log_gain_vs_uniform_fathers": [
+            0.37248047745809276,
+            0.8443369688015536,
+            0.5328223468542601,
+            0.7456779642900841,
+            0.5270042771599021,
+            0.31031680406543133,
+            0.7690585140657714
+          ],
+          "per_locus_sib_permutation_expected_log_gain_vs_uniform_fathers": [
+            0.021935982386087967,
+            0.3774276247428667,
+            0.195577209120923,
+            0.33521830392428864,
+            0.15110118551262272,
+            0.10680198567717307,
+            0.3298593002476431
+          ],
+          "source_mendelian_father_scores_not_calibrated_posterior": true,
+          "marginal_maternal_genotype_and_treatment_unchanged_in_primary": true
+        },
+        {
+          "epsilon": 0.1,
+          "grouping": "same_mother_same_treatment",
+          "number_independent_maternal_genets": 26,
+          "child_locus_pairs_evaluable": 3445,
+          "original_heldout_log_score_nats_mother_equal": 0.16173739262660944,
+          "within_group_shuffled_expected_log_score_nats_mother_equal": 0.08621162118296886,
+          "child_specific_increment_over_mother_group_null_nats": 0.07552577144364057,
+          "mother_bootstrap_95_increment": [
+            0.05721435802651713,
+            0.09441048415440698
+          ],
+          "mothers_with_positive_increment": 26,
+          "mothers_with_negative_increment": 0,
+          "mothers_with_zero_increment": 0,
+          "null_exact_within_group_uniform_permutations": 2999,
+          "permutation_null_score_mean": 0.08615522421918916,
+          "permutation_null_score95": [
+            0.08125185651489981,
+            0.0910944780075809
+          ],
+          "conditional_permutation_upper_tail_p": 0.0003333333333333333,
+          "permutation_null_mother_equal_score_sd": 0.002487291221603747,
+          "per_locus_observed_log_gain_vs_uniform_fathers": [
+            0.11763218500764613,
+            0.21918563884719303,
+            0.1566761343744198,
+            0.18605198925962502,
+            0.16573617056767673,
+            0.10218872872637474,
+            0.19122760829527097
+          ],
+          "per_locus_sib_permutation_expected_log_gain_vs_uniform_fathers": [
+            0.04276708048283696,
+            0.12158545257716065,
+            0.08578546583062314,
+            0.10486345032129406,
+            0.07718189724324005,
+            0.04977306237561233,
+            0.10564790349259606
+          ],
+          "source_mendelian_father_scores_not_calibrated_posterior": true,
+          "marginal_maternal_genotype_and_treatment_unchanged_in_primary": true
+        }
+      ]
+    },
+    "same_mother_any_treatment": {
+      "design": {
+        "grouping": "same_mother_any_treatment",
+        "groups": 26,
+        "groups_with_two_or_more_children": 26,
+        "singletons": 0,
+        "mothers": 26,
+        "group_size_quantiles": [
+          13,
+          16,
+          22,
+          24,
+          24
+        ]
+      },
+      "epsilon_sensitivity": [
+        {
+          "epsilon": 0.002,
+          "grouping": "same_mother_any_treatment",
+          "number_independent_maternal_genets": 26,
+          "child_locus_pairs_evaluable": 3445,
+          "original_heldout_log_score_nats_mother_equal": 0.6518456957530187,
+          "within_group_shuffled_expected_log_score_nats_mother_equal": -0.6442613801868318,
+          "child_specific_increment_over_mother_group_null_nats": 1.2961070759398505,
+          "mother_bootstrap_95_increment": [
+            1.096546339442762,
+            1.476717638750395
+          ],
+          "mothers_with_positive_increment": 26,
+          "mothers_with_negative_increment": 0,
+          "mothers_with_zero_increment": 0,
+          "null_exact_within_group_uniform_permutations": 2999,
+          "permutation_null_score_mean": -0.6449357055206782,
+          "permutation_null_score95": [
+            -0.6969440681312844,
+            -0.5913218617882561
+          ],
+          "conditional_permutation_upper_tail_p": 0.0003333333333333333,
+          "permutation_null_mother_equal_score_sd": 0.026917334092373662,
+          "per_locus_observed_log_gain_vs_uniform_fathers": [
+            0.31767604113292086,
+            0.9136254304272717,
+            0.5952196350015447,
+            0.8940860572697727,
+            0.5580345793582638,
+            0.3620149075437891,
+            0.9221647439689913
+          ],
+          "per_locus_sib_permutation_expected_log_gain_vs_uniform_fathers": [
+            -0.7373940521430381,
+            -0.8467316309340525,
+            -0.7381297626598914,
+            -0.6739504044792083,
+            -0.669448618363896,
+            -0.2660036430257251,
+            -0.7443651234580815
+          ],
+          "source_mendelian_father_scores_not_calibrated_posterior": true,
+          "marginal_maternal_genotype_and_treatment_unchanged_in_primary": false
+        },
+        {
+          "epsilon": 0.02,
+          "grouping": "same_mother_any_treatment",
+          "number_independent_maternal_genets": 26,
+          "child_locus_pairs_evaluable": 3445,
+          "original_heldout_log_score_nats_mother_equal": 0.586001880999124,
+          "within_group_shuffled_expected_log_score_nats_mother_equal": -0.016785125801702265,
+          "child_specific_increment_over_mother_group_null_nats": 0.6027870068008262,
+          "mother_bootstrap_95_increment": [
+            0.5043530311660843,
+            0.6958258973529253
+          ],
+          "mothers_with_positive_increment": 26,
+          "mothers_with_negative_increment": 0,
+          "mothers_with_zero_increment": 0,
+          "null_exact_within_group_uniform_permutations": 2999,
+          "permutation_null_score_mean": -0.016891135574776804,
+          "permutation_null_score95": [
+            -0.04116260548618642,
+            0.007585420024242975
+          ],
+          "conditional_permutation_upper_tail_p": 0.0003333333333333333,
+          "permutation_null_mother_equal_score_sd": 0.01232407041475737,
+          "per_locus_observed_log_gain_vs_uniform_fathers": [
+            0.37248047745809293,
+            0.8443369688015535,
+            0.5328223468542602,
+            0.745677964290084,
+            0.5270042771599021,
+            0.3103168040654313,
+            0.7690585140657712
+          ],
+          "per_locus_sib_permutation_expected_log_gain_vs_uniform_fathers": [
+            -0.12811800828787107,
+            0.038587697670814734,
+            -0.08386231735031806,
+            0.04492156117053459,
+            -0.06746838337594513,
+            -0.012777256800985496,
+            0.016110174616529412
+          ],
+          "source_mendelian_father_scores_not_calibrated_posterior": true,
+          "marginal_maternal_genotype_and_treatment_unchanged_in_primary": false
+        },
+        {
+          "epsilon": 0.1,
+          "grouping": "same_mother_any_treatment",
+          "number_independent_maternal_genets": 26,
+          "child_locus_pairs_evaluable": 3445,
+          "original_heldout_log_score_nats_mother_equal": 0.16173739262660944,
+          "within_group_shuffled_expected_log_score_nats_mother_equal": 0.03693883070173871,
+          "child_specific_increment_over_mother_group_null_nats": 0.12479856192487074,
+          "mother_bootstrap_95_increment": [
+            0.09969960720251843,
+            0.14879480339579063
+          ],
+          "mothers_with_positive_increment": 25,
+          "mothers_with_negative_increment": 1,
+          "mothers_with_zero_increment": 0,
+          "null_exact_within_group_uniform_permutations": 2999,
+          "permutation_null_score_mean": 0.03689961749829498,
+          "permutation_null_score95": [
+            0.031501303226876116,
+            0.04228488971668476
+          ],
+          "conditional_permutation_upper_tail_p": 0.0003333333333333333,
+          "permutation_null_mother_equal_score_sd": 0.002818448652451506,
+          "per_locus_observed_log_gain_vs_uniform_fathers": [
+            0.11763218500764613,
+            0.219185638847193,
+            0.1566761343744198,
+            0.18605198925962502,
+            0.16573617056767673,
+            0.10218872872637477,
+            0.191227608295271
+          ],
+          "per_locus_sib_permutation_expected_log_gain_vs_uniform_fathers": [
+            0.014710917377661607,
+            0.05429496714180353,
+            0.02871541818520885,
+            0.04828758692169649,
+            0.032517894287074,
+            0.024219068922192416,
+            0.04370403071718967
+          ],
+          "source_mendelian_father_scores_not_calibrated_posterior": true,
+          "marginal_maternal_genotype_and_treatment_unchanged_in_primary": false
+        }
+      ]
+    }
+  },
+  "limitations": {
+    "original_2017_source_reused_not_new_field_experiment": true,
+    "within_group_permutation_conditions_on_maternal_genotype_and_sibling_treatment": true,
+    "excess_six_to_seventh_locus_prediction_not_proof_of_identified_true_father": true,
+    "all_candidate_sires_sampled_adults_only_unobserved_fathers_remain": true,
+    "SSR_loci_potential_population_structure_and_relatedness_not_eliminated": true,
+    "random_within_family_swap_conservative_if_siblings_share_single_father": true,
+    "nonzero_allele_code_valid_zero_is_missing": true,
+    "no_geographic_distance_or_spatial_prior_input": true,
+    "mother_bootstrap_not_seven_loci_independent": true,
+    "no_original_alleles_coordinates_parentage_rows_or_ids_exported": true,
+    "does_not_reidentify_Daphne_jezoensis_or_D_pseudomezereum_parentage": true
+  }
+}

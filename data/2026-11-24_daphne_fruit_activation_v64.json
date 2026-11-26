@@ -1,0 +1,2062 @@
+{
+  "status": "original_Daphne_jezoensis_residual_female_activation_v64",
+  "source_article": "10.1002/ajb2.16239",
+  "relevant_separate_hand_outcross_study": "10.1007/s10265-017-0978-5",
+  "original_zenodo": "10.5281/zenodo.8253921",
+  "original_zip_sha256": "97a403f17ac4025e0a5834485cc9ceb820fa760ed5c38452d4a866abc7d8eec8",
+  "rng_seed": 20261124,
+  "conditioned_draws_per_null": 6000,
+  "sex_year": [
+    {
+      "year": 2018,
+      "morph_exact_label": "H",
+      "n_original_genets_valid": 105,
+      "flowers_total": 4765,
+      "fruits_total": 53,
+      "natural_fruit_per_flower": 0.01112277019937041,
+      "fruit_positive_genets": 14,
+      "zero_fruit_genets": 91,
+      "mean_genet_fruit_rate": 0.006724068504681425,
+      "observed": {
+        "fruit_positive_genets": 14,
+        "zero_fruit_genets": 91,
+        "fruit_count_per_fruiting_genet": 3.7857142857142856,
+        "effective_number_of_fruit_mothers_herfindahl": 3.7503337783711617,
+        "share_all_fruits_top_tenth_genets": 0.9433962264150944
+      },
+      "null_tests": {
+        "all_flowers_within_morph_year": {
+          "strata": 1,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 30.654833333333332,
+              "null_95percentile": [
+                25,
+                36
+              ],
+              "observed": 14,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 20.868075998533545,
+              "null_95percentile": [
+                15.02139037433155,
+                27.81188118811881
+              ],
+              "observed": 3.7503337783711617,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.6091823899371068,
+              "null_95percentile": [
+                0.5094339622641509,
+                0.7169811320754716
+              ],
+              "observed": 0.9433962264150944,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "flower_count_quartile_conditioned": {
+          "strata": 4,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 23.773333333333333,
+              "null_95percentile": [
+                20,
+                27
+              ],
+              "observed": 14,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 15.625007152339778,
+              "null_95percentile": [
+                11.559670781893004,
+                19.643356643356643
+              ],
+              "observed": 3.7503337783711617,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.7267704402515722,
+              "null_95percentile": [
+                0.6415094339622641,
+                0.8113207547169812
+              ],
+              "observed": 0.9433962264150944,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_0m": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 0,
+          "blocks": 17,
+          "fruit_positive_blocks": 7,
+          "single_genet_blocks": 3,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 26.628666666666668,
+              "null_95percentile": [
+                22,
+                31
+              ],
+              "observed": 14,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 16.7860392512599,
+              "null_95percentile": [
+                12.263720486209568,
+                21.442748091603054
+              ],
+              "observed": 3.7503337783711617,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.682688679245283,
+              "null_95percentile": [
+                0.6037735849056604,
+                0.7735849056603774
+              ],
+              "observed": 0.9433962264150944,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_0m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 0,
+          "blocks_after_joint_flower_size": 30,
+          "singleton_genet_strata": 10,
+          "n_genets_in_multigenet_strata": 95,
+          "n_fruits_in_multigenet_strata": 53,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 24.9355,
+              "null_95percentile": [
+                22,
+                28
+              ],
+              "observed": 14,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 15.325574898354217,
+              "null_95percentile": [
+                11.37246963562753,
+                19.108843537414966
+              ],
+              "observed": 3.7503337783711617,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.7157327044025157,
+              "null_95percentile": [
+                0.6415094339622641,
+                0.7924528301886793
+              ],
+              "observed": 0.9433962264150944,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_5m": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 5,
+          "blocks": 18,
+          "fruit_positive_blocks": 6,
+          "single_genet_blocks": 4,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 25.975166666666667,
+              "null_95percentile": [
+                22,
+                30
+              ],
+              "observed": 14,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 16.495312974486364,
+              "null_95percentile": [
+                12.266375545851528,
+                21.1203007518797
+              ],
+              "observed": 3.7503337783711617,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.6963144654088049,
+              "null_95percentile": [
+                0.6037735849056604,
+                0.7735849056603774
+              ],
+              "observed": 0.9433962264150944,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_5m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 5,
+          "blocks_after_joint_flower_size": 31,
+          "singleton_genet_strata": 14,
+          "n_genets_in_multigenet_strata": 91,
+          "n_fruits_in_multigenet_strata": 51,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 24.5935,
+              "null_95percentile": [
+                21,
+                28
+              ],
+              "observed": 14,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 15.584901170329637,
+              "null_95percentile": [
+                11.655601659751037,
+                19.643356643356643
+              ],
+              "observed": 3.7503337783711617,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.7208333333333333,
+              "null_95percentile": [
+                0.6415094339622641,
+                0.7924528301886793
+              ],
+              "observed": 0.9433962264150944,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_0m": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 0,
+          "blocks": 7,
+          "fruit_positive_blocks": 2,
+          "single_genet_blocks": 0,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 28.451833333333333,
+              "null_95percentile": [
+                23,
+                34
+              ],
+              "observed": 14,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 19.56851109904138,
+              "null_95percentile": [
+                14.258883248730964,
+                25.306306306306308
+              ],
+              "observed": 3.7503337783711617,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.6385849056603773,
+              "null_95percentile": [
+                0.5471698113207547,
+                0.7358490566037735
+              ],
+              "observed": 0.9433962264150944,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_0m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 0,
+          "blocks_after_joint_flower_size": 13,
+          "singleton_genet_strata": 5,
+          "n_genets_in_multigenet_strata": 100,
+          "n_fruits_in_multigenet_strata": 53,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 27.919166666666666,
+              "null_95percentile": [
+                24,
+                32
+              ],
+              "observed": 14,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 19.081869820007284,
+              "null_95percentile": [
+                14.115577889447236,
+                24.42608695652174
+              ],
+              "observed": 3.7503337783711617,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.6475817610062892,
+              "null_95percentile": [
+                0.5471698113207547,
+                0.7358490566037735
+              ],
+              "observed": 0.9433962264150944,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_10m": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 10,
+          "blocks": 9,
+          "fruit_positive_blocks": 5,
+          "single_genet_blocks": 1,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 28.118333333333332,
+              "null_95percentile": [
+                24,
+                33
+              ],
+              "observed": 14,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 18.29550048414084,
+              "null_95percentile": [
+                13.702439024390245,
+                23.214876033057852
+              ],
+              "observed": 3.7503337783711617,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.6543459119496855,
+              "null_95percentile": [
+                0.5660377358490566,
+                0.7358490566037735
+              ],
+              "observed": 0.9433962264150944,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_10m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 10,
+          "blocks_after_joint_flower_size": 17,
+          "singleton_genet_strata": 2,
+          "n_genets_in_multigenet_strata": 103,
+          "n_fruits_in_multigenet_strata": 53,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 26.681,
+              "null_95percentile": [
+                23,
+                30
+              ],
+              "observed": 14,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 17.200123003523842,
+              "null_95percentile": [
+                12.944700460829493,
+                21.442748091603054
+              ],
+              "observed": 3.7503337783711617,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.6790220125786164,
+              "null_95percentile": [
+                0.6037735849056604,
+                0.7547169811320755
+              ],
+              "observed": 0.9433962264150944,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        }
+      },
+      "single_largest_fruit_genet_excluded": {
+        "n_retained_genets": 104,
+        "n_retained_fruits": 30,
+        "n_original_fruits_removed_by_one_genet": 23,
+        "observed": {
+          "fruit_positive_genets": 13,
+          "zero_fruit_genets": 91,
+          "fruit_count_per_fruiting_genet": 2.3076923076923075,
+          "effective_number_of_fruit_mothers_herfindahl": 4.090909090909091,
+          "share_all_fruits_top_tenth_genets": 0.9333333333333333
+        },
+        "flower_budget_global_null": {
+          "fruit_positive": {
+            "null_mean": 20.911666666666665,
+            "null_95percentile": [
+              17,
+              25
+            ],
+            "observed": 13,
+            "null_tail_p_one_sided": 0.0003332777870354941,
+            "tail": "low"
+          },
+          "effective_fruit_mothers": {
+            "null_mean": 16.158046393642866,
+            "null_95percentile": [
+              10.714285714285714,
+              21.428571428571427
+            ],
+            "observed": 4.090909090909091,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "low"
+          },
+          "top_10pct_fruit_share": {
+            "null_mean": 0.669611111111111,
+            "null_95percentile": [
+              0.5333333333333333,
+              0.8
+            ],
+            "observed": 0.9333333333333333,
+            "null_tail_p_one_sided": 0.0003332777870354941,
+            "tail": "high"
+          },
+          "draws": 6000
+        },
+        "flower_quartile_conditional_null": {
+          "fruit_positive": {
+            "null_mean": 18.7025,
+            "null_95percentile": [
+              15,
+              22
+            ],
+            "observed": 13,
+            "null_tail_p_one_sided": 0.0021663056157307115,
+            "tail": "low"
+          },
+          "effective_fruit_mothers": {
+            "null_mean": 13.77928756038326,
+            "null_95percentile": [
+              9.574468085106384,
+              18
+            ],
+            "observed": 4.090909090909091,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "low"
+          },
+          "top_10pct_fruit_share": {
+            "null_mean": 0.7432444444444444,
+            "null_95percentile": [
+              0.6333333333333333,
+              0.8666666666666667
+            ],
+            "observed": 0.9333333333333333,
+            "null_tail_p_one_sided": 0.0021663056157307115,
+            "tail": "high"
+          },
+          "draws": 6000
+        },
+        "not_outlier_independent_population_replication": true
+      }
+    },
+    {
+      "year": 2018,
+      "morph_exact_label": "F",
+      "n_original_genets_valid": 63,
+      "flowers_total": 619,
+      "fruits_total": 255,
+      "natural_fruit_per_flower": 0.41195476575121165,
+      "fruit_positive_genets": 37,
+      "zero_fruit_genets": 26,
+      "mean_genet_fruit_rate": 0.33137463255914146,
+      "observed": {
+        "fruit_positive_genets": 37,
+        "zero_fruit_genets": 26,
+        "fruit_count_per_fruiting_genet": 6.891891891891892,
+        "effective_number_of_fruit_mothers_herfindahl": 16.219755550012472,
+        "share_all_fruits_top_tenth_genets": 0.5490196078431373
+      },
+      "null_tests": {
+        "all_flowers_within_morph_year": {
+          "strata": 1,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 55.924,
+              "null_95percentile": [
+                52,
+                60
+              ],
+              "observed": 37,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 25.43316695830212,
+              "null_95percentile": [
+                21.78391959798995,
+                29.46307204349796
+              ],
+              "observed": 16.219755550012472,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.42155816993464057,
+              "null_95percentile": [
+                0.3803921568627451,
+                0.4627450980392157
+              ],
+              "observed": 0.5490196078431373,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "flower_count_quartile_conditioned": {
+          "strata": 4,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 52.1045,
+              "null_95percentile": [
+                49,
+                55
+              ],
+              "observed": 37,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 22.36120732963648,
+              "null_95percentile": [
+                20.026178010471206,
+                24.677419354838708
+              ],
+              "observed": 16.219755550012472,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.45651045751633995,
+              "null_95percentile": [
+                0.42745098039215684,
+                0.48627450980392156
+              ],
+              "observed": 0.5490196078431373,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_0m": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 0,
+          "blocks": 18,
+          "fruit_positive_blocks": 15,
+          "single_genet_blocks": 7,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 51.1235,
+              "null_95percentile": [
+                47,
+                55
+              ],
+              "observed": 37,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 17.062390040124477,
+              "null_95percentile": [
+                15.8558888076079,
+                18.270838449770338
+              ],
+              "observed": 16.219755550012472,
+              "null_tail_p_one_sided": 0.08598566905515748,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.5200052287581699,
+              "null_95percentile": [
+                0.49411764705882355,
+                0.5490196078431373
+              ],
+              "observed": 0.5490196078431373,
+              "null_tail_p_one_sided": 0.026662222962839526,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_0m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 0,
+          "blocks_after_joint_flower_size": 28,
+          "singleton_genet_strata": 13,
+          "n_genets_in_multigenet_strata": 50,
+          "n_fruits_in_multigenet_strata": 168,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 46.126,
+              "null_95percentile": [
+                43,
+                49
+              ],
+              "observed": 37,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 16.619816519548504,
+              "null_95percentile": [
+                15.627253064167267,
+                17.50336473755047
+              ],
+              "observed": 16.219755550012472,
+              "null_tail_p_one_sided": 0.20163306115647392,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.5377725490196077,
+              "null_95percentile": [
+                0.5137254901960784,
+                0.5647058823529412
+              ],
+              "observed": 0.5490196078431373,
+              "null_tail_p_one_sided": 0.22296283952674553,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_5m": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 5,
+          "blocks": 18,
+          "fruit_positive_blocks": 15,
+          "single_genet_blocks": 5,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 51.654,
+              "null_95percentile": [
+                48,
+                55
+              ],
+              "observed": 37,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 18.06524178227573,
+              "null_95percentile": [
+                16.558441558441558,
+                19.579945799457995
+              ],
+              "observed": 16.219755550012472,
+              "null_tail_p_one_sided": 0.0071654724212631225,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.5112196078431372,
+              "null_95percentile": [
+                0.4823529411764706,
+                0.5411764705882353
+              ],
+              "observed": 0.5490196078431373,
+              "null_tail_p_one_sided": 0.009998333611064822,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_5m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 5,
+          "blocks_after_joint_flower_size": 28,
+          "singleton_genet_strata": 11,
+          "n_genets_in_multigenet_strata": 52,
+          "n_fruits_in_multigenet_strata": 176,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 46.914833333333334,
+              "null_95percentile": [
+                44,
+                50
+              ],
+              "observed": 37,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 16.29749980990071,
+              "null_95percentile": [
+                15.332468757368545,
+                17.17058357538949
+              ],
+              "observed": 16.219755550012472,
+              "null_tail_p_one_sided": 0.4314280953174471,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.5454803921568627,
+              "null_95percentile": [
+                0.5215686274509804,
+                0.5686274509803921
+              ],
+              "observed": 0.5490196078431373,
+              "null_tail_p_one_sided": 0.4470921513081153,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_0m": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 0,
+          "blocks": 7,
+          "fruit_positive_blocks": 6,
+          "single_genet_blocks": 1,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 53.6465,
+              "null_95percentile": [
+                49,
+                58
+              ],
+              "observed": 37,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 18.77816966379875,
+              "null_95percentile": [
+                17.026708562450903,
+                20.61014263074485
+              ],
+              "observed": 16.219755550012472,
+              "null_tail_p_one_sided": 0.0018330278286952174,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.48480653594771245,
+              "null_95percentile": [
+                0.4548039215686274,
+                0.5176470588235295
+              ],
+              "observed": 0.5490196078431373,
+              "null_tail_p_one_sided": 0.0003332777870354941,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_0m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 0,
+          "blocks_after_joint_flower_size": 12,
+          "singleton_genet_strata": 2,
+          "n_genets_in_multigenet_strata": 61,
+          "n_fruits_in_multigenet_strata": 221,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 51.42966666666667,
+              "null_95percentile": [
+                48,
+                55
+              ],
+              "observed": 37,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 18.629228702073146,
+              "null_95percentile": [
+                17.18873909595559,
+                20.013850415512465
+              ],
+              "observed": 16.219755550012472,
+              "null_tail_p_one_sided": 0.0008331944675887352,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.4908758169934641,
+              "null_95percentile": [
+                0.4627450980392157,
+                0.5215686274509804
+              ],
+              "observed": 0.5490196078431373,
+              "null_tail_p_one_sided": 0.0006665555740709882,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_10m": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 10,
+          "blocks": 8,
+          "fruit_positive_blocks": 8,
+          "single_genet_blocks": 0,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 53.698166666666665,
+              "null_95percentile": [
+                49,
+                58
+              ],
+              "observed": 37,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 20.216492551747336,
+              "null_95percentile": [
+                17.859104641581983,
+                22.855887521968366
+              ],
+              "observed": 16.219755550012472,
+              "null_tail_p_one_sided": 0.0003332777870354941,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.47603660130718967,
+              "null_95percentile": [
+                0.44313725490196076,
+                0.5098039215686274
+              ],
+              "observed": 0.5490196078431373,
+              "null_tail_p_one_sided": 0.0003332777870354941,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_10m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 10,
+          "blocks_after_joint_flower_size": 16,
+          "singleton_genet_strata": 1,
+          "n_genets_in_multigenet_strata": 62,
+          "n_fruits_in_multigenet_strata": 255,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 49.9025,
+              "null_95percentile": [
+                47,
+                53
+              ],
+              "observed": 37,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 19.526909884151443,
+              "null_95percentile": [
+                17.569338555979243,
+                21.59581534373962
+              ],
+              "observed": 16.219755550012472,
+              "null_tail_p_one_sided": 0.0004999166805532411,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.48890588235294125,
+              "null_95percentile": [
+                0.4549019607843137,
+                0.5254901960784314
+              ],
+              "observed": 0.5490196078431373,
+              "null_tail_p_one_sided": 0.0006665555740709882,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        }
+      },
+      "single_largest_fruit_genet_excluded": {
+        "n_retained_genets": 62,
+        "n_retained_fruits": 221,
+        "n_original_fruits_removed_by_one_genet": 34,
+        "observed": {
+          "fruit_positive_genets": 36,
+          "zero_fruit_genets": 26,
+          "fruit_count_per_fruiting_genet": 6.138888888888889,
+          "effective_number_of_fruit_mothers_herfindahl": 17.119172800560815,
+          "share_all_fruits_top_tenth_genets": 0.5203619909502263
+        },
+        "flower_budget_global_null": {
+          "fruit_positive": {
+            "null_mean": 54.325,
+            "null_95percentile": [
+              50,
+              58
+            ],
+            "observed": 36,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "low"
+          },
+          "effective_fruit_mothers": {
+            "null_mean": 26.453534536899504,
+            "null_95percentile": [
+              22.13004077933847,
+              31.011144431326233
+            ],
+            "observed": 17.119172800560815,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "low"
+          },
+          "top_10pct_fruit_share": {
+            "null_mean": 0.40108974358974364,
+            "null_95percentile": [
+              0.3574660633484163,
+              0.4479638009049774
+            ],
+            "observed": 0.5203619909502263,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "high"
+          },
+          "draws": 6000
+        },
+        "flower_quartile_conditional_null": {
+          "fruit_positive": {
+            "null_mean": 50.73466666666667,
+            "null_95percentile": [
+              47,
+              54
+            ],
+            "observed": 36,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "low"
+          },
+          "effective_fruit_mothers": {
+            "null_mean": 23.470011576601628,
+            "null_95percentile": [
+              20.495593789341168,
+              26.272727272727273
+            ],
+            "observed": 17.119172800560815,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "low"
+          },
+          "top_10pct_fruit_share": {
+            "null_mean": 0.43221945701357467,
+            "null_95percentile": [
+              0.40271493212669685,
+              0.4660633484162896
+            ],
+            "observed": 0.5203619909502263,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "high"
+          },
+          "draws": 6000
+        },
+        "not_outlier_independent_population_replication": true
+      }
+    },
+    {
+      "year": 2020,
+      "morph_exact_label": "H",
+      "n_original_genets_valid": 71,
+      "flowers_total": 2573,
+      "fruits_total": 28,
+      "natural_fruit_per_flower": 0.010882238631947143,
+      "fruit_positive_genets": 9,
+      "zero_fruit_genets": 62,
+      "mean_genet_fruit_rate": 0.009766908005727208,
+      "observed": {
+        "fruit_positive_genets": 9,
+        "zero_fruit_genets": 62,
+        "fruit_count_per_fruiting_genet": 3.111111111111111,
+        "effective_number_of_fruit_mothers_herfindahl": 3.408695652173913,
+        "share_all_fruits_top_tenth_genets": 0.9642857142857143
+      },
+      "null_tests": {
+        "all_flowers_within_morph_year": {
+          "strata": 1,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 19.106333333333332,
+              "null_95percentile": [
+                15,
+                23
+              ],
+              "observed": 9,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 15.024512856551466,
+              "null_95percentile": [
+                10.31578947368421,
+                19.6
+              ],
+              "observed": 3.408695652173913,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.6020416666666667,
+              "null_95percentile": [
+                0.4642857142857143,
+                0.75
+              ],
+              "observed": 0.9642857142857143,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "flower_count_quartile_conditioned": {
+          "strata": 4,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 18.982,
+              "null_95percentile": [
+                16,
+                22
+              ],
+              "observed": 9,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 14.870554655491365,
+              "null_95percentile": [
+                10.88888888888889,
+                18.666666666666668
+              ],
+              "observed": 3.408695652173913,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.6066369047619048,
+              "null_95percentile": [
+                0.5,
+                0.7142857142857143
+              ],
+              "observed": 0.9642857142857143,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_0m": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 0,
+          "blocks": 16,
+          "fruit_positive_blocks": 8,
+          "single_genet_blocks": 4,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 13.6905,
+              "null_95percentile": [
+                11,
+                16
+              ],
+              "observed": 9,
+              "null_tail_p_one_sided": 0.0009998333611064823,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 5.827819561795482,
+              "null_95percentile": [
+                3.95959595959596,
+                8.521739130434783
+              ],
+              "observed": 3.408695652173913,
+              "null_tail_p_one_sided": 0.0004999166805532411,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.7967678571428571,
+              "null_95percentile": [
+                0.7142857142857143,
+                0.8928571428571429
+              ],
+              "observed": 0.9642857142857143,
+              "null_tail_p_one_sided": 0.0009998333611064823,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_0m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 0,
+          "blocks_after_joint_flower_size": 27,
+          "singleton_genet_strata": 11,
+          "n_genets_in_multigenet_strata": 60,
+          "n_fruits_in_multigenet_strata": 28,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 11.796833333333334,
+              "null_95percentile": [
+                10,
+                13
+              ],
+              "observed": 9,
+              "null_tail_p_one_sided": 0.004999166805532411,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 4.505540222794029,
+              "null_95percentile": [
+                3.4690265486725664,
+                5.850746268656716
+              ],
+              "observed": 3.408695652173913,
+              "null_tail_p_one_sided": 0.004999166805532411,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.8643988095238094,
+              "null_95percentile": [
+                0.8214285714285714,
+                0.9285714285714286
+              ],
+              "observed": 0.9642857142857143,
+              "null_tail_p_one_sided": 0.004999166805532411,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_5m": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 5,
+          "blocks": 16,
+          "fruit_positive_blocks": 6,
+          "single_genet_blocks": 4,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 13.652833333333334,
+              "null_95percentile": [
+                11,
+                17
+              ],
+              "observed": 9,
+              "null_tail_p_one_sided": 0.0018330278286952174,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 8.781248411727931,
+              "null_95percentile": [
+                6.125,
+                11.878787878787879
+              ],
+              "observed": 3.408695652173913,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.7976071428571428,
+              "null_95percentile": [
+                0.6785714285714286,
+                0.8928571428571429
+              ],
+              "observed": 0.9642857142857143,
+              "null_tail_p_one_sided": 0.0018330278286952174,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_5m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 5,
+          "blocks_after_joint_flower_size": 27,
+          "singleton_genet_strata": 10,
+          "n_genets_in_multigenet_strata": 61,
+          "n_fruits_in_multigenet_strata": 28,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 12.74,
+              "null_95percentile": [
+                11,
+                15
+              ],
+              "observed": 9,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 7.871367018695423,
+              "null_95percentile": [
+                5.681159420289855,
+                9.8
+              ],
+              "observed": 3.408695652173913,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.8307142857142856,
+              "null_95percentile": [
+                0.75,
+                0.8928571428571429
+              ],
+              "observed": 0.9642857142857143,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_0m": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 0,
+          "blocks": 7,
+          "fruit_positive_blocks": 4,
+          "single_genet_blocks": 0,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 15.2455,
+              "null_95percentile": [
+                12,
+                18
+              ],
+              "observed": 9,
+              "null_tail_p_one_sided": 0.0003332777870354941,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 10.711712467952125,
+              "null_95percentile": [
+                7.84,
+                14
+              ],
+              "observed": 3.408695652173913,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.7398809523809524,
+              "null_95percentile": [
+                0.6428571428571429,
+                0.8571428571428571
+              ],
+              "observed": 0.9642857142857143,
+              "null_tail_p_one_sided": 0.0003332777870354941,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_0m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 0,
+          "blocks_after_joint_flower_size": 14,
+          "singleton_genet_strata": 5,
+          "n_genets_in_multigenet_strata": 66,
+          "n_fruits_in_multigenet_strata": 28,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 14.924333333333333,
+              "null_95percentile": [
+                12,
+                17
+              ],
+              "observed": 9,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 10.47038706069612,
+              "null_95percentile": [
+                8,
+                13.066666666666666
+              ],
+              "observed": 3.408695652173913,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.7516011904761906,
+              "null_95percentile": [
+                0.6785714285714286,
+                0.8571428571428571
+              ],
+              "observed": 0.9642857142857143,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_10m": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 10,
+          "blocks": 8,
+          "fruit_positive_blocks": 5,
+          "single_genet_blocks": 1,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 14.918166666666666,
+              "null_95percentile": [
+                12,
+                18
+              ],
+              "observed": 9,
+              "null_tail_p_one_sided": 0.0003332777870354941,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 9.913360032393992,
+              "null_95percentile": [
+                6.87719298245614,
+                13.066666666666666
+              ],
+              "observed": 3.408695652173913,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.7523988095238094,
+              "null_95percentile": [
+                0.6428571428571429,
+                0.8571428571428571
+              ],
+              "observed": 0.9642857142857143,
+              "null_tail_p_one_sided": 0.0003332777870354941,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_10m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 10,
+          "blocks_after_joint_flower_size": 14,
+          "singleton_genet_strata": 1,
+          "n_genets_in_multigenet_strata": 70,
+          "n_fruits_in_multigenet_strata": 28,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 13.868,
+              "null_95percentile": [
+                12,
+                16
+              ],
+              "observed": 9,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 9.006423748765824,
+              "null_95percentile": [
+                6.533333333333333,
+                11.878787878787879
+              ],
+              "observed": 3.408695652173913,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.7902916666666666,
+              "null_95percentile": [
+                0.7142857142857143,
+                0.8571428571428571
+              ],
+              "observed": 0.9642857142857143,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        }
+      },
+      "single_largest_fruit_genet_excluded": {
+        "n_retained_genets": 70,
+        "n_retained_fruits": 14,
+        "n_original_fruits_removed_by_one_genet": 14,
+        "observed": {
+          "fruit_positive_genets": 8,
+          "zero_fruit_genets": 62,
+          "fruit_count_per_fruiting_genet": 1.75,
+          "effective_number_of_fruit_mothers_herfindahl": 5.764705882352941,
+          "share_all_fruits_top_tenth_genets": 0.9285714285714286
+        },
+        "flower_budget_global_null": {
+          "fruit_positive": {
+            "null_mean": 11.345833333333333,
+            "null_95percentile": [
+              9,
+              14
+            ],
+            "observed": 8,
+            "null_tail_p_one_sided": 0.020496583902682886,
+            "tail": "low"
+          },
+          "effective_fruit_mothers": {
+            "null_mean": 9.945553663862672,
+            "null_95percentile": [
+              6.533333333333333,
+              14
+            ],
+            "observed": 5.764705882352941,
+            "null_tail_p_one_sided": 0.013331111481419763,
+            "tail": "low"
+          },
+          "top_10pct_fruit_share": {
+            "null_mean": 0.6895714285714287,
+            "null_95percentile": [
+              0.5,
+              0.8571428571428571
+            ],
+            "observed": 0.9285714285714286,
+            "null_tail_p_one_sided": 0.020496583902682886,
+            "tail": "high"
+          },
+          "draws": 6000
+        },
+        "flower_quartile_conditional_null": {
+          "fruit_positive": {
+            "null_mean": 12.216166666666666,
+            "null_95percentile": [
+              10,
+              14
+            ],
+            "observed": 8,
+            "null_tail_p_one_sided": 0.0008331944675887352,
+            "tail": "low"
+          },
+          "effective_fruit_mothers": {
+            "null_mean": 11.173654642770082,
+            "null_95percentile": [
+              8.166666666666666,
+              14
+            ],
+            "observed": 5.764705882352941,
+            "null_tail_p_one_sided": 0.0008331944675887352,
+            "tail": "low"
+          },
+          "top_10pct_fruit_share": {
+            "null_mean": 0.6274166666666666,
+            "null_95percentile": [
+              0.5,
+              0.7857142857142857
+            ],
+            "observed": 0.9285714285714286,
+            "null_tail_p_one_sided": 0.0008331944675887352,
+            "tail": "high"
+          },
+          "draws": 6000
+        },
+        "not_outlier_independent_population_replication": true
+      }
+    },
+    {
+      "year": 2020,
+      "morph_exact_label": "F",
+      "n_original_genets_valid": 57,
+      "flowers_total": 719,
+      "fruits_total": 205,
+      "natural_fruit_per_flower": 0.2851182197496523,
+      "fruit_positive_genets": 32,
+      "zero_fruit_genets": 25,
+      "mean_genet_fruit_rate": 0.26512956900043744,
+      "observed": {
+        "fruit_positive_genets": 32,
+        "zero_fruit_genets": 25,
+        "fruit_count_per_fruiting_genet": 6.40625,
+        "effective_number_of_fruit_mothers_herfindahl": 15.93667045885476,
+        "share_all_fruits_top_tenth_genets": 0.5170731707317073
+      },
+      "null_tests": {
+        "all_flowers_within_morph_year": {
+          "strata": 1,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 51.150333333333336,
+              "null_95percentile": [
+                47,
+                55
+              ],
+              "observed": 32,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 27.718658664438642,
+              "null_95percentile": [
+                23.360200111172873,
+                32.40169622205089
+              ],
+              "observed": 15.93667045885476,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.3654756097560975,
+              "null_95percentile": [
+                0.3121951219512195,
+                0.4195121951219512
+              ],
+              "observed": 0.5170731707317073,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "flower_count_quartile_conditioned": {
+          "strata": 4,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 50.408833333333334,
+              "null_95percentile": [
+                47,
+                53
+              ],
+              "observed": 32,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 24.710595101117068,
+              "null_95percentile": [
+                21.92227438706312,
+                27.342225113858166
+              ],
+              "observed": 15.93667045885476,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.4024829268292683,
+              "null_95percentile": [
+                0.36585365853658536,
+                0.43902439024390244
+              ],
+              "observed": 0.5170731707317073,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_0m": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 0,
+          "blocks": 15,
+          "fruit_positive_blocks": 11,
+          "single_genet_blocks": 4,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 45.8465,
+              "null_95percentile": [
+                42,
+                49
+              ],
+              "observed": 32,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 21.906823095726068,
+              "null_95percentile": [
+                19.357438968217412,
+                24.447353112274577
+              ],
+              "observed": 15.93667045885476,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.43254796747967483,
+              "null_95percentile": [
+                0.3902439024390244,
+                0.47317073170731705
+              ],
+              "observed": 0.5170731707317073,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_0m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 0,
+          "blocks_after_joint_flower_size": 22,
+          "singleton_genet_strata": 6,
+          "n_genets_in_multigenet_strata": 51,
+          "n_fruits_in_multigenet_strata": 202,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 44.56133333333333,
+              "null_95percentile": [
+                42,
+                46
+              ],
+              "observed": 32,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 21.93266092592922,
+              "null_95percentile": [
+                19.888783719829625,
+                23.97318881916714
+              ],
+              "observed": 15.93667045885476,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.4308227642276424,
+              "null_95percentile": [
+                0.3951219512195122,
+                0.4634146341463415
+              ],
+              "observed": 0.5170731707317073,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_5m": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 5,
+          "blocks": 16,
+          "fruit_positive_blocks": 13,
+          "single_genet_blocks": 4,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 44.370333333333335,
+              "null_95percentile": [
+                41,
+                47
+              ],
+              "observed": 32,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 21.02713130203229,
+              "null_95percentile": [
+                19.251030691708657,
+                22.8520935290919
+              ],
+              "observed": 15.93667045885476,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.4539211382113822,
+              "null_95percentile": [
+                0.424390243902439,
+                0.48292682926829267
+              ],
+              "observed": 0.5170731707317073,
+              "null_tail_p_one_sided": 0.0003332777870354941,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_10m_shift_5m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 10,
+          "shift_m": 5,
+          "blocks_after_joint_flower_size": 26,
+          "singleton_genet_strata": 11,
+          "n_genets_in_multigenet_strata": 46,
+          "n_fruits_in_multigenet_strata": 169,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 40.527,
+              "null_95percentile": [
+                38,
+                43
+              ],
+              "observed": 32,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 19.37113767209963,
+              "null_95percentile": [
+                18.216298222800173,
+                20.430238210986875
+              ],
+              "observed": 15.93667045885476,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.48111788617886175,
+              "null_95percentile": [
+                0.4585365853658537,
+                0.5024390243902439
+              ],
+              "observed": 0.5170731707317073,
+              "null_tail_p_one_sided": 0.0036660556573904347,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_0m": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 0,
+          "blocks": 7,
+          "fruit_positive_blocks": 6,
+          "single_genet_blocks": 0,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 49.558,
+              "null_95percentile": [
+                46,
+                53
+              ],
+              "observed": 32,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 28.13933163541768,
+              "null_95percentile": [
+                24.33340168045163,
+                32.15378729915838
+              ],
+              "observed": 15.93667045885476,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.35604715447154467,
+              "null_95percentile": [
+                0.3121951219512195,
+                0.40487804878048783
+              ],
+              "observed": 0.5170731707317073,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_0m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 0,
+          "blocks_after_joint_flower_size": 11,
+          "singleton_genet_strata": 1,
+          "n_genets_in_multigenet_strata": 56,
+          "n_fruits_in_multigenet_strata": 204,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 48.7505,
+              "null_95percentile": [
+                46,
+                51
+              ],
+              "observed": 32,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 26.626451703351233,
+              "null_95percentile": [
+                23.5170677112479,
+                29.65772759350741
+              ],
+              "observed": 15.93667045885476,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.37054390243902435,
+              "null_95percentile": [
+                0.33170731707317075,
+                0.4146341463414634
+              ],
+              "observed": 0.5170731707317073,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_10m": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 10,
+          "blocks": 7,
+          "fruit_positive_blocks": 7,
+          "single_genet_blocks": 0,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 49.17766666666667,
+              "null_95percentile": [
+                45,
+                53
+              ],
+              "observed": 32,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 24.359371716891445,
+              "null_95percentile": [
+                21.171284634760706,
+                27.62984878369494
+              ],
+              "observed": 15.93667045885476,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.40499105691056914,
+              "null_95percentile": [
+                0.36097560975609755,
+                0.45365853658536587
+              ],
+              "observed": 0.5170731707317073,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        },
+        "spatial_20m_shift_10m_plus_flower_half": {
+          "available": true,
+          "spatial_block_size_m": 20,
+          "shift_m": 10,
+          "blocks_after_joint_flower_size": 13,
+          "singleton_genet_strata": 0,
+          "n_genets_in_multigenet_strata": 57,
+          "n_fruits_in_multigenet_strata": 205,
+          "null_test_reduced_randomization_due_to_fine_strata": true,
+          "summary": {
+            "fruit_positive": {
+              "null_mean": 46.537,
+              "null_95percentile": [
+                44,
+                49
+              ],
+              "observed": 32,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "effective_fruit_mothers": {
+              "null_mean": 23.973404382260025,
+              "null_95percentile": [
+                21.40855832908813,
+                26.48078134845621
+              ],
+              "observed": 15.93667045885476,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "low"
+            },
+            "top_10pct_fruit_share": {
+              "null_mean": 0.40958861788617895,
+              "null_95percentile": [
+                0.37073170731707317,
+                0.44878048780487806
+              ],
+              "observed": 0.5170731707317073,
+              "null_tail_p_one_sided": 0.00016663889351774705,
+              "tail": "high"
+            },
+            "draws": 6000
+          }
+        }
+      },
+      "single_largest_fruit_genet_excluded": {
+        "n_retained_genets": 56,
+        "n_retained_fruits": 177,
+        "n_original_fruits_removed_by_one_genet": 28,
+        "observed": {
+          "fruit_positive_genets": 31,
+          "zero_fruit_genets": 25,
+          "fruit_count_per_fruiting_genet": 5.709677419354839,
+          "effective_number_of_fruit_mothers_herfindahl": 16.90717754991905,
+          "share_all_fruits_top_tenth_genets": 0.4858757062146893
+        },
+        "flower_budget_global_null": {
+          "fruit_positive": {
+            "null_mean": 49.082166666666666,
+            "null_95percentile": [
+              45,
+              53
+            ],
+            "observed": 31,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "low"
+          },
+          "effective_fruit_mothers": {
+            "null_mean": 26.85708160158211,
+            "null_95percentile": [
+              22.07744724630393,
+              31.870803662258393
+            ],
+            "observed": 16.90717754991905,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "low"
+          },
+          "top_10pct_fruit_share": {
+            "null_mean": 0.36745291902071564,
+            "null_95percentile": [
+              0.3163841807909605,
+              0.423728813559322
+            ],
+            "observed": 0.4858757062146893,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "high"
+          },
+          "draws": 6000
+        },
+        "flower_quartile_conditional_null": {
+          "fruit_positive": {
+            "null_mean": 49.962666666666664,
+            "null_95percentile": [
+              47,
+              53
+            ],
+            "observed": 31,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "low"
+          },
+          "effective_fruit_mothers": {
+            "null_mean": 26.290104885174806,
+            "null_95percentile": [
+              22.751633986928105,
+              29.808753568030447
+            ],
+            "observed": 16.90717754991905,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "low"
+          },
+          "top_10pct_fruit_share": {
+            "null_mean": 0.37748587570621467,
+            "null_95percentile": [
+              0.3389830508474576,
+              0.4180790960451977
+            ],
+            "observed": 0.4858757062146893,
+            "null_tail_p_one_sided": 0.00016663889351774705,
+            "tail": "high"
+          },
+          "draws": 6000
+        },
+        "not_outlier_independent_population_replication": true
+      }
+    }
+  ],
+  "strict_H_temporal_recurrence": {
+    "same_H_genets_with_valid_natural_fruit_both_years": 45,
+    "fruit_positive_H_2018": 6,
+    "fruit_positive_H_2020": 6,
+    "positive_both_years": 1,
+    "null_expected_repeat_if_years_exchangeable": 0.8,
+    "hypergeometric_one_sided_repeat_excess_p": 0.5994353632754086,
+    "null_does_not_preserve_year_specific_flower_counts_or_spatial_network": true,
+    "no_causal_temporal_residual_pistil_evolution": true
+  },
+  "limits": {
+    "fruit_count_mature_not_viable_seed_or_genetic_offspring": true,
+    "rare_fruits_do_not_prove_pistil_intrinsic_viability": true,
+    "null_assumes_exchangeable_flower_fate_within_given_strata": true,
+    "source_flower_counts_not_ovule_or_pollination_day_match": true,
+    "spatial_grid_conditions_coarse_coordinates_not_complete_resource_and_pollen_exposure": true,
+    "source_prior_related_parentage_not_used_in_natural_fruit_counts": true,
+    "observed_fruit_clustering_not_equivalent_to_mechanistic_two_stage_reproductive_failure": true,
+    "Shibata2018_hand_outcross_nonfruiting_is_previously_published": true,
+    "no_focal_D_pseudomezereum_flower_or_pollen_tube_data": true,
+    "one_source_population_repeated_years_not_two_independent_replicates": true,
+    "no_original_genetIDs_alleles_coords_or_parentage_rows_exported": true
+  }
+}

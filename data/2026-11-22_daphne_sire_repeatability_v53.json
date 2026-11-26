@@ -1,0 +1,136 @@
+{
+  "status": "original_Daphne_same_genet_multiyear_sire_residual_repeatability_v53",
+  "source_doi": "10.1002/ajb2.16239",
+  "zenodo_record": "10.5281/zenodo.8253921",
+  "original_zip_sha256": "97a403f17ac4025e0a5834485cc9ceb820fa760ed5c38452d4a866abc7d8eec8",
+  "adult_genets": 492,
+  "years": [
+    {
+      "year": 2018,
+      "candidate_strict_H": 105,
+      "offspring_assigned_to_eligible_H": 180,
+      "sampled_mother_genets": 39,
+      "distance_conditional_beta": 0.625023
+    },
+    {
+      "year": 2020,
+      "candidate_strict_H": 71,
+      "offspring_assigned_to_eligible_H": 206,
+      "sampled_mother_genets": 33,
+      "distance_conditional_beta": 0.895633
+    }
+  ],
+  "same_strict_H_genet_in_both_years": 45,
+  "repeatability": {
+    "primary_score": "Spearman correlation of per-donor log((assigned offspring +0.5)/(model-expected +0.5)); same eligible H sire genets 2018 and 2020",
+    "primary_spearman": 0.144532279314888,
+    "conditional_independent_maternal_multinomial_null_mean": 0.006461198945981553,
+    "null_95percent": [
+      -0.28696969696969693,
+      0.3038306982872198
+    ],
+    "upper_tail_p": 0.18488151184881513,
+    "two_sided_p": 0.34806519348065196,
+    "null_draws": 10000,
+    "seed": 20261122,
+    "raw_assigned_sire_count_spearman": 0.12049146875274751,
+    "expected_sire_count_spearman": 0.30105401844532276,
+    "overlapping_sires_with_at_least_one_assigned_both_years": 15,
+    "observed_successful_same_H_sires_2018": 24,
+    "observed_successful_same_H_sires_2020": 23,
+    "binary_2018_rows_2020_cols": [
+      [
+        13,
+        8
+      ],
+      [
+        9,
+        15
+      ]
+    ],
+    "binary_sire_success_fisher_two_sided_p": 0.13924372537402585,
+    "binary_sire_success_fisher_OR": 2.7083333333333335,
+    "random_fixed_margins_overlap_expected": 12.266666666666667,
+    "random_fixed_margins_overlap_95": [
+      9,
+      16
+    ],
+    "random_fixed_margins_overlap_lower_p": 0.9713028697130287,
+    "model_iid_null_sire_occupancy_miscalibration_audit": {
+      "2018": {
+        "actual_sires_detected_in_both_year_eligible_subset": 24,
+        "iid_model_null_sires_mean": 32.2847,
+        "iid_model_null_sires_interval95": [
+          28,
+          37
+        ]
+      },
+      "2020": {
+        "actual_sires_detected_in_both_year_eligible_subset": 23,
+        "iid_model_null_sires_mean": 34.286,
+        "iid_model_null_sires_interval95": [
+          30,
+          38
+        ]
+      }
+    },
+    "fixed_yearly_success_and_five_expected_opportunity_strata_overlap_mean": 13.0138,
+    "fixed_yearly_success_and_five_expected_opportunity_strata_overlap_95": [
+      10,
+      16
+    ],
+    "fixed_yearly_success_and_five_expected_opportunity_strata_overlap_lower_p": 0.9378062193780622,
+    "null_overlap_mean": 25.2748,
+    "null_overlap_95percent": [
+      20,
+      30
+    ],
+    "null_overlap_upper_tail_p": 1,
+    "leave_one_genet_out_primary_range": [
+      0.0916138125440451,
+      0.19704016913319236
+    ],
+    "expected_count_support_both_at_least_0p5": {
+      "n": 35,
+      "spearman": 0.19411764705882356
+    },
+    "expected_count_support_both_at_least_1": {
+      "n": 22,
+      "spearman": 0.22868435911914178
+    },
+    "expected_count_support_both_at_least_2": {
+      "n": 13,
+      "spearman": 0.20329670329670327
+    }
+  },
+  "same_H_fruit_recurrence_descriptive": {
+    "n_eligible_both_years": 45,
+    "2018_fruit_positive": 6,
+    "2020_fruit_positive": 6,
+    "same_genet_fruiting_both_years": 1,
+    "fruit_binary_2x2_2018_rows_2020_cols": [
+      [
+        34,
+        5
+      ],
+      [
+        5,
+        1
+      ]
+    ],
+    "independent_fixed_margins_expected_repeated": 0.8,
+    "fisher_two_sided_p": 1,
+    "fisher_odds_ratio": 1.36,
+    "limitations": "conditional on flowering H both years; no 2019, true viable seeds unknown, plant size/fruit probability not adjusted"
+  },
+  "strict_limits": {
+    "same_population_two_years": true,
+    "source_95percent_SSR_father_assignment_not_whole_population_success": true,
+    "mother_offspring_counts_fixed_within_year": true,
+    "mean_model_conditions_on_fitted_year_beta_and_10m_kernel": true,
+    "sire_flower_count_observational_and_spatial_opportunity_model_misspec_possible": true,
+    "not_stable_genetic_quality_or_gene_flow_causal_identification": true,
+    "original_parent_IDs_and_coordinates_never_output": true,
+    "target_Daphne_pseudomezereum_unmeasured": true
+  }
+}

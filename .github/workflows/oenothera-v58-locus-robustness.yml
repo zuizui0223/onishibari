@@ -1,0 +1,33 @@
+name: Independent Oenothera leave-one-SSR-locus-out validation v58
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/oenothera_v58_locus_robustness.py
+      - scripts/verify_oenothera_v58.py
+      - data/2026-11-24_oenothera_locus_robustness_v58.json
+      - results/2026-11-24_oenothera_locus_robustness_v58.md
+      - .github/workflows/oenothera-v58-locus-robustness.yml
+permissions: {contents: read}
+jobs:
+  source-backed-locus-validation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact pinned statistical dependencies
+        run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Audit exact SSR archive and evaluate leave-locus-out genetic evidence
+        run: python scripts/oenothera_v58_locus_robustness.py
+      - name: Recompute all original-source and holdout numerics against saved aggregate
+        run: python scripts/verify_oenothera_v58.py --actual analysis_results_oenothera_locus_robustness_v58/oenothera_locus_robustness_v58.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: independent-oenothera-v58-aggregate-only
+          path: analysis_results_oenothera_locus_robustness_v58/
+          retention-days: 30

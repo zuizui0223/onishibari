@@ -1,0 +1,334 @@
+{
+  "status": "independent_Oenothera_source_genotype_only_no_spatial_prior_v57",
+  "published_study": "10.1111/mec.14115",
+  "Dryad": "10.5061/dryad.p24q3",
+  "fixed_Zenodo_record": 4942351,
+  "genotype_workbook_sha256": "8348dd28cbc4532cea22f80676d241cea322527bec35e8ec1995edd812be30e7",
+  "fruit_MLTR_source_sha256": "c703d56287b62f7550931e46f54591fa7a872438420bf401814eea3186320eb6",
+  "Mendelian_identity": {
+    "parents_sampled": 323,
+    "offspring_genotyped": 521,
+    "loci": 7,
+    "mother_genotype_inconsistent_loci_total": 1,
+    "offspring_with_any_mother_genotype_exclusion": 1,
+    "offspring_with_zero_compatible_father": 207,
+    "offspring_with_unique_zero_mismatch_father": 274,
+    "offspring_with_multiple_zero_mismatch_fathers": 40,
+    "all_offspring_median_compatible_fathers": 1,
+    "all_offspring_max_compatible_fathers": 15,
+    "mother_offspring_mismatch_count_per_child": {
+      "0": 520,
+      "1": 1
+    },
+    "source_zero_coded_alleles_are_treated_as_missing": true,
+    "candidate_father_minimum_complete_informative_loci": 5,
+    "mother_child_observed_loci_median": 7,
+    "mother_child_observed_loci_min": 0,
+    "maternal_compatibility_by_locus": [
+      {
+        "locus_index_one_based": 1,
+        "mother_offspring_mendelian_mismatch": 1,
+        "adult_zero_coded_allele_cells": 48,
+        "offspring_zero_coded_allele_cells": 20,
+        "adult_observed_allele_diversity": 9,
+        "offspring_observed_allele_diversity": 8,
+        "offspring_mother_locus_fully_called": 487,
+        "offspring_with_at_least_one_zero_mismatch_father_after_omitting_this_locus": 343
+      },
+      {
+        "locus_index_one_based": 2,
+        "mother_offspring_mendelian_mismatch": 0,
+        "adult_zero_coded_allele_cells": 10,
+        "offspring_zero_coded_allele_cells": 6,
+        "adult_observed_allele_diversity": 39,
+        "offspring_observed_allele_diversity": 35,
+        "offspring_mother_locus_fully_called": 494,
+        "offspring_with_at_least_one_zero_mismatch_father_after_omitting_this_locus": 408
+      },
+      {
+        "locus_index_one_based": 3,
+        "mother_offspring_mendelian_mismatch": 0,
+        "adult_zero_coded_allele_cells": 36,
+        "offspring_zero_coded_allele_cells": 24,
+        "adult_observed_allele_diversity": 14,
+        "offspring_observed_allele_diversity": 11,
+        "offspring_mother_locus_fully_called": 486,
+        "offspring_with_at_least_one_zero_mismatch_father_after_omitting_this_locus": 333
+      },
+      {
+        "locus_index_one_based": 4,
+        "mother_offspring_mendelian_mismatch": 0,
+        "adult_zero_coded_allele_cells": 16,
+        "offspring_zero_coded_allele_cells": 68,
+        "adult_observed_allele_diversity": 36,
+        "offspring_observed_allele_diversity": 33,
+        "offspring_mother_locus_fully_called": 486,
+        "offspring_with_at_least_one_zero_mismatch_father_after_omitting_this_locus": 379
+      },
+      {
+        "locus_index_one_based": 5,
+        "mother_offspring_mendelian_mismatch": 0,
+        "adult_zero_coded_allele_cells": 0,
+        "offspring_zero_coded_allele_cells": 74,
+        "adult_observed_allele_diversity": 8,
+        "offspring_observed_allele_diversity": 8,
+        "offspring_mother_locus_fully_called": 484,
+        "offspring_with_at_least_one_zero_mismatch_father_after_omitting_this_locus": 330
+      },
+      {
+        "locus_index_one_based": 6,
+        "mother_offspring_mendelian_mismatch": 0,
+        "adult_zero_coded_allele_cells": 26,
+        "offspring_zero_coded_allele_cells": 8,
+        "adult_observed_allele_diversity": 10,
+        "offspring_observed_allele_diversity": 8,
+        "offspring_mother_locus_fully_called": 501,
+        "offspring_with_at_least_one_zero_mismatch_father_after_omitting_this_locus": 317
+      },
+      {
+        "locus_index_one_based": 7,
+        "mother_offspring_mendelian_mismatch": 0,
+        "adult_zero_coded_allele_cells": 0,
+        "offspring_zero_coded_allele_cells": 25,
+        "adult_observed_allele_diversity": 27,
+        "offspring_observed_allele_diversity": 27,
+        "offspring_mother_locus_fully_called": 507,
+        "offspring_with_at_least_one_zero_mismatch_father_after_omitting_this_locus": 371
+      }
+    ],
+    "mean_minimal_paternal_locus_mismatches": 0.5566218809980806,
+    "offspring_with_min_2_plus_father_mismatch": 49,
+    "by_original_pollination_treatment": {
+      "c": {
+        "offspring": 192,
+        "fully_mendel_compatible_father_zero": 78,
+        "fully_mendel_compatible_father_one": 105,
+        "fully_mendel_compatible_father_more_than_one": 9,
+        "median_compatible_candidate_count": 1,
+        "mean_compatible_candidate_count": 0.6510416666666666,
+        "median_le1_mismatch_candidate_count": 1
+      },
+      "de": {
+        "offspring": 168,
+        "fully_mendel_compatible_father_zero": 71,
+        "fully_mendel_compatible_father_one": 81,
+        "fully_mendel_compatible_father_more_than_one": 16,
+        "median_compatible_candidate_count": 1,
+        "mean_compatible_candidate_count": 0.7738095238095238,
+        "median_le1_mismatch_candidate_count": 2
+      },
+      "ne": {
+        "offspring": 161,
+        "fully_mendel_compatible_father_zero": 58,
+        "fully_mendel_compatible_father_one": 88,
+        "fully_mendel_compatible_father_more_than_one": 15,
+        "median_compatible_candidate_count": 1,
+        "mean_compatible_candidate_count": 0.84472049689441,
+        "median_le1_mismatch_candidate_count": 2
+      }
+    },
+    "original_source_parentage_identification_is_genetic_only": true,
+    "parent_genotype_is_original_census_no_distance_used": true
+  },
+  "uncalibrated_genotype_only_weight_sensitivity": [
+    {
+      "within_mother_paired_exclusion_test": {
+        "distance_free_genotype_only": {
+          "paired_maternal_genets": 18,
+          "night_excluded_bee_minus_day_excluded_moth_mean": 0.14481914770730922,
+          "paired_mother_boot_95": [
+            -0.053853928266496924,
+            0.33300385063980376
+          ],
+          "paired_signflip_two_sided_p": 0.17875,
+          "positive_mother_differences": 12,
+          "negative_mother_differences": 6,
+          "not_independent_family_units": true
+        },
+        "published_same_family_MLTR": {
+          "paired_maternal_genets": 16,
+          "night_excluded_bee_minus_day_excluded_moth_mean": 0.16537499999999997,
+          "paired_mother_boot_95": [
+            -0.07538125,
+            0.40694374999999994
+          ],
+          "paired_signflip_two_sided_p": 0.21915,
+          "positive_mother_differences": 10,
+          "negative_mother_differences": 5,
+          "not_independent_family_units": true
+        }
+      },
+      "genotyping_error_floor": 0.002,
+      "method": "un-calibrated prior-free per-parent transmission product with epsilon floor, exclude mother, normalize across all sampled adults",
+      "all_source_families": 68,
+      "all_source_MLTR_families": 60,
+      "families_with_pair_information": 68,
+      "genotyped_families_with_original_MLTR_match": 60,
+      "genotyped_families_not_in_original_MLTR_table": 8,
+      "families_posterior_correlated_paternity_spearman": 0.5970477873027066,
+      "families_posterior_correlated_paternity_pearson": 0.7182918595942359,
+      "estimated_mean_pair_cofather_weight": 0.28653665498680975,
+      "source_mean_MLTR_correlated_paternity": 0.4493833333333333,
+      "by_treatment": {
+        "c": {
+          "families_with_two_or_more_children": 24,
+          "mean_genotype_only_pair_cofather_weight": 0.23311791737646073,
+          "families_in_published_MLTR_subset": 21,
+          "mean_source_MLTR_correlated_paternity": 0.36166666666666664,
+          "median_children_per_family": 8
+        },
+        "de": {
+          "families_with_two_or_more_children": 22,
+          "mean_genotype_only_pair_cofather_weight": 0.2294102064918112,
+          "families_in_published_MLTR_subset": 20,
+          "mean_source_MLTR_correlated_paternity": 0.38915,
+          "median_children_per_family": 8
+        },
+        "ne": {
+          "families_with_two_or_more_children": 22,
+          "mean_genotype_only_pair_cofather_weight": 0.3904330794885109,
+          "families_in_published_MLTR_subset": 19,
+          "mean_source_MLTR_correlated_paternity": 0.6097368421052632,
+          "median_children_per_family": 8
+        }
+      }
+    },
+    {
+      "within_mother_paired_exclusion_test": {
+        "distance_free_genotype_only": {
+          "paired_maternal_genets": 18,
+          "night_excluded_bee_minus_day_excluded_moth_mean": 0.09751058222362738,
+          "paired_mother_boot_95": [
+            -0.06649733741215251,
+            0.2509634235012171
+          ],
+          "paired_signflip_two_sided_p": 0.25915,
+          "positive_mother_differences": 12,
+          "negative_mother_differences": 6,
+          "not_independent_family_units": true
+        },
+        "published_same_family_MLTR": {
+          "paired_maternal_genets": 16,
+          "night_excluded_bee_minus_day_excluded_moth_mean": 0.16537499999999997,
+          "paired_mother_boot_95": [
+            -0.07407812500000002,
+            0.4010625
+          ],
+          "paired_signflip_two_sided_p": 0.21355,
+          "positive_mother_differences": 10,
+          "negative_mother_differences": 5,
+          "not_independent_family_units": true
+        }
+      },
+      "genotyping_error_floor": 0.02,
+      "method": "un-calibrated prior-free per-parent transmission product with epsilon floor, exclude mother, normalize across all sampled adults",
+      "all_source_families": 68,
+      "all_source_MLTR_families": 60,
+      "families_with_pair_information": 68,
+      "genotyped_families_with_original_MLTR_match": 60,
+      "genotyped_families_not_in_original_MLTR_table": 8,
+      "families_posterior_correlated_paternity_spearman": 0.5687971927331178,
+      "families_posterior_correlated_paternity_pearson": 0.6904066889666518,
+      "estimated_mean_pair_cofather_weight": 0.21286278689981863,
+      "source_mean_MLTR_correlated_paternity": 0.4493833333333333,
+      "by_treatment": {
+        "c": {
+          "families_with_two_or_more_children": 24,
+          "mean_genotype_only_pair_cofather_weight": 0.1696622796904164,
+          "families_in_published_MLTR_subset": 21,
+          "mean_source_MLTR_correlated_paternity": 0.36166666666666664,
+          "median_children_per_family": 8
+        },
+        "de": {
+          "families_with_two_or_more_children": 22,
+          "mean_genotype_only_pair_cofather_weight": 0.18408629945442614,
+          "families_in_published_MLTR_subset": 20,
+          "mean_source_MLTR_correlated_paternity": 0.38915,
+          "median_children_per_family": 8
+        },
+        "ne": {
+          "families_with_two_or_more_children": 22,
+          "mean_genotype_only_pair_cofather_weight": 0.29369625940628846,
+          "families_in_published_MLTR_subset": 19,
+          "mean_source_MLTR_correlated_paternity": 0.6097368421052632,
+          "median_children_per_family": 8
+        }
+      }
+    },
+    {
+      "within_mother_paired_exclusion_test": {
+        "distance_free_genotype_only": {
+          "paired_maternal_genets": 18,
+          "night_excluded_bee_minus_day_excluded_moth_mean": 0.0004427938763680321,
+          "paired_mother_boot_95": [
+            -0.04790463623858281,
+            0.041544186397539554
+          ],
+          "paired_signflip_two_sided_p": 0.98665,
+          "positive_mother_differences": 10,
+          "negative_mother_differences": 8,
+          "not_independent_family_units": true
+        },
+        "published_same_family_MLTR": {
+          "paired_maternal_genets": 16,
+          "night_excluded_bee_minus_day_excluded_moth_mean": 0.16537499999999997,
+          "paired_mother_boot_95": [
+            -0.07839687500000002,
+            0.40562812499999995
+          ],
+          "paired_signflip_two_sided_p": 0.20995,
+          "positive_mother_differences": 10,
+          "negative_mother_differences": 5,
+          "not_independent_family_units": true
+        }
+      },
+      "genotyping_error_floor": 0.1,
+      "method": "un-calibrated prior-free per-parent transmission product with epsilon floor, exclude mother, normalize across all sampled adults",
+      "all_source_families": 68,
+      "all_source_MLTR_families": 60,
+      "families_with_pair_information": 68,
+      "genotyped_families_with_original_MLTR_match": 60,
+      "genotyped_families_not_in_original_MLTR_table": 8,
+      "families_posterior_correlated_paternity_spearman": 0.5799582650704627,
+      "families_posterior_correlated_paternity_pearson": 0.5966150781344506,
+      "estimated_mean_pair_cofather_weight": 0.04473758109817459,
+      "source_mean_MLTR_correlated_paternity": 0.4493833333333333,
+      "by_treatment": {
+        "c": {
+          "families_with_two_or_more_children": 24,
+          "mean_genotype_only_pair_cofather_weight": 0.04197837470313018,
+          "families_in_published_MLTR_subset": 21,
+          "mean_source_MLTR_correlated_paternity": 0.36166666666666664,
+          "median_children_per_family": 8
+        },
+        "de": {
+          "families_with_two_or_more_children": 22,
+          "mean_genotype_only_pair_cofather_weight": 0.05112630485564252,
+          "families_in_published_MLTR_subset": 20,
+          "mean_source_MLTR_correlated_paternity": 0.38915,
+          "median_children_per_family": 8
+        },
+        "ne": {
+          "families_with_two_or_more_children": 22,
+          "mean_genotype_only_pair_cofather_weight": 0.051588528009142404,
+          "families_in_published_MLTR_subset": 19,
+          "mean_source_MLTR_correlated_paternity": 0.6097368421052632,
+          "median_children_per_family": 8
+        }
+      }
+    }
+  ],
+  "limitations": {
+    "source_has_independent_7_locus_offspring_and_parent_genotypes": true,
+    "no_spatial_prior_or_locations_used": true,
+    "paternity_sample_source_published_2017_not_new_2026_fielddata": true,
+    "candidate_fathers_only_sampled_adults_no_external_pollen": true,
+    "zero_encoded_SSR_alleles_are_missing_not_true_size_zero": true,
+    "strict_sire_compatibility_requires_at_least_5_informative_loci": true,
+    "Mendelian_disagreements_may_mean_genotyping_error_mutation_or_nonmatches": true,
+    "soft_error_floors_not_empirical_paternity_posteriors": true,
+    "same_source_MLTR_correlatedPaternity_not_independent_same_family_replicate": true,
+    "not_focal_Daphne_pseudomezereum_nor_reestimation_of_D_jezoensis": true,
+    "no_original_individual_identifiers_or_alleles_exported": true
+  }
+}

@@ -1,0 +1,565 @@
+{
+  "status": "original_Daphne_within_mother_father_concentration_fixed_margin_v54",
+  "paper_doi": "10.1002/ajb2.16239",
+  "source_zenodo": "10.5281/zenodo.8253921",
+  "source_zip_sha256": "97a403f17ac4025e0a5834485cc9ceb820fa760ed5c38452d4a866abc7d8eec8",
+  "rng_seed": 20261124,
+  "yearly": [
+    {
+      "year": 2018,
+      "eligible_strict_H_candidate_fathers": 105,
+      "sampled_mothers_with_eligible_H_offspring": 39,
+      "source_assigned_offspring": 180,
+      "donor_genets_with_at_least_one_assigned": 56,
+      "mothers_with_at_least_two_genotyped": 30,
+      "min_max_offspring_in_one_maternal_family": [
+        1,
+        16
+      ],
+      "maternal_family_size_mean": 4.615384615384615,
+      "within_family_sibling_pairs": 592,
+      "same_father_sibling_pairs_observed": 188,
+      "same_father_sibling_pair_fraction_observed": 0.31756756756756754,
+      "mother_equal_same_father_pair_fraction_observed": 0.3842683242683242,
+      "fitted_flower_coefficient_at_lambda10m": 0.625023,
+      "inference": "Only children with SSR-assigned strictly H-coded fathers; conditional on available candidate father set and sampled maternal families",
+      "independent_mother_genet_null": {
+        "null_mean": 0.02768800675675676,
+        "null_sd": 0.007634878615623495,
+        "null_95": [
+          0.013513513513513514,
+          0.043918918918918914
+        ],
+        "one_sided_excess_p": 0.00009999000099990002,
+        "two_sided_centered_p": 0.00009999000099990002,
+        "observed_minus_null_mean": 0.2898795608108108,
+        "draws": 10000
+      },
+      "independent_mother_genet_null_mother_equal": {
+        "null_mean": 0.027656847023347017,
+        "null_sd": 0.015090776595477936,
+        "null_95": [
+          0.007850348725348726,
+          0.06578710872460872
+        ],
+        "one_sided_excess_p": 0.00009999000099990002,
+        "two_sided_centered_p": 0.00009999000099990002,
+        "observed_minus_null_mean": 0.35661147724497716,
+        "draws": 10000
+      },
+      "exact_global_father_mother_totals_exchangeable_null": {
+        "null_mean": 0.024850844594594596,
+        "null_sd": 0.006419236134748293,
+        "null_95": [
+          0.013513513513513514,
+          0.03885135135135135
+        ],
+        "one_sided_excess_p": 0.00009999000099990002,
+        "two_sided_centered_p": 0.00009999000099990002,
+        "observed_minus_null_mean": 0.29271672297297296,
+        "draws": 10000
+      },
+      "exact_global_father_mother_totals_exchangeable_null_mother_equal": {
+        "null_mean": 0.024720615218115215,
+        "null_sd": 0.01389115450121845,
+        "null_95": [
+          0.007038262663262664,
+          0.06133994015244015
+        ],
+        "one_sided_excess_p": 0.00009999000099990002,
+        "two_sided_centered_p": 0.00009999000099990002,
+        "observed_minus_null_mean": 0.359547709050209,
+        "draws": 10000
+      },
+      "spatially_weighted_exact_margins_nulls": {
+        "5": {
+          "null_mean": 0.06651632882882882,
+          "null_sd": 0.011512686850574404,
+          "null_95": [
+            0.0472972972972973,
+            0.09121621621621621
+          ],
+          "one_sided_excess_p": 0.0003332222592469177,
+          "two_sided_centered_p": 0.0003332222592469177,
+          "observed_minus_null_mean": 0.2510512387387387,
+          "draws": 3000,
+          "mother_equal_metric": {
+            "null_mean": 0.06725622399205732,
+            "null_sd": 0.020407953147941024,
+            "null_95": [
+              0.03472718485218486,
+              0.11443157305657306
+            ],
+            "one_sided_excess_p": 0.0003332222592469177,
+            "two_sided_centered_p": 0.0003332222592469177,
+            "observed_minus_null_mean": 0.31701210027626686,
+            "draws": 3000
+          },
+          "chains": [
+            {
+              "attempted_valid_label_swaps": 381664,
+              "accepted_swaps": 106282,
+              "conditional_swap_acceptance": 0.2784700679131383,
+              "chain_pair_mean": 0.0667331081081081,
+              "chain_pair_95": [
+                0.04560810810810811,
+                0.09121621621621621
+              ],
+              "chain_mother_equal_mean": 0.06722825600325599,
+              "chain_mother_equal_95": [
+                0.034591824841824846,
+                0.11451649507899506
+              ],
+              "chain_start": "observed"
+            },
+            {
+              "attempted_valid_label_swaps": 381764,
+              "accepted_swaps": 106466,
+              "conditional_swap_acceptance": 0.27887909808153727,
+              "chain_pair_mean": 0.06629954954954954,
+              "chain_pair_95": [
+                0.0472972972972973,
+                0.09121621621621621
+              ],
+              "chain_mother_equal_mean": 0.06728419198085864,
+              "chain_mother_equal_95": [
+                0.035130411255411255,
+                0.11414265595515595
+              ],
+              "chain_start": "uniform_randomized"
+            }
+          ],
+          "chain_mean_absolute_difference": 0.00043355855855856107,
+          "chain_mother_equal_mean_absolute_difference": 0.00005593597760264468,
+          "source_data_observed_start_and_random_start_in_same_window": true
+        },
+        "10": {
+          "null_mean": 0.04281137387387387,
+          "null_sd": 0.008917317674293603,
+          "null_95": [
+            0.02702702702702703,
+            0.0625
+          ],
+          "one_sided_excess_p": 0.0003332222592469177,
+          "two_sided_centered_p": 0.0003332222592469177,
+          "observed_minus_null_mean": 0.2747561936936937,
+          "draws": 3000,
+          "mother_equal_metric": {
+            "null_mean": 0.04220355147938481,
+            "null_sd": 0.01748861453704971,
+            "null_95": [
+              0.017939229751729752,
+              0.08488659951159956
+            ],
+            "one_sided_excess_p": 0.0003332222592469177,
+            "two_sided_centered_p": 0.0003332222592469177,
+            "observed_minus_null_mean": 0.3420647727889394,
+            "draws": 3000
+          },
+          "chains": [
+            {
+              "attempted_valid_label_swaps": 381332,
+              "accepted_swaps": 177881,
+              "conditional_swap_acceptance": 0.46647278486987714,
+              "chain_pair_mean": 0.04260360360360361,
+              "chain_pair_95": [
+                0.02702702702702703,
+                0.060810810810810814
+              ],
+              "chain_mother_equal_mean": 0.041694124579124574,
+              "chain_mother_equal_95": [
+                0.017999438061938062,
+                0.08649455405705397
+              ],
+              "chain_start": "observed"
+            },
+            {
+              "attempted_valid_label_swaps": 381336,
+              "accepted_swaps": 178688,
+              "conditional_swap_acceptance": 0.4685841357752743,
+              "chain_pair_mean": 0.04301914414414415,
+              "chain_pair_95": [
+                0.028716216216216218,
+                0.0625
+              ],
+              "chain_mother_equal_mean": 0.04271297837964504,
+              "chain_mother_equal_95": [
+                0.01798689504939505,
+                0.08451975339475333
+              ],
+              "chain_start": "uniform_randomized"
+            }
+          ],
+          "chain_mean_absolute_difference": 0.00041554054054054185,
+          "chain_mother_equal_mean_absolute_difference": 0.0010188538005204695,
+          "source_data_observed_start_and_random_start_in_same_window": true
+        },
+        "20": {
+          "null_mean": 0.030770833333333334,
+          "null_sd": 0.007306031719095187,
+          "null_95": [
+            0.018581081081081082,
+            0.04560810810810811
+          ],
+          "one_sided_excess_p": 0.0003332222592469177,
+          "two_sided_centered_p": 0.0003332222592469177,
+          "observed_minus_null_mean": 0.2867967342342342,
+          "draws": 3000,
+          "mother_equal_metric": {
+            "null_mean": 0.029307660333493666,
+            "null_sd": 0.014761882293767908,
+            "null_95": [
+              0.009543542106042108,
+              0.06632201594701598
+            ],
+            "one_sided_excess_p": 0.0003332222592469177,
+            "two_sided_centered_p": 0.0003332222592469177,
+            "observed_minus_null_mean": 0.3549606639348305,
+            "draws": 3000
+          },
+          "chains": [
+            {
+              "attempted_valid_label_swaps": 381250,
+              "accepted_swaps": 257527,
+              "conditional_swap_acceptance": 0.6754806557377049,
+              "chain_pair_mean": 0.030715090090090092,
+              "chain_pair_95": [
+                0.018581081081081082,
+                0.04560810810810811
+              ],
+              "chain_mother_equal_mean": 0.029018738113738115,
+              "chain_mother_equal_95": [
+                0.00990515503015503,
+                0.06609116346616346
+              ],
+              "chain_start": "observed"
+            },
+            {
+              "attempted_valid_label_swaps": 381484,
+              "accepted_swaps": 257416,
+              "conditional_swap_acceptance": 0.6747753509976827,
+              "chain_pair_mean": 0.03082657657657658,
+              "chain_pair_95": [
+                0.018581081081081082,
+                0.0472972972972973
+              ],
+              "chain_mother_equal_mean": 0.029596582553249217,
+              "chain_mother_equal_95": [
+                0.00935323704073704,
+                0.06649600862100857
+              ],
+              "chain_start": "uniform_randomized"
+            }
+          ],
+          "chain_mean_absolute_difference": 0.00011148648648648743,
+          "chain_mother_equal_mean_absolute_difference": 0.0005778444395111021,
+          "source_data_observed_start_and_random_start_in_same_window": true
+        }
+      },
+      "source_mother_sex_strata_descriptive": {
+        "F": {
+          "mothers": 35,
+          "offspring_with_strict_H_fathers": 170,
+          "informative_sibling_pairs": 579,
+          "observed_same_father_pair_fraction": 0.3143350604490501
+        }
+      },
+      "limitations": [
+        "No independently marked individual pollinator visitation events",
+        "Paternity assigned at >=0.95, father candidates incomplete",
+        "Published Daphne fruits are single-seeded; offspring can come from multiple separate fruits of a mother",
+        "Source is published paternity diversity experiment, not newly collected field data",
+        "Paternity concentrates through maternal mating compatibility or temporal phenology as well as insect carryover",
+        "Fixed margin null conditions on realized globally successful sires",
+        "Metropolis swaps approximate but do not prove exact mixed equilibrium",
+        "Source parentage may pool natural/day-open/night-open treatments on the same maternal genet",
+        "Original MasterBayes sire assignment includes a distance prior; the source father labels are not distance-blind",
+        "Mother-equal pair metric is restricted to mothers with at least two assigned H-sired offspring",
+        "Maternal genotype and paternal source identity not output"
+      ]
+    },
+    {
+      "year": 2020,
+      "eligible_strict_H_candidate_fathers": 71,
+      "sampled_mothers_with_eligible_H_offspring": 33,
+      "source_assigned_offspring": 206,
+      "donor_genets_with_at_least_one_assigned": 35,
+      "mothers_with_at_least_two_genotyped": 22,
+      "min_max_offspring_in_one_maternal_family": [
+        1,
+        42
+      ],
+      "maternal_family_size_mean": 6.242424242424242,
+      "within_family_sibling_pairs": 1594,
+      "same_father_sibling_pairs_observed": 1105,
+      "same_father_sibling_pair_fraction_observed": 0.6932245922208281,
+      "mother_equal_same_father_pair_fraction_observed": 0.5059894089008135,
+      "fitted_flower_coefficient_at_lambda10m": 0.895633,
+      "inference": "Only children with SSR-assigned strictly H-coded fathers; conditional on available candidate father set and sampled maternal families",
+      "independent_mother_genet_null": {
+        "null_mean": 0.04929360100376411,
+        "null_sd": 0.009189564910998342,
+        "null_95": [
+          0.033877038895859475,
+          0.06963613550815557
+        ],
+        "one_sided_excess_p": 0.00009999000099990002,
+        "two_sided_centered_p": 0.00009999000099990002,
+        "observed_minus_null_mean": 0.643930991217064,
+        "draws": 10000
+      },
+      "independent_mother_genet_null_mother_equal": {
+        "null_mean": 0.07330915084414819,
+        "null_sd": 0.025384167294748697,
+        "null_95": [
+          0.03614891190972122,
+          0.13359387126592245
+        ],
+        "one_sided_excess_p": 0.00009999000099990002,
+        "two_sided_centered_p": 0.00009999000099990002,
+        "observed_minus_null_mean": 0.43268025805666527,
+        "draws": 10000
+      },
+      "exact_global_father_mother_totals_exchangeable_null": {
+        "null_mean": 0.09150514429109159,
+        "null_sd": 0.012344189610107335,
+        "null_95": [
+          0.07089084065244668,
+          0.1191969887076537
+        ],
+        "one_sided_excess_p": 0.00009999000099990002,
+        "two_sided_centered_p": 0.00009999000099990002,
+        "observed_minus_null_mean": 0.6017194479297365,
+        "draws": 10000
+      },
+      "exact_global_father_mother_totals_exchangeable_null_mother_equal": {
+        "null_mean": 0.09133471532769265,
+        "null_sd": 0.024526361344370532,
+        "null_95": [
+          0.05564300287063109,
+          0.14878660970163546
+        ],
+        "one_sided_excess_p": 0.00009999000099990002,
+        "two_sided_centered_p": 0.00009999000099990002,
+        "observed_minus_null_mean": 0.4146546935731208,
+        "draws": 10000
+      },
+      "spatially_weighted_exact_margins_nulls": {
+        "5": {
+          "null_mean": 0.2733588456712672,
+          "null_sd": 0.03564508898987862,
+          "null_95": [
+            0.20826537013801757,
+            0.3456712672521957
+          ],
+          "one_sided_excess_p": 0.0003332222592469177,
+          "two_sided_centered_p": 0.0003332222592469177,
+          "observed_minus_null_mean": 0.4198657465495609,
+          "draws": 3000,
+          "mother_equal_metric": {
+            "null_mean": 0.23112141697998007,
+            "null_sd": 0.032966145761011506,
+            "null_95": [
+              0.1767756169794515,
+              0.3036519466660518
+            ],
+            "one_sided_excess_p": 0.0003332222592469177,
+            "two_sided_centered_p": 0.0003332222592469177,
+            "observed_minus_null_mean": 0.2748679919208334,
+            "draws": 3000
+          },
+          "chains": [
+            {
+              "attempted_valid_label_swaps": 346568,
+              "accepted_swaps": 76685,
+              "conditional_swap_acceptance": 0.22126970753214376,
+              "chain_pair_mean": 0.27262986198243416,
+              "chain_pair_95": [
+                0.2079516938519448,
+                0.3434912170639899
+              ],
+              "chain_mother_equal_mean": 0.23039259723890976,
+              "chain_mother_equal_95": [
+                0.17775945442950528,
+                0.29931248973184765
+              ],
+              "chain_start": "observed"
+            },
+            {
+              "attempted_valid_label_swaps": 346054,
+              "accepted_swaps": 76979,
+              "conditional_swap_acceptance": 0.22244794165072504,
+              "chain_pair_mean": 0.2740878293601004,
+              "chain_pair_95": [
+                0.20828105395232122,
+                0.34851003764115424
+              ],
+              "chain_mother_equal_mean": 0.23185023672105035,
+              "chain_mother_equal_95": [
+                0.17519088108258912,
+                0.3076861706437889
+              ],
+              "chain_start": "uniform_randomized"
+            }
+          ],
+          "chain_mean_absolute_difference": 0.001457967377666236,
+          "chain_mother_equal_mean_absolute_difference": 0.001457639482140588,
+          "source_data_observed_start_and_random_start_in_same_window": true
+        },
+        "10": {
+          "null_mean": 0.1677404851526558,
+          "null_sd": 0.02515682667077357,
+          "null_95": [
+            0.12672521957340024,
+            0.22396486825595985
+          ],
+          "one_sided_excess_p": 0.0003332222592469177,
+          "two_sided_centered_p": 0.0003332222592469177,
+          "observed_minus_null_mean": 0.5254841070681723,
+          "draws": 3000,
+          "mother_equal_metric": {
+            "null_mean": 0.1616559654487195,
+            "null_sd": 0.028448499242245694,
+            "null_95": [
+              0.11368266374372975,
+              0.22319362781768187
+            ],
+            "one_sided_excess_p": 0.0003332222592469177,
+            "two_sided_centered_p": 0.0003332222592469177,
+            "observed_minus_null_mean": 0.34433344345209393,
+            "draws": 3000
+          },
+          "chains": [
+            {
+              "attempted_valid_label_swaps": 342958,
+              "accepted_swaps": 147062,
+              "conditional_swap_acceptance": 0.42880469328605836,
+              "chain_pair_mean": 0.16715098285236302,
+              "chain_pair_95": [
+                0.12672521957340024,
+                0.22115746549560844
+              ],
+              "chain_mother_equal_mean": 0.1617059430118068,
+              "chain_mother_equal_95": [
+                0.11395185400749729,
+                0.22539599855407716
+              ],
+              "chain_start": "observed"
+            },
+            {
+              "attempted_valid_label_swaps": 343471,
+              "accepted_swaps": 146989,
+              "conditional_swap_acceptance": 0.427951704801861,
+              "chain_pair_mean": 0.16832998745294855,
+              "chain_pair_95": [
+                0.12672521957340024,
+                0.22617628607277282
+              ],
+              "chain_mother_equal_mean": 0.16160598788563216,
+              "chain_mother_equal_95": [
+                0.11365233726447936,
+                0.21932789226463306
+              ],
+              "chain_start": "uniform_randomized"
+            }
+          ],
+          "chain_mean_absolute_difference": 0.001179004600585537,
+          "chain_mother_equal_mean_absolute_difference": 0.00009995512617463898,
+          "source_data_observed_start_and_random_start_in_same_window": true
+        },
+        "20": {
+          "null_mean": 0.11913822668339606,
+          "null_sd": 0.01815935406678536,
+          "null_95": [
+            0.08971141781681305,
+            0.1599749058971142
+          ],
+          "one_sided_excess_p": 0.0003332222592469177,
+          "two_sided_centered_p": 0.0003332222592469177,
+          "observed_minus_null_mean": 0.5740863655374321,
+          "draws": 3000,
+          "mother_equal_metric": {
+            "null_mean": 0.11212673009237407,
+            "null_sd": 0.027159363934423586,
+            "null_95": [
+              0.0704725343271027,
+              0.1740297528973057
+            ],
+            "one_sided_excess_p": 0.0003332222592469177,
+            "two_sided_centered_p": 0.0003332222592469177,
+            "observed_minus_null_mean": 0.3938626788084394,
+            "draws": 3000
+          },
+          "chains": [
+            {
+              "attempted_valid_label_swaps": 341724,
+              "accepted_swaps": 226371,
+              "conditional_swap_acceptance": 0.662438107946764,
+              "chain_pair_mean": 0.1189000418235048,
+              "chain_pair_95": [
+                0.08971141781681305,
+                0.15934755332496864
+              ],
+              "chain_mother_equal_mean": 0.11286677257209408,
+              "chain_mother_equal_95": [
+                0.0704653579232715,
+                0.1725890988269577
+              ],
+              "chain_start": "observed"
+            },
+            {
+              "attempted_valid_label_swaps": 342246,
+              "accepted_swaps": 227146,
+              "conditional_swap_acceptance": 0.6636921980096188,
+              "chain_pair_mean": 0.11937641154328732,
+              "chain_pair_95": [
+                0.08845671267252196,
+                0.1603042659974905
+              ],
+              "chain_mother_equal_mean": 0.11138668761265406,
+              "chain_mother_equal_95": [
+                0.07075907850731913,
+                0.17453297395843542
+              ],
+              "chain_start": "uniform_randomized"
+            }
+          ],
+          "chain_mean_absolute_difference": 0.00047636971978251563,
+          "chain_mother_equal_mean_absolute_difference": 0.00148008495944002,
+          "source_data_observed_start_and_random_start_in_same_window": true
+        }
+      },
+      "source_mother_sex_strata_descriptive": {
+        "F": {
+          "mothers": 32,
+          "offspring_with_strict_H_fathers": 203,
+          "informative_sibling_pairs": 1591,
+          "observed_same_father_pair_fraction": 0.6945317410433689
+        }
+      },
+      "limitations": [
+        "No independently marked individual pollinator visitation events",
+        "Paternity assigned at >=0.95, father candidates incomplete",
+        "Published Daphne fruits are single-seeded; offspring can come from multiple separate fruits of a mother",
+        "Source is published paternity diversity experiment, not newly collected field data",
+        "Paternity concentrates through maternal mating compatibility or temporal phenology as well as insect carryover",
+        "Fixed margin null conditions on realized globally successful sires",
+        "Metropolis swaps approximate but do not prove exact mixed equilibrium",
+        "Source parentage may pool natural/day-open/night-open treatments on the same maternal genet",
+        "Original MasterBayes sire assignment includes a distance prior; the source father labels are not distance-blind",
+        "Mother-equal pair metric is restricted to mothers with at least two assigned H-sired offspring",
+        "Maternal genotype and paternal source identity not output"
+      ]
+    }
+  ],
+  "inferential_limits": {
+    "same_original_2023_publication_as_v28_to_v53": true,
+    "parentage_source_probability_095_threshold": true,
+    "genet_is_observation_unit_of_father_mother_not_each_child": true,
+    "null_conditioned_on_original_sampled_mothers_and_year_specific_sires": true,
+    "concentrated_fathers_does_not_establish_repeat_individual_pollinator": true,
+    "sex_specific_brood_comparisons_descriptive_no_causal_assignment": true,
+    "Daphne_pseudomezereum_not_observed": true,
+    "no_original_genet_ID_location_or_parentage_rows_exported": true
+  }
+}

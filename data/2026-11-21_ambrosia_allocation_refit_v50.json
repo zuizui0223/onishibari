@@ -1,0 +1,212 @@
+{
+  "status": "original_public_data_secondary_refit_v50",
+  "article_doi": "10.1111/evo.14544",
+  "data_doi": "10.5061/dryad.4tmpg4fcp",
+  "source_version_zip": "https://datadryad.org/api/v2/versions/178493/download",
+  "sha256": {
+    "AljibouryFriedman_field_data.csv": "9c703da516bed53363d1678d2fb95d228d11956790fd03d6777e5b3ef4631aa2",
+    "AljibouryFriedman_progeny_data.csv": "a9612ecbb6a6f57acdd4b96462b030f8295fc18170c2d3fd2d5cb783bdc5bbdd",
+    "README_file.txt": "9530359c9617f22468ac331c34f5728c9e1f568fcd4c169d58696bac5ba6c0ff"
+  },
+  "interpretation": {
+    "allocation_contrasts": "Descriptive treatment-category means among archived outcomes; not a complete-data intention-to-treat estimator.",
+    "mass_models": "Observational Poisson pseudo-likelihood log-mean models, not the published negative-binomial mixed models or published power fit.",
+    "mass_endpoint": "Remaining male inflorescence dry mass at senescence; not cumulative seasonal construction or maintenance cost.",
+    "donor_hc3": "Working donor-level independence, not a full covariance model for the shared mating network.",
+    "maternal_resampling": "Conditional maternal-family sampling variation with the measured donor set fixed; not total biological uncertainty.",
+    "missing_outcomes": "Three donors remain unclassified after recovery of two positive assignments for one missing donor. Archive appearances are not biological zero success."
+  },
+  "audit": {
+    "field_rows": 192,
+    "assigned_category_n": [
+      49,
+      49,
+      47,
+      47
+    ],
+    "block_x_category_counts": [
+      [
+        16,
+        19,
+        16,
+        15
+      ],
+      [
+        16,
+        17,
+        16,
+        14
+      ],
+      [
+        17,
+        13,
+        15,
+        18
+      ]
+    ],
+    "source_populations": 18,
+    "unique_progeny": 1242,
+    "distinct_archive_fathers": 177,
+    "focal_mothers": 72,
+    "mothers_per_block": [
+      24,
+      24,
+      24
+    ],
+    "maternal_assigned_count_range": [
+      11,
+      22
+    ],
+    "maternal_assignment_total": 1242,
+    "maternal_sums_match": true,
+    "observed_field_donor_totals_match_progeny": true,
+    "field_missing_donor_totals": 4,
+    "field_missing_with_positive_documentation": 1,
+    "documented_assignments_in_missing": 2,
+    "mass_positive_and_complete": true,
+    "mean_mass_all_assigned_by_cat": [
+      2.5642857142857145,
+      4.799795918367347,
+      7.611063829787235,
+      14.19659574468085
+    ]
+  },
+  "allocation_contrasts": {
+    "field_observed": {
+      "donors": 188,
+      "positive": 176,
+      "zeros": 12,
+      "sum": 1240,
+      "category_means": [
+        3.9361702127659575,
+        5.448979591836735,
+        8.382978723404255,
+        8.755555555555556
+      ],
+      "category_n": [
+        47,
+        49,
+        47,
+        45
+      ],
+      "high_minus_low": 4.819385342789599,
+      "high_over_low": 2.2243843843843845
+    },
+    "observed_plus_documented_assignments": {
+      "donors": 189,
+      "positive": 177,
+      "zeros": 12,
+      "sum": 1242,
+      "category_means": [
+        3.9361702127659575,
+        5.448979591836735,
+        8.382978723404255,
+        8.608695652173912
+      ],
+      "category_n": [
+        47,
+        49,
+        47,
+        46
+      ],
+      "high_minus_low": 4.672525439407955,
+      "high_over_low": 2.1870740305522913
+    },
+    "appearances_as_sire_in_progeny_file": {
+      "donors": 192,
+      "positive": 177,
+      "zeros": 15,
+      "sum": 1242,
+      "category_means": [
+        3.7755102040816326,
+        5.448979591836735,
+        8.382978723404255,
+        8.425531914893616
+      ],
+      "category_n": [
+        49,
+        49,
+        47,
+        47
+      ],
+      "high_minus_low": 4.650021710811984,
+      "high_over_low": 2.2316273720529036
+    }
+  },
+  "observational_mass_models": {
+    "field_observed": {
+      "pooled": {
+        "beta_log_mass": 0.2930119408440073,
+        "se_donor_hc3": 0.10902329881333979,
+        "ci95_donor_hc3": [
+          0.07933020169411287,
+          0.5066936799939017
+        ],
+        "doubling_ratio": 1.2251954725144774,
+        "ci95_fixed_donors_maternal_family_resampling": [
+          0.15995822811251104,
+          0.42410522626603137
+        ]
+      },
+      "within_cap": {
+        "beta_log_mass": -0.21539576971526347,
+        "se_donor_hc3": 0.22483208891554063,
+        "ci95_donor_hc3": [
+          -0.6560585665586303,
+          0.22526702712810326
+        ],
+        "doubling_ratio": 0.8613098470445327,
+        "ci95_fixed_donors_maternal_family_resampling": [
+          -0.4838499184388709,
+          0.06117208651339563
+        ]
+      }
+    },
+    "observed_plus_documented_assignments": {
+      "pooled": {
+        "beta_log_mass": 0.29683485735830184,
+        "se_donor_hc3": 0.10834878791993502,
+        "ci95_donor_hc3": [
+          0.08447513526666073,
+          0.509194579449943
+        ],
+        "doubling_ratio": 1.228446354407674
+      },
+      "within_cap": {
+        "beta_log_mass": -0.1350974242669888,
+        "se_donor_hc3": 0.21047210027214422,
+        "ci95_donor_hc3": [
+          -0.5476151605508944,
+          0.27742031201691675
+        ],
+        "doubling_ratio": 0.9106083387209821
+      }
+    },
+    "appearances_as_sire_in_progeny_file": {
+      "pooled": {
+        "beta_log_mass": 0.3093781431932505,
+        "se_donor_hc3": 0.10663911566749798,
+        "ci95_donor_hc3": [
+          0.10036931714175348,
+          0.5183869692447476
+        ],
+        "doubling_ratio": 1.2391734535976278
+      },
+      "within_cap": {
+        "beta_log_mass": -0.10639022984333754,
+        "se_donor_hc3": 0.20635074630416414,
+        "ci95_donor_hc3": [
+          -0.510830260782461,
+          0.2980498010957858
+        ],
+        "doubling_ratio": 0.9289093826188526
+      }
+    }
+  },
+  "maternal_bootstrap": {
+    "draws": 1999,
+    "seed": 14544,
+    "strata": "block by maternal allocation category",
+    "population": "resample measured maternal families conditional on fixed field-observed donor set"
+  }
+}

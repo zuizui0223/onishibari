@@ -1,0 +1,31 @@
+name: Zurich 2016 Poisson arrival null for rare visitor timing
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/zurich2016_temporal_visit_concentration.py
+      - .github/workflows/angiosperm-zurich-temporal-visits.yml
+
+permissions:
+  contents: read
+
+jobs:
+  conditional-visit-arrival:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install NumPy
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy
+      - name: Randomize visit times within garden and plant conditional on counted flowers and effort
+        run: .venv/bin/python scripts/zurich2016_temporal_visit_concentration.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zurich2016-conditional-flower-exposure-visit-clumping
+          path: analysis_results_zurich_temporal_reliability/
+          if-no-files-found: warn

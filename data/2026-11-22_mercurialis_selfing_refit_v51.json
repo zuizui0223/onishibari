@@ -1,0 +1,119 @@
+{
+  "concept_doi": "10.5281/zenodo.14542260",
+  "version_doi": "10.5281/zenodo.15644955",
+  "source_url": "https://zenodo.org/api/records/15644955/files/Geito_NewPhyto_v2.zip/content",
+  "archive_sha256": "a18b7d296110be1e9817d6e1a3994365a4e7ae0aab50435e7e6883e1f3de4042",
+  "archive_zenodo_md5": "ea198a76d60cdf412638c77e6e0e3d80",
+  "member_sha256": {
+    "3G.csv": "ccf42650536d372a814854658e812330e1d7c40e150f500ebd382a73ac072b3f",
+    "3G_ID01.csv": "435c7870dfeca62fb493e8c87c7b3fd93a77ab3ed81d42a11e87a2474e6ed36a",
+    "Genotype_3P.csv": "a67b7d4961000099247df319633b3066770256edf58d2dc18cc20bf328480cd6",
+    "Selfing.R": "96174b5a5acee5de2517553809157df955c29f9f8adf49968b1358c71e0e2603",
+    "Fitness.R": "dc98856e863b248a3038919fc9e56cf23bbdd4d751706f1a9e295a8c91601eed",
+    "Trade-off.R": "b771fb7b172eababb6a576f1657276e80a690ff2094b818bacc19bac8740af06",
+    "README.md.txt": "b1b012ced9929834766c596d883db6e7b75da09ae501a927a590fd2114e561aa"
+  },
+  "reproduction": {
+    "parents_all": 181,
+    "parents_by_population": [
+      60,
+      61,
+      60
+    ],
+    "whole_biomass_observed": 180,
+    "average_female_and_male_flowers_180_size_known": [
+      238.00555555555556,
+      316.24444444444447
+    ],
+    "mothers_with_assigned_mature_seeds": 173,
+    "genotyped_number_sum_equals_paper_assigned": 915,
+    "all_assigned_selfed_calls": 265,
+    "source_model_mothers_with_size_and_progeny": 172,
+    "source_model_assigned_and_selfed": [
+      914,
+      264
+    ],
+    "source_model_mean_of_maternal_fractions": 0.2962656045504883,
+    "source_model_mothers_with_zero_male_count": 7,
+    "source_model_mothers_with_zero_female_count": 1,
+    "scenario_rows": 362,
+    "unique_paired_plants": 181,
+    "genotype_parent_rows": 181,
+    "genotype_progeny_rows": 951,
+    "genotype_progeny_at_least_five_complete_loci": 948,
+    "genotype_progeny_more_than_five_complete_loci": 947
+  },
+  "within_flowering_mothers": {
+    "model": "Grouped binomial logit of selfed among assigned mature seeds, log2 male flowers + log2 female flowers + log2 end aboveground biomass + population intercepts",
+    "mothers": 164,
+    "assigned_seeds": 882,
+    "selfed_seeds": 262,
+    "OR_per_doubling": 1.3628370296836614,
+    "ci95_mother_HC3": [
+      1.151542168022924,
+      1.6129020899563016
+    ],
+    "ci95_within_array_mother_bootstrap": [
+      1.1729089050832944,
+      1.6187002143589548
+    ],
+    "standardized_100_200_male_flowers": {
+      "probabilities": [
+        0.2686319584547696,
+        0.33282784743369626
+      ],
+      "difference": 0.06419588897892664,
+      "ci95_difference_within_array_mother_bootstrap": [
+        0.032365008005029644,
+        0.09603908958943254
+      ],
+      "standardization": "each measured mother equal weight; observed female flowers, biomass and array retained"
+    },
+    "by_population_varying_male_slope_shared_adjusters": {
+      "Population 1": {
+        "mothers": 60,
+        "assigned": 299,
+        "selfed": 90,
+        "OR_per_doubling": 1.345277656309559,
+        "ci95_mother_HC3": [
+          1.0970139426738057,
+          1.6497255888605151
+        ],
+        "male_flower_count_q25_q75": [
+          89.25,
+          424.0
+        ]
+      },
+      "Population 2": {
+        "mothers": 52,
+        "assigned": 282,
+        "selfed": 81,
+        "OR_per_doubling": 1.3464164332041026,
+        "ci95_mother_HC3": [
+          1.0501675545879372,
+          1.7262361645836366
+        ],
+        "male_flower_count_q25_q75": [
+          32.75,
+          342.0
+        ]
+      },
+      "Population 3": {
+        "mothers": 52,
+        "assigned": 301,
+        "selfed": 91,
+        "OR_per_doubling": 1.395079404853596,
+        "ci95_mother_HC3": [
+          1.0820207545539908,
+          1.7987146158290712
+        ],
+        "male_flower_count_q25_q75": [
+          47.75,
+          365.0
+        ]
+      }
+    },
+    "bootstrap_draws": 1999,
+    "bootstrap_seed": 70356
+  }
+}

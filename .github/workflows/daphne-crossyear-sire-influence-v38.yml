@@ -1,0 +1,34 @@
+name: "Daphne original paternal flower coefficient: cross-year transfer + sire influence v0.38"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/daphne_jezoensis_2018_2020_crossyear_sire_influence_v38.py
+      - scripts/verify_daphne_year_transfer_sire_v38.py
+      - results/2026-11-17_daphne_year_transfer_paternity_sire_influence_v38.md
+      - scripts/daphne_jezoensis_2018_2020_flower_to_paternity_choice_v30.py
+      - .github/workflows/daphne-crossyear-sire-influence-v38.yml
+permissions:
+  contents: read
+jobs:
+  original-year-transfer:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install original-source model dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy
+      - name: Transfer sire model coefficient across source years and drop one observed sire at a time
+        run: .venv/bin/python scripts/daphne_jezoensis_2018_2020_crossyear_sire_influence_v38.py
+      - name: Verify exactly matched father counts, cross-year transfer, and one-sire sensitivity
+        run: .venv/bin/python scripts/verify_daphne_year_transfer_sire_v38.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-2018-2020-crossyear-father-choice-influence-v38
+          path: analysis_results_daphne_crossyear_paternity_v38/
+          retention-days: 30

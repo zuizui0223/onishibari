@@ -1,0 +1,33 @@
+name: Pulsatilla original-removal attrition and genotyped-seed uncertainty v61
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/pulsatilla_v61_selection_tipping.py
+      - scripts/verify_pulsatilla_selection_v61.py
+      - data/2026-11-24_pulsatilla_selection_tipping_v61.json
+      - results/2026-11-24_pulsatilla_stage_selection_v61.md
+      - .github/workflows/pulsatilla-v61-selection-tipping.yml
+permissions: {contents: read}
+jobs:
+  source-verified-sex-investment-maternal-stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned numeric stack
+        run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Source checksum, original treatment census, MNAR tipping and flower-level genotype uncertainty
+        run: python scripts/pulsatilla_v61_selection_tipping.py
+      - name: Verify source-backed all-field JSON and measured-followup tipping algebra
+        run: python scripts/verify_pulsatilla_selection_v61.py --actual analysis_results_pulsatilla_selection_v61/pulsatilla_stamen_removal_selection_tipping_v61.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pulsatilla-v61-aggregate-only
+          path: analysis_results_pulsatilla_selection_v61/
+          retention-days: 30

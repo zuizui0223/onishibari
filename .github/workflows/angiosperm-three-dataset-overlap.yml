@@ -1,0 +1,27 @@
+name: Angiosperm cross-dataset species grain overlap audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/reproductive_three_dataset_overlap.py
+      - .github/workflows/angiosperm-three-dataset-overlap.yml
+
+permissions:
+  contents: read
+
+jobs:
+  de-duplicate-and-link:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - name: Re-fetch source-fixed tables and count true experiment and species intersection
+        run: python3 scripts/reproductive_three_dataset_overlap.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-three-dataset-species-overlap
+          path: analysis_results_overlap/
+          if-no-files-found: warn

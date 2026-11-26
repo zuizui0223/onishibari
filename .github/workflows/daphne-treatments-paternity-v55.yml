@@ -1,0 +1,33 @@
+name: Daphne natural-only and treatment-stratified paternity clustering v55
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_jezoensis_treatment_stratified_paternity_v55.py
+      - scripts/verify_daphne_treatment_sire_v55.py
+      - data/2026-11-24_daphne_treatment_specific_sire_v55.json
+      - results/2026-11-24_daphne_treatment_specific_sire_v55.md
+      - .github/workflows/daphne-treatments-paternity-v55.yml
+permissions: {contents: read}
+jobs:
+  original-treatment-paternity-nulls:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned scientific runtime
+        run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Author-DNAID treatment join, original SSR source, natural-only and stratified fixed-margin null
+        run: python scripts/daphne_jezoensis_treatment_stratified_paternity_v55.py
+      - name: Verify all source-backed numerical results against pinned aggregate
+        run: python scripts/verify_daphne_treatment_sire_v55.py --actual analysis_results_daphne_treatment_specific_sire_clustering_v55/daphne_treatment_specific_maternal_sire_clustering_v55.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-paternity-v55-treatment-aggregates
+          path: analysis_results_daphne_treatment_specific_sire_clustering_v55/
+          retention-days: 30

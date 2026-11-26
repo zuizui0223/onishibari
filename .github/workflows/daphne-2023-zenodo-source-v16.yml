@@ -1,0 +1,30 @@
+name: "Daphne 2023 source audit: matched day-night opportunity (v0.16)"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/daphne_jezoensis_zenodo_2023_source_inventory_v16.py
+      - .github/workflows/daphne-2023-zenodo-source-v16.yml
+permissions:
+  contents: read
+jobs:
+  published-zenodo-inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q pandas numpy openpyxl
+      - name: Audit author original public data and verified hashes
+        run: .venv/bin/python scripts/daphne_jezoensis_zenodo_2023_source_inventory_v16.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-jezoensis-zenodo2023-original-file-schema-v16
+          path: analysis_results_daphne_zenodo2023_v16/
+          retention-days: 30
+          if-no-files-found: warn

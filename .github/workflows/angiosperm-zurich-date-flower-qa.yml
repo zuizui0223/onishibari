@@ -1,0 +1,27 @@
+name: Zurich 2016 date-matched flower count and visitation quality audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/zurich2016_flower_date_link.py
+      - .github/workflows/angiosperm-zurich-date-flower-qa.yml
+
+permissions:
+  contents: read
+
+jobs:
+  same-day-flower-and-visitor-sources:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconcile actual daily flower abundance, site/plant visitation, and volunteer minutes
+        run: python3 scripts/zurich2016_flower_date_link.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zurich2016-source-day-flowers-visitors-quality
+          path: analysis_results_zurich_display_date/
+          if-no-files-found: warn

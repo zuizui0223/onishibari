@@ -1,0 +1,21 @@
+name: Pulsatilla biological ovule ceiling and original loss audit v62
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/pulsatilla_v62_original_ovule_schema.py
+      - .github/workflows/pulsatilla-v62-original-ovule-schema.yml
+permissions: {contents: read}
+jobs:
+  original-source-ovule-attrition:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Retrieve pinned public original flowers and report aggregate ovule fields only
+        run: python scripts/pulsatilla_v62_original_ovule_schema.py

@@ -1,0 +1,34 @@
+name: Angiosperm rainfall climate spatial baseline (GloPL × WorldClim)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/reproductive_worldclim_rainfall_pilot.py
+      - .github/workflows/angiosperm-rainfall-geo.yml
+
+permissions:
+  contents: read
+
+jobs:
+  spatial-coverage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install raster and statistical packages
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install --quiet numpy scipy rasterio
+      - name: Sample WorldClim v2.1 1970-2000 10-arcmin normals at real GloPL locations
+        run: .venv/bin/python scripts/reproductive_worldclim_rainfall_pilot.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-GloPL-geographic-rainfall-climatology-pilot
+          path: |
+            analysis_results_rainfall_pilot/pilot_summary.json
+            analysis_results_rainfall_pilot/species_median_PL_worldclim_10m.csv
+            analysis_results_rainfall_pilot/site_coordinates_for_ndvi_sampling.csv
+          if-no-files-found: warn

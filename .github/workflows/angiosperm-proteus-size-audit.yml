@@ -1,0 +1,31 @@
+name: PROTEUS size versus reproductive trait descriptive audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/proteus_size_proxy_audit.py
+      - .github/workflows/angiosperm-proteus-size-audit.yml
+
+permissions:
+  contents: read
+
+jobs:
+  morphology-size:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install rank test
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install --quiet scipy
+      - name: Check maximum height and flower size, explicitly not direct plant biomass
+        run: .venv/bin/python scripts/proteus_size_proxy_audit.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-PROTEUS-size-proxy-audit
+          path: analysis_results_body_size_proxy/
+          if-no-files-found: warn

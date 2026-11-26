@@ -1,0 +1,30 @@
+name: "Daphne 2015 ambiguous HF candidate donors and equal-plant synchrony v0.25"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_jezoensis_2015_synchrony_HF_sensitivity_v25.py
+      - scripts/daphne_jezoensis_2015_sex_synchrony_v24.py
+      - .github/workflows/daphne-2015-synchrony-HF-sensitivity-v25.yml
+permissions:
+  contents: read
+jobs:
+  sex-ambiguity-sensitivity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Original-data dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy
+      - name: Test H+HF donor potential versus verified H-only temporal overlap
+        run: .venv/bin/python scripts/daphne_jezoensis_2015_synchrony_HF_sensitivity_v25.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-2015-sex-synchrony-HF-ambiguity-v25
+          path: analysis_results_daphne_2015_synchrony_sensitivity_v25/
+          retention-days: 30
+          if-no-files-found: warn

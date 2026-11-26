@@ -1,0 +1,32 @@
+name: UK PoMS flower patch context and visitor saturation interaction
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/ukpoms_flower_accessibility_interactions.py
+      - .github/workflows/angiosperm-poms-flower-context-interactions.yml
+
+permissions:
+  contents: read
+
+jobs:
+  resource-accessibility:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install cluster robust count model dependencies
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy scikit-learn statsmodels patsy
+      - name: Compare sublinear visit scaling by floral morphology and resource patch context
+        run: |
+          OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 .venv/bin/python scripts/ukpoms_flower_accessibility_interactions.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ukpoms-floral-accessibility-moderated-visitation-scaling
+          path: analysis_results_flower_context_interactions/
+          if-no-files-found: warn

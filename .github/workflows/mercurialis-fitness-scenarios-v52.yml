@@ -1,0 +1,17 @@
+name: Mercurialis fitness scenario semantics probe v0.52
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/mercurialis_v52_fitness_scenario_probe.py
+      - .github/workflows/mercurialis-fitness-scenarios-v52.yml
+permissions: {contents: read}
+jobs:
+  verify-public-fitness-semantics:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe original paired ID=0 and ID=1 fitness, no original IDs or rows
+        run: python3 scripts/mercurialis_v52_fitness_scenario_probe.py

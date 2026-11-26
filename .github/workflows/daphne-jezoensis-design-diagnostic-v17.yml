@@ -1,0 +1,28 @@
+name: "Daphne original day-night experiment design diagnostic (v0.17)"
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_jezoensis_2023_design_diagnostic_v17.py
+      - .github/workflows/daphne-jezoensis-design-diagnostic-v17.yml
+permissions:
+  contents: read
+jobs:
+  experiment-source-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q pandas numpy
+      - name: Decode author original published files and audit experimental units
+        run: .venv/bin/python scripts/daphne_jezoensis_2023_design_diagnostic_v17.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-jezoensis-diel-source-experiment-units-v17
+          path: analysis_results_daphne_diel_design_v17/
+          retention-days: 30
+          if-no-files-found: warn

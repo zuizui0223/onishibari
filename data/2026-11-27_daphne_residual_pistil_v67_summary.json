@@ -1,0 +1,810 @@
+{
+  "status": "v67_source_verified_conditional_frontiers_and_sampling_audit",
+  "source_doi": "10.1002/ajb2.16239",
+  "source_zip_sha256": "97a403f17ac4025e0a5834485cc9ceb820fa760ed5c38452d4a866abc7d8eec8",
+  "workflow_run_id": 45869420311,
+  "source_job": 140080642095,
+  "frontier_job": 140080642457,
+  "artifacts": [
+    {
+      "id": 15142016555,
+      "name": "daphne-v67-frontier-aggregate",
+      "digest": "sha256:d8e64f6b315bdb084cd8af5350d8b364e6cde3ce5183450b29f9cae0f605bfad"
+    },
+    {
+      "id": 15141986762,
+      "name": "daphne-v67-original-source-audit",
+      "digest": "sha256:170ed2130daf345f78f8a6c455775dedd137f5dcd7165a966c7e52f95af8c109"
+    }
+  ],
+  "notes": [
+    "both original-source audit and deterministic aggregate frontier succeeded",
+    "selected frontier rows independently recomputed from successful CI summaries using the stated analytic inverse",
+    "theta, c, eta, beta, h are scenarios, not measured cost, selection, or lifetime fitness",
+    "no population expansion or true sire inference"
+  ],
+  "by_year": [
+    {
+      "year": 2018,
+      "cohort": 105,
+      "flowers": 4765,
+      "fruits": 53,
+      "assigned_natural_seeds": 110,
+      "raw_ratio": 0.4818181818181818,
+      "source_audit": {
+        "year": 2018,
+        "strict_H_sire_risk_and_fruit_cohort_identical": true,
+        "strict_H_genets": 105,
+        "strict_H_natural_fruits": 53,
+        "natural_seed_records": 158,
+        "natural_mothers": 32,
+        "natural_mothers_with_strict_F_code": 29,
+        "natural_seed_records_from_strict_F_code_mothers": 151,
+        "natural_mothers_with_valid_census_fruit_count": 32,
+        "valid_mothers_recorded_fruit_total": 211,
+        "valid_mothers_sampled_seed_total": 158,
+        "valid_mothers_where_sample_seed_count_exceeds_recorded_fruits": 1,
+        "valid_mothers_where_sample_count_equals_recorded_fruits": 24,
+        "valid_mothers_where_sample_count_below_recorded_fruits": 7,
+        "no_population_paternity_expansion_from_these_counts": true,
+        "confidence_sensitivity": [
+          {
+            "confidence_cutoff": 0.95,
+            "natural_assignments_any_sire": 132,
+            "natural_assignments_strict_H": 110,
+            "natural_H_assignments_from_strict_F_mothers": 103,
+            "n_H_genets_with_sampled_siring": 42,
+            "n_H_genets_with_own_fruit_and_sampled_siring": 6,
+            "H_own_fruits_from_genets_without_sampled_siring": 45,
+            "sampled_H_siring_from_fruit_positive_genets": 20,
+            "sampled_H_siring_from_fruit_zero_genets": 90,
+            "raw_cohort_fruit_to_assignment_ratio": 0.4818181818181818,
+            "fruit_positive_H_raw_ratio": 2.65
+          },
+          {
+            "confidence_cutoff": 0.975,
+            "natural_assignments_any_sire": 129,
+            "natural_assignments_strict_H": 107,
+            "natural_H_assignments_from_strict_F_mothers": 100,
+            "n_H_genets_with_sampled_siring": 41,
+            "n_H_genets_with_own_fruit_and_sampled_siring": 6,
+            "H_own_fruits_from_genets_without_sampled_siring": 45,
+            "sampled_H_siring_from_fruit_positive_genets": 20,
+            "sampled_H_siring_from_fruit_zero_genets": 87,
+            "raw_cohort_fruit_to_assignment_ratio": 0.4953271028037383,
+            "fruit_positive_H_raw_ratio": 2.65
+          },
+          {
+            "confidence_cutoff": 0.99,
+            "natural_assignments_any_sire": 128,
+            "natural_assignments_strict_H": 106,
+            "natural_H_assignments_from_strict_F_mothers": 100,
+            "n_H_genets_with_sampled_siring": 40,
+            "n_H_genets_with_own_fruit_and_sampled_siring": 6,
+            "H_own_fruits_from_genets_without_sampled_siring": 45,
+            "sampled_H_siring_from_fruit_positive_genets": 20,
+            "sampled_H_siring_from_fruit_zero_genets": 86,
+            "raw_cohort_fruit_to_assignment_ratio": 0.5,
+            "fruit_positive_H_raw_ratio": 2.65
+          },
+          {
+            "confidence_cutoff": 0.995,
+            "natural_assignments_any_sire": 123,
+            "natural_assignments_strict_H": 101,
+            "natural_H_assignments_from_strict_F_mothers": 96,
+            "n_H_genets_with_sampled_siring": 39,
+            "n_H_genets_with_own_fruit_and_sampled_siring": 6,
+            "H_own_fruits_from_genets_without_sampled_siring": 45,
+            "sampled_H_siring_from_fruit_positive_genets": 19,
+            "sampled_H_siring_from_fruit_zero_genets": 82,
+            "raw_cohort_fruit_to_assignment_ratio": 0.5247524752475248,
+            "fruit_positive_H_raw_ratio": 2.789473684210526
+          }
+        ]
+      },
+      "selected_frontiers": [
+        {
+          "theta": 0.05,
+          "beta": 0.5,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.024090909090909093,
+          "c_break_even": 0.08885850913908802,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.05,
+          "beta": 0.5,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.024090909090909093,
+          "c_break_even": 0.046494992424166305,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.05,
+          "beta": 1,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.024090909090909093,
+          "c_break_even": 0.045967042497831755,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.05,
+          "beta": 1,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.024090909090909093,
+          "c_break_even": 0.023524189968930315,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.05,
+          "beta": 0.614363,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.024090909090909093,
+          "c_break_even": 0.07323042688711977,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.05,
+          "beta": 0.614363,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.024090909090909093,
+          "c_break_even": 0.03800684207858287,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 0.5,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.04818181818181819,
+          "c_break_even": 0.16483643908344597,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 0.5,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.04818181818181819,
+          "c_break_even": 0.08982111599966602,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 1,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.04818181818181819,
+          "c_break_even": 0.087893864013267,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 1,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.04818181818181819,
+          "c_break_even": 0.045967042497831755,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 0.614363,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.04818181818181819,
+          "c_break_even": 0.13734297086858432,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 0.614363,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.04818181818181819,
+          "c_break_even": 0.07373497574732228,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 0.5,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.12045454545454545,
+          "c_break_even": 0.33811513241116176,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 0.5,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.12045454545454545,
+          "c_break_even": 0.20345280169842295,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 1,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.12045454545454545,
+          "c_break_even": 0.19413919413919412,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 1,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.12045454545454545,
+          "c_break_even": 0.10750507099391482,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 0.614363,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.12045454545454545,
+          "c_break_even": 0.28913640827177134,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 0.614363,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.12045454545454545,
+          "c_break_even": 0.16900026961220221,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 0.5,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.2409090909090909,
+          "c_break_even": 0.5191639015279461,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 0.5,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.2409090909090909,
+          "c_break_even": 0.3505883615773726,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 1,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.2409090909090909,
+          "c_break_even": 0.3251533742331288,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 1,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.2409090909090909,
+          "c_break_even": 0.19413919413919412,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 0.614363,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.2409090909090909,
+          "c_break_even": 0.4570861253786862,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 0.614363,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.2409090909090909,
+          "c_break_even": 0.29624863247203054,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 0.5,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.4818181818181818,
+          "c_break_even": 0.7051513231638968,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 0.5,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.4818181818181818,
+          "c_break_even": 0.5445820316910684,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 1,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.4818181818181818,
+          "c_break_even": 0.49074074074074076,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 1,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.4818181818181818,
+          "c_break_even": 0.3251533742331288,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 0.614363,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.4818181818181818,
+          "c_break_even": 0.6420184883111426,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 0.614363,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.4818181818181818,
+          "c_break_even": 0.4727741009615769,
+          "future_gain_alone_weakly_suffices": false
+        }
+      ],
+      "theta0_1_future_sensitivity": [
+        {
+          "h": 0,
+          "g_required": 0.04818181818181819,
+          "c_break_even": 0.045967042497831755,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "h": 0.01,
+          "g_required": 0.038181818181818185,
+          "c_break_even": 0.03677758318739055,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "h": 0.02,
+          "g_required": 0.028181818181818186,
+          "c_break_even": 0.02740937223695845,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "h": 0.05,
+          "g_required": 0,
+          "c_break_even": 0,
+          "future_gain_alone_weakly_suffices": true
+        },
+        {
+          "h": 0.1,
+          "g_required": 0,
+          "c_break_even": 0,
+          "future_gain_alone_weakly_suffices": true
+        }
+      ],
+      "example_c03": {
+        "paternal_gain_fraction": 0.030927835051546393,
+        "retain_minus_loss_over_current_paternity": 0.017253983130271794
+      },
+      "share_fruits_without_sampled_siring": 0.8490566037735849,
+      "share_sampled_siring_from_fruit_zero_genets": 0.8181818181818182,
+      "fruit_positive_group_raw_ratio": 2.65,
+      "fruit_positive_group_to_overall_raw_ratio_multiplier": 5.5
+    },
+    {
+      "year": 2020,
+      "cohort": 71,
+      "flowers": 2573,
+      "fruits": 28,
+      "assigned_natural_seeds": 131,
+      "raw_ratio": 0.21374045801526717,
+      "source_audit": {
+        "year": 2020,
+        "strict_H_sire_risk_and_fruit_cohort_identical": true,
+        "strict_H_genets": 71,
+        "strict_H_natural_fruits": 28,
+        "natural_seed_records": 199,
+        "natural_mothers": 32,
+        "natural_mothers_with_strict_F_code": 31,
+        "natural_seed_records_from_strict_F_code_mothers": 190,
+        "natural_mothers_with_valid_census_fruit_count": 32,
+        "valid_mothers_recorded_fruit_total": 211,
+        "valid_mothers_sampled_seed_total": 199,
+        "valid_mothers_where_sample_seed_count_exceeds_recorded_fruits": 1,
+        "valid_mothers_where_sample_count_equals_recorded_fruits": 23,
+        "valid_mothers_where_sample_count_below_recorded_fruits": 8,
+        "no_population_paternity_expansion_from_these_counts": true,
+        "confidence_sensitivity": [
+          {
+            "confidence_cutoff": 0.95,
+            "natural_assignments_any_sire": 163,
+            "natural_assignments_strict_H": 131,
+            "natural_H_assignments_from_strict_F_mothers": 128,
+            "n_H_genets_with_sampled_siring": 31,
+            "n_H_genets_with_own_fruit_and_sampled_siring": 5,
+            "H_own_fruits_from_genets_without_sampled_siring": 7,
+            "sampled_H_siring_from_fruit_positive_genets": 23,
+            "sampled_H_siring_from_fruit_zero_genets": 108,
+            "raw_cohort_fruit_to_assignment_ratio": 0.21374045801526717,
+            "fruit_positive_H_raw_ratio": 1.2173913043478262
+          },
+          {
+            "confidence_cutoff": 0.975,
+            "natural_assignments_any_sire": 161,
+            "natural_assignments_strict_H": 129,
+            "natural_H_assignments_from_strict_F_mothers": 126,
+            "n_H_genets_with_sampled_siring": 31,
+            "n_H_genets_with_own_fruit_and_sampled_siring": 5,
+            "H_own_fruits_from_genets_without_sampled_siring": 7,
+            "sampled_H_siring_from_fruit_positive_genets": 23,
+            "sampled_H_siring_from_fruit_zero_genets": 106,
+            "raw_cohort_fruit_to_assignment_ratio": 0.21705426356589147,
+            "fruit_positive_H_raw_ratio": 1.2173913043478262
+          },
+          {
+            "confidence_cutoff": 0.99,
+            "natural_assignments_any_sire": 157,
+            "natural_assignments_strict_H": 128,
+            "natural_H_assignments_from_strict_F_mothers": 125,
+            "n_H_genets_with_sampled_siring": 31,
+            "n_H_genets_with_own_fruit_and_sampled_siring": 5,
+            "H_own_fruits_from_genets_without_sampled_siring": 7,
+            "sampled_H_siring_from_fruit_positive_genets": 23,
+            "sampled_H_siring_from_fruit_zero_genets": 105,
+            "raw_cohort_fruit_to_assignment_ratio": 0.21875,
+            "fruit_positive_H_raw_ratio": 1.2173913043478262
+          },
+          {
+            "confidence_cutoff": 0.995,
+            "natural_assignments_any_sire": 155,
+            "natural_assignments_strict_H": 126,
+            "natural_H_assignments_from_strict_F_mothers": 124,
+            "n_H_genets_with_sampled_siring": 30,
+            "n_H_genets_with_own_fruit_and_sampled_siring": 5,
+            "H_own_fruits_from_genets_without_sampled_siring": 7,
+            "sampled_H_siring_from_fruit_positive_genets": 22,
+            "sampled_H_siring_from_fruit_zero_genets": 104,
+            "raw_cohort_fruit_to_assignment_ratio": 0.2222222222222222,
+            "fruit_positive_H_raw_ratio": 1.2727272727272727
+          }
+        ]
+      },
+      "selected_frontiers": [
+        {
+          "theta": 0.05,
+          "beta": 0.5,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.010687022900763359,
+          "c_break_even": 0.04120564158377341,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.05,
+          "beta": 0.5,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.010687022900763359,
+          "c_break_even": 0.021036226394428675,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.05,
+          "beta": 1,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.010687022900763359,
+          "c_break_even": 0.02092675635276532,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.05,
+          "beta": 1,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.010687022900763359,
+          "c_break_even": 0.010574018126888218,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.05,
+          "beta": 0.65786,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.010687022900763359,
+          "c_break_even": 0.03155241321622168,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.05,
+          "beta": 0.65786,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.010687022900763359,
+          "c_break_even": 0.016029084761039928,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 0.5,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.021374045801526718,
+          "c_break_even": 0.07953709206452735,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 0.5,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.021374045801526718,
+          "c_break_even": 0.04141558357408264,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 1,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.021374045801526718,
+          "c_break_even": 0.040995607613469986,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 1,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.021374045801526718,
+          "c_break_even": 0.02092675635276532,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 0.65786,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.021374045801526718,
+          "c_break_even": 0.06133294984304214,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.1,
+          "beta": 0.65786,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.021374045801526718,
+          "c_break_even": 0.031636659754482606,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 0.5,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.05343511450381679,
+          "c_break_even": 0.17995890476418025,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 0.5,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.05343511450381679,
+          "c_break_even": 0.09887628649443396,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 1,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.05343511450381679,
+          "c_break_even": 0.09655172413793103,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 1,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.05343511450381679,
+          "c_break_even": 0.050724637681159424,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 0.65786,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.05343511450381679,
+          "c_break_even": 0.1414022172818716,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.25,
+          "beta": 0.65786,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.05343511450381679,
+          "c_break_even": 0.0760800527132214,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 0.5,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.10687022900763359,
+          "c_break_even": 0.3104986138454739,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 0.5,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.10687022900763359,
+          "c_break_even": 0.18378121284185492,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 1,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.10687022900763359,
+          "c_break_even": 0.17610062893081763,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 1,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.10687022900763359,
+          "c_break_even": 0.09655172413793103,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 0.65786,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.10687022900763359,
+          "c_break_even": 0.2502530240864351,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 0.5,
+          "beta": 0.65786,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.10687022900763359,
+          "c_break_even": 0.14302240697159935,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 0.5,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.21374045801526717,
+          "c_break_even": 0.4862129876351008,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 0.5,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.21374045801526717,
+          "c_break_even": 0.3211898263518057,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 1,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.21374045801526717,
+          "c_break_even": 0.2994652406417112,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 1,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.21374045801526717,
+          "c_break_even": 0.17610062893081763,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 0.65786,
+          "eta": 0.5,
+          "h": 0,
+          "g_required": 0.21374045801526717,
+          "c_break_even": 0.40644917643917655,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "theta": 1,
+          "beta": 0.65786,
+          "eta": 1,
+          "h": 0,
+          "g_required": 0.21374045801526717,
+          "c_break_even": 0.2550588098162801,
+          "future_gain_alone_weakly_suffices": false
+        }
+      ],
+      "theta0_1_future_sensitivity": [
+        {
+          "h": 0,
+          "g_required": 0.021374045801526718,
+          "c_break_even": 0.02092675635276532,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "h": 0.01,
+          "g_required": 0.011374045801526718,
+          "c_break_even": 0.011246131783530832,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "h": 0.02,
+          "g_required": 0.0013740458015267173,
+          "c_break_even": 0.0013721603903033997,
+          "future_gain_alone_weakly_suffices": false
+        },
+        {
+          "h": 0.05,
+          "g_required": 0,
+          "c_break_even": 0,
+          "future_gain_alone_weakly_suffices": true
+        },
+        {
+          "h": 0.1,
+          "g_required": 0,
+          "c_break_even": 0,
+          "future_gain_alone_weakly_suffices": true
+        }
+      ],
+      "example_c03": {
+        "paternal_gain_fraction": 0.030927835051546393,
+        "retain_minus_loss_over_current_paternity": -0.009553789250019675
+      },
+      "share_fruits_without_sampled_siring": 0.25,
+      "share_sampled_siring_from_fruit_zero_genets": 0.8244274809160306,
+      "fruit_positive_group_raw_ratio": 1.2173913043478262,
+      "fruit_positive_group_to_overall_raw_ratio_multiplier": 5.695652173913044
+    }
+  ]
+}

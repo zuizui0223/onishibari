@@ -1,0 +1,32 @@
+name: UK PoMS relative bee vs hoverfly floral scaling
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/ukpoms_relative_guild_flower_scaling.py
+      - .github/workflows/angiosperm-relative-bee-hoverfly.yml
+
+permissions:
+  contents: read
+
+jobs:
+  conditional-visitor-share:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 19
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install source models
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q numpy pandas scipy scikit-learn statsmodels patsy
+      - name: Fit group-paired binomial visitation models with 101-square clusters
+        run: |
+          OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 .venv/bin/python scripts/ukpoms_relative_guild_flower_scaling.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ukpoms-hoverfly-versus-bee-floral-scaling
+          path: analysis_results_relative_guild/
+          if-no-files-found: warn

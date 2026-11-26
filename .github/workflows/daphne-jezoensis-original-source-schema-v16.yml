@@ -1,0 +1,30 @@
+name: Daphne jezoensis 2023 original day-night source audit v0.16
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/angiosperm-reproductive-decoupling-20261115
+    paths:
+      - scripts/daphne_jezoensis2023_original_source_schema_v16.py
+      - .github/workflows/daphne-jezoensis-original-source-schema-v16.yml
+permissions:
+  contents: read
+jobs:
+  original-source-inventory:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install source profile dependency
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q pandas
+      - name: Retrieve and profile original Zenodo source
+        run: .venv/bin/python scripts/daphne_jezoensis2023_original_source_schema_v16.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-jezoensis-original-source-schema-v16
+          path: source_audit_daphne_jezoensis_diel_v16/
+          retention-days: 30
+          if-no-files-found: warn

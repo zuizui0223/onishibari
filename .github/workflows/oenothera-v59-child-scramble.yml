@@ -1,0 +1,33 @@
+name: Oenothera within-mother offspring allele permutation negative control v59
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/oenothera_v59_within_mother_allele_scramble.py
+      - scripts/verify_oenothera_v59.py
+      - data/2026-11-24_oenothera_child_specific_v59.json
+      - results/2026-11-24_oenothera_child_specific_paternity_signal_v59.md
+      - .github/workflows/oenothera-v59-child-scramble.yml
+permissions: {contents: read}
+jobs:
+  original-source-negative-control:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install source-reproducibility numeric dependencies
+        run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Verify published raw SSR and permute withheld alleles within original maternal families
+        run: python scripts/oenothera_v59_within_mother_allele_scramble.py
+      - name: Verify fresh original-source calculations against pinned v59 JSON
+        run: python scripts/verify_oenothera_v59.py --actual analysis_results_oenothera_child_specific_genetic_signal_v59/oenothera_v59_within_family_allele_scramble.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: oenothera-v59-scramble-aggregate-only
+          path: analysis_results_oenothera_child_specific_genetic_signal_v59/
+          retention-days: 30

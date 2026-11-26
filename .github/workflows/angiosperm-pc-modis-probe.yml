@@ -1,0 +1,39 @@
+name: Probe real MODIS NDVI EVI for GloPL sample sites
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/pc_modis_ndvi_probe.py
+      - .github/workflows/angiosperm-pc-modis-probe.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  modis-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get GloPL species location table from prior successful run
+        uses: actions/download-artifact@v4
+        with:
+          name: angiosperm-GloPL-geographic-rainfall-climatology-pilot
+          run-id: 43693752526
+          github-token: ${{ github.token }}
+          path: input
+      - name: Install STAC, NASA remote asset and COG reader packages
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q pystac-client planetary-computer rasterio
+      - name: Probe nine species times two 2013 dates (not real experiment years)
+        run: .venv/bin/python scripts/pc_modis_ndvi_probe.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: angiosperm-MODIS-actual-pixel-probe
+          path: analysis_results_modis_probe/
+          if-no-files-found: warn

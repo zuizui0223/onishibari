@@ -1,0 +1,28 @@
+name: Daphne fruit-zero structural vs heterogeneous-activity model validation v65
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_v65_zero_state_predictive_comparison.py
+      - .github/workflows/daphne-v65-zero-state-crossvalidation.yml
+permissions: {contents: read}
+jobs:
+  original-source-female-function-activation-prediction:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned numeric stack
+        run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Pinned source natural fruit counts and beta-binomial vs structural-zero model heldout genet scores
+        run: python scripts/daphne_v65_zero_state_predictive_comparison.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-v65-zero-state-model-aggregate-only
+          path: analysis_results_daphne_zero_activation_v65/
+          retention-days: 30
