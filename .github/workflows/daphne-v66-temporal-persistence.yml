@@ -1,0 +1,27 @@
+name: Daphne paired-genet temporal fruiting persistence v66
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_v66_temporal_persistence.py
+      - .github/workflows/daphne-v66-temporal-persistence.yml
+permissions: {contents: read}
+jobs:
+  source-paired-genet:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Source ZIP SHA and paired annual fruiting likelihood
+        run: python scripts/daphne_v66_temporal_persistence.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daphne-v66-aggregate-only
+          path: analysis_results_daphne_temporal_persistence_v66/
+          retention-days: 30
