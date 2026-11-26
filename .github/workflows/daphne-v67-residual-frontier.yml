@@ -1,0 +1,36 @@
+name: Daphne residual pistil fitness accounting and source audit v67
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/angiosperm-reproductive-decoupling-20261115]
+    paths:
+      - scripts/daphne_v67_residual_pistil_frontier.py
+      - scripts/daphne_v67_natural_source_audit.py
+      - .github/workflows/daphne-v67-residual-frontier.yml
+permissions: {contents: read}
+jobs:
+  conditional-frontier:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compute conditional fitness frontiers from verified aggregates
+        run: python3 scripts/daphne_v67_residual_pistil_frontier.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: daphne-v67-frontier-aggregate
+          path: analysis_results_daphne_residual_pistil_frontier_v67/
+  original-source-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install numpy==2.3.5 scipy==1.17.0 pandas==2.2.3
+      - name: Confirm source natural paternity frame and H cohort
+        run: python scripts/daphne_v67_natural_source_audit.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: daphne-v67-original-source-audit
+          path: analysis_results_daphne_v67_source_audit/
