@@ -24,6 +24,27 @@ def capture(name,b,src):
     BOOKS[name]={s:book.parse(s) for s in book.sheet_names}
     return {"file":name,"sha256":sha,"sheets":{s:len(x) for s,x in BOOKS[name].items()}}
 old.inspect_file=capture
+
+def cirsium_sources(src):
+    # Official public publisher alternative if Europe PMC archive is temporarily unavailable.
+    # An XLSX is accepted only if SHA256 equals the pinned v70 file.
+    try:
+        old.cirsium(src)
+    except Exception as e:
+        src["errors"].append(type(e).__name__+": "+str(e)[:200])
+    if "ECE3-16-e74093-s001.xlsx" in BOOKS:return
+    urls=[
+        "https://pmc.ncbi.nlm.nih.gov/articles/instance/13400990/bin/ECE3-16-e74093-s001.xlsx",
+        "https://onlinelibrary.wiley.com/doi/suppl/10.1002/ece3.74093/supinfo/ece374093-sup-0001-DataS1.xlsx"
+    ]
+    for url in urls:
+        try:
+            b=old.get(url)
+            src["files"].append(capture("ECE3-16-e74093-s001.xlsx",b,src))
+            if "ECE3-16-e74093-s001.xlsx" in BOOKS:return
+        except Exception as e:
+            src["errors"].append(type(e).__name__+": "+str(e)[:200])
+
 def fetch_retry(label,fn):
     a=old.job(label,fn)
     if not any(x.get("sha256") for x in a[1]["files"]):
@@ -227,7 +248,7 @@ def main():
     assert dms("49°27'48.2\"N 16°01'36.0\"E") is not None
     assert abs(dist((50,15),(50,15)))<1e-8
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as ex:
-        sources=dict(ex.map(lambda x:fetch_retry(*x),[("figshare",old.figshare),("quality",old.dryad),("cirsium",old.cirsium)]))
+        sources=dict(ex.map(lambda x:fetch_retry(*x),[("figshare",old.figshare),("quality",old.dryad),("cirsium",cirsium_sources)]))
     # Only source-level summaries; no original row, coords or site name.
     res={"sources":{k:{"files":v["files"],"error_count":len(v["errors"])} for k,v in sources.items()}}
     for k,v in res["sources"].items():print("SOURCE",k,json.dumps(v,ensure_ascii=False),flush=True)
