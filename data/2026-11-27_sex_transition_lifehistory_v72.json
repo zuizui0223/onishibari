@@ -1,0 +1,133 @@
+{
+  "checks": 405,
+  "neutralChecks": 45,
+  "anchors": [
+    {
+      "species": "C. palustre",
+      "A": 1.26,
+      "observed_frequency": 0.193,
+      "equal_survival_equilibrium": 0,
+      "required_F_to_H_expected_adult_census_duration_ratio": 1.8264589602879568,
+      "scope": "conditional diagnostic: viable achenes assumed adult recruitment, frequency assumed equilibrium, hypothetical dominant nuclear male sterility"
+    },
+    {
+      "species": "C. heterophyllum",
+      "A": 3.77,
+      "observed_frequency": 0.533,
+      "equal_survival_equilibrium": 0.3194945848375451,
+      "required_F_to_H_expected_adult_census_duration_ratio": 1.6718316019061794,
+      "scope": "conditional diagnostic: viable achenes assumed adult recruitment, frequency assumed equilibrium, hypothetical dominant nuclear male sterility"
+    }
+  ],
+  "scenarios": [
+    {
+      "A": 3.77,
+      "t": 0.25,
+      "sF": 0,
+      "sH": 0,
+      "sM": 0,
+      "relative_death_reduction": 0,
+      "q": 0.3194945848375451,
+      "required_paternity_gain": 0.49603174603174605,
+      "required_cost_beta1": 0.33156498673740054,
+      "required_cost_beta025": 0.8003649640598758
+    },
+    {
+      "A": 3.77,
+      "t": 0.25,
+      "sF": 0,
+      "sH": 0,
+      "sM": 0.05,
+      "relative_death_reduction": 0.05,
+      "q": 0.3194945848375451,
+      "required_paternity_gain": 0.42123015873015857,
+      "required_cost_beta1": 0.2963841965656847,
+      "required_cost_beta025": 0.7549005474910422
+    },
+    {
+      "A": 3.77,
+      "t": 0.25,
+      "sF": 0,
+      "sH": 0,
+      "sM": 0.1,
+      "relative_death_reduction": 0.1,
+      "q": 0.3194945848375451,
+      "required_paternity_gain": 0.3464285714285713,
+      "required_cost_beta1": 0.25729442970822275,
+      "required_cost_beta025": 0.6957246823043374
+    },
+    {
+      "A": 3.77,
+      "t": 0.25,
+      "sF": 0.5,
+      "sH": 0.5,
+      "sM": 0.5,
+      "relative_death_reduction": 0,
+      "q": 0.3194945848375451,
+      "required_paternity_gain": 0.49603174603174605,
+      "required_cost_beta1": 0.33156498673740054,
+      "required_cost_beta025": 0.8003649640598758
+    },
+    {
+      "A": 3.77,
+      "t": 0.25,
+      "sF": 0.5,
+      "sH": 0.5,
+      "sM": 0.525,
+      "relative_death_reduction": 0.05,
+      "q": 0.3194945848375451,
+      "required_paternity_gain": 0.42123015873015857,
+      "required_cost_beta1": 0.2963841965656847,
+      "required_cost_beta025": 0.7549005474910422
+    },
+    {
+      "A": 3.77,
+      "t": 0.25,
+      "sF": 0.5,
+      "sH": 0.5,
+      "sM": 0.55,
+      "relative_death_reduction": 0.1,
+      "q": 0.3194945848375451,
+      "required_paternity_gain": 0.3464285714285711,
+      "required_cost_beta1": 0.25729442970822264,
+      "required_cost_beta025": 0.6957246823043371
+    },
+    {
+      "A": 3.77,
+      "t": 0.25,
+      "sF": 0.8,
+      "sH": 0.8,
+      "sM": 0.8,
+      "relative_death_reduction": 0,
+      "q": 0.3194945848375451,
+      "required_paternity_gain": 0.4960317460317458,
+      "required_cost_beta1": 0.3315649867374004,
+      "required_cost_beta025": 0.8003649640598757
+    },
+    {
+      "A": 3.77,
+      "t": 0.25,
+      "sF": 0.8,
+      "sH": 0.8,
+      "sM": 0.81,
+      "relative_death_reduction": 0.05,
+      "q": 0.3194945848375451,
+      "required_paternity_gain": 0.42123015873015857,
+      "required_cost_beta1": 0.2963841965656847,
+      "required_cost_beta025": 0.7549005474910422
+    },
+    {
+      "A": 3.77,
+      "t": 0.25,
+      "sF": 0.8,
+      "sH": 0.8,
+      "sM": 0.8200000000000001,
+      "relative_death_reduction": 0.1,
+      "q": 0.3194945848375451,
+      "required_paternity_gain": 0.3464285714285713,
+      "required_cost_beta1": 0.25729442970822275,
+      "required_cost_beta025": 0.6957246823043374
+    }
+  ],
+  "model": "adult vacancy-recruitment recurrence with differential survival; dominant nuclear sex determination; no juvenile lag, stochasticity, CMS or density-dependent pollen limitation"
+}

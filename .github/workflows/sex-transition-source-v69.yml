@@ -1,0 +1,26 @@
+name: Sex system stage integration source audit v69
+on:
+  push:
+    branches: [research/sex-function-transition-v68-20261127]
+    paths:
+      - scripts/sex_transition_source_audit_v69.py
+      - .github/workflows/sex-transition-source-v69.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pandas==2.2.3 openpyxl==3.1.5 xlrd==2.0.1
+      - run: python scripts/sex_transition_source_audit_v69.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sex-transition-v69-source-audit
+          path: analysis_results_sex_transition_v69/

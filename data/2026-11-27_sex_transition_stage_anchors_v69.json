@@ -1,0 +1,77 @@
+{
+  "daphne": [
+    {
+      "species": "Daphne jezoensis",
+      "year": 2018,
+      "F": {
+        "n": 63,
+        "flowers": 619,
+        "fruit": 255
+      },
+      "H": {
+        "n": 105,
+        "flowers": 4765,
+        "fruit": 53
+      },
+      "display_RR": 0.21650926897516617,
+      "conversion_RR": 37.037065260462704,
+      "output_RR": 8.018867924528301,
+      "log_display": -1.5301219196377156,
+      "log_conversion": 3.611919175010011,
+      "log_output": 2.0817972553722948
+    },
+    {
+      "species": "Daphne jezoensis",
+      "year": 2020,
+      "F": {
+        "n": 57,
+        "flowers": 719,
+        "fruit": 205
+      },
+      "H": {
+        "n": 71,
+        "flowers": 2573,
+        "fruit": 28
+      },
+      "display_RR": 0.34807481198137197,
+      "conversion_RR": 26.20032783628055,
+      "output_RR": 9.11967418546366,
+      "log_display": -1.0553378453539324,
+      "log_conversion": 3.2657719235239018,
+      "log_output": 2.21043407816997
+    }
+  ],
+  "cirsium": [
+    {
+      "species": "Cirsium heterophyllum",
+      "populations": 126,
+      "trait_populations": 13,
+      "flower_F": 323,
+      "flower_H": 296,
+      "viable_F": 21.3,
+      "viable_H": 6.99,
+      "population_mean_viable_achene_RR": 3.77,
+      "floret_RR": 1.0912162162162162,
+      "mean_viability_RR": 3.0472103004291844,
+      "marginal_product": 3.3251652940494143,
+      "log_floret_RR": 0.08729286889859618,
+      "log_viability_RR": 1.1142265164696605
+    },
+    {
+      "species": "Cirsium palustre",
+      "populations": 285,
+      "trait_populations": 16,
+      "flower_F": 14100,
+      "flower_H": 12850,
+      "viable_F": 86.5,
+      "viable_H": 85.7,
+      "population_mean_viable_achene_RR": 1.26,
+      "floret_RR": 1.0972762645914398,
+      "mean_viability_RR": 1.0093348891481912,
+      "marginal_product": 1.1075192168863421,
+      "log_floret_RR": 0.09283098604289387,
+      "log_viability_RR": 0.009291588334099418
+    }
+  ],
+  "scope": "descriptive; two studies, not 4 independent estimates; no pooled meta-analysis"
+}

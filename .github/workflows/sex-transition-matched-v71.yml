@@ -1,0 +1,26 @@
+name: Sex transition v71 source-pinned population and genus holdout
+on:
+  push:
+    branches: [research/sex-function-transition-v68-20261127]
+    paths:
+      - scripts/sex_transition_matched_v71.py
+      - .github/workflows/sex-transition-matched-v71.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  matched:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pandas==2.2.3 openpyxl==3.1.5 xlrd==2.0.1 scipy==1.15.3
+      - run: python scripts/sex_transition_matched_v71.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sex-transition-v71-aggregate-results
+          path: analysis_results_sex_transition_v71/
