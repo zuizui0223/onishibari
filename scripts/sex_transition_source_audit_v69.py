@@ -19,7 +19,7 @@ def get(url):
 def jget(url): return json.loads(get(url))
 def norm(x): return re.sub(r"[^a-z0-9]","",str(x).lower())
 def taxon(x):
-    s=re.sub(r"[_\\s]+"," ",str(x).strip()).lower()
+    s=re.sub(r"[_\s]+"," ",str(x).strip()).lower()
     return s if re.fullmatch(r"[a-z][a-z-]+ [a-z][a-z-]+",s) else None
 def inspect_file(name,b,src):
     suffix=Path(name).suffix.lower()
@@ -108,6 +108,10 @@ def job(label,fn):
     except Exception as e:src["errors"].append(str(e)[:300])
     return label,src
 def main():
+    assert taxon("Cirsium palustre")=="cirsium palustre"
+    assert taxon("Cirsium_heterophyllum")=="cirsium heterophyllum"
+    assert taxon("Daphne jezoensis")=="daphne jezoensis"
+    assert taxon("Cirsium sp. 1") is None
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as ex:
         res=dict(ex.map(lambda x:job(*x),[("figshare",figshare),("dryad_quality",dryad),("cirsium",cirsium)]))
     q=set().union(*map(set,res["dryad_quality"].get("sets",{}).values()))
@@ -115,7 +119,7 @@ def main():
     gd=set().union(*map(set,res["figshare"].get("gynodioecy_sets",{}).values()))
     anchors=json.loads(Path("data/2026-11-27_sex_function_transition_v68.json").read_text())["rows"][:28]
     prior={taxon(x["species"]) for x in anchors}
-    report={"sources":res,"coverage":{"quality_exact_binomials":len(q),"macro_all_exact_binomials":len(macro),"macro_gynodioecy_explicit_text_exact_binomials":len(gd),"quality_macro_all_overlap":len(q&macro),"quality_macro_gynodioecy_overlap":len(q&gd),"review_quality_overlap":len(prior&q),"review_macro_gynodioecy_overlap":len(prior&gd),"triple_overlap":sorted(q&gd&prior)},"caution":"Zero matched names without source access or recognized headers is NOT evidence of biological non-overlap. No coordinate/site matching, no meta-analysis. Inspect original codebook before interpreting system codes."}
+    report={"sources":res,"coverage":{"quality_exact_binomials":len(q),"macro_all_exact_binomials":len(macro),"macro_gynodioecy_explicit_text_exact_binomials":len(gd),"quality_macro_all_overlap":len(q&macro) if q and macro else None,"quality_macro_gynodioecy_overlap":len(q&gd) if q and gd else None,"review_quality_overlap":len(prior&q) if q else None,"review_macro_gynodioecy_overlap":len(prior&gd) if gd else None,"triple_overlap":sorted(q&gd&prior) if q and gd else None},"caution":"Zero matched names without source access or recognized headers is NOT evidence of biological non-overlap. No coordinate/site matching, no meta-analysis. Inspect original codebook before interpreting system codes."}
     (OUT/"source_coverage.json").write_text(json.dumps(report,indent=2,ensure_ascii=False)+"\n")
     for k,v in res.items():
         print("SOURCE",k,"FILES",len(v["files"]),"ERRORS",json.dumps(v["errors"],ensure_ascii=False),flush=True)
