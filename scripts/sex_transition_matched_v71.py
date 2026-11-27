@@ -88,7 +88,7 @@ def macro_tables(m,q):
     vs=v.groupby(["sp","reference id","stage"],as_index=False).yi.mean()
     vs=vs.pivot_table(index=["sp","reference id"],columns="stage",values="yi").dropna(subset=["pregermination","postgermination"])
     vs["stage_delta"]=vs["postgermination"]-vs["pregermination"]
-    delta=vs.groupby("sp",as_index=False).stage_delta.mean()
+    delta=vs.groupby(level="sp")["stage_delta"].mean().reset_index()
     merged=sp.merge(prior,on="sp",how="left").merge(quality,on="sp",how="left").merge(delta,on="sp",how="left")
     report={"G_rows":len(d),"G_exact_species":int(d.sp.nunique()),"valid_rows":len(g),
         "exact_unique_sites":len(site),"species_with_valid_freq_sites":len(sp),
@@ -231,14 +231,24 @@ def main():
     # Only source-level summaries; no original row, coords or site name.
     res={"sources":{k:{"files":v["files"],"error_count":len(v["errors"])} for k,v in sources.items()}}
     for k,v in res["sources"].items():print("SOURCE",k,json.dumps(v,ensure_ascii=False),flush=True)
-    if EXPECTED.keys()<=BOOKS.keys():
-        res["macro"]=macro_tables(BOOKS["Fig_Share_FemaleFrequency.xlsx"],BOOKS["Dataset_S1.xls"])
-        res["cirsium"]=cirsium_tables(BOOKS["ECE3-16-e74093-s001.xlsx"])
-    else:
-        if {"Fig_Share_FemaleFrequency.xlsx","Dataset_S1.xls"}<=BOOKS.keys():res["macro"]=macro_tables(BOOKS["Fig_Share_FemaleFrequency.xlsx"],BOOKS["Dataset_S1.xls"])
-        if "ECE3-16-e74093-s001.xlsx" in BOOKS:res["cirsium"]=cirsium_tables(BOOKS["ECE3-16-e74093-s001.xlsx"])
-    for k in ["macro","cirsium"]:
-        if k in res:print("RESULT",k,json.dumps(res[k],ensure_ascii=False,allow_nan=False),flush=True)
-    (OUT/"summary.json").write_text(json.dumps(res,indent=2,ensure_ascii=False,allow_nan=False)+"\n")
-    if not EXPECTED.keys()<=BOOKS.keys():raise RuntimeError("source retrieval/hash gate incomplete")
+    errors={}
+    tasks=[
+        ("macro",{"Fig_Share_FemaleFrequency.xlsx","Dataset_S1.xls"},lambda:macro_tables(BOOKS["Fig_Share_FemaleFrequency.xlsx"],BOOKS["Dataset_S1.xls"])),
+        ("cirsium",{"ECE3-16-e74093-s001.xlsx"},lambda:cirsium_tables(BOOKS["ECE3-16-e74093-s001.xlsx"]))
+    ]
+    for k,required,fn in tasks:
+        if required<=BOOKS.keys():
+            try:
+                value=fn()
+                message=json.dumps(value,ensure_ascii=False,allow_nan=False)
+                res[k]=value
+                print("RESULT",k,message,flush=True)
+            except Exception as e:
+                import traceback
+                errors[k]=type(e).__name__+": "+str(e)
+                traceback.print_exc()
+        else:errors[k]="missing hash-pinned inputs"
+        res["analysis_errors"]=errors
+        (OUT/"summary.json").write_text(json.dumps(res,indent=2,ensure_ascii=False,allow_nan=False)+"\n")
+    if errors:raise RuntimeError("analysis gates incomplete: "+str(errors))
 if __name__=="__main__":main()
